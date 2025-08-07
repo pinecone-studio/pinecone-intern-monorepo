@@ -54,7 +54,7 @@ export const HomeHeader = () => {
       <WhiteTinderLogo />
 
       <div className="flex gap-4">
-        <Button className="py-2 px-4 bg-transparent text-[#FAFAFA] font-sans font-[500] text-[14px]" onClick={() => router.push('/signup')}>
+        <Button className="py-2 px-4 bg-transparent text-[#FAFAFA] font-sans font-[500] text-[14px] rounded-full" onClick={() => router.push('/signup')}>
           Create Account
         </Button>
         <Button className="py-2 px-4 bg-white text-[#18181B] font-[500] font-sans text-[14px] rounded-full" onClick={() => router.push('/login')}>

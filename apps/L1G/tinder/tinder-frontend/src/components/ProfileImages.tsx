@@ -6,7 +6,11 @@ import { X, Plus, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import axios from 'axios';
 
-export const ProfileImages = () => {
+type ProfileImagesProps = {
+  onSuccess: () => void;
+};
+
+export const ProfileImages = ({ onSuccess }: ProfileImagesProps) => {
   const [uploadedImages, setUploadedImages] = useState<string[]>(['', '', '', '', '', '']);
   const [isUploading, setIsUploading] = useState<boolean[]>([false, false, false, false, false, false]);
 
@@ -77,15 +81,19 @@ export const ProfileImages = () => {
     updateUploadingState(index, false);
   };
 
+  const handleNext = () => {
+    onSuccess();
+  };
+
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6">
-      <div className="w-full max-w-2xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="font-sans text-[24px] font-semibold text-gray-900 mb-4">Upload your image</h1>
-          <p className="font-sans text-[14px] text-gray-500">Please choose an image that represents you.</p>
+    <div className="w-[640px] bg-white flex flex-col items-center justify-center gap-6">
+      <div className="w-full max-w-2xl gap-[16px] flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center gap-1 py-2 justify-center">
+          <h1 className="font-sans font-[500] text-[24px] text-gray-900 ">Upload your image</h1>
+          <p className="font-sans font-[400] text-[14px] text-gray-500">Please choose an image that represents you.</p>
         </div>
 
-        <div className="grid grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-3 gap-6">
           {uploadedImages.map((image, index) => (
             <div key={index} data-testid={`image-slot-${index}`} className="relative w-[197px] h-[296px] bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center">
               {isUploading[index] ? (
@@ -109,23 +117,25 @@ export const ProfileImages = () => {
           ))}
         </div>
 
-        <div className="mb-12">
+        <div className="w-full">
           <Button
             variant="outline"
-            className="relative w-full h-14 text-lg font-medium border-2 border-red-400 text-red-400 hover:bg-red-50 rounded-full bg-transparent overflow-hidden"
+            className="py-2 flex gap-2 relative w-full h-[36px] font-[400] text-md font-sans border border-red-400 text-[#18181B] hover:bg-red-50 rounded-full bg-transparent overflow-hidden"
             aria-label="Upload image"
           >
-            <Plus className="w-5 h-5 mr-2" />
+            <Plus size={16} color="#E4345A" />
             Upload image
             <input ref={fileInputRef} type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={handleUploadImage} data-testid="upload-input" />
           </Button>
         </div>
 
-        <div className="flex justify-between items-center">
-          <Button variant="outline" className="px-8 py-3 text-lg font-medium border-gray-300 text-gray-700 hover:bg-gray-50 rounded-full bg-transparent">
+        <div className="w-full h-[36px] flex justify-between items-center">
+          <Button variant="outline" className="px-4 py-2 text-[14px] font-[400] border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-full bg-transparent">
             Back
           </Button>
-          <Button className="px-8 py-3 text-lg font-medium bg-red-400 hover:bg-red-500 text-white rounded-full">Next</Button>
+          <Button onClick={handleNext} className="px-4 py-2 text-[14px] font-[400] bg-[#E11D48E5] bg-opacity-90 hover:bg-red-500 text-white rounded-full">
+            Next
+          </Button>
         </div>
       </div>
     </div>

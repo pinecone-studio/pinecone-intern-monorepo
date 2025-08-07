@@ -1,42 +1,52 @@
 'use client';
+import { ConfirmEmail } from '@/components/ConfirmEmail';
 import { CreateAccount } from '@/components/CreateAcc';
+import { CreatePassword } from '@/components/CreatePassword';
+import { GenderSelect } from '@/components/GenderSelect';
+import HowOldAreYou from '@/components/HowOldAreYou';
 import { MainHeader } from '@/components/MainHeader';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+import { ProfileImages } from '@/components/ProfileImages';
+import { YouAreAllSet } from '@/components/YouAreAllSet';
+import YourDetailsPage from '@/components/YourDetailsPage';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const Signup = () => {
   const router = useRouter();
 
+  const [step, setStep] = useState<'createAccount' | 'confirmEmail' | 'createPass' | 'genderSelect' | 'ageSelect' | 'details' | 'uploadImages' | 'allSet'>('createAccount');
+
+  const renderStep = () => {
+    switch (step) {
+      case 'createAccount':
+        return <CreateAccount onSuccess={() => setStep('confirmEmail')} />;
+      case 'confirmEmail':
+        return <ConfirmEmail onSuccess={() => setStep('createPass')} />;
+      case 'createPass':
+        return <CreatePassword onSuccess={() => setStep('genderSelect')} />;
+      case 'genderSelect':
+        return <GenderSelect onSuccess={() => setStep('ageSelect')} />;
+      case 'ageSelect':
+        return <HowOldAreYou onSuccess={() => setStep('details')} onBack={() => setStep('genderSelect')} />;
+      case 'details':
+        return <YourDetailsPage onSuccess={() => setStep('uploadImages')} onBack={() => setStep('ageSelect')} />;
+      case 'uploadImages':
+        return <ProfileImages onSuccess={() => setStep('allSet')} />;
+      case 'allSet':
+        return <YouAreAllSet onSuccess={() => router.push('/home')} />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
-      <div className="w-[350px] h-fit flex flex-col gap-6 items-center">
+    <div className="w-screen h-screen flex justify-center items-center relative">
+      <div className="w-[640px] h-fit flex flex-col gap-6 items-center justify-start top-[200px] fixed">
         <MainHeader />
-
-        <div className="items-center flex flex-col text-center">
-          <h1 className="font-semibold text-[24px] font-sans">Create an account</h1>
-          <p className="text-[#71717A] text-[14px] font-[400]">Enter your email below to create your account</p>
-        </div>
-
-        <div className="w-full h-fit flex flex-col gap-4">
-          <CreateAccount />
-
-          <div className="w-full flex justify-between items-center gap-[10px] py-4">
-            <Separator className="w-[156px]" />
-            <p className=" font-[400] text-[12px] text-[#71717A]">OR</p>
-            <Separator className="w-[156px]" />
-          </div>
-
-          <Button onClick={() => router.push('/login')} className="rounded-full border-[1px] border-[#E4E4E7] bg-white text-[#18181B] text-[14px] font-[500] shadow-sm hover:bg-[#E4E4E7]">
-            Log in
-          </Button>
-        </div>
-
-        <p className="text-center  text-wrap w-[249px] text-[14px] text-[#71717A] font-[400]">
-          By clicking continue, you agree to our <span className="underline">Terms of Service</span> and <span className="underline">Privacy Policy</span>.
-        </p>
+        <div className="w-fit max-w-[640px] h-fit flex flex-col gap-4">{renderStep()}</div>
       </div>
     </div>
   );
 };
+
 export default Signup;

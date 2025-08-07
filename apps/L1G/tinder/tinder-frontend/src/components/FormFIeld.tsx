@@ -7,6 +7,11 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { MultiSelect } from './MultiSelect';
 
+type ProfileFormProps = {
+  onSuccess: () => void;
+  onBack: () => void;
+};
+
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
   bio: z.string().optional(),
@@ -15,7 +20,7 @@ const formSchema = z.object({
   work: z.string().optional(),
 });
 
-const ProfileForm = () => {
+const ProfileForm = ({ onSuccess, onBack }: ProfileFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -29,6 +34,7 @@ const ProfileForm = () => {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
+    onSuccess();
   };
 
   return (
@@ -120,7 +126,7 @@ const ProfileForm = () => {
         />
 
         <div className="flex justify-between items-center">
-          <Button type="button" className="border-[#E4E4E7] border text-black bg-white hover:bg-[#E4E4E7] w-16 h-9 rounded-full py-2 px-4">
+          <Button onClick={onBack} type="button" className="border-[#E4E4E7] border text-black bg-white hover:bg-[#E4E4E7] w-16 h-9 rounded-full py-2 px-4">
             Back
           </Button>
           <Button className="bg-[#E11D48E5] w-16 h-9 rounded-full py-2 px-4 hover:bg-[#eb5e7de5]" type="submit">

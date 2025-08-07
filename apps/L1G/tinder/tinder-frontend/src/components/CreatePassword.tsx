@@ -15,7 +15,11 @@ const formSchema = z.object({
   }),
 });
 
-export const CreatePassword = () => {
+type CreatePasswordProps = {
+  onSuccess: () => void;
+};
+
+export const CreatePassword = ({ onSuccess }: CreatePasswordProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -26,6 +30,7 @@ export const CreatePassword = () => {
 
   function onSubmit(_values: z.infer<typeof formSchema>) {
     console.log('working');
+    onSuccess();
   }
 
   return (
