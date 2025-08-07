@@ -7,7 +7,7 @@ import TinderCard from '@/components/TinderCard';
 
 export interface UserProfile {
   id: string;
-  name: string;
+  name: string | null | undefined;
   age?: number;
   images: string[] | null;
 }
