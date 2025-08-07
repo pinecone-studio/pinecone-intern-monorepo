@@ -126,6 +126,7 @@ describe('Verify Reset Code Page', () => {
 
     cy.get('[data-cy="Error-Message"]').should('be.visible').and('have.text', 'Имэйл хаяг олдсонгүй');
   });
+
   it(`it should throw error when user enters 4 digit but request is failed`, () => {
     cy.intercept('POST', '**/graphql', (req) => {
       if (req.body.operationName === 'VerifyResetCode') {

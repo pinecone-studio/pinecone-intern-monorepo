@@ -8,8 +8,8 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import Image from 'next/image';
 import { ArrowLeft, RefreshCcw } from 'lucide-react';
-import { useSendResetCodeMutation, useVerifyResetCodeMutation } from '@/generated';
 import { useRouter } from 'next/navigation';
+import { useSendResetCodeMutation, useVerifyResetCodeMutation } from '@/generated';
 
 const formSchema = z.object({
   code: z
@@ -23,7 +23,7 @@ const formSchema = z.object({
 });
 
 export const StepTwo = () => {
-  const [verifyPassword] = useVerifyResetCodeMutation();
+  const [verifyResetCode] = useVerifyResetCodeMutation();
   const [sendResetCode] = useSendResetCodeMutation();
   const router = useRouter();
 
@@ -34,35 +34,26 @@ export const StepTwo = () => {
     },
   });
 
-  const handleVerificationError = (error: Error) => {
-    const errorMessage = error.message.toLowerCase();
-    const errorMap: Record<string, string> = {
-      'invalid code': 'Код буруу байна',
-      'not found': 'Имэйл хаяг олдсонгүй',
-      'internal server error': 'Хүсэлт явуулахад алдаа гарлаа',
-    };
-
-    const errorType = Object.keys(errorMap).find((key) => errorMessage.includes(key));
-    if (errorType) {
-      form.setError('code', {
-        type: 'manual',
-        message: errorMap[errorType],
-      });
-    }
-  };
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const userEmail = localStorage.getItem('emailAddress');
     try {
-      await verifyPassword({
+      await verifyResetCode({
         variables: {
           input: { code: values.code, email: userEmail || '' },
         },
       });
       router.push('/reset-password/verify-password/update-password');
     } catch (error) {
-      if (error instanceof Error) {
-        handleVerificationError(error);
+      if (error instanceof Error && error.message.includes('invalid code')) {
+        form.setError('code', {
+          type: 'manual',
+          message: 'Код буруу байна',
+        });
+      } else {
+        form.setError('code', {
+          type: 'manual',
+          message: 'Хүсэлт явуулахад алдаа гарлаа',
+        });
       }
     }
   }
