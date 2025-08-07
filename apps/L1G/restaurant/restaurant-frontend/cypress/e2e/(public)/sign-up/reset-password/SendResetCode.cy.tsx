@@ -38,7 +38,7 @@ describe('Reset Password Page', () => {
     cy.get('[ data-cy="Email-Error-Message"]').should('have.text', 'Хүсэлт явуулахад алдаа гарлаа');
   });
 
-  it(`Should throw a error when request is failed`, () => {
+  it(`Should throw a error when user is not found`, () => {
     cy.intercept('POST', '**/graphql', (req) => {
       if (req.body.operationName === 'SendResetCode') {
         req.reply({
