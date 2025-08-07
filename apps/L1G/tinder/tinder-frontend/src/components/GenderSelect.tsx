@@ -4,15 +4,20 @@ import React, { useState } from 'react';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 
-export const GenderSelect = () => {
+type GenderSelectProps = {
+  onSuccess: () => void;
+};
+
+export const GenderSelect = ({ onSuccess }: GenderSelectProps) => {
   const [selectedInterest, setSelectedInterest] = useState('');
 
   const handleNext = () => {
     console.log('Selected interest:', selectedInterest);
+    onSuccess();
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start pt-20 bg-white">
+    <div className="flex flex-col items-center justify-start bg-white">
       <h1 data-cy="Interest-Title" className="text-2xl font-sans font-semibold text-center">
         Who are you interested in?
       </h1>

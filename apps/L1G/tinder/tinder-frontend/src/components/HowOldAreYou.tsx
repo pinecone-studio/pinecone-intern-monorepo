@@ -9,9 +9,10 @@ import { useForm } from 'react-hook-form';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
-import { TinderLogo } from './TinderLogo';
 
-const HowOldAreYou = () => {
+type HowOldAreYouProps = { onSuccess: () => void; onBack: () => void };
+
+const HowOldAreYou = ({ onSuccess, onBack }: HowOldAreYouProps) => {
   const formSchema = z.object({
     date: z
       .date({
@@ -29,19 +30,23 @@ const HowOldAreYou = () => {
 
   function onSubmit(_values: z.infer<typeof formSchema>) {
     console.log('working');
+    onSuccess();
   }
 
+  const handleBack = () => {
+    onBack();
+  };
+
   return (
-    <div className="flex flex-col items-center pt-20 min-h-screen bg-background px-4 gap-6">
+    <div className="w-[400px] flex flex-col items-center px-4 gap-6">
       <div className="w-full max-w-[400px] flex flex-col items-center gap-6">
-        <TinderLogo />
         <div className="flex justify-center items-center flex-col">
-          <h1 className="font-font-sans font-semibold tracking-wider text-2xl leading-8 text-foreground">How old are you</h1>
+          <h1 className="font-sans font-semibold text-2xl ">How old are you</h1>
           <p className="font-sans text-sm font-normal leading-5 text-muted-foreground">Please enter your age to continue</p>
         </div>
       </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 w-full">
           <FormField
             control={form.control}
             name="date"
@@ -73,7 +78,7 @@ const HowOldAreYou = () => {
             )}
           />
           <div className="flex justify-between">
-            <Button className="bg-white text-black border border-gray-200 rounded-full px-4" type="button">
+            <Button onClick={handleBack} className="bg-white text-black border border-gray-200 rounded-full px-4" type="button">
               Back
             </Button>
             <Button data-testid="next-button" className="bg-red-600 rounded-full px-4" type="submit">

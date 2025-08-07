@@ -2,7 +2,13 @@ import { Button } from '@/components/ui/button';
 import { CircleCheck } from 'lucide-react';
 import React from 'react';
 
-export const YouAreAllSet = () => {
+type YouAreAllSetProps = {
+  onSuccess: () => void;
+};
+export const YouAreAllSet = ({ onSuccess }: YouAreAllSetProps) => {
+  const onClick = () => {
+    onSuccess();
+  };
   return (
     <div className="w-[320px] max-w-[320px] font-sans h-fit flex flex-col justify-center items-center gap-6">
       <div className="w-full flex flex-col items-center gap-4 py-2">
@@ -13,7 +19,9 @@ export const YouAreAllSet = () => {
         </div>
       </div>
 
-      <Button className="flex h-[40px] justify-center items-center bg-[#E11D48] font-sans font-[500] text-[14px] py-2 px-4 text-[#FAFAFA] rounded-full">Start Swiping!</Button>
+      <Button onClick={onClick} className="flex h-[40px] justify-center items-center bg-[#E11D48] font-sans font-[500] text-[14px] py-2 px-4 text-[#FAFAFA] rounded-full">
+        Start Swiping!
+      </Button>
     </div>
   );
 };

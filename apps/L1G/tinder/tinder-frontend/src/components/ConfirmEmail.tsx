@@ -11,7 +11,11 @@ const FormSchema = z.object({
   otp: z.string().length(4, { message: 'Your one-time password must be 4 digits.' }).regex(/^\d+$/, { message: 'OTP must contain only digits.' }),
 });
 
-export const ConfirmEmail = () => {
+type ConfirmEmailProps = {
+  onSuccess: () => void;
+};
+
+export const ConfirmEmail = ({ onSuccess }: ConfirmEmailProps) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -33,6 +37,7 @@ export const ConfirmEmail = () => {
 
   function onSubmit(_value: z.infer<typeof FormSchema>) {
     console.log('otp working');
+    onSuccess();
   }
 
   function handleResend() {
@@ -41,7 +46,7 @@ export const ConfirmEmail = () => {
   }
 
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div className="w-[350px] flex flex-col gap-4">
       <div className="flex flex-col gap-1 py-2 justify-center items-center">
         <p className="font-sans text-[24px] font-semibold text-[#09090B]">Confirm email</p>
         <p className="font-sans text-[14px] font-normal text-[#71717A] text-center">To continue, enter the secure code we sent to n.shagai@nest.mn. Check junk mail if it’s not in your inbox.</p>
@@ -55,7 +60,7 @@ export const ConfirmEmail = () => {
               control={form.control}
               name="otp"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="flex flex-col w-full items-center justify-center">
                   <FormLabel></FormLabel>
                   <FormControl>
                     <InputOTP maxLength={4} {...field} className="w-full">
