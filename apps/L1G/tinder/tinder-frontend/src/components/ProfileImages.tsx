@@ -27,53 +27,51 @@ export const ProfileImages = () => {
     });
   };
 
-  const uploadImage = async (
-    file: File,
-    cloudName: string,
-    index: number,
-    setIsUploading: React.Dispatch<React.SetStateAction<boolean[]>>,
-    setUploadedImages: React.Dispatch<React.SetStateAction<string[]>>
-  ) => {
+  const getFirstEmptyIndex = () => uploadedImages.findIndex((img) => !img);
+
+  const updateUploadingState = (index: number, value: boolean) => {
     setIsUploading((prev) => {
       const newUploading = [...prev];
-      newUploading[index] = true;
+      newUploading[index] = value;
       return newUploading;
     });
+  };
+
+  const uploadToCloudinary = async (file: File): Promise<string | null> => {
+    if (!cloudName) return null;
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'my_unsigned_preset');
 
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('upload_preset', 'my_unsigned_preset');
-
       const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formData);
-
-      const data = res.data;
-      if (!data.secure_url) return;
-
-      setUploadedImages((prev) => {
-        const newImages = [...prev];
-        newImages[index] = data.secure_url;
-        return newImages;
-      });
+      return res.data.secure_url || null;
     } catch (err) {
       console.error('Upload error:', err);
-    } finally {
-      setIsUploading((prev) => {
-        const newUploading = [...prev];
-        newUploading[index] = false;
-        return newUploading;
-      });
+      return null;
     }
   };
 
   const handleUploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (!file || !cloudName) return;
+    if (!file) return;
 
-    const firstEmptyIndex = uploadedImages.findIndex((img) => !img);
-    if (firstEmptyIndex === -1) return;
+    const index = getFirstEmptyIndex();
+    if (index === -1) return;
 
-    await uploadImage(file, cloudName, firstEmptyIndex, setIsUploading, setUploadedImages);
+    updateUploadingState(index, true);
+
+    const url = await uploadToCloudinary(file);
+    if (url) {
+      setUploadedImages((prev) => {
+        const newImages = [...prev];
+        newImages[index] = url;
+        return newImages;
+      });
+    }
+
+    updateUploadingState(index, false);
   };
 
   return (

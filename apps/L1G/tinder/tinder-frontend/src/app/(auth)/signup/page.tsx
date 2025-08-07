@@ -1,15 +1,13 @@
 import { TinderLogo } from '@/components/TinderLogo';
-import { YouAreAllSet } from '@/components/YouAreAllSet';
+import YourDetailsPage from '@/components/YourDetailsPage';
 
 const Signup = () => {
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
-      <div className="w-[350px] h-fit flex flex-col gap-6 items-center">
-        <TinderLogo />
-        <YouAreAllSet />
-      </div>
+    <div>
+      Sign up page ju
+      <TinderLogo />
+      <YourDetailsPage />
     </div>
   );
 };
-
 export default Signup;
