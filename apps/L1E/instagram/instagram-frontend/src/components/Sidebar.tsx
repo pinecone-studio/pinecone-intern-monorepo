@@ -1,5 +1,17 @@
+"use client";
 import Link from 'next/link';
-import { Home,Search,  AlignJustify, Heart, PlusSquare } from 'lucide-react';
+import { Home,Search,  AlignJustify, Heart, PlusSquare ,ImagePlus ,BookOpenCheck , Smile} from 'lucide-react';
+import { useState } from 'react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+// import EmojiPicker from 'emoji-picker-react';
+
 import {
   Avatar,
   AvatarFallback,
@@ -8,6 +20,8 @@ import {
 import Image from 'next/image';
 
 export function Sidebar() {
+
+
   return (
     <div className="fixed left-0 top-0 h-screen  border-r p-4 bg-red-50">
       <div className="inline-flex flex-col h-[1000px] bg-slate-200   p-[36px_32px_16px_16px] justify-between items-start flex-shrink-0">
@@ -32,10 +46,25 @@ export function Sidebar() {
             <span className='text-[16px] font-normal'>Notifications</span>
           </Link>
 
-          <Link href="/create" className="flex items-center w-full p-3 hover:text-primary gap-4 rounded-lg hover:bg-gray-100 transition-colors">
-            <PlusSquare className="h-[24px] w-[24px]" />
-            <span className='text-[16px] font-normal'>Create</span>
-          </Link>
+<DropdownMenu >
+  <DropdownMenuTrigger asChild className=""> 
+    <Link 
+      href="#" 
+      className="flex items-center w-full p-3 hover:text-primary gap-4 rounded-lg hover:bg-gray-100 transition-colors"  
+    >
+      <PlusSquare className="h-[24px] w-[24px]" />
+      <span className='text-[16px] font-normal'>Create</span>
+    </Link>
+  </DropdownMenuTrigger >
+  <DropdownMenuContent className='w-[154px] h-[72px] rounded-md flex flex-col mt-2 items-start justify-start mr-4'>
+    {/* <DropdownMenuItem   onClick={(e) =>{ e.preventDefault() ,handlePostClick()}} className='flex pt-[6px] pr-[8px] justify-between items-center self-stretch'>
+      Post <ImagePlus className='w-[16px] h-[16px]'/>
+    </DropdownMenuItem> */}
+    <DropdownMenuItem className='flex p-[6px_8px] justify-between items-center self-stretch'>
+      Story <BookOpenCheck className='w-[16px] h-[16px]'/>
+    </DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
 
           <Link href="/profile" className="flex items-center w-full p-3 hover:text-primary gap-4 rounded-lg hover:bg-gray-100 transition-colors">
             <Avatar className='w-[24px] h-[24px]'>
