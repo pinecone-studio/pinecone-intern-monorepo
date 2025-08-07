@@ -21,13 +21,14 @@ const inputs = [
   {
     name: 'password',
     label: 'Password',
+    type: 'password',
   },
   {
     name: 'repeatPassword',
     label: 'Confirm password',
+    type: 'password',
   },
 ] as const;
-
 
 export const CreatePassword = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -44,12 +45,13 @@ export const CreatePassword = () => {
 
   return (
     <Form {...form}>
-   
-     <form onSubmit={form.handleSubmit(onSubmit)} className="w-[360px] flex flex-col gap-5">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-[360px] flex flex-col gap-5">
         <div className="flex flex-col gap-4 justify-center items-center">
-          <TinderLogo/>
-          <p className='text-[24px] font-md'>Create password</p>
-          <p className='text-[14px] text-[#71717A]'>Use a minimum of 10 characters, including  uppercase <br/> letters, lowercase letters, and numbers</p>
+          <TinderLogo />
+          <p className="text-[24px] font-md">Create password</p>
+          <p className="text-[14px] text-[#71717A]">
+            Use a minimum of 10 characters, including uppercase <br /> letters, lowercase letters, and numbers
+          </p>
           {inputs.map((input) => (
             <FormField
               key={input.label}
@@ -59,7 +61,7 @@ export const CreatePassword = () => {
                 <FormItem>
                   <FormLabel className="text-xs">{input.label}</FormLabel>
                   <FormControl>
-                    <Input className="p-2 rounded-sm w-[360px]" placeholder={input.label} {...field} />
+                    <Input type={input.type} className="p-2 rounded-sm w-[360px]" placeholder={input.label} {...field} />
                   </FormControl>
                   <FormMessage className="text-xs text-red-500" />
                 </FormItem>
@@ -67,10 +69,10 @@ export const CreatePassword = () => {
             />
           ))}
 
-        <Button type="submit" className="bg-[#E11D48] w-[350px] rounded-full">
-          Continue
+          <Button type="submit" className="bg-[#E11D48] w-[350px] rounded-full">
+            Continue
           </Button>
-          </div>
+        </div>
       </form>
     </Form>
   );
