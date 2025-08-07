@@ -20,5 +20,6 @@ export const UsertypeDefs = gql`
     login(email: String!, password: String!): String
     like(likedByUser: ID!, likeReceiver: ID!): String
     dislike(dislikedByUser: ID!, dislikeReceiver: ID!): String
+    uploadImages(images: [String!]!): User
   }
 `;

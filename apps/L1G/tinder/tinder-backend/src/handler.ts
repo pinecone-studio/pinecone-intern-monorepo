@@ -17,22 +17,25 @@ const server = new ApolloServer<Context>({
 
 export const handler = startServerAndCreateNextHandler<NextRequest, Context>(server, {
   context: async (req) => {
-    const token = req.headers.get('authorization') || '';
+    const authHeader = req.headers.get('authorization') || '';
+    const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader;
 
-    let userId = null;
+    let userId: string | undefined = undefined;
 
     try {
       if (!process.env.JWT_SECRET) {
         throw new Error('JWT_SECRET is not defined');
       }
+
       const decoded = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
-      userId = decoded.userId;
-    } catch {
-      userId = null;
+
+      if (typeof decoded === 'object' && decoded.userId) {
+        userId = decoded.userId;
+      }
+    } catch (error) {
+      console.warn('Invalid or missing JWT:', error);
     }
 
-    return {
-      userId,
-    };
+    return { userId };
   },
 });
