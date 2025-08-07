@@ -11,7 +11,7 @@ const formSchema = z.object({
     message: 'Password must be at least 8 characters.',
   }),
   repeatPassword: z.string().min(8, {
-    message: 'Password must be at least 8 characters.',
+    message: 'Confirm password must be at least 8 characters.',
   }),
 });
 
