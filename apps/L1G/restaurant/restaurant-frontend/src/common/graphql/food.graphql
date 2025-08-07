@@ -1,0 +1,13 @@
+query getFoods {
+  getFoods {
+    foodId
+    foodName
+    price
+    status
+    image
+    category {
+      categoryId
+      categoryName
+    }
+  }
+}
