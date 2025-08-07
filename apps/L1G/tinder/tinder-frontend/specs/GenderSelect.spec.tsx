@@ -68,17 +68,6 @@ describe('GenderSelect', () => {
     expect(screen.getByTestId('Next-Button')).not.toBeDisabled();
   });
 
-  it.each([
-    ['male', 'Male'],
-    ['female', 'Female'],
-    ['both', 'Both'],
-  ])('navigates to "/" when %s is selected and Next is clicked', (testId: string) => {
-    render(<GenderSelect />);
-    fireEvent.click(screen.getByTestId(`option-${testId}`));
-    fireEvent.click(screen.getByTestId('Next-Button'));
-    expect(mockPush).toHaveBeenCalledWith('/');
-  });
-
   it('logs selected interest when Next is clicked', () => {
     const consoleSpy = jest.spyOn(console, 'log');
     render(<GenderSelect />);

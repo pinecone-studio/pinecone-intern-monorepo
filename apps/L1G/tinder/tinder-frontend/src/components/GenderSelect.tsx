@@ -1,19 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 
 export const GenderSelect = () => {
   const [selectedInterest, setSelectedInterest] = useState('');
-  const router = useRouter();
 
   const handleNext = () => {
-    if (selectedInterest) {
-      console.log('Selected interest:', selectedInterest);
-      router.push('/');
-    }
+    console.log('Selected interest:', selectedInterest);
   };
 
   return (
@@ -42,8 +37,9 @@ export const GenderSelect = () => {
 
         <div className="mt-4 flex justify-end">
           <Button
-            className="px-6 py-2 bg-[#E53958] hover:bg-[#d7334f] text-white rounded-full shadow-md"
+            type="submit"
             onClick={handleNext}
+            className="px-6 py-2 bg-[#E53958] hover:bg-[#d7334f] text-white rounded-full shadow-md"
             disabled={!selectedInterest}
             data-cy="Next-Button"
             data-testid="Next-Button"
