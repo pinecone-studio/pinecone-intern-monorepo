@@ -54,7 +54,7 @@ export const LoginForm = () => {
                   <FormItem>
                     <FormLabel className="flex justify-between">
                       Password{' '}
-                      <button className="text-[#2563EB] inter text-[14px] font-[500]" onClick={() => router.push('/login/forgot-password')}>
+                      <button className="text-[#2563EB] font-sans text-[14px] font-[500]" onClick={() => router.push('/login/forgot-password')}>
                         Forgot Password?
                       </button>
                     </FormLabel>
@@ -66,7 +66,7 @@ export const LoginForm = () => {
                 )}
               />
             </div>
-            <Button type="submit" className="rounded-full bg-[#E11D48E5] bg-opacity-90 inter hover:bg-[#E11D48E5] hover:bg-opacity-100">
+            <Button type="submit" className="rounded-full bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
               Continue
             </Button>
           </form>
