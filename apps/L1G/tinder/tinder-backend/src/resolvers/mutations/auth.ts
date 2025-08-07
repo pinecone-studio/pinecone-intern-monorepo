@@ -6,7 +6,7 @@ import { UserOtpModel } from 'src/models/userOtp.model';
 
 const generateOtp = () => Math.floor(1000 + Math.random() * 9000).toString();
 
-export const requestSignup = async (_: any, { email }: { email: string }) => {
+export const requestSignup: MutationResolvers['requestSignup'] = async (_, { email }) => {
   const existingUser = await Usermodel.findOne({ email });
   if (existingUser) throw new Error('Email already registered');
 
@@ -16,10 +16,10 @@ export const requestSignup = async (_: any, { email }: { email: string }) => {
   await UserOtpModel.findOneAndUpdate({ email }, { otp, expiresAt, verified: false }, { upsert: true, new: true });
 
   await sendOtpEmail(email, otp);
-  return 'OTP sent to your email';
+  return { input: email, output: 'OTP sent to your email' };
 };
 
-export const verifyOtp = async (_: any, { email, otp }: { email: string; otp: string }) => {
+export const verifyOtp: MutationResolvers['verifyOtp'] = async (_, { email, otp }) => {
   const record = await UserOtpModel.findOne({ email });
   if (!record) throw new Error('No OTP request found');
   if (record.verified) throw new Error('OTP already verified');
@@ -28,7 +28,7 @@ export const verifyOtp = async (_: any, { email, otp }: { email: string; otp: st
 
   record.verified = true;
   await record.save();
-  return 'OTP verified successfully';
+  return { input: email, output: 'OTP verified successfully' };
 };
 
 export const signup: MutationResolvers['signup'] = async (_, { password, genderPreferences, dateOfBirth, name, images, bio, interests, profession, schoolWork }) => {

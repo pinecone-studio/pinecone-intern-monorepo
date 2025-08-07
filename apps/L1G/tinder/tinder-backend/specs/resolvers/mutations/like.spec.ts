@@ -25,7 +25,7 @@ describe('like resolver', () => {
 
     const result = await like({}, { likedByUser, likeReceiver });
 
-    expect(result).toBe("🎉 It's a match!");
+    expect(result).toBe("It's a match! You can now chat!");
     expect(Usermodel.findById).toHaveBeenCalledWith(new mongoose.Types.ObjectId(likeReceiver));
   });
 
@@ -42,7 +42,7 @@ describe('like resolver', () => {
 
     const result = await like({}, { likedByUser, likeReceiver });
 
-    expect(result).toBe('👍 Like recorded successfully');
+    expect(result).toBe('Like successful, waiting for a match.');
   });
   it('returns "Like recorded" if receiver user is not found', async () => {
     const likedByUser = new mongoose.Types.ObjectId().toString();
@@ -56,18 +56,14 @@ describe('like resolver', () => {
 
     const result = await like({}, { likedByUser, likeReceiver });
 
-    expect(result).toBe('👍 Like recorded successfully');
+    expect(result).toBe('Like successful, waiting for a match.');
   });
-  it('calls console.warn when DB failure occurs', async () => {
+  it('throws GraphQLError when DB failure occurs', async () => {
     (Usermodel.findByIdAndUpdate as jest.Mock).mockRejectedValue(new Error('DB failure'));
     (Usermodel.findById as jest.Mock).mockReturnValue({
       select: jest.fn().mockRejectedValue(new Error('DB failure')),
     });
-    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {
-      return;
-    });
+
     await expect(like({}, { likedByUser, likeReceiver })).rejects.toThrow('Failed to like user');
-    expect(warnSpy).toHaveBeenCalledWith('⚠️ Like mutation failed:', 'DB failure');
-    warnSpy.mockRestore();
   });
 });
