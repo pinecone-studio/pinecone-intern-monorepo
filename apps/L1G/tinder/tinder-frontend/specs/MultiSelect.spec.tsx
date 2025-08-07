@@ -11,9 +11,15 @@ const mockOptions = [
 ];
 
 class ResizeObserver {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
+  observe() {
+    // noop for test
+  }
+  unobserve() {
+    // noop for test
+  }
+  disconnect() {
+    // noop for test
+  }
 }
 
 global.ResizeObserver = ResizeObserver;
