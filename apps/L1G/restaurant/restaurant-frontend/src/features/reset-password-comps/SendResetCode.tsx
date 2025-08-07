@@ -47,7 +47,9 @@ export const StepOne = () => {
           type: 'manual',
           message: 'Имайл хаяг олдсонгүй',
         });
+        console.log(error, 'err');
       } else {
+        console.log(error, 'err2');
         form.setError('email', {
           type: 'manual',
           message: 'Хүсэлт явуулахад алдаа гарлаа',
