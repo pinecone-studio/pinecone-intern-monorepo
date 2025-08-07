@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 export type CardProps = {
-  id: number;
+  id: string;
   image: string;
   foodName: string;
   price: string;

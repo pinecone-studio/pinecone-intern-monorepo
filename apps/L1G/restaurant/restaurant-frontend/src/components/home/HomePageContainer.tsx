@@ -24,10 +24,7 @@ const HomePageContainer = () => {
               data-testid="homepage-container-filter-button"
               key={category?.categoryId}
               onClick={() => {
-                if (category?.categoryId) {
-                  setActiveCategory(category.categoryName);
-                  console.log(activeCategory, 'category');
-                }
+                setActiveCategory(category.categoryName);
               }}
               className={`whitespace-nowrap text-sm font-medium pb-2 border-b-2 transition-colors ${
                 activeCategory === category?.categoryName ? 'text-orange-600 border-orange-600' : 'text-gray-500 border-transparent hover:text-gray-700'
