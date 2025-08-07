@@ -1,5 +1,4 @@
-import { uploadImages } from './mutations/image-upload';
-import { login, signup, like, createInterest, updateInterest, deleteInterest, dislike, requestSignup, verifyOtp } from './mutations';
+import { login, signup, like, createInterest, updateInterest, deleteInterest, dislike, requestSignup, verifyOtp, uploadImages } from './mutations';
 import { getAllInterests, getInterest, getusers } from './queries';
 
 export const resolvers = {

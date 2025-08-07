@@ -13,15 +13,19 @@ export const ProfileImages = () => {
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  const [uploadImagesMutation, { data, loading: mutationLoading, error: mutationError }] = useUploadImagesMutation();
+
   const handleRemoveImage = (index: number) => {
     setUploadedImages((prev) => {
-      const newImages = prev.filter((_, i) => i !== index);
+      const newImages = [...prev];
+      newImages.splice(index, 1);
       newImages.push('');
       return newImages;
     });
 
     setIsUploading((prev) => {
-      const newUploading = prev.filter((_, i) => i !== index);
+      const newUploading = [...prev];
+      newUploading.splice(index, 1);
       newUploading.push(false);
       return newUploading;
     });
@@ -38,10 +42,7 @@ export const ProfileImages = () => {
   };
 
   const uploadToCloudinary = async (file: File): Promise<string | null> => {
-    if (!cloudName) {
-      console.error('Cloudinary cloud name is missing!');
-      return null;
-    }
+    if (!cloudName) return null;
 
     const formData = new FormData();
     formData.append('file', file);
@@ -75,6 +76,32 @@ export const ProfileImages = () => {
     }
 
     updateUploadingState(index, false);
+  };
+
+  const handleUploadAllImages = async () => {
+    try {
+      const imagesToUpload = uploadedImages.filter(Boolean);
+
+      if (imagesToUpload.length === 0) {
+        alert('Please upload at least one image.');
+        return;
+      }
+
+      const response = await uploadImagesMutation({
+        variables: { images: imagesToUpload },
+        context: {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+          },
+        },
+      });
+
+      console.log('Upload success:', response.data);
+      alert('Images uploaded successfully!');
+    } catch (error) {
+      console.error('Upload mutation error:', error);
+      alert('Failed to upload images');
+    }
   };
 
   return (
@@ -125,8 +152,12 @@ export const ProfileImages = () => {
           <Button variant="outline" className="px-8 py-3 text-lg font-medium border-gray-300 text-gray-700 hover:bg-gray-50 rounded-full bg-transparent">
             Back
           </Button>
-          <Button className="px-8 py-3 text-lg font-medium bg-red-400 hover:bg-red-500 text-white rounded-full">Next</Button>
+          <Button onClick={handleUploadAllImages} disabled={mutationLoading} className="px-8 py-3 text-lg font-medium bg-red-400 hover:bg-red-500 text-white rounded-full">
+            {mutationLoading ? 'Uploading...' : 'Next'}
+          </Button>
         </div>
+
+        {mutationError && <p className="text-red-500 mt-4">Error uploading images: {mutationError.message}</p>}
       </div>
     </div>
   );

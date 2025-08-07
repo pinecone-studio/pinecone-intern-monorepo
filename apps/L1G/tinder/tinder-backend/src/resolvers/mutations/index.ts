@@ -3,3 +3,4 @@ export * from './dislike';
 export * from './like';
 export * from './login';
 export * from './auth';
+export * from './image-upload';
