@@ -27,32 +27,36 @@ export const ProfileImages = () => {
     });
   };
 
-  const uploadImage = async (
-    file: File,
-    cloudName: string,
-    index: number,
-    setIsUploading: React.Dispatch<React.SetStateAction<boolean[]>>,
-    setUploadedImages: React.Dispatch<React.SetStateAction<string[]>>
-  ) => {
+  const handleUploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || !cloudName) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'my_unsigned_preset');
+
+    const firstEmptyIndex = uploadedImages.findIndex((img) => !img);
+
+    if (firstEmptyIndex === -1) return;
+
     setIsUploading((prev) => {
       const newUploading = [...prev];
-      newUploading[index] = true;
+      newUploading[firstEmptyIndex] = true;
       return newUploading;
     });
 
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('upload_preset', 'my_unsigned_preset');
-
-      const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formData);
+      const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formData, {});
 
       const data = res.data;
-      if (!data.secure_url) return;
+
+      if (!data.secure_url) {
+        return;
+      }
 
       setUploadedImages((prev) => {
         const newImages = [...prev];
-        newImages[index] = data.secure_url;
+        newImages[firstEmptyIndex] = data.secure_url;
         return newImages;
       });
     } catch (err) {
@@ -60,20 +64,10 @@ export const ProfileImages = () => {
     } finally {
       setIsUploading((prev) => {
         const newUploading = [...prev];
-        newUploading[index] = false;
+        newUploading[firstEmptyIndex] = false;
         return newUploading;
       });
     }
-  };
-
-  const handleUploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file || !cloudName) return;
-
-    const firstEmptyIndex = uploadedImages.findIndex((img) => !img);
-    if (firstEmptyIndex === -1) return;
-
-    await uploadImage(file, cloudName, firstEmptyIndex, setIsUploading, setUploadedImages);
   };
 
   return (
