@@ -4,13 +4,17 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 const SignInPage = () => {
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
+    <div data-cy="Sing-in-page" className="w-screen h-screen flex justify-center items-center">
       <div className="w-[350px] h-fit flex flex-col gap-6 items-center">
-        <MainHeader />
+        <MainHeader data-cy="Login-Main-header" />
 
         <div className="flex flex-col gap-[4px] py-2 justify-center items-center">
-          <p className=" text-[24px] font-[600] text-[#09090B]">Sign in</p>
-          <p className=" text-[14px] font-[400] text-[#71717A]">Enter your email below to sign in</p>
+          <p data-cy="Login-Header-text" className=" text-[24px] font-[600] text-[#09090B]">
+            Sign in
+          </p>
+          <p data-cy="Login-Subheader-text" className=" text-[14px] font-[400] text-[#71717A]">
+            Enter your email below to sign in
+          </p>
         </div>
 
         <div className="w-full h-fit flex flex-col gap-4">
@@ -18,7 +22,9 @@ const SignInPage = () => {
 
           <div className="w-full flex justify-between items-center gap-[10px] py-4">
             <Separator className="w-[156px]" />
-            <p className=" font-[400] text-[12px] text-[#71717A]">OR</p>
+            <p data-cy="Login-or-signup" className=" font-[400] text-[12px] text-[#71717A]">
+              OR
+            </p>
             <Separator className="w-[156px]" />
           </div>
 

@@ -29,7 +29,7 @@ export const LoginForm = () => {
   }
 
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div data-cy="Login-Form" className="w-full flex flex-col gap-4">
       <div className="flex flex-col gap-4">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2">
@@ -43,7 +43,7 @@ export const LoginForm = () => {
                     <FormControl>
                       <Input placeholder="name@example.com" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage data-cy="Form-Email-Input-Error-Message" />
                   </FormItem>
                 )}
               />
@@ -61,12 +61,12 @@ export const LoginForm = () => {
                     <FormControl>
                       <Input placeholder="Please enter your password" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage data-cy="Form-Password-Input-Error-Message" />
                   </FormItem>
                 )}
               />
             </div>
-            <Button type="submit" className="rounded-full bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
+            <Button data-cy="Sign-Up-Submit-Button" type="submit" className="rounded-full bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
               Continue
             </Button>
           </form>
