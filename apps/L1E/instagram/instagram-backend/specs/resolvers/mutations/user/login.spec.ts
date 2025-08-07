@@ -1,97 +1,104 @@
-import { login } from "src/resolvers/mutations/user/login";
-import { User } from "src/models";
-import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
-jest.mock("src/models", ()=>({
-    User: {
-        findOne: jest.fn(),
-    },
-}));
+import { login } from 'src/resolvers/mutations/user/login';  // өөрийн файлын замыг зөв оруулна уу
+import { User } from 'src/models';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
-jest.mock("jsonwebtoken",()=>({
-    __esModule: true, // This is crucial for mocking default exports in Jest
-    default: {
-        sign: jest.fn(),
-    },
-}))
+jest.mock('src/models');
+jest.mock('bcrypt');
+jest.mock('jsonwebtoken');
 
-jest.mock("bcrypt", ()=> ({
-    compareSync:jest.fn(),
-}))
+describe('login mutation', () => {
+  const mockInput = {
+    email: 'test@example.com',
+    password: 'password123',
+  };
 
-describe("login resolver", () => {
-    const mockInput = {
-        email: "test@gmail.com",
-        password: "test123"
-    }
-    const mockUser = {
-        _id: "123",
-        email: "test@gmail.com",
-        password: "test123"
-    }
-    const mockContext = {};
+  beforeAll(() => {
+    process.env.JWT_SECRET = 'testsecret';
+  });
 
-beforeEach(()=>{
+  beforeEach(() => {
     jest.clearAllMocks();
-    process.env.JWT_SECRET = "testsecret";
-});
+  });
 
-it("should login successfully with correct credentials", async () => {
-    const foundUser = { _id: "123", ...mockInput };
+  it('should login successfully with correct credentials', async () => {
+    (User.findOne as jest.Mock).mockResolvedValue({
+      _id: 'user-id-123',
+      email: mockInput.email,
+      password: 'hashed-password',
+    });
 
-    (jwt.sign as jest.Mock).mockReturnValue("token123");
-    (User.findOne as jest.Mock).mockResolvedValue(foundUser);
-    (bcrypt.compareSync as jest.Mock).mockReturnValue(true);
+    (bcrypt.compare as jest.Mock).mockResolvedValue(true);
 
-    const result = await login!(null as any, { input: mockInput }, mockContext as any, {} as any);
+    (jwt.sign as jest.Mock).mockReturnValue('mock-token');
 
-    expect(jwt.sign).toHaveBeenCalledWith({ userId: "123" }, "testsecret");
+    const result = await login!(null as any, { input: mockInput }, null as any, null as any);
+
     expect(User.findOne).toHaveBeenCalledWith({ email: mockInput.email });
-    expect(bcrypt.compareSync).toHaveBeenCalledWith(mockInput.password, foundUser.password);
+    expect(bcrypt.compare).toHaveBeenCalledWith(mockInput.password, 'hashed-password');
+    expect(jwt.sign).toHaveBeenCalledWith({ userId: 'user-id-123' }, 'testsecret');
 
     expect(result).toEqual({
-        user: foundUser,
-        token: "token123",
+      user: {
+        _id: 'user-id-123',
+        email: mockInput.email,
+        password: 'hashed-password',
+      },
+      token: 'mock-token',
     });
+  });
+
+  it('should throw error if user not found', async () => {
+    (User.findOne as jest.Mock).mockResolvedValue(null);
+
+    await expect(login!(null as any, { input: mockInput }, null as any, null as any))
+      .rejects.toThrow('Invalid credentials');
+  });
+  it('should throw error if JWT_SECRET is not configured', async () => {
+    const originalSecret = process.env.JWT_SECRET;
+    delete process.env.JWT_SECRET;
+
+    (User.findOne as jest.Mock).mockResolvedValue({
+      _id: 'user-id-123',
+      email: mockInput.email,
+      password: 'hashed-password',
+    });
+
+    (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+
+    await expect(login!(null as any, { input: mockInput }, null as any, null as any))
+      .rejects.toThrow('JWT_SECRET not configured');
+
+    process.env.JWT_SECRET = originalSecret;
+  });
+  it('should throw error if password does not match', async () => {
+    (User.findOne as jest.Mock).mockResolvedValue({
+      _id: 'user-id-123',
+      email: mockInput.email,
+      password: 'hashed-password',
+    });
+
+    (bcrypt.compare as jest.Mock).mockResolvedValue(false);
+
+    await expect(login!(null as any, { input: mockInput }, null as any, null as any))
+      .rejects.toThrow('Invalid credentials');
+  });
+
+  it('should throw error if email is missing', async () => {
+    await expect(login!(null as any, { input: { password: '123' } as any }, null as any, null as any))
+      .rejects.toThrow('Email is required');
+  });
+
+  it('should throw error if password is missing', async () => {
+    await expect(login!(null as any, { input: { email: 'test@example.com' } as any }, null as any, null as any))
+      .rejects.toThrow('Password is required');
+  });
+  it('should throw generic "Login failed" error for unknown error types', async () => {
+    (User.findOne as jest.Mock).mockImplementation(() => {
+      throw "some string error";
+    });
+
+    await expect(login!(null as any, { input: mockInput }, null as any, null as any))
+      .rejects.toThrow('Login failed');
+  });
 });
-
-    it("should throw error if email is missing", async () => {
-        const input = { ...mockInput, email: "" };
-        await expect(login!(null as any, { input }, mockContext as any, {}as any)
-    ).rejects.toThrow("Email is required");
-    });
-    it("should throw error if password is missing", async ()=>{
-        const input = {...mockInput, password: ""}
-        await expect (
-            login!(null as any, {input}, mockContext as any, {}as any)
-        ).rejects.toThrow("Password is required")
-    });
-    it("should be throw error if JWT_SECRET is not configured", async ()=>{
-        delete process.env.JWT_SECRET;
-
-        await expect(
-            login!(null as any, {input:mockInput}, mockContext as any, {}as any)
-        ).rejects.toThrow("JWT_SECRET not configured")
-    })
-    it("should throw error if user not found", async ()=>{
-        (User.findOne as jest.Mock).mockResolvedValue(null);
-        await expect (
-            login!(null as any, {input:mockInput}, mockContext as any, {}as any)
-        ).rejects.toThrow("Invalid credentials")
-    })
-    it("should throw error if password doesn't match", async ()=>{
-        (User.findOne as jest.Mock).mockResolvedValue(mockUser);
-        (bcrypt.compareSync as jest.Mock).mockReturnValue(false);
-        await expect (
-            login!(null as any, {input:mockInput}, mockContext as any, {}as any)
-        ).rejects.toThrow("Invalid credentials")
-    });
-    it("should throw 'Login failed' if non-error thrown", async () => {
-        (User.findOne as jest.Mock).mockRejectedValue("some string error"); // not an Error object
-    
-        await expect(
-            login!(null as any, {input:mockInput}, mockContext as any, {}as any)
-    ).rejects.toThrow("Login failed");
-      });
-})
-

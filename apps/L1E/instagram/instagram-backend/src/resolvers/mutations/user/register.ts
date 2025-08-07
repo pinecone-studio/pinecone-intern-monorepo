@@ -2,14 +2,20 @@ import { MutationResolvers } from "src/generated";
 import { User } from "src/models";
 import { checkEmailExists } from "src/utils/email-exist";
 import { hashPassword } from "src/utils/hash";
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
-function validateInput(input: {
+// Input шалгах (asserts ашиглаж narrowing хийх)
+function validateRegisterInput(input: {
   email?: string;
   password?: string;
   userName?: string;
   fullName?: string;
-}) {
+}): asserts input is {
+  email: string;
+  password: string;
+  userName: string;
+  fullName: string;
+} {
   const { email, password, userName, fullName } = input;
   if (!email) throw new Error("Email is required");
   if (!password) throw new Error("Password is required");
@@ -17,6 +23,7 @@ function validateInput(input: {
   if (!fullName) throw new Error("Full name is required");
 }
 
+// JWT_SECRET авах
 function getJwtSecret(): string {
   if (!process.env.JWT_SECRET) {
     throw new Error("JWT_SECRET not configured");
@@ -26,11 +33,11 @@ function getJwtSecret(): string {
 
 export const register: MutationResolvers['register'] = async (_, { input }) => {
   try {
-    validateInput(input);
+    validateRegisterInput(input); // narrowing хийсэн тул дараа нь `as string` хэрэггүй
     const { email, password, userName, fullName } = input;
 
-    await checkEmailExists(email as string, "Sorry try another email!");
-    const hashed = await hashPassword(password as string);
+    await checkEmailExists(email, "Sorry try another email!");
+    const hashed = await hashPassword(password);
 
     const user = await User.create({
       data: {
@@ -48,9 +55,7 @@ export const register: MutationResolvers['register'] = async (_, { input }) => {
       token,
     };
   } catch (error) {
-    if (error instanceof Error) {
-      throw error;
-    }
+    if (error instanceof Error) throw error;
     throw new Error("Registration failed");
   }
 };
