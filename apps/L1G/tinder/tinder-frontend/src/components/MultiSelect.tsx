@@ -21,7 +21,6 @@ const multiSelectVariants = cva('m-1 transition ease-in-out delay-150 hover:-tra
     variant: 'default',
   },
 });
-
 interface MultiSelectProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof multiSelectVariants> {
   options: {
     label: string;
@@ -33,7 +32,6 @@ interface MultiSelectProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
   maxCount?: number;
   modalPopover?: boolean;
 }
-
 interface MultiSelectProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof multiSelectVariants> {
   options: {
     label: string;
@@ -47,7 +45,6 @@ interface MultiSelectProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
   asChild?: boolean;
   className?: string;
 }
-
 export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
   ({ options, variant: _variant = 'default', defaultValue = [], placeholder = 'Select options', maxCount = 3, modalPopover = false, className, ...props }, ref) => {
     const [selectedValues, setSelectedValues] = React.useState<string[]>(defaultValue);
@@ -61,12 +58,10 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
         setSelectedValues(newSelectedValues);
       }
     };
-
     const toggleOption = (option: string) => {
       const newSelectedValues = selectedValues.includes(option) ? selectedValues.filter((_value) => _value !== option) : [...selectedValues, option];
       setSelectedValues(newSelectedValues);
     };
-
     const handleClear = () => {
       setSelectedValues([]);
     };
@@ -79,7 +74,6 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
       const newSelectedValues = selectedValues.slice(0, maxCount);
       setSelectedValues(newSelectedValues);
     };
-
     const toggleAll = () => {
       if (selectedValues.length === options.length) {
         setSelectedValues([]);
@@ -88,7 +82,6 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
         setSelectedValues(allValues);
       }
     };
-
     return (
       <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen} modal={modalPopover}>
         <PopoverTrigger asChild>
@@ -125,7 +118,6 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
                       </button>
                     </CommandItem>
                   )}
-
                   {selectedValues.length > 0 && (
                     <>
                       <CommandItem className="flex-1 justify-center max-w-full">
@@ -141,11 +133,9 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
                           Clear
                         </button>
                       </CommandItem>
-
                       <Separator orientation="vertical" className="flex min-h-6 h-full" />
                     </>
                   )}
-
                   <CommandItem
                     onSelect={() => {
                       setIsPopoverOpen(false);
