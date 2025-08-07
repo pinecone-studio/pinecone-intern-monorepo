@@ -41,7 +41,7 @@ export const LoginForm = () => {
                   <FormItem>
                     <FormLabel className="flex">Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="name@example.com" {...field} />
+                      <Input className="rounded-md" placeholder="name@example.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -59,7 +59,7 @@ export const LoginForm = () => {
                       </button>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="Please enter your password" {...field} />
+                      <Input className="rounded-md" placeholder="Please enter your password" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
