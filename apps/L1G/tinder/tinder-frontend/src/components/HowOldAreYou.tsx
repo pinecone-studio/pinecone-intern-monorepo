@@ -36,8 +36,8 @@ const HowOldAreYou = () => {
       <div className="w-full max-w-[400px] flex flex-col items-center gap-6">
         <TinderLogo />
         <div className="flex justify-center items-center flex-col">
-          <h1 className="font-inter font-semibold tracking-wider text-2xl leading-8 text-foreground">How old are you</h1>
-          <p className="inter text-sm font-normal leading-5 text-muted-foreground">Please enter your age to continue</p>
+          <h1 className="font-font-sans font-semibold tracking-wider text-2xl leading-8 text-foreground">How old are you</h1>
+          <p className="font-sans text-sm font-normal leading-5 text-muted-foreground">Please enter your age to continue</p>
         </div>
       </div>
       <Form {...form}>

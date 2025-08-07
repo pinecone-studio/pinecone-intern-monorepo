@@ -29,8 +29,8 @@ export const ForgetPassword = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full h-fit flex flex-col justify-center items-center px-4 gap-2">
         <div className="flex flex-col items-center gap-6 max-w-[350px] w-full">
           <div className="flex flex-col items-center gap-1">
-            <p className="text-2xl font-semibold inter">Forget password </p>
-            <p className="text-sm text-[#71717A] inter">Enter your email account to reset password</p>
+            <p className="text-2xl font-semibold font-sans">Forget password </p>
+            <p className="text-sm text-[#71717A] font-sans">Enter your email account to reset password</p>
           </div>
           <FormField
             control={form.control}
@@ -46,7 +46,7 @@ export const ForgetPassword = () => {
             )}
           />
         </div>
-        <Button type="submit" className="inter w-full rounded-full bg-[#E11D48E5]">
+        <Button type="submit" className="font-sans w-full rounded-full bg-[#E11D48E5]">
           Continue
         </Button>
       </form>

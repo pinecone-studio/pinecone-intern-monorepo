@@ -80,8 +80,8 @@ export const ProfileImages = () => {
     <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6">
       <div className="w-full max-w-2xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-[24px] font-semibold text-gray-900 mb-4">Upload your image</h1>
-          <p className="text-[14px] text-gray-500">Please choose an image that represents you.</p>
+          <h1 className="font-sans text-[24px] font-semibold text-gray-900 mb-4">Upload your image</h1>
+          <p className="font-sans text-[14px] text-gray-500">Please choose an image that represents you.</p>
         </div>
 
         <div className="grid grid-cols-3 gap-6 mb-12">
