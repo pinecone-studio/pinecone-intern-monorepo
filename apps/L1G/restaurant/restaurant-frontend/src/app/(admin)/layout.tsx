@@ -1,6 +1,3 @@
-import { ApolloWrapper } from '@/components/providers/ApolloWrapper';
-import { CssBaseline } from '@mui/material';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import Image from 'next/image';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
