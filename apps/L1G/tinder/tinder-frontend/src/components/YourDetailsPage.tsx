@@ -1,5 +1,5 @@
 import ProfileForm from './FormFIeld';
-import TinderLogo from './TinderLogo';
+import { TinderLogo } from './TinderLogo';
 import TitleContainer from './TitleContainer';
 
 const YourDetailsPage = () => {
