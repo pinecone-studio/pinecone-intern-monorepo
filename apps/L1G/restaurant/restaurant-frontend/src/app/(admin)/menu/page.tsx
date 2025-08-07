@@ -1,5 +1,7 @@
 import React from 'react';
 
-export default function page() {
-  return <div>menu</div>;
-}
+const MenuPage = () => {
+  return <div>MenuPage</div>;
+};
+
+export default MenuPage;
