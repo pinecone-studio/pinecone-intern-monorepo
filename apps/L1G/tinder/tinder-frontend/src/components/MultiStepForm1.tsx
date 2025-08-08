@@ -12,10 +12,10 @@ type Props = {
 export const MultiStepForm1 = ({ step, setStep }: Props) => {
   return (
     <>
-      {step === 'genderSelect' && <GenderSelect onSuccess={() => setStep('ageSelect')} />}
       {step === 'createAccount' && <CreateAccount onSuccess={() => setStep('confirmEmail')} />}
       {step === 'confirmEmail' && <ConfirmEmail onSuccess={() => setStep('createPass')} />}
       {step === 'createPass' && <CreatePassword onSuccess={() => setStep('genderSelect')} />}
+      {step === 'genderSelect' && <GenderSelect onSuccess={() => setStep('ageSelect')} />}
     </>
   );
 };
