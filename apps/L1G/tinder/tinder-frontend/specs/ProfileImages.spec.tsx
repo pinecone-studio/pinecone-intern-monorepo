@@ -1,4 +1,4 @@
-/*eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-console */
 import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { ProfileImages } from '@/components/ProfileImages';
