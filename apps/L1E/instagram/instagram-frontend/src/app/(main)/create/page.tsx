@@ -1,14 +1,15 @@
 "use client";
-import Link from 'next/link';
 import { useState } from 'react';
-import { Home,Search,  AlignJustify, Heart, PlusSquare ,ImagePlus ,BookOpenCheck , Smile} from 'lucide-react';
 import { Button } from "@/components/ui/button"
-
+import { usePost } from '@/components/context/PostContext';
+import Image from 'next/image';
 const CreatePost = () => {
-  const [postStep, setPostStep] = useState<'idle' | 'select-image' | 'add-caption'>('idle');
+
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [caption, setCaption] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
+  const { postStep, setPostStep } = usePost();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -16,14 +17,10 @@ const CreatePost = () => {
       const reader = new FileReader();
       reader.onload = (event) => {
         setSelectedImage(event.target?.result as string);
-        setPostStep('add-caption');
+        setPostStep('preview');
       };
       reader.readAsDataURL(file);
     }
-  };
-
-  const handlePostClick = () => {
-    setPostStep('select-image');
   };
 
   const handleShare = () => {
@@ -37,11 +34,11 @@ const CreatePost = () => {
             <h1>Create Post</h1>
                   {postStep !== 'idle' && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+          <div className="bg-white rounded-xl pt-[8px] pb-[24px]">
             {postStep === 'select-image' && (
-              <div className="space-y-4">
-                <h2 className="text-xl font-bold">Create New Post</h2>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+              <div className="flex flex-col  w-[638px] h-[678px] items-center gap-[196px] p-[8px_0px_48px_0px]">
+                <h2 className="text-[16px] font-normal text-center border-b w-full pb-2">Create New Post</h2>
+                <div className=" h-[175px] rounded-lg p-8 text-center flex flex-col items-center justify-center">
                   <input
                     type="file"
                     id="image-upload"
@@ -49,14 +46,40 @@ const CreatePost = () => {
                     className="hidden"
                     onChange={handleImageChange}
                   />
-                  <label htmlFor="image-upload" className="cursor-pointer">
-                    <PlusSquare className="mx-auto h-12 w-12 text-gray-400" />
-                    <p className="mt-2 font-medium">Select photos from your computer</p>
+                  <label htmlFor="image-upload" className="cursor-pointer flex flex-col items-center justify-center h-full">
+                    <Image src="/filedrop.svg" alt="Upload Icon" width={96} height={77} />
+                    <p className="mt-2  text-[20px] font-[400]">Drag photos and videos here</p>
                   </label>
+                   
+                    <Button variant="outline" className="mt-2 bg-blue-400 w-[178px] h-[40px] p-[8px_16px] hover:bg-blue-500 text-white" onClick={() => document.getElementById('image-upload')?.click()}>
+                      <label htmlFor="image-upload" className="cursor-pointer text-white">
+                        Select from computer
+                      </label>
+                    </Button>
                 </div>
-                <Button variant="outline" onClick={() => setPostStep('idle')}>
+               
+              </div>
+            )}
+
+            {postStep === 'preview' && selectedImage && (
+              <div className="flex flex-col  w-[638px] h-[678px] items-center">
+                <div className='flex justify-between items-center w-full px-4 mb-4'>
+                     <Button variant="outline" onClick={() => setPostStep('idle')}>
                   Cancel
                 </Button>
+                <h2 className="text-xl font-bold">Crop</h2>
+                <p className='text-blue-600' onClick={() => setPostStep('add-caption')}>next</p>
+                 
+                </div>
+              
+                  <div className="overflow-hidden rounded-md bg-red-200 w-full h-full">
+                    <img 
+                      src={selectedImage} 
+                      alt="Preview" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                 
               </div>
             )}
 
