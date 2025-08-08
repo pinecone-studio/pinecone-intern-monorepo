@@ -2,9 +2,11 @@ import { CreatePassword } from '@/components/CreatePassword';
 import { fireEvent, render, screen, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
+const mockOnSuccess = jest.fn();
+
 describe('Create Password component', () => {
   it('renders without crashing', () => {
-    render(<CreatePassword />);
+    render(<CreatePassword onSuccess={mockOnSuccess} />);
 
     expect(screen.getByText('Create password')).toBeInTheDocument();
     expect(screen.getByText('Use a minimum of 10 characters, including uppercase letters, lowercase letters, and numbers')).toBeInTheDocument();
@@ -14,7 +16,7 @@ describe('Create Password component', () => {
   });
 
   it('shows messages when password is invalid', async () => {
-    render(<CreatePassword />);
+    render(<CreatePassword onSuccess={mockOnSuccess} />);
 
     const passwordInput = screen.getByLabelText('Password') as HTMLInputElement;
     const confirmPasswordInput = screen.getByLabelText('Confirm password') as HTMLInputElement;
@@ -39,7 +41,7 @@ describe('Create Password component', () => {
   it('submits the form when passwords are valid', async () => {
     const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
 
-    render(<CreatePassword />);
+    render(<CreatePassword onSuccess={mockOnSuccess} />);
 
     const passwordInput = screen.getByLabelText('Password') as HTMLInputElement;
     const confirmPasswordInput = screen.getByLabelText('Confirm password') as HTMLInputElement;

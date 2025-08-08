@@ -3,9 +3,12 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom'; // ensure matchers like ork
 import ProfileForm from '@/components/FormFIeld';
 
+const mockOnSuccess = jest.fn();
+const mockOnBack = jest.fn();
+
 describe('ProfileForm Component', () => {
   beforeEach(() => {
-    render(<ProfileForm />);
+    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} />);
   });
 
   it('should render all form fields', () => {

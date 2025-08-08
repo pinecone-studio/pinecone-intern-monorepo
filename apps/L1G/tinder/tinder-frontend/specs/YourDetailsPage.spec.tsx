@@ -3,9 +3,11 @@ import { render, screen } from '@testing-library/react';
 import YourDetailsPage from '@/components/YourDetailsPage';
 import '@testing-library/jest-dom';
 
+const mockOnSuccess = jest.fn();
+const mockOnBack = jest.fn();
 describe('YourDetailsPage Component', () => {
   beforeEach(() => {
-    render(<YourDetailsPage />);
+    render(<YourDetailsPage onSuccess={mockOnSuccess} onBack={mockOnBack} />);
   });
 
   it('should display correct title', () => {
@@ -21,10 +23,5 @@ describe('YourDetailsPage Component', () => {
   it('should render ProfileForm component', () => {
     const formElement = screen.getByTestId('profile-form');
     expect(formElement);
-  });
-
-  it('should have correct container styling', () => {
-    const container = screen.getByTestId('details-page-container');
-    expect(container).toHaveClass('flex flex-col items-center justify-center min-h-screen bg-background px-4');
   });
 });

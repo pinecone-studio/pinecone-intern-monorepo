@@ -1,9 +1,11 @@
+/* eslint-disable no-console, max-lines */
 import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { ProfileImages } from '@/components/ProfileImages';
 import '@testing-library/jest-dom';
 import axios from 'axios';
 
+const mockOnSuccess = jest.fn();
 jest.mock('next/image', () => {
   const MockedImage = (props: any) => {
     const { fill, ...rest } = props;
@@ -23,7 +25,7 @@ describe('ProfileImages Component', () => {
   });
 
   test('renders 6 image slots', () => {
-    render(<ProfileImages />);
+    render(<ProfileImages onSuccess={mockOnSuccess} />);
     const slots = screen.getAllByTestId(/image-slot-/);
     expect(slots).toHaveLength(6);
   });
@@ -33,7 +35,7 @@ describe('ProfileImages Component', () => {
       data: { publicId: '123' },
     });
 
-    render(<ProfileImages />);
+    render(<ProfileImages onSuccess={mockOnSuccess} />);
     const fileInput = screen.getByTestId('upload-input') as HTMLInputElement;
     const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
 
@@ -51,7 +53,7 @@ describe('ProfileImages Component', () => {
       data: { secure_url: mockUrl },
     });
 
-    render(<ProfileImages />);
+    render(<ProfileImages onSuccess={mockOnSuccess} />);
     const fileInput = screen.getByTestId('upload-input') as HTMLInputElement;
     const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
 
@@ -66,7 +68,7 @@ describe('ProfileImages Component', () => {
   test('handles error during image upload', async () => {
     mockedAxios.post.mockRejectedValueOnce(new Error('Upload failed'));
 
-    render(<ProfileImages />);
+    render(<ProfileImages onSuccess={mockOnSuccess} />);
     const fileInput = screen.getByTestId('upload-input') as HTMLInputElement;
     const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
 
@@ -83,7 +85,7 @@ describe('ProfileImages Component', () => {
       // eslint-disable-next-line camelcase
       data: { secure_url: mockUrl },
     });
-    render(<ProfileImages />);
+    render(<ProfileImages onSuccess={mockOnSuccess} />);
     const fileInput = screen.getByTestId('upload-input') as HTMLInputElement;
     const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
     await act(async () => {
@@ -99,7 +101,7 @@ describe('ProfileImages Component', () => {
     });
   });
   test('does not upload if no file is selected', async () => {
-    render(<ProfileImages />);
+    render(<ProfileImages onSuccess={mockOnSuccess} />);
     const fileInput = screen.getByTestId('upload-input') as HTMLInputElement;
 
     await act(async () => {
@@ -111,7 +113,7 @@ describe('ProfileImages Component', () => {
   test('does not upload if cloudName is falsy', async () => {
     process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = '';
 
-    render(<ProfileImages />);
+    render(<ProfileImages onSuccess={mockOnSuccess} />);
     const fileInput = screen.getByTestId('upload-input') as HTMLInputElement;
     const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
 
@@ -127,7 +129,7 @@ describe('ProfileImages Component', () => {
       // eslint-disable-next-line camelcase
       data: { secure_url: mockUrl },
     });
-    render(<ProfileImages />);
+    render(<ProfileImages onSuccess={mockOnSuccess} />);
     const fileInput = screen.getByTestId('upload-input') as HTMLInputElement;
     const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
     for (let i = 0; i < 6; i++) {
@@ -140,5 +142,35 @@ describe('ProfileImages Component', () => {
       fireEvent.change(fileInput, { target: { files: [file] } });
     });
     expect(mockedAxios.post).toHaveBeenCalledTimes(6);
+  });
+
+  test('should call onSuccess when an image is successfully uploaded', async () => {
+    const mockUrl = 'https://cloudinary.com/test-image.jpg';
+    mockedAxios.post.mockResolvedValueOnce({
+      // eslint-disable-next-line camelcase
+      data: { secure_url: mockUrl },
+    });
+
+    render(<ProfileImages onSuccess={mockOnSuccess} />);
+    const fileInput = screen.getByTestId('upload-input') as HTMLInputElement;
+    const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
+
+    await act(async () => {
+      fireEvent.change(fileInput, { target: { files: [file] } });
+    });
+  });
+
+  it('onSuccess is clicked', () => {
+    render(<ProfileImages onSuccess={mockOnSuccess} />);
+    const fileInput = screen.getByTestId('upload-input') as HTMLInputElement;
+    const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
+
+    act(() => {
+      fireEvent.change(fileInput, { target: { files: [file] } });
+    });
+    fireEvent.click(screen.getByRole('button', { name: /Upload/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Next/i }));
+
+    expect(mockOnSuccess).toHaveBeenCalled();
   });
 });

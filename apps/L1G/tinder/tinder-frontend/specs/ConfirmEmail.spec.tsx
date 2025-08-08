@@ -2,6 +2,7 @@ import { ConfirmEmail } from '@/components/ConfirmEmail';
 import { fireEvent, render, screen, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
+const mockOnSuccess = jest.fn();
 beforeEach(() => {
   jest.useFakeTimers();
   jest.spyOn(console, 'log').mockImplementation();
@@ -15,7 +16,7 @@ afterEach(() => {
 
 describe('ConfirmEmail', () => {
   it('should render correctly', () => {
-    render(<ConfirmEmail />);
+    render(<ConfirmEmail onSuccess={mockOnSuccess} />);
 
     expect(screen.getByText('Confirm email')).toBeInTheDocument();
     expect(screen.getByText(/To continue, enter the secure code we sent/i)).toBeInTheDocument();
@@ -24,7 +25,7 @@ describe('ConfirmEmail', () => {
   });
 
   it('should handle OTP input', async () => {
-    render(<ConfirmEmail />);
+    render(<ConfirmEmail onSuccess={mockOnSuccess} />);
 
     const otpInput = screen.getByRole('textbox'); // only one input
 
@@ -36,7 +37,7 @@ describe('ConfirmEmail', () => {
   });
 
   it('should submit OTP form', async () => {
-    render(<ConfirmEmail />);
+    render(<ConfirmEmail onSuccess={mockOnSuccess} />);
 
     const otpInput = screen.getByRole('textbox');
     const confirmBtn = screen.getByRole('button', { name: /Confirm/i });
@@ -53,7 +54,7 @@ describe('ConfirmEmail', () => {
   });
 
   it('should reset timer on resend', async () => {
-    render(<ConfirmEmail />);
+    render(<ConfirmEmail onSuccess={mockOnSuccess} />);
     act(() => {
       jest.advanceTimersByTime(60000);
     });
@@ -67,7 +68,7 @@ describe('ConfirmEmail', () => {
   });
 
   it('should countdown timer', () => {
-    render(<ConfirmEmail />);
+    render(<ConfirmEmail onSuccess={mockOnSuccess} />);
     expect(screen.getByText(/Send again in 60s/i)).toBeInTheDocument();
 
     act(() => {

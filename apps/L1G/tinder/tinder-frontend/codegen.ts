@@ -9,6 +9,7 @@ if (!schemaUrl) {
 const config: CodegenConfig = {
   overwrite: true,
   schema: schemaUrl,
+  // schema: 'https://tinder-backend-prod-tau.vercel.app/api/graphql',
   documents: ['apps/L1G/tinder/tinder-frontend/src/**/*.{graphql,ts,tsx}'],
   generates: {
     'apps/L1G/tinder/tinder-frontend/src/generated/index.ts': {
