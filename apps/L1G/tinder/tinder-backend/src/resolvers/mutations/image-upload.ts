@@ -3,6 +3,8 @@ import { Usermodel } from 'src/models/user';
 
 export const uploadImages: MutationResolvers['uploadImages'] = async (_, { images }, context) => {
   try {
+    console.log('userId in context:', context.userId);
+
     if (!context?.userId) {
       console.error('Missing userId in context');
       throw new Error('Unauthorized');
