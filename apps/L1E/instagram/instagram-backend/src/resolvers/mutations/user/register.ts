@@ -16,11 +16,18 @@ function validateRegisterInput(input: {
   userName: string;
   fullName: string;
 } {
-  const { email, password, userName, fullName } = input;
-  if (!email) throw new Error("Email is required");
-  if (!password) throw new Error("Password is required");
-  if (!userName) throw new Error("Username is required");
-  if (!fullName) throw new Error("Full name is required");
+  const requiredFields: { [key: string]: string } = {
+    email: "Email is required",
+    password: "Password is required",
+    userName: "Username is required",
+    fullName: "Full name is required",
+  };
+
+  for (const key in requiredFields) {
+    if (!input[key as keyof typeof input]) {
+      throw new Error(requiredFields[key]);
+    }
+  }
 }
 
 // JWT_SECRET авах

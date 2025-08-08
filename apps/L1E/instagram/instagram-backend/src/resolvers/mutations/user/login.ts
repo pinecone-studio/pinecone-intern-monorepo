@@ -4,7 +4,7 @@ import { MutationResolvers } from "src/generated";
 import bcrypt from 'bcrypt';
 import { getJwtSecret } from "src/utils/check-jwt";
 
-// Input шалгах + narrowing хийж өгнө
+// Input шалгах + narrowing
 function validateLoginInput(input: {
   email?: string;
   password?: string;
@@ -16,18 +16,17 @@ function validateLoginInput(input: {
   if (!input.password) throw new Error("Password is required");
 }
 
-// JWT_SECRET авах (null-check + return string)
-
 export const login: MutationResolvers['login'] = async (_, { input }) => {
   try {
-    validateLoginInput(input); // narrowing хийж байна
+    validateLoginInput(input);
     const { email, password } = input;
 
     const user = await User.findOne({ email });
-    if (!user) throw new Error("Invalid credentials");
+    const isMatch = user && await bcrypt.compare(password, user.password);
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) throw new Error("Invalid credentials");
+    if (!user || !isMatch) {
+      throw new Error("Invalid credentials");
+    }
 
     const token = jwt.sign({ userId: user._id }, getJwtSecret());
 
@@ -36,9 +35,7 @@ export const login: MutationResolvers['login'] = async (_, { input }) => {
       token,
     };
   } catch (error) {
-    if (error instanceof Error) {
-      throw error;
-    }
+    if (error instanceof Error) throw error;
     throw new Error("Login failed");
   }
 };
