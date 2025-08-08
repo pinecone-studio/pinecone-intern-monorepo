@@ -3,6 +3,7 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 const config: CodegenConfig = {
   overwrite: true,
   schema: process.env.BACKEND_URI,
+
   documents: ['apps/L1G/restaurant/restaurant-frontend/src/**/*.graphql'],
   generates: {
     'apps/L1G/restaurant/restaurant-frontend/src/generated/index.ts': {
