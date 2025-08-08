@@ -38,7 +38,10 @@ export const ProfileImages = () => {
   };
 
   const uploadToCloudinary = async (file: File): Promise<string | null> => {
-    if (!cloudName) return null;
+    if (!cloudName) {
+      console.error('Cloudinary cloud name is missing!');
+      return null;
+    }
 
     const formData = new FormData();
     formData.append('file', file);

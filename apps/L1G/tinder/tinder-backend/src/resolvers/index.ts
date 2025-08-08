@@ -1,4 +1,4 @@
-import { login, signup, like, createInterest, updateInterest, deleteInterest, dislike, requestSignup, verifyOtp } from './mutations';
+import { login, signup, like, createInterest, updateInterest, deleteInterest, dislike, requestSignup, verifyOtp, uploadImages } from './mutations';
 import { getAllInterests, getInterest, getusers } from './queries';
 
 export const resolvers = {
@@ -17,5 +17,6 @@ export const resolvers = {
     updateInterest,
     deleteInterest,
     dislike,
+    uploadImages,
   },
 };

@@ -82,7 +82,7 @@
       },
       "dependsOn": [
         {
-          "target": "get-secrets:dev"
+          "target": "get-secrets:testing"
         }
       ]
     },
