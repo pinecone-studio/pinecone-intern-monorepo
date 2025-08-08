@@ -2,6 +2,7 @@ import { User } from "src/models";
 import jwt from 'jsonwebtoken';
 import { MutationResolvers } from "src/generated";
 import bcrypt from 'bcrypt';
+import { getJwtSecret } from "src/utils/check-jwt";
 
 // Input шалгах + narrowing хийж өгнө
 function validateLoginInput(input: {
@@ -16,12 +17,6 @@ function validateLoginInput(input: {
 }
 
 // JWT_SECRET авах (null-check + return string)
-function getJwtSecret(): string {
-  if (!process.env.JWT_SECRET) {
-    throw new Error("JWT_SECRET not configured");
-  }
-  return process.env.JWT_SECRET;
-}
 
 export const login: MutationResolvers['login'] = async (_, { input }) => {
   try {

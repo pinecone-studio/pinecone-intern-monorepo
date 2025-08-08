@@ -3,7 +3,7 @@ import { User } from "src/models";
 import { checkEmailExists } from "src/utils/email-exist";
 import { hashPassword } from "src/utils/hash";
 import jwt from 'jsonwebtoken';
-
+import { getJwtSecret } from "src/utils/check-jwt";
 // Input шалгах (asserts ашиглаж narrowing хийх)
 function validateRegisterInput(input: {
   email?: string;
@@ -24,12 +24,7 @@ function validateRegisterInput(input: {
 }
 
 // JWT_SECRET авах
-function getJwtSecret(): string {
-  if (!process.env.JWT_SECRET) {
-    throw new Error("JWT_SECRET not configured");
-  }
-  return process.env.JWT_SECRET;
-}
+
 
 export const register: MutationResolvers['register'] = async (_, { input }) => {
   try {
