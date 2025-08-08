@@ -1,7 +1,7 @@
 'use client';
 import { MainHeader } from '@/components/MainHeader';
 import { MultiStepForm1 } from '@/components/MultiStepForm1';
-import { MultiStepForm2 } from '@/components/MultiStepForm2';
+import MultiStepForm2 from '@/components/MultiStepForm2';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
