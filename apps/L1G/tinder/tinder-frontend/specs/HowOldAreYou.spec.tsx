@@ -4,6 +4,9 @@ import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import HowOldAreYou from '@/components/HowOldAreYou';
 import '@testing-library/jest-dom';
 
+const mockOnSuccess = jest.fn();
+const mockOnBack = jest.fn();
+
 // Mock Date.now to control current date
 const mockToday = new Date('2024-01-01T00:00:00Z');
 beforeAll(() => {
@@ -35,7 +38,7 @@ describe('HowOldAreYou Component', () => {
   });
 
   it('renders correctly', () => {
-    render(<HowOldAreYou />);
+    render(<HowOldAreYou onSuccess={mockOnSuccess} onBack={mockOnBack} />);
     expect(screen.getByText('How old are you')).toBeInTheDocument();
     expect(screen.getByText('Please enter your age to continue')).toBeInTheDocument();
     expect(screen.getByTestId('date-picker-button')).toBeInTheDocument();
@@ -43,17 +46,17 @@ describe('HowOldAreYou Component', () => {
   });
 
   it('opens calendar when date button is clicked', async () => {
-    render(<HowOldAreYou />);
+    render(<HowOldAreYou onSuccess={mockOnSuccess} onBack={mockOnBack} />);
     await act(async () => {
       fireEvent.click(screen.getByTestId('date-picker-button'));
     });
-    expect(screen.getByRole('dialog')).toBeInTheDocument(); // Popover opens
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
   });
 
   it('submits form with valid date', async () => {
     const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
 
-    render(<HowOldAreYou />);
+    render(<HowOldAreYou onSuccess={mockOnSuccess} onBack={mockOnBack} />);
 
     // Open the calendar
     act(() => {
@@ -77,7 +80,7 @@ describe('HowOldAreYou Component', () => {
   });
 
   it('shows validation error when no date is selected', async () => {
-    render(<HowOldAreYou />);
+    render(<HowOldAreYou onSuccess={mockOnSuccess} onBack={mockOnBack} />);
 
     // Clear the default date (if applicable)
     await act(async () => {
@@ -97,13 +100,13 @@ describe('HowOldAreYou Component', () => {
   });
 
   it('displays "Pick a date" when no date is selected', () => {
-    render(<HowOldAreYou />);
+    render(<HowOldAreYou onSuccess={mockOnSuccess} onBack={mockOnBack} />);
     // Simulate no date selected (default state)
     expect(screen.getByText('Pick a date')).toBeInTheDocument();
   });
 
   it('displays formatted date when a date is selected', async () => {
-    render(<HowOldAreYou />);
+    render(<HowOldAreYou onSuccess={mockOnSuccess} onBack={mockOnBack} />);
 
     // Open the calendar
     await act(async () => {
@@ -118,7 +121,7 @@ describe('HowOldAreYou Component', () => {
   });
 
   it('disables invalid dates', async () => {
-    render(<HowOldAreYou />);
+    render(<HowOldAreYou onSuccess={mockOnSuccess} onBack={mockOnBack} />);
 
     // Open the calendar
     await act(async () => {
@@ -128,5 +131,16 @@ describe('HowOldAreYou Component', () => {
     // Check that an invalid date (1899-01-01) is disabled
     const invalidDateButton = screen.getByRole('button', { name: 'Select 1899-01-01' });
     expect(invalidDateButton).toBeDisabled();
+  });
+
+  it('should call onBack when back button is clicked', async () => {
+    render(<HowOldAreYou onSuccess={mockOnSuccess} onBack={mockOnBack} />);
+
+    const backButton = screen.getByRole('button', { name: /Back/i });
+    await act(async () => {
+      fireEvent.click(backButton);
+    });
+
+    expect(mockOnBack).toHaveBeenCalled();
   });
 });

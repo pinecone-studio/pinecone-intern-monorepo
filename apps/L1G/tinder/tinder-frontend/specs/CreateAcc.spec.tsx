@@ -3,7 +3,7 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom';
 
 const mockPush = jest.fn();
-
+const mockOnSuccess = jest.fn();
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
     push: mockPush,
@@ -18,7 +18,7 @@ describe('CreateAcc Component', () => {
   it('renders without crash', async () => {
     const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
 
-    render(<CreateAccount />);
+    render(<CreateAccount onSuccess={mockOnSuccess} />);
 
     const email = screen.getByPlaceholderText('name@example.com') as HTMLInputElement;
     const submitBtn = screen.getByRole('button', { name: /Continue/i });
@@ -38,7 +38,7 @@ describe('CreateAcc Component', () => {
 
   it('shows error when invalid email is submitted', async () => {
     const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
-    render(<CreateAccount />);
+    render(<CreateAccount onSuccess={mockOnSuccess} />);
     const emailInput = screen.getByPlaceholderText('name@example.com');
 
     await act(async () => {
@@ -51,5 +51,14 @@ describe('CreateAcc Component', () => {
     expect(await screen.findByText('Please enter a valid email')).toBeInTheDocument();
 
     expect(consoleSpy).not.toHaveBeenCalledWith('working');
+  });
+
+  it('navigates to log in page', () => {
+    render(<CreateAccount onSuccess={mockOnSuccess} />);
+    const loginLink = screen.getByText('Log in');
+
+    fireEvent.click(loginLink);
+
+    expect(mockPush).toHaveBeenCalledWith('/login');
   });
 });

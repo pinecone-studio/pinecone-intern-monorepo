@@ -4,6 +4,7 @@ import { ProfileImages } from '@/components/ProfileImages';
 import '@testing-library/jest-dom';
 import axios from 'axios';
 
+const mockOnSuccess = jest.fn();
 jest.mock('next/image', () => {
   const MockedImage = (props: any) => {
     const { fill, ...rest } = props;
@@ -140,5 +141,35 @@ describe('ProfileImages Component', () => {
       fireEvent.change(fileInput, { target: { files: [file] } });
     });
     expect(mockedAxios.post).toHaveBeenCalledTimes(6);
+  });
+
+  test('should call onSuccess when an image is successfully uploaded', async () => {
+    const mockUrl = 'https://cloudinary.com/test-image.jpg';
+    mockedAxios.post.mockResolvedValueOnce({
+      // eslint-disable-next-line camelcase
+      data: { secure_url: mockUrl },
+    });
+
+    render(<ProfileImages onSuccess={mockOnSuccess} />);
+    const fileInput = screen.getByTestId('upload-input') as HTMLInputElement;
+    const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
+
+    await act(async () => {
+      fireEvent.change(fileInput, { target: { files: [file] } });
+    });
+  });
+
+  it('onSuccess is clicked', () => {
+    render(<ProfileImages onSuccess={mockOnSuccess} />);
+    const fileInput = screen.getByTestId('upload-input') as HTMLInputElement;
+    const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
+
+    act(() => {
+      fireEvent.change(fileInput, { target: { files: [file] } });
+    });
+    fireEvent.click(screen.getByRole('button', { name: /Upload/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Next/i }));
+
+    expect(mockOnSuccess).toHaveBeenCalled();
   });
 });
