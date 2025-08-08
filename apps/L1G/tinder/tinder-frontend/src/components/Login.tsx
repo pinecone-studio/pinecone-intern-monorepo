@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email' }),
@@ -25,7 +26,14 @@ export const LoginForm = () => {
   });
 
   function onSubmit(_values: z.infer<typeof formSchema>) {
-    console.log('working');
+    axios
+      .post(`${process.env.BACKEND_URI}/`, _values)
+      .then((response) => {
+        router.push('/dashboard');
+      })
+      .catch((error) => {
+        console.error('Login failed:', error);
+      });
   }
 
   return (
@@ -41,7 +49,7 @@ export const LoginForm = () => {
                   <FormItem>
                     <FormLabel className="flex">Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="name@example.com" {...field} />
+                      <Input data-cy="Login-Email-Input" placeholder="name@example.com" {...field} />
                     </FormControl>
                     <FormMessage data-cy="Form-Email-Input-Error-Message" />
                   </FormItem>
@@ -59,14 +67,14 @@ export const LoginForm = () => {
                       </button>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="Please enter your password" {...field} />
+                      <Input data-cy="Login-password-Input" placeholder="Please enter your password" {...field} />
                     </FormControl>
                     <FormMessage data-cy="Form-Password-Input-Error-Message" />
                   </FormItem>
                 )}
               />
             </div>
-            <Button data-cy="Sign-Up-Submit-Button" type="submit" className="rounded-full bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
+            <Button data-cy="Create-an-account-Button" type="submit" className="rounded-full bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
               Continue
             </Button>
           </form>

@@ -1,8 +1,11 @@
+'use client';
 import { LoginForm } from '@/components/Login';
 import { MainHeader } from '@/components/MainHeader';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { useRouter } from 'next/navigation';
 const SignInPage = () => {
+  const router = useRouter();
   return (
     <div data-cy="Sing-in-page" className="w-screen h-screen flex justify-center items-center">
       <div className="w-[350px] h-fit flex flex-col gap-6 items-center">
@@ -28,10 +31,16 @@ const SignInPage = () => {
             <Separator className="w-[156px]" />
           </div>
 
-          <Button className="rounded-full border-[1px] border-[#E4E4E7] bg-white text-[#18181B]  text-[14px] font-[500] shadow-sm">Create an account</Button>
+          <Button
+            data-cy="Create-an-account-Button"
+            onClick={() => router.push('/signup')}
+            className="rounded-full border-[1px] border-[#E4E4E7] bg-white text-[#18181B]  text-[14px] font-[500] shadow-sm"
+          >
+            Create an account
+          </Button>
         </div>
 
-        <p className="text-center  text-wrap w-[249px] text-[14px] text-[#71717A] font-[400]">
+        <p data-cy="Login-long-text" className="text-center  text-wrap w-[249px] text-[14px] text-[#71717A] font-[400]">
           By clicking continue, you agree to our <span className="underline">Terms of Service</span> and <span className="underline">Privacy Policy</span>.
         </p>
       </div>
