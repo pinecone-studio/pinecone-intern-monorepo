@@ -1,5 +1,3 @@
-import { GraphQLResolveInfo } from 'graphql';
-import { User } from 'src/models';
 import { getUsers } from 'src/resolvers/queries';
 
 jest.mock('../../../../src/models', () => ({
