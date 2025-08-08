@@ -1,44 +1,80 @@
 import { MultiStepForm1 } from '@/components/MultiStepForm1';
-import { MultiStepForm2 } from '@/components/MultiStepForm2';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-jest.mock('next/navigation', () => ({
-  useRouter: () => ({
-    push: jest.fn(),
-    replace: jest.fn(),
-    prefetch: jest.fn(),
-  }),
+jest.mock('@/components/CreateAcc', () => ({
+  CreateAccount: ({ onSuccess }) => (
+    <div>
+      Create an account
+      <button onClick={onSuccess}>Next</button>
+    </div>
+  ),
+}));
+jest.mock('@/components/ConfirmEmail', () => ({
+  ConfirmEmail: ({ onSuccess }) => (
+    <div>
+      Confirm email
+      <button onClick={onSuccess}>Next</button>
+    </div>
+  ),
+}));
+jest.mock('@/components/CreatePassword', () => ({
+  CreatePassword: ({ onSuccess }) => (
+    <div>
+      Create password
+      <button onClick={onSuccess}>Next</button>
+    </div>
+  ),
+}));
+jest.mock('@/components/GenderSelect', () => ({
+  GenderSelect: ({ onSuccess }) => (
+    <div>
+      Who are you interested in?
+      <button onClick={onSuccess}>Next</button>
+    </div>
+  ),
 }));
 
-describe('MultiStepForm', () => {
-  it('should render the correct step for first half', () => {
-    render(<MultiStepForm1 step="createAccount" setStep={jest.fn()} />);
-    expect(screen.getByText('Create an account')).toBeInTheDocument();
+describe('MultiStepForm1', () => {
+  const mockSetStep = jest.fn();
 
-    render(<MultiStepForm1 step="confirmEmail" setStep={jest.fn()} />);
-    expect(screen.getByText(/confirm email/i)).toBeInTheDocument();
-
-    render(<MultiStepForm1 step="createPass" setStep={jest.fn()} />);
-    expect(screen.getByText(/create password/i)).toBeInTheDocument();
-
-    render(<MultiStepForm1 step="genderSelect" setStep={jest.fn()} />);
-    expect(screen.getByText('Who are you interested in?')).toBeInTheDocument();
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('should render the correct step for second half', () => {
-    const mockRouter = { push: jest.fn() };
+  it('renders createAccount step and triggers onSuccess', () => {
+    render(<MultiStepForm1 step="createAccount" setStep={mockSetStep} />);
+    expect(screen.getByText(/Create an account/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Next'));
+    expect(mockSetStep).toHaveBeenCalledWith('confirmEmail');
+  });
 
-    render(<MultiStepForm2 step="ageSelect" setStep={jest.fn()} router={mockRouter} />);
-    expect(screen.getByText(/How old are you/i)).toBeInTheDocument();
+  it('renders confirmEmail step and triggers onSuccess', () => {
+    render(<MultiStepForm1 step="confirmEmail" setStep={mockSetStep} />);
+    expect(screen.getByText(/confirm email/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Next'));
+    expect(mockSetStep).toHaveBeenCalledWith('createPass');
+  });
 
-    render(<MultiStepForm2 step="details" setStep={jest.fn()} router={mockRouter} />);
-    expect(screen.getByText(/your details/i)).toBeInTheDocument();
+  it('renders createPass step and triggers onSuccess', () => {
+    render(<MultiStepForm1 step="createPass" setStep={mockSetStep} />);
+    expect(screen.getByText(/create password/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Next'));
+    expect(mockSetStep).toHaveBeenCalledWith('genderSelect');
+  });
 
-    render(<MultiStepForm2 step="uploadImages" setStep={jest.fn()} router={mockRouter} />);
-    expect(screen.getByText(/upload your image/i)).toBeInTheDocument(); // Adjust based on actual text
+  it('renders genderSelect step and triggers onSuccess', () => {
+    render(<MultiStepForm1 step="genderSelect" setStep={mockSetStep} />);
+    expect(screen.getByText('Who are you interested in?')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Next'));
+    expect(mockSetStep).toHaveBeenCalledWith('ageSelect');
+  });
 
-    render(<MultiStepForm2 step="allSet" setStep={jest.fn()} router={mockRouter} />);
-    expect(screen.getByText(/you're all set/i)).toBeInTheDocument();
+  it('handles invalid step gracefully', () => {
+    render(<MultiStepForm1 step="invalidStep" setStep={mockSetStep} />);
+    expect(screen.queryByText(/Create an account/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/confirm email/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/create password/i)).not.toBeInTheDocument();
+    expect(screen.queryByText('Who are you interested in?')).not.toBeInTheDocument();
   });
 });

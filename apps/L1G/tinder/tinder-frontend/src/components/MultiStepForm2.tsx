@@ -11,7 +11,7 @@ type Props = {
   router: AppRouterInstance;
 };
 
-export const MultiStepForm2 = ({ step, setStep, router }: Props) => {
+const MultiStepForm2 = ({ step, setStep, router }: Props) => {
   return (
     <>
       {step === 'ageSelect' && <HowOldAreYou onSuccess={() => setStep('details')} onBack={() => setStep('genderSelect')} />}
@@ -21,3 +21,5 @@ export const MultiStepForm2 = ({ step, setStep, router }: Props) => {
     </>
   );
 };
+
+export default MultiStepForm2;
