@@ -23,6 +23,9 @@ const nextConfig = {
   },
   env: {
     MONGO_URI: process.env.MONGO_URI ?? '',
+    VERCEL_KE: process.env.VERCEL_KEY ?? '',
+    EMAIL_USER: process.env.EMAIL_USER ?? '',
+    EMAIL_PASS: process.env.EMAIL_PASS ?? '',
   },
   nx: {
     svgr: false,

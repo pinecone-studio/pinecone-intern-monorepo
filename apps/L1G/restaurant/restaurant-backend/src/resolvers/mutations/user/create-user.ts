@@ -1,5 +1,4 @@
 import { MutationResolvers } from 'src/generated';
-
 import bcrypt from 'bcryptjs';
 import { UserModel } from 'src/models/user.model';
 
