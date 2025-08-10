@@ -4,7 +4,7 @@ import { MutationResolvers } from "src/generated";
 import bcrypt from "bcrypt";
 import { getJwtSecret } from "src/utils/check-jwt";
 
-// Input шалгах + narrowing (refactored to lower complexity)
+// Input шалгах + narrowing
 function validateLoginInput(input: {
   email?: string;
   password?: string;
@@ -12,27 +12,20 @@ function validateLoginInput(input: {
   email: string;
   password: string;
 } {
-  const requiredFields: { [K in keyof typeof input]: string } = {
-    email: "Email is required",
-    password: "Password is required",
-  };
-
-  for (const key in requiredFields) {
-    if (!input[key as keyof typeof input]) {
-      throw new Error(requiredFields[key as keyof typeof requiredFields]);
-    }
-  }
+  if (!input.email) throw new Error("Email is required");
+  if (!input.password) throw new Error("Password is required");
 }
 
-// Login mutation
 export const login: MutationResolvers["login"] = async (_, { input }) => {
   try {
-    validateLoginInput(input); // narrowing хийгдсэн
+    validateLoginInput(input);
     const { email, password } = input;
 
     const user = await User.findOne({ email });
+    const passwordMatches =
+      user && (await bcrypt.compare(password, user.password));
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user || !passwordMatches) {
       throw new Error("Invalid credentials");
     }
 
@@ -43,6 +36,7 @@ export const login: MutationResolvers["login"] = async (_, { input }) => {
       token,
     };
   } catch (error) {
-    throw error instanceof Error ? error : new Error("Login failed");
+    if (error instanceof Error) throw error;
+    throw new Error("Login failed");
   }
 };
