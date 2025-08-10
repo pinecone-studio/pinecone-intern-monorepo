@@ -16,20 +16,29 @@ function validateLoginInput(input: {
   if (!input.password) throw new Error("Password is required");
 }
 
+async function findUserAndCheckPassword(email: string, password: string) {
+  const user = await User.findOne({ email });
+  if (!user) return null;
+  const passwordMatches = await bcrypt.compare(password, user.password);
+  if (!passwordMatches) return null;
+  return user;
+}
+
+function createJwtToken(userId: string) {
+  return jwt.sign({ userId }, getJwtSecret());
+}
+
 export const login: MutationResolvers["login"] = async (_, { input }) => {
   try {
     validateLoginInput(input);
     const { email, password } = input;
 
-    const user = await User.findOne({ email });
-    const passwordMatches =
-      user && (await bcrypt.compare(password, user.password));
-
-    if (!user || !passwordMatches) {
+    const user = await findUserAndCheckPassword(email, password);
+    if (!user) {
       throw new Error("Invalid credentials");
     }
 
-    const token = jwt.sign({ userId: user._id }, getJwtSecret());
+    const token = createJwtToken(user._id);
 
     return {
       user,
