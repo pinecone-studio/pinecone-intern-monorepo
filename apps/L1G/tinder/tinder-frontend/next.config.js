@@ -10,6 +10,8 @@ const nextConfig = {
   },
   env: {
     BACKEND_URI: process.env.BACKEND_URI ?? '',
+    VERCEL_TOKEN: process.env.VERCEL_TOKEN ?? '',
+    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ?? '',
   },
   images: {
     remotePatterns: [

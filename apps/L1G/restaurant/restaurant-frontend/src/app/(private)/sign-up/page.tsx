@@ -1,9 +1,8 @@
+import React from 'react';
 import { CreateUserCard } from '@/components/auth/sign-up/CreateUserCard';
 
-const SignUpPage = () => (
-  <div>
-    <CreateUserCard />
-  </div>
-);
+const SignUpPage = () => {
+  return <CreateUserCard />;
+};
 
 export default SignUpPage;
