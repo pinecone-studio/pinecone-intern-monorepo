@@ -5,16 +5,26 @@ import { UserOtpModel } from 'src/models/user-otp.model';
 
 const generateOtp = () => Math.floor(1000 + Math.random() * 9000).toString();
 
-export const requestSignup: MutationResolvers['requestSignup'] = async (_, { email, otpType }) => {
+async function validateUserForOtp(email: string, otpType: string) {
   const existingUser = await Usermodel.findOne({ email });
 
-  if (otpType === 'create') {
-    if (existingUser) throw new Error('Email already registered');
-  } else if (otpType === 'forgot') {
-    if (!existingUser) throw new Error('Email not found');
-  } else {
-    throw new Error('Invalid OTP type');
-  }
+  const validators: Record<string, () => void> = {
+    create: () => {
+      if (existingUser) throw new Error('Email already registered');
+    },
+    forgot: () => {
+      if (!existingUser) throw new Error('Email not found');
+    },
+  };
+
+  const validate = validators[otpType];
+  if (!validate) throw new Error('Invalid OTP type');
+
+  validate();
+}
+
+export const requestSignup: MutationResolvers['requestSignup'] = async (_, { email, otpType }) => {
+  await validateUserForOtp(email, otpType);
 
   const otp = generateOtp();
   const expiresAt = new Date(Date.now() + 10 * 60 * 1000);

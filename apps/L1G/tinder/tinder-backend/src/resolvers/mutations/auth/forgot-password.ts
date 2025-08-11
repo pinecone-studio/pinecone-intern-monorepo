@@ -4,7 +4,7 @@ import { Usermodel } from 'src/models/user';
 import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
 
-export const forgotPassword: MutationResolvers['forgotPassword'] = async (_, { otpId, Newpassword }) => {
+async function validateOtpRecord(otpId: string) {
   if (!mongoose.Types.ObjectId.isValid(otpId)) {
     throw new Error('Invalid OTP ID');
   }
@@ -20,21 +20,29 @@ export const forgotPassword: MutationResolvers['forgotPassword'] = async (_, { o
     throw new Error('OTP not verified, expired, or already used');
   }
 
-  const email = otpRecord.email;
+  return otpRecord;
+}
 
+async function validateUserAndHashPassword(email: string, newPassword: string) {
   const user = await Usermodel.findOne({ email });
   if (!user) {
     throw new Error('User not found');
   }
 
-  if (typeof Newpassword !== 'string' || Newpassword.trim() === '') {
+  if (typeof newPassword !== 'string' || newPassword.trim() === '') {
     throw new Error('New password is required and must be a non-empty string');
   }
 
-  const hashedPassword = await bcrypt.hash(Newpassword, 10);
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
   user.password = hashedPassword;
 
   const updatedUser = await user.save();
+  return updatedUser;
+}
+
+export const forgotPassword: MutationResolvers['forgotPassword'] = async (_, { otpId, Newpassword }) => {
+  const otpRecord = await validateOtpRecord(otpId);
+  const updatedUser = await validateUserAndHashPassword(otpRecord.email, Newpassword);
 
   otpRecord.registered = true;
   await otpRecord.save();

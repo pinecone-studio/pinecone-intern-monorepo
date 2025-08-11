@@ -26,9 +26,21 @@ export const UsertypeDefs = gql`
   }
 
   type Mutation {
+    forgotPassword(Newpassword: String!, otpId: String!): User
     requestSignup(email: String!, otpType: OtpType!): String
     verifyOtp(email: String!, otp: String!, otpType: OtpType!): String
-    signup(password: String!, genderPreferences: String, dateOfBirth: String, name: String, images: [String!], bio: String, interests: [String], profession: String, schoolWork: String): User
+    signup(
+      otpId: String!
+      password: String!
+      genderPreferences: String
+      dateOfBirth: String
+      name: String
+      images: [String!]
+      bio: String
+      interests: [String]
+      profession: String
+      schoolWork: String
+    ): User
     updateProfile(
       id: ID!
       name: String
