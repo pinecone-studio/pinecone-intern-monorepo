@@ -1,6 +1,6 @@
 "use client";
 import Link from 'next/link';
-import { Home,Search,  AlignJustify, Heart, PlusSquare ,ImagePlus ,BookOpenCheck , Smile} from 'lucide-react';
+import { Home,Search,  AlignJustify, Heart, PlusSquare ,ImagePlus ,BookOpenCheck} from 'lucide-react';
 import { usePost } from "./context/PostContext"
 import {
   DropdownMenu,
@@ -53,11 +53,11 @@ export function Sidebar() {
       className="flex items-center w-full p-3 hover:text-primary gap-4 rounded-lg hover:bg-gray-100 transition-colors"  
     >
       <PlusSquare className="h-[24px] w-[24px]" />
-      <span className='text-[16px] font-normal'>Create</span>
+      <span data-cy="create" className='text-[16px] font-normal'>Create</span>
     </Link>
   </DropdownMenuTrigger>
   <DropdownMenuContent className='w-[154px] h-[72px] rounded-md flex flex-col mt-2 items-start justify-start mr-4'>
-    <DropdownMenuItem   onClick={(e) =>{ e.preventDefault() ,handlePostClick()}} className='flex pt-[6px] pr-[8px] justify-between items-center self-stretch'>
+    <DropdownMenuItem  data-cy="create-post"  onClick={(e) =>{ e.preventDefault() ,handlePostClick()}} className='flex pt-[6px] pr-[8px] justify-between items-center self-stretch'>
       Post <ImagePlus className='w-[16px] h-[16px]'/>
     </DropdownMenuItem>
     <DropdownMenuItem className='flex p-[6px_8px] justify-between items-center self-stretch'>
