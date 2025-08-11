@@ -12,11 +12,9 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import axios from "axios"
 import { useRouter } from "next/navigation"
 import { InputWithToggle } from "../components/InputWithToggle"
-
-const BASE_URL = process.env.BASE_URL;
+import Image from "next/image"
 
 const inputs = [
     {
@@ -65,6 +63,8 @@ const SignInPage = () => {
             //     password: value.password,
             // });
 
+            console.log(value, "this is value")
+
             router.push("/signup");
 
         } catch (error) {
@@ -78,7 +78,7 @@ const SignInPage = () => {
             <div className="w-[364px] h-fit space-y-3 mx-auto pt-[105px] rounded-[10px]">
                 <div className="bg-white py-12 rounded-[10px]">
                     <div className="pb-3">
-                        <img src="../Logo.svg" className="w-full px-[89px]" />
+                        <Image src="../Logo.svg" alt="instaLogo" className="w-full px-[89px]" width={364} height={292}/>
                     </div>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 px-6 w-full">
