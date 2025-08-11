@@ -1,9 +1,7 @@
 import { StepTwo } from '@/features/reset-password-comps/VerifyResetCode';
 
-const VerifyResetCodePage = () => (
-  <div>
-    <StepTwo />
-  </div>
-);
+const VerifyResetCodePage = () => {
+  return <StepTwo />;
+};
 
 export default VerifyResetCodePage;

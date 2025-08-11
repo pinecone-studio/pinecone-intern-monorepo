@@ -1,9 +1,7 @@
 import { SignInComponent } from '@/components/auth/SignInComponent';
 
-const SignIn = () => (
-  <div>
-    <SignInComponent />
-  </div>
-);
+const SignIn = () => {
+  return <SignInComponent />;
+};
 
 export default SignIn;
