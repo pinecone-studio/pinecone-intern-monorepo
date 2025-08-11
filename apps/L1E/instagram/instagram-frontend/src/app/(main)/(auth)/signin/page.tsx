@@ -33,7 +33,7 @@ const inputs = [
 
 const Users = ["Nake", "Naka", "Naak", "Naraa", "Naagii"]
 
-const SignUpPage = () => {
+const SignInPage = () => {
     const router = useRouter();
 
     const formSchema = z.object({
@@ -115,4 +115,4 @@ const SignUpPage = () => {
     )
 };
 
-export default SignUpPage;
+export default SignInPage;
