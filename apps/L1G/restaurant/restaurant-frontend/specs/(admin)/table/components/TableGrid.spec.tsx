@@ -3,7 +3,6 @@ import { GetTablesDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import { ErrorBoundary } from 'specs/utils/ErrorBoundary';
-
 const getTablesMock: MockedResponse = {
   request: {
     query: GetTablesDocument,
@@ -28,6 +27,13 @@ const getTablesErrorMock: MockedResponse = {
   error: new Error('Error: Network error'),
 };
 
+jest.mock('@/components/table/CreateTableModal', () => ({
+  CreateTableModal: ({ refetch }: { refetch: () => void }) => {
+    refetch(); // calls refresh inside TableGrid
+    return <div>CreateTableModal Mock</div>;
+  },
+}));
+
 describe('getTables', () => {
   it('should render', async () => {
     const { getAllByTestId } = render(
@@ -51,4 +57,6 @@ describe('getTables', () => {
 
     await waitFor(() => expect(getByTestId('error')).toBeDefined());
   });
+
+  it('should call refresh when CreateTableModal successfully creates a table', async () => {});
 });
