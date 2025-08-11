@@ -119,7 +119,13 @@ const SignUpPage = () => {
                                                                 : <Input placeholder={input.placeholder} {...field} type={input.type} className="rounded-md h-[38px]" data-cy={`Sign-Up-${input.message}-Input`} />
                                                         }
                                                     </FormControl>
-                                                    <FormMessage className="text-center" data-cy={`Sign-Up-${input.message}-Input-Error-Message`} />
+                                                    {/* <FormMessage className="text-center" data-cy={`Sign-Up-${input.message}-Input-Error-Message`} /> */}
+                                                    <div
+                                                        data-cy={`Sign-Up-${input.message}-Input-Error-Message`}
+                                                        className="text-center text-red-500 text-sm min-h-[20px]"
+                                                    >
+                                                        <FormMessage />
+                                                    </div>
                                                 </FormItem>
                                             )}
                                         />

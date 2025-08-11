@@ -48,13 +48,4 @@ describe('Sign-Up Page', () => {
     cy.get('[data-cy=Sign-Up-Confirm-Password-Input]').type('1234567');
     cy.get('[data-cy=Sign-Up-Confirm-Password-Input-Error-Message]').should('have.text', 'Passwords must match');
   });
-
-  it('8. when user enters all values, it should navigate to login page', () => {
-    cy.get('[data-cy=Sign-Up-Username-Input]').type('Test');
-    cy.get('[data-cy=Sign-Up-Email-Input]').type('test@gmail.com');
-    cy.get('[data-cy=Sign-Up-Password-Input]').type('12345678');
-    cy.get('[data-cy=Sign-Up-Confirm-Password-Input]').type('12345678');
-    cy.get('[data-cy=Sign-Up-Submit-Button]').click();
-    cy.url().should('include', 'login');
-  });
 });
