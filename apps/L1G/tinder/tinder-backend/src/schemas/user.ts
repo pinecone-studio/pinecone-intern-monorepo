@@ -20,11 +20,27 @@ export const UsertypeDefs = gql`
   type Query {
     getusers: [User]
   }
+  enum OtpType {
+    create
+    forgot
+  }
 
   type Mutation {
-    requestSignup(email: String!): String
-    verifyOtp(email: String!, otp: String!): String
-    signup(password: String!, genderPreferences: String, dateOfBirth: String, name: String, images: [String!], bio: String, interests: [String], profession: String, schoolWork: String): User
+    forgotPassword(Newpassword: String!, otpId: String!): User
+    requestSignup(email: String!, otpType: OtpType!): String
+    verifyOtp(email: String!, otp: String!, otpType: OtpType!): String
+    signup(
+      otpId: String!
+      password: String!
+      genderPreferences: String
+      dateOfBirth: String
+      name: String
+      images: [String!]
+      bio: String
+      interests: [String]
+      profession: String
+      schoolWork: String
+    ): User
     updateProfile(
       id: ID!
       name: String
