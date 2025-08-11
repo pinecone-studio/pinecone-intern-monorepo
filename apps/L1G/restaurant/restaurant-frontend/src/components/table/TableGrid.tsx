@@ -8,10 +8,6 @@ import { CreateTableModal } from './CreateTableModal';
 export const TableGrid = () => {
   const { loading, error, data, refetch } = useGetTablesQuery();
 
-  const refresh = async () => {
-    await refetch();
-  };
-
   if (loading) return 'loading...';
 
   if (error) {
@@ -19,6 +15,11 @@ export const TableGrid = () => {
   }
 
   const tableData = data?.getTables;
+
+  const refresh = async () => {
+    await refetch();
+  };
+
   return (
     <div className="flex w-fit h-fit flex-col gap-4">
       <CreateTableModal refetch={refresh} />

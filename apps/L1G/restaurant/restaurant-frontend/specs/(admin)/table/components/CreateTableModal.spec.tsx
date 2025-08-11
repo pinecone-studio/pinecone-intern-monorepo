@@ -1,6 +1,5 @@
 import { CreateTableModal } from '@/components/table/CreateTableModal';
 import { CreateTableDocument } from '@/generated';
-import { ApolloError } from '@apollo/client';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, screen, act, fireEvent, waitFor } from '@testing-library/react';
 

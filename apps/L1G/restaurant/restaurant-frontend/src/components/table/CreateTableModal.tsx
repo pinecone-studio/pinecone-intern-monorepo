@@ -40,7 +40,7 @@ export const CreateTableModal = ({ refetch }: CreateTableModalProps) => {
         },
       });
 
-      await refetch();
+      refetch();
 
       form.reset();
 

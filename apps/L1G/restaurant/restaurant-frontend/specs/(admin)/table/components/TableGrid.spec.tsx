@@ -3,6 +3,7 @@ import { GetTablesDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import { ErrorBoundary } from 'specs/utils/ErrorBoundary';
+
 const getTablesMock: MockedResponse = {
   request: {
     query: GetTablesDocument,
@@ -10,6 +11,11 @@ const getTablesMock: MockedResponse = {
   result: {
     data: {
       getTables: [
+        {
+          tableId: 'test',
+          tableName: 'test',
+          tableQr: 'https://test.png',
+        },
         {
           tableId: 'test',
           tableName: 'test',
@@ -29,15 +35,15 @@ const getTablesErrorMock: MockedResponse = {
 
 jest.mock('@/components/table/CreateTableModal', () => ({
   CreateTableModal: ({ refetch }: { refetch: () => void }) => {
-    refetch(); // calls refresh inside TableGrid
+    refetch();
     return <div>CreateTableModal Mock</div>;
   },
 }));
-
+const mocks = [getTablesMock, getTablesMock];
 describe('getTables', () => {
   it('should render', async () => {
     const { getAllByTestId } = render(
-      <MockedProvider mocks={[getTablesMock]} addTypename={false}>
+      <MockedProvider mocks={mocks} addTypename={false}>
         <TableGrid />
       </MockedProvider>
     );
@@ -57,6 +63,4 @@ describe('getTables', () => {
 
     await waitFor(() => expect(getByTestId('error')).toBeDefined());
   });
-
-  it('should call refresh when CreateTableModal successfully creates a table', async () => {});
 });
