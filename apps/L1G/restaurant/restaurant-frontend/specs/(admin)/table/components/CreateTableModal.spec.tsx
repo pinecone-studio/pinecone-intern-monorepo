@@ -29,7 +29,9 @@ const createTableApolloErrorMock: MockedResponse = {
   request: {
     query: CreateTableDocument,
     variables: {
-      tableName: '2A',
+      input: {
+        tableName: '2A',
+      },
     },
   },
   error: new Error('table already exists'),
