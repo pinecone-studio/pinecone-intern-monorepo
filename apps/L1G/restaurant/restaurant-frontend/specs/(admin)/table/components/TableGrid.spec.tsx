@@ -16,6 +16,11 @@ const getTablesMock: MockedResponse = {
           tableName: 'test',
           tableQr: 'https://test.png',
         },
+        {
+          tableId: 'test',
+          tableName: 'test',
+          tableQr: 'https://test.png',
+        },
       ],
     },
   },
@@ -28,10 +33,17 @@ const getTablesErrorMock: MockedResponse = {
   error: new Error('Error: Network error'),
 };
 
+jest.mock('@/components/table/CreateTableModal', () => ({
+  CreateTableModal: ({ refetch }: { refetch: () => void }) => {
+    refetch();
+    return <div>CreateTableModal Mock</div>;
+  },
+}));
+const mocks = [getTablesMock, getTablesMock];
 describe('getTables', () => {
   it('should render', async () => {
     const { getAllByTestId } = render(
-      <MockedProvider mocks={[getTablesMock]} addTypename={false}>
+      <MockedProvider mocks={mocks} addTypename={false}>
         <TableGrid />
       </MockedProvider>
     );
