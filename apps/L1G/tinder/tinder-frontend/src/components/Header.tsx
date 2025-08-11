@@ -11,7 +11,7 @@ export const Header = () => {
 
         <div className="w-fit h-fit flex justify-center items-center gap-4">
           <div className="w-[40px] h-[40px] flex justify-center items-center ">
-            <MessageSquare size={16} strokeWidth={2} />
+            <MessageSquare size={16} strokeWidth={2} aria-label="Messages" />
           </div>
 
           <div className="w-[40px] h-[40px] flex justify-center items-center rounded-full">
