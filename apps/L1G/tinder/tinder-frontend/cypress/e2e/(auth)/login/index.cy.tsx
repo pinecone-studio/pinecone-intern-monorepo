@@ -24,7 +24,8 @@ describe('Login Page', () => {
     cy.get('[data-cy=Form-Email-Input-Error-Message]').should('be.visible');
     cy.get('[data-cy=Form-Email-Input-Error-Message]').should('have.text', 'Please enter a valid email');
   });
-});
+
+
 it('7. When user enters invalid email, it should display error message', () => {
   cy.get('[data-cy=Login-Email-Input]').type('12');
   cy.get('[data-cy=Sign-In-Submit-Button]').click();
@@ -58,4 +59,5 @@ it('13. Should navigate to sign-up page when create an account button is clicked
   cy.get('[data-cy=Login-password-Input]').type('12345678');
   cy.get('[data-cy=Sign-In-Submit-Button]').click();
   cy.url().should('include', 'signup');
+});
 });
