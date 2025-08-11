@@ -6,6 +6,7 @@ const userOtpSchema = new mongoose.Schema({
   expiresAt: { type: Date, required: true },
   verified: { type: Boolean, default: false },
   registered: { type: Boolean, default: false },
+  otpType: { type: String, enum: ['create', 'forgot'], default: 'create' },
 });
 
 export const UserOtpModel = mongoose.models.UserOtp || mongoose.model('UserOtp', userOtpSchema);

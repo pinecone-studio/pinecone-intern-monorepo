@@ -2,8 +2,19 @@ import { Usermodel } from 'src/models/user';
 import bcrypt from 'bcryptjs';
 import { MutationResolvers } from 'src/generated';
 import { UserOtpModel } from 'src/models/user-otp.model';
-export const signup: MutationResolvers['signup'] = async (_, { password, genderPreferences, dateOfBirth, name, images, bio, interests, profession, schoolWork }) => {
-  const otpRecord = await UserOtpModel.findOne({ verified: true, registered: false });
+import mongoose from 'mongoose';
+
+export const signup: MutationResolvers['signup'] = async (_, { otpId, password, genderPreferences, dateOfBirth, name, images, bio, interests, profession, schoolWork }) => {
+  if (!mongoose.Types.ObjectId.isValid(otpId)) {
+    throw new Error('Invalid OTP ID');
+  }
+
+  const otpRecord = await UserOtpModel.findOne({
+    _id: otpId,
+    otpType: 'create',
+    verified: true,
+    registered: false,
+  });
 
   if (!otpRecord) {
     throw new Error('OTP not verified or already used for signup');
@@ -16,8 +27,8 @@ export const signup: MutationResolvers['signup'] = async (_, { password, genderP
     throw new Error('Email already registered');
   }
 
-  if (typeof password !== 'string') {
-    throw new Error('Password is required and must be a string');
+  if (typeof password !== 'string' || password.trim() === '') {
+    throw new Error('Password is required and must be a non-empty string');
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
