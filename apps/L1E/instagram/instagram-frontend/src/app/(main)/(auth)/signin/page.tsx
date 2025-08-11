@@ -23,26 +23,31 @@ const inputs = [
         name: 'email',
         placeholder: 'Mobile number or Email',
         type: "text",
+        message: "Email",
     },
     {
         name: 'password',
         placeholder: 'Password',
         type: "password",
+        message: "Password",
     },
 ] as const;
 
-const Users = ["Nake", "Naka", "Naak", "Naraa", "Naagii"]
+const EmailAdresses = ["Nake@gmail.com", "Naka@gmail.com", "Naak@gmail.com", "Naraa@gmail.com", "Naagii@gmail.com"]
 
 const SignInPage = () => {
     const router = useRouter();
 
     const formSchema = z.object({
-        email: z.string().min(2, {
-            message: "Email must be at least 2 characters.",
-        }).email(),
-        password: z.string().min(6, {
+        email: z.string().min(1, {
+            message: "Email is required",
+        }).email({ message: 'Invalid email address' }),
+        password: z.string().min(1, { message: "Password is required" }).min(6, {
             message: "Password must be at least 6 characters.",
         }),
+    }).refine((data) => EmailAdresses.includes(data.email), {
+        path: ['email'],
+        message: "A user with that email does not exist.",
     })
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -55,11 +60,9 @@ const SignInPage = () => {
 
     const onSubmit = async (value: z.infer<typeof formSchema>) => {
         try {
-            // const res = await axios.post(`${BASE_URL}/auth/signup`, {
+            // const res = await axios.post(`${BASE_URL}/auth/signin`, {
             //     email: value.email,
             //     password: value.password,
-            //     fullname: value.fullname,
-            //     username: value.username,
             // });
 
             router.push("/signup");
@@ -71,10 +74,10 @@ const SignInPage = () => {
     };
 
     return (
-        <div className="bg-gray-50 w-full h-screen">
+        <div className="bg-gray-50 w-full h-screen" data-cy="Sign-In-Page">
             <div className="w-[364px] h-fit space-y-3 mx-auto pt-[105px] rounded-[10px]">
                 <div className="bg-white py-12 rounded-[10px]">
-                    <div className="pb-7">
+                    <div className="pb-3">
                         <img src="../Logo.svg" className="w-full px-[89px]" />
                     </div>
                     <Form {...form}>
@@ -83,7 +86,7 @@ const SignInPage = () => {
                                 inputs.map((input, index) => {
                                     return (
                                         <FormField
-                                        key={input.name+index}
+                                            key={input.name + index}
                                             control={form.control}
                                             name={input.name}
                                             render={({ field }) => (
@@ -91,24 +94,29 @@ const SignInPage = () => {
                                                     <FormControl>
                                                         {
                                                             input.type === "password"
-                                                                ? <InputWithToggle {...field} placeholder={input.placeholder} type={input.type} className="rounded-md h-[38px]" />
-                                                                : <Input placeholder={input.placeholder} {...field} type={input.type} className="rounded-md h-[38px]" />
+                                                                ? <InputWithToggle {...field} placeholder={input.placeholder} type={input.type} className="rounded-md h-[38px]" data-cy={`Sign-In-${input.message}-Input`} />
+                                                                : <Input placeholder={input.placeholder} {...field} type={input.type} className="rounded-md h-[38px]" data-cy={`Sign-In-${input.message}-Input`} />
                                                         }
                                                     </FormControl>
-                                                    <FormMessage />
+                                                    {/* <FormMessage className="text-center" data-cy={`Sign-Up-${input.message}-Input-Error-Message`} /> */}
+                                                    <div
+                                                        data-cy={`Sign-In-${input.message}-Input-Error-Message`}
+                                                        className={`text-center text-red-500 text-sm ${!input.message ? 'hidden' : ''}`}
+                                                    >
+                                                        <FormMessage />
+                                                    </div>
                                                 </FormItem>
                                             )}
                                         />
                                     )
                                 })
                             }
-                            <p className="text-sm font-medium text-[#2563EB] text-center py-[10px] px-[16px]">Forgot password?</p>
-                            <Button type="submit" className="w-full bg-blue-600/50">Log in</Button>
+                            <Button data-cy="Sign-In-Submit-Button" type="submit" className="w-full bg-blue-600/50 cursor-pointer">Log in</Button>
                         </form>
                     </Form>
                 </div>
                 <div className="bg-white rounded-[10px] py-4">
-                    <p className="text-center py-[10px] text-sm font-normal">Don't have an account? <a href="/signup" className="text-blue-600 font-bold pl-4">Sign up</a></p>
+                    <p className="text-center py-[10px] text-sm font-normal">Do not have an account? <a href="/signup" className="text-blue-600 font-bold pl-4">Sign Up</a></p>
                 </div>
             </div>
         </div>
