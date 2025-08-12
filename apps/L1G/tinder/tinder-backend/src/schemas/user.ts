@@ -24,11 +24,23 @@ export const UsertypeDefs = gql`
     create
     forgot
   }
-
+  type ForgotPasswordPayload {
+    message: String!
+    user: User!
+  }
+  type RequestSignupResponse {
+    input: String!
+    output: String!
+  }
+  type VerifyOtpResponse {
+    input: String!
+    output: String!
+    otpId: ID!
+  }
   type Mutation {
-    forgotPassword(Newpassword: String!, otpId: String!): User
-    requestSignup(email: String!, otpType: OtpType!): String
-    verifyOtp(email: String!, otp: String!, otpType: OtpType!): String
+    forgotPassword(newPassword: String!, otpId: String!): ForgotPasswordPayload!
+    requestSignup(email: String!, otpType: OtpType!): RequestSignupResponse!
+    verifyOtp(email: String!, otp: String!, otpType: OtpType!): VerifyOtpResponse!
     signup(
       otpId: String!
       password: String!

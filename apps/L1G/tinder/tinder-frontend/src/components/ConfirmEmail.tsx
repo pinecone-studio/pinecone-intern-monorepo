@@ -1,97 +1,124 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
+import React, { useState } from 'react';
 import z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useVerifyOtpMutation, useRequestSignupMutation, OtpType } from '@/generated';
+import { ResetPassword } from './ResetPassword';
+import { OtpForm } from './OtpForm';
 
-const FormSchema = z.object({
+export const FormSchema = z.object({
   otp: z.string().length(4, { message: 'Your one-time password must be 4 digits.' }).regex(/^\d+$/, { message: 'OTP must contain only digits.' }),
 });
 
 type ConfirmEmailProps = {
   onSuccess: () => void;
+  email?: string;
 };
 
-export const ConfirmEmail = ({ onSuccess }: ConfirmEmailProps) => {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      otp: '',
-    },
-  });
+function useCountdown(initialSeconds: number) {
+  const [timeLeft, setTimeLeft] = React.useState(initialSeconds);
 
-  const [timeLeft, setTimeLeft] = useState(60);
-
-  useEffect(() => {
+  React.useEffect(() => {
     if (timeLeft === 0) return;
 
-    const interval = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
-    }, 1000);
-
+    const interval = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
     return () => clearInterval(interval);
   }, [timeLeft]);
 
-  function onSubmit(_value: z.infer<typeof FormSchema>) {
-    console.log('otp working');
-    onSuccess();
+  const reset = () => setTimeLeft(initialSeconds);
+
+  return { timeLeft, reset };
+}
+
+async function handleOtpSubmit(
+  values: z.infer<typeof FormSchema>,
+  email: string | undefined,
+  verifyOtp: ReturnType<typeof useVerifyOtpMutation>[0],
+  setOtpId: React.Dispatch<React.SetStateAction<string | null>>
+) {
+  if (!email) return;
+  try {
+    const response = await verifyOtp({
+      variables: { email, otp: values.otp, otpType: OtpType.Forgot },
+    });
+
+    const otpIdFromResponse = response.data?.verifyOtp?.otpId;
+    if (otpIdFromResponse) {
+      setOtpId(otpIdFromResponse);
+    } else {
+      console.error('OTP verification failed or otpId missing');
+    }
+  } catch (e) {
+    console.error('Verification failed:', e);
+  }
+}
+
+async function handleResendOtp(
+  email: string | undefined,
+  requestSignup: ReturnType<typeof useRequestSignupMutation>[0],
+  setMessage: React.Dispatch<React.SetStateAction<string | null>>,
+  resetTimer: () => void
+) {
+  if (!email) return;
+  try {
+    setMessage(null);
+    await requestSignup({
+      variables: { email, otpType: OtpType.Forgot },
+    });
+    resetTimer();
+    setMessage('OTP resent successfully.');
+  } catch (e) {
+    console.error('Failed to resend OTP:', e);
+    setMessage('Failed to resend OTP, please try again.');
+  }
+}
+
+export const ConfirmEmail = ({ onSuccess, email }: ConfirmEmailProps) => {
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: { otp: '' },
+  });
+
+  const [verifyOtp, { loading: verifying, error: verifyError }] = useVerifyOtpMutation();
+  const [requestSignup, { loading: resending, error: resendError }] = useRequestSignupMutation();
+  const [message, setMessage] = useState<string | null>(null);
+
+  const { timeLeft, reset: resetTimer } = useCountdown(60);
+
+  const [otpId, setOtpId] = useState<string | null>(null);
+
+  async function onSubmit(values: z.infer<typeof FormSchema>) {
+    await handleOtpSubmit(values, email, verifyOtp, setOtpId);
   }
 
-  function handleResend() {
-    console.log('Resend OTP clicked');
-    setTimeLeft(60);
+  async function handleResend() {
+    await handleResendOtp(email, requestSignup, setMessage, resetTimer);
+  }
+
+  if (otpId) {
+    return <ResetPassword otpId={otpId} onSuccess={onSuccess} />;
   }
 
   return (
     <div className="w-[350px] flex flex-col gap-4">
       <div className="flex flex-col gap-1 py-2 justify-center items-center">
         <p className="font-sans text-[24px] font-semibold text-[#09090B]">Confirm email</p>
-        <p className="font-sans text-[14px] font-normal text-[#71717A] text-center">To continue, enter the secure code we sent to n.shagai@nest.mn. Check junk mail if it’s not in your inbox.</p>
+        <p className="font-sans text-[14px] font-normal text-[#71717A] text-center">To continue, enter the secure code we sent to {email}. Check junk mail if it’s not in your inbox.</p>
       </div>
 
       <div className="w-full flex justify-center items-center gap-4">
-        <Form {...form}>
-          <form data-testid="otp-form" onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col justify-center items-center gap-4">
-            <FormField
-              data-testid="otp"
-              control={form.control}
-              name="otp"
-              render={({ field }) => (
-                <FormItem className="flex flex-col w-full items-center justify-center">
-                  <FormLabel></FormLabel>
-                  <FormControl>
-                    <InputOTP maxLength={4} {...field} className="w-full">
-                      <InputOTPGroup className="h-[40px]" data-testid="otp-group">
-                        <InputOTPSlot index={0} className="h-full rounded-l-md" />
-                        <InputOTPSlot index={1} className="h-full " />
-                        <InputOTPSlot index={2} className="h-full " />
-                        <InputOTPSlot index={3} className="h-full rounded-r-md" />
-                      </InputOTPGroup>
-                    </InputOTP>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="py-2 px-4 flex justify-center items-center">
-              {timeLeft > 0 ? (
-                <p className="text-[14px] font-medium text-[#09090B] font-sans">Send again in {timeLeft}s</p>
-              ) : (
-                <Button type="button" onClick={handleResend} className="bg-transparent hover:bg-transparent text-[14px] font-medium text-blue-600 hover:underline font-sans">
-                  Resend Code
-                </Button>
-              )}
-            </div>
-
-            <Button type="submit" className="w-full bg-[#E11D48E5] bg-opacity-90 text-white hover:bg-[#E11D48E5] rounded-full">
-              Confirm
-            </Button>
-          </form>
-        </Form>
+        <OtpForm
+          form={form}
+          onSubmit={onSubmit}
+          timeLeft={timeLeft}
+          handleResend={handleResend}
+          resending={resending}
+          resendError={resendError ?? undefined}
+          verifyError={verifyError ?? undefined}
+          message={message}
+          verifying={verifying}
+        />
       </div>
     </div>
   );
