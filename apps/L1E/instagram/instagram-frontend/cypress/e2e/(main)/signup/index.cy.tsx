@@ -2,12 +2,15 @@ describe("Sign-up Page", () => {
     beforeEach(() => {
         cy.visit('/signup', { failOnStatusCode: false });
     });
- 
+
     it('1. Should render sign-up', () => {
         cy.get('[data-cy=Sign-Up-Page]').should('be.visible');
     });
 
     it('2. When user does not enter email, it should display error message', () => {
+        cy.get('[data-cy=Sign-Up-Password-Input]').type('Password1');
+        cy.get('[data-cy=Sign-Up-Full-Name-Input]').type('Test User');
+        cy.get('[data-cy=Sign-Up-Username-Input]').type('testuser123');
         cy.get('[data-cy=Sign-Up-Submit-Button]').click();
         cy.get('[data-cy=Sign-Up-Email-Input-Error-Message]').should('be.visible');
         cy.get('[data-cy=Sign-Up-Email-Input-Error-Message]').should('contain.text', 'Email is required')
@@ -15,6 +18,9 @@ describe("Sign-up Page", () => {
 
     it('3. When user enters invalid email, it should display error message', () => {
         cy.get('[data-cy=Sign-Up-Email-Input]').type('Naraa')
+        cy.get('[data-cy=Sign-Up-Password-Input]').type('Password1');
+        cy.get('[data-cy=Sign-Up-Full-Name-Input]').type('Test User');
+        cy.get('[data-cy=Sign-Up-Username-Input]').type('testuser123');
         cy.get('[data-cy=Sign-Up-Submit-Button]').click();
         cy.get('[data-cy=Sign-Up-Email-Input-Error-Message]').should('be.visible');
         cy.get('[data-cy=Sign-Up-Email-Input-Error-Message]').should('contain.text', 'Invalid email address');
@@ -44,7 +50,7 @@ describe("Sign-up Page", () => {
         cy.get('[data-cy=Sign-Up-Submit-Button]').click();
         cy.get('[data-cy=Sign-Up-Full-Name-Input-Error-Message]').should('be.visible');
         cy.get('[data-cy=Sign-Up-Full-Name-Input-Error-Message]').should('contain.text', 'Full name must be at least 2 characters')
-    }) 
+    })
 
     it('8. When user does not enter username, it should display error message', () => {
         cy.get('[data-cy=Sign-Up-Submit-Button]').click();

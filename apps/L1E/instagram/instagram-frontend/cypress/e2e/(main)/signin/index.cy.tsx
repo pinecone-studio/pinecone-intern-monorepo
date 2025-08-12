@@ -8,6 +8,7 @@ describe('Sign-In Page', () => {
     });
 
     it('2. When user does not enter email address, it should display error message', () => {
+        cy.get('[data-cy=Sign-In-Password-Input]').type('Password1');
         cy.get('[data-cy=Sign-In-Submit-Button]').click();
         cy.get('[data-cy=Sign-In-Email-Input-Error-Message]').should('be.visible');
         cy.get('[data-cy=Sign-In-Email-Input-Error-Message]').should('contain.text', 'Email is required')
@@ -22,12 +23,14 @@ describe('Sign-In Page', () => {
     })
 
     it('4. When user does not enter password, it should display error message', () => {
+        cy.get('[data-cy=Sign-In-Email-Input]').type('Naraa@gmail.com');
         cy.get('[data-cy=Sign-In-Submit-Button]').click();
         cy.get('[data-cy=Sign-In-Password-Input-Error-Message]').should('be.visible');
         cy.get('[data-cy=Sign-In-Password-Input-Error-Message]').should('contain.text', "Password is required");
     })
 
     it('5. When user enters less than 6 characters on password input, it should display error message', () => {
+        cy.get('[data-cy=Sign-In-Email-Input]').type('Naraa@gmail.com');
         cy.get('[data-cy=Sign-In-Password-Input]').type('Naraa');
         cy.get('[data-cy=Sign-In-Submit-Button]').click();
         cy.get('[data-cy=Sign-In-Password-Input-Error-Message]').should('be.visible');
@@ -36,6 +39,7 @@ describe('Sign-In Page', () => {
 
      it('6. When user enters unregistered email address, it should display error message', () => {
         cy.get('[data-cy=Sign-In-Email-Input]').type('Naran@gmail.com');
+        cy.get('[data-cy=Sign-In-Password-Input]').type('Password1');
         cy.get('[data-cy=Sign-In-Submit-Button]').click();
         cy.get('[data-cy=Sign-In-Email-Input-Error-Message]').should('be.visible');
         cy.get('[data-cy=Sign-In-Email-Input-Error-Message]').should('contain.text', 'A user with that email does not exist.')
