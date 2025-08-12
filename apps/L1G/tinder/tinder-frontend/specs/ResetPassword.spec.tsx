@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useForgotPasswordMutation } from '@/generated';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { ResetPassword } from '@/components/ResetPassword';
-jest.mock('next/router', () => ({ useRouter: jest.fn() }));
+jest.mock('next/navigation', () => ({ useRouter: jest.fn() }));
 jest.mock('@/generated', () => ({ useForgotPasswordMutation: jest.fn() }));
 describe('ResetPassword Component', () => {
   const mockOnSuccess = jest.fn();
