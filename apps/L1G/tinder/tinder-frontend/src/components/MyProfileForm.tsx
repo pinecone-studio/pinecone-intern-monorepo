@@ -10,6 +10,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '@/components/ui/input';
 import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
+import { MultiSelect } from './MultiSelect';
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -17,7 +18,7 @@ const formSchema = z.object({
   birthDate: z.date({ message: 'A date of birth is required.' }),
   genderPrefence: z.string().min(1),
   bio: z.string().max(200, { message: 'Bio must be less than 200 characters' }),
-  interests: z.string().max(100),
+  interests: z.array(z.string()).optional(),
   profession: z.string().max(100, { message: 'Profession must be less than 100 characters' }),
   school: z.string().max(100, { message: 'School must be less than 100 characters' }),
 });
@@ -31,7 +32,7 @@ export const MyProfileForm = () => {
       birthDate: new Date('2000-01-01'),
       genderPrefence: '',
       bio: '',
-      interests: '',
+      interests: [],
       profession: '',
       school: '',
     },
@@ -105,7 +106,16 @@ export const MyProfileForm = () => {
               <FormItem>
                 <FormLabel className="flex">Gender Preference</FormLabel>
                 <FormControl>
-                  <Input className="rounded-md" {...field} />
+                  <Select>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Theme" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="light">Light</SelectItem>
+                      <SelectItem value="dark">Dark</SelectItem>
+                      <SelectItem value="system">System</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -132,8 +142,24 @@ export const MyProfileForm = () => {
               <FormItem>
                 <FormLabel className="flex">Interests</FormLabel>
                 <FormControl>
-                  <Input className="rounded-md" {...field} />
+                  <MultiSelect
+                    options={[
+                      { value: 'music', label: 'Music' },
+                      { value: 'sports', label: 'Sports' },
+                      { value: 'reading', label: 'Reading' },
+                      { value: 'coding', label: 'Coding' },
+                      { value: 'travel', label: 'Travel' },
+                      { value: 'gaming', label: 'Gaming' },
+                      { value: 'cooking', label: 'Cooking' },
+                      { value: 'art', label: 'Art' },
+                      { value: 'photography', label: 'Photography' },
+                      { value: 'fitness', label: 'Fitness' },
+                    ]}
+                    value={field.value}
+                    maxCount={10}
+                  />
                 </FormControl>
+                <FormDescription>You can select up to a maximum of 10 interests.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
