@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { useForgotPasswordMutation } from '@/generated';
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const passwordSchema = z
   .string()
