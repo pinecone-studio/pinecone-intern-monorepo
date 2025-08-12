@@ -1,4 +1,4 @@
-import { ApolloWrapper } from '@/components/providers';
+import { ApolloWrapper, AuthProvider } from '@/components/providers';
 import './global.css';
 import { PropsWithChildren } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,9 +13,11 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html lang="en">
       <body>
         <Sidebar />
-        {/* Uncomment the following line to enable Apollo Client */}
-        {/* <ApolloWrapper>{children}</ApolloWrapper> */}
-        {children}
+        <ApolloWrapper>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </ApolloWrapper>
       </body>
     </html>
   );
