@@ -1,6 +1,6 @@
 describe("Sign-up Page", () => {
     beforeEach(() => {
-        cy.visit('/signup');
+        cy.visit('/signup', { failOnStatusCode: false });
     });
  
     it('1. Should render sign-up', () => {

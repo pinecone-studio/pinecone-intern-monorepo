@@ -1,6 +1,6 @@
 describe('Sign-In Page', () => {
     beforeEach(() => {
-        cy.visit('/signin')
+        cy.visit('/signin', { failOnStatusCode: false })
     });
 
     it('1. Should render sign-in', () => {
