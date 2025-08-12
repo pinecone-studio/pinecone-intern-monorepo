@@ -2,7 +2,6 @@
 import { Separator } from '@/components/ui/separator';
 import { useState, useRef } from 'react';
 import axios from 'axios';
-import { useUploadImagesMutation } from '@/generated';
 import { X, Plus, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -10,7 +9,6 @@ import { Button } from '@/components/ui/button';
 export const MyImages = () => {
   const [uploadedImages, setUploadedImages] = useState<string[]>(['', '', '', '', '', '']);
   const [isUploading, setIsUploading] = useState<boolean[]>([false, false, false, false, false, false]);
-  const [uploadImagesMutation, { loading }] = useUploadImagesMutation();
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -74,7 +72,7 @@ export const MyImages = () => {
     updateUploadingState(index, false);
   };
   return (
-    <>
+    <div className="flex flex-col w-[672px] max-w-[672px]">
       <div className="flex flex-col gap-[1px] justify-start items-start ">
         <p className="text-[18px] font-sans font-[500] text-[#09090B]">Your Images</p>
         <p className="text-[14px] font-sans font-[400] text-[#71717A]">Please choose an image that represents you.</p>
@@ -120,6 +118,6 @@ export const MyImages = () => {
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 };

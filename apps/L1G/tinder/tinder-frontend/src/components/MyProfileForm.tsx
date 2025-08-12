@@ -32,7 +32,7 @@ export const MyProfileForm = () => {
     console.log('working');
   }
   return (
-    <>
+    <div className="flex flex-col w-[672px] max-w-[672px]">
       <div className="flex flex-col gap-[1px] justify-start items-start ">
         <p className="text-[18px] font-sans font-[500] text-[#09090B]">Personal Information</p>
         <p className="text-[14px] font-sans font-[400] text-[#71717A]">This is how others will see you on the site.</p>
@@ -146,6 +146,6 @@ export const MyProfileForm = () => {
           </Button>
         </form>
       </Form>
-    </>
+    </div>
   );
 };
