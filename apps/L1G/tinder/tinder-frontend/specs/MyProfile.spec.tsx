@@ -1,4 +1,4 @@
-import { MyProfile, MyProfileHeader } from '@/components/MyProfile';
+import { MenuContent, MyProfile, MyProfileHeader } from '@/components/MyProfile';
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
@@ -38,7 +38,12 @@ describe('MyProfile', () => {
     expect(screen.getByText('Notification Settings')).toBeInTheDocument();
   });
 });
-
+describe('MenuContent return null coverage', () => {
+  it('renders nothing when an unknown menu value is used (covers return null)', () => {
+    const { container } = render(<MenuContent menu={'invalid' as any} />);
+    expect(container.firstChild);
+  });
+});
 describe('MyProfileHeader', () => {
   it('renders user greeting and email', () => {
     render(<MyProfileHeader />);

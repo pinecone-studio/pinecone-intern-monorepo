@@ -48,7 +48,7 @@ const SidebarMenu = ({ menu, setMenu }: { menu: MenuType; setMenu: (_m: MenuType
   );
 };
 
-const MenuContent = ({ menu }: { menu: MenuType }) => {
+export const MenuContent = ({ menu }: { menu: MenuType }) => {
   switch (menu) {
     case 'profile':
       return <MyProfileForm />;
