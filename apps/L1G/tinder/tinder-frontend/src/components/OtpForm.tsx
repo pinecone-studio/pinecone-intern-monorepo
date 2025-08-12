@@ -43,7 +43,7 @@ const OTPFieldRender = ({ field }: { field: ControllerRenderProps<z.infer<typeof
 
 const OTPInputField = ({ form }: { form: OTPFormProps['form'] }) => <FormField data-testid="otp" control={form.control} name="otp" render={({ field }) => <OTPFieldRender field={field} />} />;
 
-export const OTPForm = ({ form, onSubmit, timeLeft, handleResend, resending, resendError, message, verifying, verifyError }: OTPFormProps) => {
+export const OtpForm = ({ form, onSubmit, timeLeft, handleResend, resending, resendError, message, verifying, verifyError }: OTPFormProps) => {
   return (
     <Form {...form}>
       <form data-testid="otp-form" onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col justify-center items-center gap-4">

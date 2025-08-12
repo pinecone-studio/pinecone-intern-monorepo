@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useVerifyOtpMutation, useRequestSignupMutation, OtpType } from '@/generated';
 import { ResetPassword } from './ResetPassword';
-import { OTPForm } from './OTPForm';
+import { OtpForm } from './OtpForm';
 
 export const FormSchema = z.object({
   otp: z.string().length(4, { message: 'Your one-time password must be 4 digits.' }).regex(/^\d+$/, { message: 'OTP must contain only digits.' }),
@@ -108,7 +108,7 @@ export const ConfirmEmail = ({ onSuccess, email }: ConfirmEmailProps) => {
       </div>
 
       <div className="w-full flex justify-center items-center gap-4">
-        <OTPForm
+        <OtpForm
           form={form}
           onSubmit={onSubmit}
           timeLeft={timeLeft}
