@@ -1,5 +1,5 @@
-mutation Signup($password: String!, $name: String) {
-  signup(password: $password, name: $name) {
+mutation Signup($password: String!, $name: String, $otpId: String!) {
+  signup(password: $password, name: $name, otpId: $otpId) {
     id
     name
     email
