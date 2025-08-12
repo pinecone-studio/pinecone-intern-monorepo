@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useRouter } from "next/navigation"
-import { InputWithToggle } from "../components/InputWithToggle"
 import Image from "next/image"
 
 const inputs = [
@@ -99,11 +98,6 @@ const SignUpPage = () => {
                                                 <FormItem>
                                                     <FormControl>
                                                         <Input placeholder={input.placeholder} {...field} type={input.type} className="rounded-md h-[38px]" data-cy={`Sign-Up-${input.message}-Input`} />
-                                                        {/* {
-                                                            input.type === "password"
-                                                                ? <InputWithToggle {...field} placeholder={input.placeholder} type={input.type} className="rounded-md h-[38px]" data-cy={`Sign-Up-${input.message}-Input`} />
-                                                                : <Input placeholder={input.placeholder} {...field} type={input.type} className="rounded-md h-[38px]" data-cy={`Sign-Up-${input.message}-Input`} />
-                                                        } */}
                                                     </FormControl>
                                                     <div
                                                         data-cy={`Sign-Up-${input.message}-Input-Error-Message`}
