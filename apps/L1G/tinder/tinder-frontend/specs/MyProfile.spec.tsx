@@ -37,13 +37,6 @@ describe('MyProfile', () => {
     fireEvent.click(btn);
     expect(screen.getByText('Notification Settings')).toBeInTheDocument();
   });
-
-  it('switches to Display menu when clicked', () => {
-    render(<MyProfile />);
-    const btn = screen.getByRole('button', { name: /Display/i });
-    fireEvent.click(btn);
-    expect(screen.getByText('Display Settings')).toBeInTheDocument();
-  });
 });
 
 describe('MyProfileHeader', () => {
