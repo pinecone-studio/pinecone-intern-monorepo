@@ -8,7 +8,7 @@ import { Calendar } from '@/components/ui/calendar';
 
 type Props = { control: Control<any> };
 
-export function BirthDateField({ control }: Props) {
+export const BirthDateField = ({ control }: Props) => {
   return (
     <FormField
       control={control}
@@ -35,4 +35,4 @@ export function BirthDateField({ control }: Props) {
       )}
     />
   );
-}
+};

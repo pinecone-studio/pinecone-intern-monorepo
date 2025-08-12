@@ -4,7 +4,7 @@ import { Control } from 'react-hook-form';
 
 type Props = { control: Control<any> };
 
-export function NameEmailFields({ control }: Props) {
+export const NameEmailFields = ({ control }: Props) => {
   return (
     <div className="flex gap-6">
       <FormField
@@ -35,4 +35,4 @@ export function NameEmailFields({ control }: Props) {
       />
     </div>
   );
-}
+};
