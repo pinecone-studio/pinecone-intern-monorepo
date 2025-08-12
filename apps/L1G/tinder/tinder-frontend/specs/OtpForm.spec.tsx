@@ -5,9 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import '@testing-library/jest-dom';
 import { FormSchema } from '@/components/ConfirmEmail';
-import { OTPForm } from '@/components/OTPForm';
+import { OtpForm } from '@/components/OtpForm';
 
-type TestProps = Partial<React.ComponentProps<typeof OTPForm>>;
+type TestProps = Partial<React.ComponentProps<typeof OtpForm>>;
 
 const Wrapper = (props: TestProps = {}) => {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -27,7 +27,7 @@ const Wrapper = (props: TestProps = {}) => {
     verifyError: undefined,
   };
 
-  return <OTPForm {...{ ...defaultProps, ...props }} />;
+  return <OtpForm {...{ ...defaultProps, ...props }} />;
 };
 
 describe('OTPForm', () => {
