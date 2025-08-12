@@ -2,7 +2,7 @@ import type { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: process.env.BACKEND_URL,
+  schema: process.env.NEXT_PUBLIC_API_UR,
   documents: ['apps/L1E/instagram/instagram-frontend/src/**/*.graphql'],
   generates: {
     'apps/L1E/instagram/instagram-frontend/src/generated/index.ts': {
