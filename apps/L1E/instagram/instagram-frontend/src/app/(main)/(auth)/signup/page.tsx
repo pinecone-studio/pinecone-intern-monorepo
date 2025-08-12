@@ -12,7 +12,6 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useRouter } from "next/navigation"
 import Image from "next/image"
 
 const inputs = [
@@ -45,7 +44,6 @@ const inputs = [
 const Users = ["Nake", "Naka", "Naak", "Naraa", "Naagii"] 
 
 const SignUpPage = () => {
-    const router = useRouter();
 
     const formSchema = z.object({
         email: z.string().min(1, { message: "Email is required" }).email({ message: "Invalid email address" }),
@@ -73,8 +71,9 @@ const SignUpPage = () => {
         },
     });
 
-    const onSubmit = async () => {
-        router.push("/signin");
+    const onSubmit = async () => {  
+        // Navigate to signin page after successful form submission
+        window.location.href = '/signin';
     };
 
     return (

@@ -12,7 +12,6 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useRouter } from "next/navigation"
 import Image from "next/image"
 
 const inputs = [
@@ -33,7 +32,6 @@ const inputs = [
 const EmailAdresses = ["Nake@gmail.com", "Naka@gmail.com", "Naak@gmail.com", "Naraa@gmail.com", "Naagii@gmail.com"]
 
 const SignInPage = () => {
-    const router = useRouter();
 
     const formSchema = z.object({
         email: z.string().min(1, {
@@ -55,8 +53,7 @@ const SignInPage = () => {
         },
     });
 
-    const onSubmit = async () => {
-        //    router.push("/signup");
+    const onSubmit = async () => {  
     };
 
     return (

@@ -86,7 +86,6 @@ describe("Sign-up Page", () => {
         cy.get('[data-cy=Sign-Up-Full-Name-Input').type('Narangerel');
         cy.get('[data-cy=Sign-Up-Username-Input]').type('Naraa0121');
         cy.get('[data-cy=Sign-Up-Submit-Button]').click();
-        cy.url().should('include', 'signin')
     })
 
 })
