@@ -53,7 +53,7 @@ export const CreateTableModal = ({ refetch }: CreateTableModalProps) => {
   };
 
   return (
-    <div data-testid="Create-Table" className="w-[600px] flex justify-between items-center">
+    <div data-testid="Create-Table" className="w-full flex justify-between items-center">
       <Toaster position="top-center" />
       <h1 className="font-semibold text-[28px]">Ширээ</h1>
       <Dialog open={open} onOpenChange={setOpen}>

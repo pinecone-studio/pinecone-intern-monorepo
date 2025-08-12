@@ -21,14 +21,16 @@ export const TableGrid = () => {
   };
 
   return (
-    <div className="flex w-fit h-fit flex-col gap-4">
+    <div className="flex sm:w-[600px] w-full h-fit flex-col gap-4 px-4">
       <CreateTableModal refetch={refresh} />
-      <div className="flex flex-col p-4 bg-white border border-solid border-[#E4E4E7] rounded-md">
+      <div className="flex flex-col p-4 bg-white border border-solid border-[#E4E4E7] rounded-md h-fit max-h-[450px] overflow-scroll">
         {tableData?.map((table) => (
           <div data-testid="admin-table" key={table.tableId}>
             <div className="flex py-4 w-full justify-between items-center">
               <h1 className="font-bold text-[18px]">{table.tableName}</h1>
               <div className="flex justify-around gap-2">
+                <SeeTableModal data={table} />
+                <SeeTableModal data={table} />
                 <SeeTableModal data={table} />
               </div>
             </div>
