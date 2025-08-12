@@ -5,6 +5,7 @@ import Image from 'next/image';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
     <html lang="mn">
       <body>
         <AppRouterCacheProvider>
@@ -38,6 +39,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         </AppRouterCacheProvider>
       </body>
     </html>
+    </ErrorBoundary>
   );
 };
 
