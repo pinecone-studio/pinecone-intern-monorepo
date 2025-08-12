@@ -18,11 +18,3 @@ import '@cypress/code-coverage/support';
 import 'cypress-wait-until';
 import './commands';
 
-// Handle 401 errors globally
-Cypress.on('uncaught:exception', (err, runnable) => {
-  // returning false here prevents Cypress from failing the test
-  if (err.message.includes('401') || err.message.includes('Unauthorized')) {
-    return false;
-  }
-  return true;
-});

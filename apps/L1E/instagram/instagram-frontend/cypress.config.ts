@@ -28,7 +28,6 @@ const config: Cypress.ConfigOptions<unknown> = {
     requestTimeout: 30000,
     trashAssetsBeforeRuns: true,
     retries: 2,
-    baseUrl: 'http://localhost:4201',
     reporter: '../../../../node_modules/cypress-multi-reporters',
     reporterOptions: {
       reporterEnabled: 'mochawesome',
