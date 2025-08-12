@@ -43,7 +43,7 @@ const inputs = [
     },
 ] as const;
 
-const Users = ["Nake", "Naka", "Naak", "Naraa", "Naagii"]
+const Users = ["Nake", "Naka", "Naak", "Naraa", "Naagii"] 
 
 const SignUpPage = () => {
     const router = useRouter();
@@ -74,16 +74,8 @@ const SignUpPage = () => {
         },
     });
 
-    const onSubmit = async (value: z.infer<typeof formSchema>) => {
-        localStorage.setItem(
-            'userData',
-            JSON.stringify({
-                username: value.username,
-                email: value.email,
-            })
-        );
+    const onSubmit = async () => {
         router.push("/signin");
-
     };
 
     return (

@@ -56,14 +56,7 @@ const SignInPage = () => {
         },
     });
 
-    const onSubmit = async (value: z.infer<typeof formSchema>) => {
-        localStorage.setItem(
-            'userData',
-            JSON.stringify({
-              email: value.email,
-            })
-          );
-
+    const onSubmit = async () => {
            router.push("/signup");
     };
 
