@@ -23,9 +23,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           </a>
         </div>
       </div>
-      <div className="flex flex-col w-full h-[100vh] bg-[#F4F4F5] items-center py-4">
+      <div className="flex flex-col w-full h-[100vh] bg-[#F4F4F5] items-center py-4 justify-between">
         {children}
-        <div className="flex py-4 text-[#3F4145] text-sm">©2024 Copyright</div>
+        <div className="flex p-4 text-[#3F4145] text-sm">©2024 Copyright</div>
       </div>
     </div>
   );
