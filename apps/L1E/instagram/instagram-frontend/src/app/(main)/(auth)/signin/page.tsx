@@ -57,20 +57,14 @@ const SignInPage = () => {
     });
 
     const onSubmit = async (value: z.infer<typeof formSchema>) => {
-        try {
-            // const res = await axios.post(`${BASE_URL}/auth/signin`, {
-            //     email: value.email,
-            //     password: value.password,
-            // });
+        localStorage.setItem(
+            'userData',
+            JSON.stringify({
+              email: value.email,
+            })
+          );
 
-            console.log(value, "this is value")
-
-            router.push("/signup");
-
-        } catch (error) {
-            console.log((error as Error).message);
-        }
-
+           router.push("/signup");
     };
 
     return (

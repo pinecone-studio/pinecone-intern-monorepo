@@ -75,21 +75,14 @@ const SignUpPage = () => {
     });
 
     const onSubmit = async (value: z.infer<typeof formSchema>) => {
-        try {
-            // const res = await axios.post(`${BASE_URL}/auth/signup`, {
-            //     email: value.email,
-            //     password: value.password,
-            //     fullname: value.fullname,
-            //     username: value.username,
-            // });
-
-            console.log(value, "this is value")
-
-            router.push("/signin");
-
-        } catch (error) {
-            console.log((error as Error).message);
-        }
+        localStorage.setItem(
+            'userData',
+            JSON.stringify({
+                username: value.username,
+                email: value.email,
+            })
+        );
+        router.push("/signin");
 
     };
 
@@ -98,7 +91,7 @@ const SignUpPage = () => {
             <div className="w-[364px] h-fit space-y-3 mx-auto pt-[105px] rounded-[10px]">
                 <div className="bg-white py-12 rounded-[10px]">
                     <div className="pb-3">
-                        <Image src="../Logo.svg" alt="instaLogo" className="w-full px-[89px]" width={364} height={292}/>
+                        <Image src="../Logo.svg" alt="instaLogo" className="w-full px-[89px]" width={364} height={292} />
                     </div>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 px-6 w-full">

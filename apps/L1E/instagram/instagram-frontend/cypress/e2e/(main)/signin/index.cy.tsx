@@ -40,4 +40,11 @@ describe('Sign-In Page', () => {
         cy.get('[data-cy=Sign-In-Email-Input-Error-Message]').should('be.visible');
         cy.get('[data-cy=Sign-In-Email-Input-Error-Message]').should('contain.text', 'A user with that email does not exist.')
     })
+
+    it('7 When user enters all values, it should navigate to signup page', () => {
+        cy.get('[data-cy=Sign-In-Email-Input]').type('Naraa@gmail.com');
+        cy.get('[data-cy=Sign-In-Password-Input]').type('Naraa0121');
+        cy.get('[data-cy=Sign-In-Submit-Button]').click();
+        cy.url().should('include', 'signup')
+    })
 })
