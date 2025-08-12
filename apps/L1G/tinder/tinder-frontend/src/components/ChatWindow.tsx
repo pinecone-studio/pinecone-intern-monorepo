@@ -55,7 +55,7 @@ const ChatWindow = () => {
         <MessageSquareDashedIcon size={48} color="gray" />
         <p className="text-[14px] font-medium">Say Hi!</p>
         <p className="text-[14px] text-[#71717A] text-center max-w-[358px]">
-          You've got a match! Send a message to start chatting.
+          You have got a match! Send a message to start chatting.
         </p>
       </div>
 

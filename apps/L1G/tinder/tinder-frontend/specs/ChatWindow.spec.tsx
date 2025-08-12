@@ -38,7 +38,7 @@ describe('ChatWindow', () => {
     render(<ChatWindow />);
     
     expect(screen.getByText('Say Hi!')).toBeInTheDocument();
-    expect(screen.getByText("You've got a match! Send a message to start chatting.")).toBeInTheDocument();
+    expect(screen.getByText("You have got a match! Send a message to start chatting.")).toBeInTheDocument();
     expect(screen.getByTestId('message-icon')).toBeInTheDocument();
   });
 

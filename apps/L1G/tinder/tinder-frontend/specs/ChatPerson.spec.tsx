@@ -9,11 +9,13 @@ jest.mock('next/image', () => ({
   },
 }));
 
-jest.mock('@/components/ChatWindow', () => {
-  return function MockChatWindow() {
-    return <div data-testid="chat-window">ChatWindow Component</div>;
-  };
-});
+
+jest.mock('@/components/ChatWindow', () => ({
+  __esModule: true,
+  default: () => <div data-testid="chat-window">ChatWindow Component</div>,
+}));
+
+
 
 jest.mock('lucide-react', () => ({
   MessageSquareDashedIcon: () => <div data-testid="message-icon">MessageIcon</div>,
