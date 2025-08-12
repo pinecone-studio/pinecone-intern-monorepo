@@ -57,7 +57,7 @@ const SignInPage = () => {
     });
 
     const onSubmit = async () => {
-           router.push("/signup");
+        //    router.push("/signup");
     };
 
     return (
@@ -79,11 +79,12 @@ const SignInPage = () => {
                                             render={({ field }) => (
                                                 <FormItem>
                                                     <FormControl>
-                                                        {
+                                                         <Input placeholder={input.placeholder} {...field} type={input.type} className="rounded-md h-[38px]" data-cy={`Sign-In-${input.message}-Input`} />
+                                                        {/* {
                                                             input.type === "password"
                                                                 ? <InputWithToggle {...field} placeholder={input.placeholder} type={input.type} className="rounded-md h-[38px]" data-cy={`Sign-In-${input.message}-Input`} />
                                                                 : <Input placeholder={input.placeholder} {...field} type={input.type} className="rounded-md h-[38px]" data-cy={`Sign-In-${input.message}-Input`} />
-                                                        }
+                                                        } */}
                                                     </FormControl>
                                                     {/* <FormMessage className="text-center" data-cy={`Sign-Up-${input.message}-Input-Error-Message`} /> */}
                                                     <div

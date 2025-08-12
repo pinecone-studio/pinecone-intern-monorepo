@@ -1,13 +1,12 @@
 describe("Sign-up Page", () => {
-    beforeEach(() => {
-        cy.visit('/signup', { failOnStatusCode: false });
-    });
 
     it('1. Should render sign-up', () => {
+        cy.visit('/signup');
         cy.get('[data-cy=Sign-Up-Page]').should('be.visible');
     });
 
     it('2. When user does not enter email, it should display error message', () => {
+        cy.visit('/signup');
         cy.get('[data-cy=Sign-Up-Password-Input]').type('Password1');
         cy.get('[data-cy=Sign-Up-Full-Name-Input]').type('Test User');
         cy.get('[data-cy=Sign-Up-Username-Input]').type('testuser123');
@@ -17,6 +16,7 @@ describe("Sign-up Page", () => {
     })
 
     it('3. When user enters invalid email, it should display error message', () => {
+        cy.visit('/signup');
         cy.get('[data-cy=Sign-Up-Email-Input]').type('Naraa')
         cy.get('[data-cy=Sign-Up-Password-Input]').type('Password1');
         cy.get('[data-cy=Sign-Up-Full-Name-Input]').type('Test User');
@@ -27,12 +27,14 @@ describe("Sign-up Page", () => {
     });
 
     it('4. When user does not enter password, it should display error message', () => {
+        cy.visit('/signup');
         cy.get('[data-cy=Sign-Up-Submit-Button').click();
         cy.get('[data-cy=Sign-Up-Password-Input-Error-Message]').should('be.visible');
         cy.get('[data-cy=Sign-Up-Password-Input-Error-Message]').should('contain.text', 'Password is required');
     })
 
     it('5. When user enters less than 6 characters on password input, it should display error message', () => {
+        cy.visit('/signup');
         cy.get('[data-cy=Sign-Up-Password-Input]').type('Naraa');
         cy.get('[data-cy=Sign-Up-Submit-Button]').click();
         cy.get('[data-cy=Sign-Up-Password-Input-Error-Message]').should('be.visible');
@@ -40,12 +42,14 @@ describe("Sign-up Page", () => {
     })
 
     it('6. When user does not enter full name, it should display error message', () => {
+        cy.visit('/signup');
         cy.get('[data-cy=Sign-Up-Submit-Button]').click();
         cy.get('[data-cy=Sign-Up-Full-Name-Input-Error-Message]').should('be.visible');
         cy.get('[data-cy=Sign-Up-Full-Name-Input-Error-Message]').should('contain.text', 'Full name is required');
     })
 
     it('7. When user enters less than 2 characters on full name input, it should display error message', () => {
+        cy.visit('/signup');
         cy.get('[data-cy=Sign-Up-Full-Name-Input]').type('N');
         cy.get('[data-cy=Sign-Up-Submit-Button]').click();
         cy.get('[data-cy=Sign-Up-Full-Name-Input-Error-Message]').should('be.visible');
@@ -53,12 +57,14 @@ describe("Sign-up Page", () => {
     })
 
     it('8. When user does not enter username, it should display error message', () => {
+        cy.visit('/signup');
         cy.get('[data-cy=Sign-Up-Submit-Button]').click();
         cy.get('[data-cy=Sign-Up-Username-Input-Error-Message]').should('be.visible');
         cy.get('[data-cy=Sign-Up-Username-Input-Error-Message]').should('contain.text', 'Username is required');
     })
 
     it('9. When user enters less than 2 characters on username input', () => {
+        cy.visit('/signup');
         cy.get('[data-cy=Sign-Up-Username-Input]').type('N');
         cy.get('[data-cy=Sign-Up-Submit-Button]').click();
         cy.get('[data-cy=Sign-Up-Username-Input-Error-Message]').should('be.visible');
@@ -66,6 +72,7 @@ describe("Sign-up Page", () => {
     })
 
     it('10. When the name user enters on username input already exists on database', () => {
+        cy.visit('/signup');
         cy.get('[data-cy=Sign-Up-Username-Input]').type('Naka');
         cy.get('[data-cy=Sign-Up-Submit-Button]').click();
         cy.get('[data-cy=Sign-Up-Username-Input-Error-Message]').should('be.visible');
@@ -73,6 +80,7 @@ describe("Sign-up Page", () => {
     })
 
     it('11. When user enters all values, it should navigate to login page', () => {
+        cy.visit('/signup');
         cy.get('[data-cy=Sign-Up-Email-Input]').type('Naraa@gmail.com');
         cy.get('[data-cy=Sign-Up-Password-Input').type('Naraa0121');
         cy.get('[data-cy=Sign-Up-Full-Name-Input').type('Narangerel');

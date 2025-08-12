@@ -98,11 +98,12 @@ const SignUpPage = () => {
                                             render={({ field }) => (
                                                 <FormItem>
                                                     <FormControl>
-                                                        {
+                                                        <Input placeholder={input.placeholder} {...field} type={input.type} className="rounded-md h-[38px]" data-cy={`Sign-Up-${input.message}-Input`} />
+                                                        {/* {
                                                             input.type === "password"
                                                                 ? <InputWithToggle {...field} placeholder={input.placeholder} type={input.type} className="rounded-md h-[38px]" data-cy={`Sign-Up-${input.message}-Input`} />
                                                                 : <Input placeholder={input.placeholder} {...field} type={input.type} className="rounded-md h-[38px]" data-cy={`Sign-Up-${input.message}-Input`} />
-                                                        }
+                                                        } */}
                                                     </FormControl>
                                                     <div
                                                         data-cy={`Sign-Up-${input.message}-Input-Error-Message`}
