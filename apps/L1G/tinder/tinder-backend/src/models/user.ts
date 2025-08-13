@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
   images: { type: [String], default: [] },
   likedBy: { type: [mongoose.Schema.Types.ObjectId], ref: 'User', default: [] },
   likedTo: { type: [mongoose.Schema.Types.ObjectId], ref: 'User', default: [] },
-  matched: { type: [mongoose.Schema.Types.ObjectId], ref: 'User', default: [] },
+  matchIds: { type: [mongoose.Schema.Types.ObjectId], ref: 'Match', default: [] },
 });
 
 export const Usermodel = mongoose.models.User || mongoose.model('User', userSchema);

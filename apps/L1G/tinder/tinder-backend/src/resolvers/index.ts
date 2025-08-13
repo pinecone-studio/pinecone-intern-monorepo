@@ -1,12 +1,14 @@
-import { login, signup, like, createInterest, updateInterest, deleteInterest, dislike, requestSignup, verifyOtp, uploadImages } from './mutations';
+import { login, signup, like, createInterest, updateInterest, deleteInterest, dislike, requestSignup, verifyOtp, uploadImages, sendMessage, markMessagesAsSeen } from './mutations';
 import { forgotPassword } from './mutations/auth/forgot-password';
-import { getAllInterests, getInterest, getusers } from './queries';
+import { getAllInterests, getChatWithUser, getInterest, getUserAllChatMessages, getusers } from './queries';
 
 export const resolvers = {
   Query: {
     getusers,
     getAllInterests,
     getInterest,
+    getUserAllChatMessages,
+    getChatWithUser,
   },
   Mutation: {
     login,
@@ -20,5 +22,7 @@ export const resolvers = {
     dislike,
     uploadImages,
     forgotPassword,
+    sendMessage,
+    markMessagesAsSeen,
   },
 };
