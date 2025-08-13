@@ -28,7 +28,7 @@ const MenuCard = ({ image, foodName, price }: CardProps) => {
           </div>
         )}
       </div>
-      <div className="flex flex-col mt-1">
+      <div className="flex flex-col mt-1 rounded-t-xl ">
         <p className="text-[14px] truncate">{foodName}</p>
         <p className="text-[18px] font-bold">{price}k</p>
       </div>
