@@ -3,12 +3,13 @@ import { Trash } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DialogContainer } from '../../components/table/DialogContainer';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
-import { useDeleteTableMutation } from '@/generated';
+import { GetTablesQuery, useDeleteTableMutation } from '@/generated';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { ApolloQueryResult } from '@apollo/client';
 
 type DeleteTableModalProps = {
-  refetch: () => Promise<void>;
+  refetch: () => Promise<ApolloQueryResult<GetTablesQuery>>;
   data: string;
 };
 export const DeleteTableModal = ({ data, refetch }: DeleteTableModalProps) => {

@@ -5,14 +5,15 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { DialogContainer } from './DialogContainer';
+import { DialogContainer } from '../../components/table/DialogContainer';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
-import { useCreateTableMutation } from '@/generated';
+import { GetTablesQuery, useCreateTableMutation } from '@/generated';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { ApolloQueryResult } from '@apollo/client';
 
 type CreateTableModalProps = {
-  refetch: () => Promise<void>;
+  refetch: () => Promise<ApolloQueryResult<GetTablesQuery>>;
 };
 
 const formSchema = z.object({
@@ -48,6 +49,8 @@ export const CreateTableModal = ({ refetch }: CreateTableModalProps) => {
 
       setOpen(false);
     } catch (err: unknown) {
+      form.reset();
+      setOpen(false);
       toast.error('Ширээ үүссэн байна! өөр нэр сонгоно уу');
     }
   };

@@ -45,10 +45,6 @@ const getTablesErrorMock: MockedResponse = {
   error: new Error('Network error'),
 };
 
-jest.mock('@/components/table/CreateTableModal', () => ({
-  CreateTableModal: () => <div>CreateTableModal Mock</div>,
-}));
-
 describe('TableGrid Component', () => {
   it('should render table list', async () => {
     const { getAllByTestId } = render(
