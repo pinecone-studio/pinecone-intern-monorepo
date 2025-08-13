@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { MyImages } from '@/components/MyImages';
 import '@testing-library/jest-dom';
 import React from 'react';
@@ -5,6 +6,7 @@ import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 import axios from 'axios';
 import { UploadImagesDocument } from '@/generated';
 import { MockedProvider } from '@apollo/client/testing';
+
 jest.mock('next/image', () => {
   const MockedImage = (props: any) => <img {...props} alt={props.alt || 'mocked image'} />;
   MockedImage.displayName = 'NextImageMock';
@@ -13,6 +15,7 @@ jest.mock('next/image', () => {
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 const apolloMocks = [{ request: { query: UploadImagesDocument, variables: { images: expect.any(Array) } }, result: { data: { uploadImages: { id: 'user123', images: [], __typename: 'User' } } } }];
+
 describe('MyImages', () => {
   beforeEach(() => {
     jest.clearAllMocks();
