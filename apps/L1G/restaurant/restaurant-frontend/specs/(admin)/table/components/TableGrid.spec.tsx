@@ -3,7 +3,7 @@ import { GetTablesDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import { ErrorBoundary } from 'specs/utils/ErrorBoundary';
-
+import '@testing-library/jest-dom';
 const getTablesMock: MockedResponse = {
   request: {
     query: GetTablesDocument,

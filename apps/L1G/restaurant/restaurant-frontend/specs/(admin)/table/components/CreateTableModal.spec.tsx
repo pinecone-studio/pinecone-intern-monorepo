@@ -2,7 +2,7 @@ import { CreateTableModal } from '@/components/table/CreateTableModal';
 import { CreateTableDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, screen, act, fireEvent, waitFor } from '@testing-library/react';
-
+import '@testing-library/jest-dom';
 const refetchMock = jest.fn();
 
 const createTableMock: MockedResponse = {

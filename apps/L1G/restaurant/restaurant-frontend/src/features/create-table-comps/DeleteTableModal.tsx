@@ -27,7 +27,10 @@ export const DeleteTableModal = ({ data, refetch }: DeleteTableModalProps) => {
       toast.success('Ширээ амжилттай устгагдлаа');
 
       setOpen(false);
-    } catch (error) {}
+    } catch (error) {
+      setOpen(false);
+      toast.error('Амжилтгүй');
+    }
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
