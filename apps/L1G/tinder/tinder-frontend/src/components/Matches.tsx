@@ -3,57 +3,80 @@
 import React from 'react';
 import Image from 'next/image';
 
-const matches = [
-  {
-    name: 'Mark Zuckerberg',
-    age: 40,
-    job: 'Software Engineer',
-    avatar: '/profile.jpg',
-  },
-  {
-    name: 'Eleanor Pena',
-    age: 32,
-    job: 'Software Engineer',
-    avatar: '/profile.jpg',
-  },
-  {
-    name: 'Wade Warren',
-    age: 32,
-    job: 'Software Engineer',
-    avatar: '/profile.jpg',
-  },
-];
+interface User {
+  id: number;
+  name: string;
+  age: number;
+  job: string;
+  avatar: string;
+}
 
-export const Matches = () => {
+interface AvatarProps {
+  user: User;
+  size?: number;
+}
+
+const Avatar: React.FC<AvatarProps> = ({ user, size = 48 }) => {
+  const hasImage = !!user.avatar?.trim();
+  const defaultAvatar = '/profile.jpg';
+
+  return (
+    <div className="relative">
+      <Image
+        src={hasImage ? user.avatar : defaultAvatar}
+        alt={user.name || 'Avatar'}
+        width={size}
+        height={size}
+        className="rounded-full object-cover"
+      />
+    </div>
+  );
+};
+
+interface MatchesProps {
+  topRowUsers: User[];
+  selectedUser: User | null;
+  onUserSelect: (user: User) => void;
+}
+
+const Matches: React.FC<MatchesProps> = ({
+  topRowUsers,
+  selectedUser,
+  onUserSelect,
+}) => {
   return (
     <div className="w-full flex justify-center items-center">
       <div className="w-full max-w-[1280px] px-4 border-b border-gray-200">
         <p className="text-[20px] font-medium py-4">Matches</p>
-        <div className="flex items-center gap-8 no-scrollbar py-2">
-          {matches.map((user, idx) => (
-            <div 
-              key={idx} 
-              className="flex flex-col items-center min-w-[100px] p-3 rounded-lg cursor-pointer"
-            >
-              <div className="w-[40px] h-[40px] rounded-full overflow-hidden">
-                <Image
-                  src={user.avatar}
-                  alt={user.name}
-                  width={40}
-                  height={40}
-                  className="object-cover w-full h-full"
-                />
+        <div className="flex gap-8 overflow-x-auto pb-2">
+          {topRowUsers.map((user) => {
+            const isSelected = selectedUser?.id === user.id;
+            return (
+              <div
+                key={user.id}
+                onClick={() => onUserSelect(user)}
+                className={`flex flex-col items-center min-w-[60px] cursor-pointer hover:opacity-80 transition-opacity ${
+                  isSelected ? 'opacity-100' : 'opacity-70'
+                }`}
+              >
+                <Avatar user={user} size={40} />
+                <p
+                  className={`text-[14px] font-medium mt-3 text-center ${
+                    isSelected ? 'text-red-600' : 'text-black'
+                  }`}
+                >
+                  {user.name}, {user.age}
+                </p>
+                <p className="text-[12px] text-gray-500 text-center">{user.job}</p>
               </div>
-              <p className="text-[14px] font-medium mt-3 text-center">
-                {user.name}, {user.age}
-              </p>
-              <p className="text-[12px] text-gray-500 text-center">{user.job}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
   );
 };
+
+export default Matches;
 
 
