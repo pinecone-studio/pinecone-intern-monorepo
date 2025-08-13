@@ -6,7 +6,7 @@ import z from 'zod';
 
 type FormValues = z.infer<typeof profileFormSchema>;
 
-function Wrapper() {
+const Wrapper = () => {
   const methods = useForm<FormValues>({
     defaultValues: {
       name: '',
@@ -28,7 +28,7 @@ function Wrapper() {
       </form>
     </FormProvider>
   );
-}
+};
 
 describe('NameEmailFields', () => {
   it('renders name and email inputs', () => {

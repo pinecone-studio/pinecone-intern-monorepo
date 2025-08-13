@@ -13,7 +13,7 @@ import { NameEmailFields } from './NameEmailFields';
 import { BirthDateField } from './BirthDateField';
 import { Separator } from '@/components/ui/separator';
 
-export const MyProfileForm = () => {
+export const MyProfileForm = ({ onSubmit }: { onSubmit: (_data: z.infer<typeof profileFormSchema>) => void }) => {
   const form = useForm<z.infer<typeof profileFormSchema>>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
@@ -48,10 +48,12 @@ export const MyProfileForm = () => {
             name="genderPrefence"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="flex">Gender Preference</FormLabel>
+                <FormLabel className="flex" htmlFor="genderPreference">
+                  Gender Preference
+                </FormLabel>
                 <FormControl>
                   <Select {...field} onValueChange={field.onChange} defaultValue={field.value}>
-                    <SelectTrigger className="w-[180px]">
+                    <SelectTrigger id="genderPreference" className="w-[180px]">
                       <SelectValue placeholder="" />
                     </SelectTrigger>
                     <SelectContent>
@@ -138,7 +140,7 @@ export const MyProfileForm = () => {
             )}
           />
         </div>
-        <Button type="submit" className="rounded-md w-fit py-2 px-4 bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
+        <Button onClick={form.handleSubmit(onSubmit)} type="submit" className="rounded-md w-fit py-2 px-4 bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
           Update Profile
         </Button>
       </Form>
