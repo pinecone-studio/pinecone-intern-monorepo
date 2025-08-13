@@ -27,6 +27,7 @@ describe('Create Table Modal', () => {
     cy.get('[data-testid="Admin-Create-Table-Dialog-Trigger"]').click();
     cy.get('[data-testid="Admin-Create-Table-Input"]').type('TEST_TEST');
     cy.get('[data-testid="Admin-Create-Table-Button"]').click();
+    cy.get('[data-cy="Admin-Table-Dialog-Close"]').click();
     cy.contains('Ширээ үүссэн байна! өөр нэр сонгоно уу').should('be.visible');
     cy.get('[data-cy="Admin-Delete-Table-Dialog-Trigger"]').wait(3000).last().click();
     cy.get('[data-cy="Admin-Delete-Table-Button"]').click();
