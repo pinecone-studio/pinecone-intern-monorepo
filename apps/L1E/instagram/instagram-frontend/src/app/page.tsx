@@ -1,3 +1,4 @@
+"use client"
 // import Profile from '@/components/Profile';
 import Follow from '@/components/FollowSection';
 import Post from '@/components/Post';

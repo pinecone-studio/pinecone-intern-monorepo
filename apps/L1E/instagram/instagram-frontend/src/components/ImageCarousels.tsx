@@ -1,26 +1,29 @@
 "use client";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { usePost } from "@/components/context/PostContext";
-import { ImagePlus, ArrowLeft } from "lucide-react";
-import Image from "next/image";
+
+import { ImagePlus } from "lucide-react";
+
 
 const ImageCarousel = ({
   selectedImages,
   currentIndex,
   handleNext,
   handlePrev,
+  postStep,
+  onAddImageClick
 }: {
   selectedImages: string[];
   currentIndex: number;
   handleNext: () => void;
   handlePrev: () => void;
+  postStep: string;
+  onAddImageClick: () => void;
 }) => (
-  <div className="relative overflow-hidden rounded-md w-full h-full flex items-center justify-center">
+  <div className="relative overflow-hidden rounded-b-xl  w-[638px] flex items-center justify-center">
+     {postStep === "preview" && ( <div  onClick={onAddImageClick} className="w-[40px] h-[40px] bg-white absolute bottom-[10px] right-[10px] rounded-full flex justify-center items-center"><ImagePlus className="w-[16px] h-[16px] text-black"/></div>)}
     <img
       src={selectedImages[currentIndex]}
       alt={`Preview ${currentIndex + 1}`}
-      className="w-full h-full object-cover"
+      className="w-full  h-[638px] object-cover"
     />
     {currentIndex > 0 && (
       <button
