@@ -5,14 +5,15 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { DialogContainer } from './DialogContainer';
+import { DialogContainer } from '../../components/table/DialogContainer';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
-import { useCreateTableMutation } from '@/generated';
+import { GetTablesQuery, useCreateTableMutation } from '@/generated';
 import { useState } from 'react';
-import { toast, Toaster } from 'sonner';
+import { toast } from 'sonner';
+import { ApolloQueryResult } from '@apollo/client';
 
 type CreateTableModalProps = {
-  refetch: () => Promise<void>;
+  refetch: () => Promise<ApolloQueryResult<GetTablesQuery>>;
 };
 
 const formSchema = z.object({
@@ -48,13 +49,14 @@ export const CreateTableModal = ({ refetch }: CreateTableModalProps) => {
 
       setOpen(false);
     } catch (err: unknown) {
+      form.reset();
+      setOpen(false);
       toast.error('Ширээ үүссэн байна! өөр нэр сонгоно уу');
     }
   };
 
   return (
     <div data-testid="Create-Table" className="w-full flex justify-between items-center">
-      <Toaster position="top-center" />
       <h1 className="font-semibold text-[28px]">Ширээ</h1>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger data-testid="Admin-Create-Table-Dialog-Trigger" className="bg-white text-[14px] font-medium rounded-md flex w-fit px-4 h-[36px] items-center gap-1">

@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { MyProfileForm } from './MyProfileForm';
 import { MyImages } from './MyImages';
 
-type MenuType = 'profile' | 'images' | 'appearance' | 'notifications' | 'display';
+type MenuType = 'profile' | 'images' | 'appearance' | 'notifications';
 
 export const MyProfile = () => {
   const [menu, setMenu] = useState<MenuType>('profile');
@@ -28,7 +28,6 @@ const SidebarMenu = ({ menu, setMenu }: { menu: MenuType; setMenu: (_m: MenuType
     { label: 'Images', value: 'images' },
     { label: 'Appearance', value: 'appearance' },
     { label: 'Notifications', value: 'notifications' },
-    { label: 'Display', value: 'display' },
   ];
 
   return (

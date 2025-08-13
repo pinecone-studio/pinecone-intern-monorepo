@@ -1,5 +1,5 @@
 // import Profile from '@/components/Profile';
-import Follow from '@/components/Follow_Section';
+import Follow from '@/components/FollowSection';
 import Post from '@/components/Post';
 import Story from '@/components/Story';
 

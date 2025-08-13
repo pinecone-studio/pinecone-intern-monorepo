@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/avatar"
 import Image from 'next/image';
 
-export function Sidebar() {
+export const Sidebar = () => {
   return (
     <div className="fixed left-0 top-0 h-screen  border-r p-4 bg-red-50">
       <div className="inline-flex flex-col h-[1000px] bg-slate-200   p-[36px_32px_16px_16px] justify-between items-start flex-shrink-0">

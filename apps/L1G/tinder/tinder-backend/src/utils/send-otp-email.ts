@@ -16,5 +16,6 @@ export const sendOtpEmail = async (to: string, otp: string) => {
     to,
     subject: 'Your OTP Code',
     html: `<p>Your OTP code is: <strong>${otp}</strong>. It is valid for 5 minutes.</p>`,
+
   });
 };

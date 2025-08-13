@@ -6,7 +6,7 @@ describe('profileFormSchema', () => {
       name: 'John Doe',
       email: 'johndoe@example.com',
       birthDate: new Date('2000-01-01'),
-      genderPrefence: 'male',
+      genderPreference: 'male',
       bio: 'This is a short bio.',
       interests: ['music', 'sports'],
       profession: 'Software Engineer',
@@ -23,7 +23,7 @@ describe('profileFormSchema', () => {
       name: '', // Invalid: empty string
       email: 'invalid-email', // Invalid: not a valid email
       birthDate: 'invalid-date', // Invalid: not a valid date
-      genderPrefence: '', // Invalid: empty string
+      genderPreference: '', // Invalid: empty string
       bio: 'This is a bio that exceeds the 200 characters limit. '.repeat(10), // Invalid: bio too long
       interests: ['music', 'sports'],
       profession: 'Engineer', // Valid, but profession can still be tested
@@ -54,7 +54,7 @@ describe('profileFormSchema', () => {
           code: 'invalid_type',
         }),
         expect.objectContaining({
-          path: ['genderPrefence'],
+          path: ['genderPreference'],
           message: 'String must contain at least 1 character(s)',
           code: 'too_small',
         }),
@@ -73,7 +73,7 @@ describe('profileFormSchema', () => {
       name: 'Jane Doe',
       email: 'janedoe@example.com',
       birthDate: new Date('1990-05-15'),
-      genderPrefence: 'female',
+      genderPreference: 'female',
       bio: 'A valid bio.',
       interests: [], // empty array is valid
       profession: 'Designer',
@@ -91,7 +91,7 @@ describe('profileFormSchema', () => {
       name: 'Jack Smith',
       email: 'jacksmith@example.com',
       birthDate: new Date('1985-12-12'),
-      genderPrefence: 'male',
+      genderPreference: 'male',
       bio: 'This is a bio.',
       interests: ['reading', 'coding'], // valid interests
       profession: 'Writer',
@@ -109,7 +109,7 @@ describe('profileFormSchema', () => {
       name: 'Sarah Lee',
       email: 'sarahlee@example.com',
       birthDate: new Date('1995-03-25'),
-      genderPrefence: 'female',
+      genderPreference: 'female',
       bio: 'Valid bio.',
       interests: ['music'],
       profession: 'A'.repeat(101), // Invalid: profession too long
@@ -129,17 +129,16 @@ describe('profileFormSchema', () => {
     );
   });
 
-  // Test for school max length validation
   it('should fail if school name exceeds the max length of 100 characters', async () => {
     const invalidSchoolData = {
       name: 'Mark Johnson',
       email: 'markjohnson@example.com',
       birthDate: new Date('1992-08-30'),
-      genderPrefence: 'male',
+      genderPreference: 'male',
       bio: 'Valid bio.',
       interests: ['art'],
       profession: 'Artist',
-      school: 'S'.repeat(101), // Invalid: school name too long
+      school: 'S'.repeat(101),
     };
 
     const result = await profileFormSchema.safeParseAsync(invalidSchoolData);
