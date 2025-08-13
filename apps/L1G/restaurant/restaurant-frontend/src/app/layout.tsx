@@ -10,10 +10,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html lang="mn">
       <body>
         <AppRouterCacheProvider>
-          <ApolloWrapper>
-            <Navbar />
-            {children}
-          </ApolloWrapper>
+          <ApolloWrapper>{children}</ApolloWrapper>
           <CssBaseline />
         </AppRouterCacheProvider>
       </body>
