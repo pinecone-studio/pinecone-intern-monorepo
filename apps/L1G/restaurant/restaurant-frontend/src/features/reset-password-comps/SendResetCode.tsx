@@ -11,7 +11,7 @@ import { useSendResetCodeMutation } from '@/generated';
 import { useRouter } from 'next/navigation';
 
 export const StepOne = () => {
-  const [sendResetCode] = useSendResetCodeMutation();
+  const [sendResetCode, { loading }] = useSendResetCodeMutation();
   const router = useRouter();
 
   const formSchema = z.object({
@@ -55,6 +55,16 @@ export const StepOne = () => {
       }
     }
   }
+
+  if (loading) {
+    return (
+      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col gap-2 items-center justify-center">
+        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900 mr-2"></div>
+        <p className="text-center text-[#441500] ">Уншиж байна</p>
+      </div>
+    );
+  }
+
   return (
     <div data-cy="Send-Reset-Code-Page" className="w-screen h-screen flex flex-col items-center pt-[105px] gap-8 ">
       <h1 className="text-[24px] font-semibold text-[#441500]">Нууц үг сэргээх</h1>
