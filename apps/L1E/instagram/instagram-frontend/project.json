@@ -28,7 +28,7 @@
       "options": {
         "buildTarget": "instagram-frontend:build",
         "dev": true,
-        "port": 4201
+        "port": 4202
       },
       "configurations": {
         "development": {
