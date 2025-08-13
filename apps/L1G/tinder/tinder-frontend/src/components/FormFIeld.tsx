@@ -32,8 +32,7 @@ const ProfileForm = ({ onSuccess, onBack }: ProfileFormProps) => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = (_values: z.infer<typeof formSchema>) => {
     onSuccess();
   };
 
