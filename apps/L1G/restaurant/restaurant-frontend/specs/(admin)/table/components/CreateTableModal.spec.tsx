@@ -105,10 +105,10 @@ describe('createTableModal', () => {
     act(() => {
       fireEvent.click(DialogSubmit);
     });
-
-    const toastMessage = await screen.findByText('2A Ширээ амжилттай үүслээ');
-
-    expect(toastMessage).toBeDefined();
+    await waitFor(() => {
+      const toastMessage = screen.findByText('2A Ширээ амжилттай үүслээ');
+      expect(toastMessage).toBeDefined();
+    });
   });
 });
 

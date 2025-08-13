@@ -33,8 +33,8 @@ export const TableGrid = () => {
           </h1>
         ) : (
           <>
-            {tableData?.map((table) => (
-              <div data-testid="admin-table" key={table.tableId}>
+            {tableData?.map((table, index) => (
+              <div data-testid="admin-table" key={index}>
                 <div className="flex py-4 w-full justify-between items-center">
                   <h1 className="font-bold text-[18px]">{table.tableName}</h1>
                   <div className="flex justify-around gap-2">
