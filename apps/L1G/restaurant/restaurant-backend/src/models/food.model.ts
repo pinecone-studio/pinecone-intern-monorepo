@@ -47,4 +47,4 @@ export type FoodPopulatedType = Omit<FoodType, 'category'> & {
   category: CategoryType;
 };
 
-export const FoodModel = models.Food || model<FoodType>('food', FoodSchema);
+export const FoodModel = models.Food || model<FoodType>('Food', FoodSchema);
