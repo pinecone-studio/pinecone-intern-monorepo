@@ -3,30 +3,35 @@ import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import z from 'zod';
+import { z } from 'zod';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { MultiSelect } from './MultiSelect';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { profileFormSchema } from './schema/ProfileFormSchema';
 import { NameEmailFields } from './NameEmailFields';
 import { BirthDateField } from './BirthDateField';
 import { Separator } from '@/components/ui/separator';
+import { ProfessionSchoolFields } from './ProfessionSchoolFields';
 
-export const MyProfileForm = ({ onSubmit }: { onSubmit: (_data: z.infer<typeof profileFormSchema>) => void }) => {
+export const MyProfileForm = () => {
   const form = useForm<z.infer<typeof profileFormSchema>>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      name: '',
-      email: '',
+      name: 'John Doe',
+      email: 'johndoe@example.com',
       birthDate: new Date('2000-01-01'),
-      genderPreference: '',
-      bio: '',
-      interests: [],
-      profession: '',
-      school: '',
+      genderPreference: 'Female',
+      bio: 'my bio',
+      interests: ['art', 'music', 'sports'],
+      profession: 'Software Engineer',
+      school: 'Facebook',
     },
   });
+
+  const onSubmit = async (_data: z.infer<typeof profileFormSchema>) => {
+    console.log('working');
+  };
 
   return (
     <div className="flex flex-col w-[672px] max-w-[672px]">
@@ -43,7 +48,6 @@ export const MyProfileForm = ({ onSubmit }: { onSubmit: (_data: z.infer<typeof p
           <div className="flex flex-col gap-6">
             <NameEmailFields control={form.control} />
             <BirthDateField control={form.control} />
-
             <FormField
               control={form.control}
               name="genderPreference"
@@ -58,9 +62,17 @@ export const MyProfileForm = ({ onSubmit }: { onSubmit: (_data: z.infer<typeof p
                         <SelectValue placeholder="" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Men">Men</SelectItem>
-                        <SelectItem value="Women">Women</SelectItem>
-                        <SelectItem value="Both">Both</SelectItem>
+                        <SelectGroup>
+                          <SelectItem data-testid="option-male" value="Male">
+                            Male
+                          </SelectItem>
+                          <SelectItem data-testid="option-female" value="Female">
+                            Female
+                          </SelectItem>
+                          <SelectItem data-testid="option-both" value="Both">
+                            Both
+                          </SelectItem>
+                        </SelectGroup>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -68,7 +80,6 @@ export const MyProfileForm = ({ onSubmit }: { onSubmit: (_data: z.infer<typeof p
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="bio"
@@ -104,6 +115,7 @@ export const MyProfileForm = ({ onSubmit }: { onSubmit: (_data: z.infer<typeof p
                         { value: 'fitness', label: 'Fitness' },
                       ]}
                       value={field.value}
+                      onChange={field.onChange}
                       maxCount={10}
                     />
                   </FormControl>
@@ -112,38 +124,11 @@ export const MyProfileForm = ({ onSubmit }: { onSubmit: (_data: z.infer<typeof p
                 </FormItem>
               )}
             />
-
-            <FormField
-              control={form.control}
-              name="profession"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex">Profession</FormLabel>
-                  <FormControl>
-                    <Input className="rounded-md" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="school"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex">School/Work</FormLabel>
-                  <FormControl>
-                    <Input className="rounded-md" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <ProfessionSchoolFields control={form.control} />
+            <Button type="submit" className="rounded-md w-fit py-2 px-4 bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
+              Update Profile
+            </Button>
           </div>
-          <Button type="submit" className="rounded-md w-fit py-2 px-4 bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
-            Update Profile
-          </Button>
         </form>
       </Form>
     </div>
