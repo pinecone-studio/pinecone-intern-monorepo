@@ -1,41 +1,25 @@
 'use client';
 
-import React from 'react';
 import Image from 'next/image';
-import ChatWindow from './ChatWindow';
+import React from 'react';
 
-const matches = [
-  {
-    id: 1,
-    name: 'Esther Howard',
-    age: 32,
-    job: 'Software Engineer',
-    avatar: '/profile.jpg',
-  },
-  {
-    id: 2,
-    name: 'Kathryn Murphy',
-    age: 24,
-    job: 'Software Engineer',
-    avatar: '/profile.jpg',
-  },
-  {
-    id: 3,
-    name: 'Guy Hawkins',
-    age: 41,
-    job: 'Software Engineer',
-    avatar: '/profile.jpg',
-  },
-  {
-    id: 4,
-    name: 'Jacob Jones',
-    age: 20,
-    job: 'Software Engineer',
-    avatar: '/profile.jpg',
-  },
-];
+interface User {
+  id: number;
+  name: string;
+  age: number;
+  job: string;
+  avatar: string;
+}
 
-const ChatPerson = () => {
+interface AvatarProps {
+  user: User;
+  size?: number;
+}
+
+const Avatar: React.FC<AvatarProps> = ({ user, size = 48 }) => {
+  const hasImage = !!user.avatar?.trim();
+  const defaultAvatar = '/profile.jpg';
+
   return (
     <div className="w-full h-[900px] flex justify-center items-start">
       <div className="w-full max-w-[1280px] flex h-full">

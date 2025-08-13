@@ -3,13 +3,38 @@
 import React from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { MessageSquareDashedIcon, Send } from 'lucide-react';
+import { MessageSquare, Send, Heart, MessageSquareDashedIcon } from 'lucide-react';
+import UnmatchButton from './UnmatchButton';
 
-const selectedUser = {
-  name: 'Bessie Cooper',
-  age: 32,
-  job: 'Software Engineer',
-  avatar: '/profile.jpg',
+interface User {
+  id: number;
+  name: string;
+  age: number;
+  job: string;
+  avatar: string;
+}
+
+interface Message {
+  id: number;
+  text: string;
+  sender: 'me' | 'them';
+  timestamp: string;
+}
+
+interface AvatarProps {
+  user: User;
+  size?: number;
+}
+
+const Avatar: React.FC<AvatarProps> = ({ user, size = 48 }) => {
+  const hasImage = !!user.avatar?.trim();
+  const defaultAvatar = '/profile.jpg';
+
+  return (
+    <div className="relative">
+      <Image src={hasImage ? user.avatar : defaultAvatar} alt={user.name || 'Avatar'} width={size} height={size} className="rounded-full object-cover" />
+    </div>
+  );
 };
 
 const ChatWindow = () => {
@@ -36,6 +61,8 @@ const ChatWindow = () => {
           </div>
         </div>
       </div>
+    );
+  }
 
       <div className="flex flex-col justify-center items-center flex-grow gap-2 mt-8">
         <MessageSquareDashedIcon size={48} color="gray" />

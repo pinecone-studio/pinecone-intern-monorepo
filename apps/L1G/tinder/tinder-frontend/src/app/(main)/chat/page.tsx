@@ -1,17 +1,13 @@
-import ChatPerson from '@/components/ChatPerson';
+import ChatPage from '@/components/ChatPage';
 import { Header } from '@/components/Header';
-import { Matches } from '@/components/Matches';
-
 
 const Chat = () => {
  return (
-   <div>
-     <Header />
-     <Matches />
-     <ChatPerson />
+   <div> 
+  <Header/>
+  <ChatPage/>
    </div>
  );
 };
-
 
 export default Chat

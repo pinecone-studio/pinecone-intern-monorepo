@@ -36,7 +36,29 @@ const matches = [
   },
 ];
 
-export const Matches = () => {
+interface AvatarProps {
+  user: User;
+  size?: number;
+}
+
+const Avatar: React.FC<AvatarProps> = ({ user, size = 48 }) => {
+  const hasImage = !!user.avatar?.trim();
+  const defaultAvatar = '/profile.jpg';
+
+  return (
+    <div className="relative">
+      <Image src={hasImage ? user.avatar : defaultAvatar} alt={user.name || 'Avatar'} width={size} height={size} className="rounded-full object-cover" />
+    </div>
+  );
+};
+
+interface MatchesProps {
+  topRowUsers: User[];
+  selectedUser: User | null;
+  onUserSelect: (user: User) => void;
+}
+
+const Matches: React.FC<MatchesProps> = ({ topRowUsers, selectedUser, onUserSelect }) => {
   return (
     <div className="w-full max-w-[1280px] pt-6 border-b border-gray-200 gap-2 px-3">
       <p className="text-[16px] md:text-[20px] font-medium ">Matches</p>
