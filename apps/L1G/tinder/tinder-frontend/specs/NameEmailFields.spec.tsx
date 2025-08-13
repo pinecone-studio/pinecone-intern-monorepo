@@ -3,6 +3,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { NameEmailFields } from '@/components/NameEmailFields';
 import { profileFormSchema } from '@/components/schema/ProfileFormSchema';
 import z from 'zod';
+import '@testing-library/jest-dom';
 
 type FormValues = z.infer<typeof profileFormSchema>;
 
@@ -47,7 +48,7 @@ describe('NameEmailFields', () => {
     fireEvent.change(nameInput, { target: { value: 'Alice' } });
     fireEvent.change(emailInput, { target: { value: 'alice@example.com' } });
 
-    expect(nameInput);
-    expect(emailInput);
+    expect(nameInput).toHaveValue('Alice');
+    expect(emailInput).toHaveValue('alice@example.com');
   });
 });

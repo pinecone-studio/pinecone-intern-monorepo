@@ -130,11 +130,14 @@ describe('MyImages', () => {
         fireEvent.change(fileInput, { target: { files: [file] } });
       });
     }
+    const initialImages = await screen.findAllByTestId(/uploaded-image-/);
+    expect(initialImages).toHaveLength(6);
+
     await act(async () => {
       fireEvent.change(fileInput, { target: { files: [file] } });
     });
-    const images = screen.getAllByTestId(/uploaded-image-/);
-    expect(images.length).toBeLessThanOrEqual(6);
+    const images = await screen.findAllByTestId(/uploaded-image-/);
+    expect(images).toHaveLength(6);
   });
   it('handles missing secure_url in Cloudinary response', async () => {
     mockedAxios.post.mockResolvedValueOnce({

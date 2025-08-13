@@ -41,7 +41,7 @@ describe('MyProfile', () => {
 describe('MenuContent return null coverage', () => {
   it('renders nothing when an unknown menu value is used (covers return null)', () => {
     const { container } = render(<MenuContent menu={'invalid' as any} />);
-    expect(container.firstChild);
+    expect(container.firstChild).toBeNull();
   });
 });
 describe('MyProfileHeader', () => {

@@ -17,9 +17,9 @@ export const NameEmailFields = ({ control }: NameEmailFieldsProps) => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel htmlFor="name">Name</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input id="name" autoComplete="name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -32,9 +32,9 @@ export const NameEmailFields = ({ control }: NameEmailFieldsProps) => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel htmlFor="email">Email</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input id="email" autoComplete="email" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
