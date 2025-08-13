@@ -39,6 +39,6 @@ describe('Admin delete table', () => {
     cy.get('[data-cy="Admin-Update-Table-Button"]').click().wait(3000);
     cy.contains('Ширээ амжилттай шинчлэгдлээ').should('be.visible');
     cy.get('[data-cy="Admin-Delete-Table-Dialog-Trigger"]').last().click();
-    cy.get('[data-cy="Admin-Delete-Table-Button"]').click().wait(3000);
+    cy.get('[data-cy="Admin-Delete-Table-Button"]').click();
   });
 });
