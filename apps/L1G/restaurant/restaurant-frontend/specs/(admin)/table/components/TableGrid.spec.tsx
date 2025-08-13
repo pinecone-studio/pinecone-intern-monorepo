@@ -26,12 +26,24 @@ const getTablesMock: MockedResponse = {
   },
 };
 
+const getTablesEmptyMock: MockedResponse = {
+  request: {
+    query: GetTablesDocument,
+  },
+  result: {
+    data: {
+      getTables: [],
+    },
+  },
+};
+
 const getTablesErrorMock: MockedResponse = {
   request: {
     query: GetTablesDocument,
   },
   error: new Error('Error: Network error'),
 };
+const mocks = [getTablesMock, getTablesMock];
 
 jest.mock('@/components/table/CreateTableModal', () => ({
   CreateTableModal: ({ refetch }: { refetch: () => void }) => {
@@ -39,7 +51,7 @@ jest.mock('@/components/table/CreateTableModal', () => ({
     return <div>CreateTableModal Mock</div>;
   },
 }));
-const mocks = [getTablesMock, getTablesMock];
+
 describe('getTables', () => {
   it('should render', async () => {
     const { getAllByTestId } = render(
@@ -52,6 +64,16 @@ describe('getTables', () => {
       expect(tables).toBeDefined();
     });
   });
+
+  it('should display text if tableData epmty', async () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[getTablesEmptyMock]} addTypename={false}>
+        <TableGrid />
+      </MockedProvider>
+    );
+    await waitFor(() => expect(getByTestId('admin-empty-message')).toBeDefined());
+  });
+
   it('should throw error when getTables failed', async () => {
     const { getByTestId } = render(
       <ErrorBoundary fallback={<div data-testid="error">Error</div>}>

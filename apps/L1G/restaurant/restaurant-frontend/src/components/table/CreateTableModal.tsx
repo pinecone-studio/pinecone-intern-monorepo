@@ -9,7 +9,7 @@ import { DialogContainer } from './DialogContainer';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { useCreateTableMutation } from '@/generated';
 import { useState } from 'react';
-import { toast, Toaster } from 'sonner';
+import { toast } from 'sonner';
 
 type CreateTableModalProps = {
   refetch: () => Promise<void>;
@@ -54,7 +54,6 @@ export const CreateTableModal = ({ refetch }: CreateTableModalProps) => {
 
   return (
     <div data-testid="Create-Table" className="w-full flex justify-between items-center">
-      <Toaster position="top-center" />
       <h1 className="font-semibold text-[28px]">Ширээ</h1>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger data-testid="Admin-Create-Table-Dialog-Trigger" className="bg-white text-[14px] font-medium rounded-md flex w-fit px-4 h-[36px] items-center gap-1">
