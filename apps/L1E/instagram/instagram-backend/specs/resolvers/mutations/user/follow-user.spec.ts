@@ -43,9 +43,9 @@ describe('followUser', () => {
     };
 
     MockedUser.findById
-      .mockResolvedValueOnce(mockFollower)
-      .mockResolvedValueOnce(mockFollowing)
-      .mockResolvedValue(mockUpdatedUser);
+    .mockResolvedValueOnce(mockFollower)
+    .mockResolvedValueOnce(mockFollowing)
+    .mockResolvedValue(mockUpdatedUser);
 
     const result = await followUser(null, { followerId, followingId });
 
