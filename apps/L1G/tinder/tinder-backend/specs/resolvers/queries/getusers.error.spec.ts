@@ -8,6 +8,14 @@ describe('getusers resolver (error/edge cases)', () => {
     jest.clearAllMocks();
   });
 
+  function createPopulateChain(mockData: any) {
+    const leanMock = jest.fn().mockResolvedValueOnce(mockData);
+    const populate3 = jest.fn().mockReturnValueOnce({ lean: leanMock });
+    const populate2 = jest.fn().mockReturnValueOnce({ populate: populate3 });
+    const populate1 = jest.fn().mockReturnValueOnce({ populate: populate2 });
+    return { populate1, populate2, populate3, leanMock };
+  }
+
   it('should handle users with undefined likedBy and likedTo', async () => {
     const mockUsers = [
       {
@@ -18,11 +26,15 @@ describe('getusers resolver (error/edge cases)', () => {
         likedTo: undefined,
       },
     ];
-    const leanMock = jest.fn().mockResolvedValueOnce(mockUsers);
-    const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
-    const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
-    jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as unknown as ReturnType<typeof Usermodel.find>);
+
+    const { populate1 } = createPopulateChain(mockUsers);
+
+    jest.spyOn(Usermodel, 'find').mockReturnValue({
+      populate: populate1,
+    } as any);
+
     const result = await getusers();
+
     expect(result).toEqual([
       {
         id: '60f1a5e9c9d8e72e5c9b1234',
@@ -30,27 +42,39 @@ describe('getusers resolver (error/edge cases)', () => {
         name: 'Test User',
         likedBy: [],
         likedTo: [],
+        images: [],
+        matched: [],
       },
     ]);
   });
 
   it('should throw an error and warn when database query fails', async () => {
-    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => { /* noop */ });
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {
+      // intentionally empty
+    });
     jest.spyOn(Usermodel, 'find').mockImplementationOnce(() => {
       throw new Error('DB failure');
     });
+
     await expect(getusers()).rejects.toThrow('DB failure');
+
     expect(warnSpy).toHaveBeenCalledWith('⚠️ Failed to fetch users:', 'DB failure');
+
     warnSpy.mockRestore();
   });
 
   it('calls console.warn when DB failure occurs', async () => {
-    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => { /* noop */ });
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {
+      // intentionally empty
+    });
     jest.spyOn(Usermodel, 'find').mockImplementationOnce(() => {
       throw new Error('DB failure');
     });
+
     await expect(getusers()).rejects.toThrow('DB failure');
+
     expect(warnSpy).toHaveBeenCalledWith('⚠️ Failed to fetch users:', 'DB failure');
+
     warnSpy.mockRestore();
   });
 
@@ -64,11 +88,15 @@ describe('getusers resolver (error/edge cases)', () => {
         likedTo: undefined,
       },
     ];
-    const leanMock = jest.fn().mockResolvedValueOnce(mockUsers);
-    const populateLikedToMock = jest.fn().mockReturnValueOnce({ lean: leanMock });
-    const populateLikedByMock = jest.fn().mockReturnValueOnce({ populate: populateLikedToMock });
-    jest.spyOn(Usermodel, 'find').mockReturnValue({ populate: populateLikedByMock } as unknown as ReturnType<typeof Usermodel.find>);
+
+    const { populate1 } = createPopulateChain(mockUsers);
+
+    jest.spyOn(Usermodel, 'find').mockReturnValue({
+      populate: populate1,
+    } as any);
+
     const result = await getusers();
+
     expect(result).toEqual([
       {
         id: '123',
@@ -76,7 +104,9 @@ describe('getusers resolver (error/edge cases)', () => {
         name: 'User',
         likedBy: [],
         likedTo: [],
+        images: [],
+        matched: [],
       },
     ]);
   });
-}); 
+});

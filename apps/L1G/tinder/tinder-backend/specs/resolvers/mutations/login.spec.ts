@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { Usermodel } from 'src/models/user';
-import { login } from 'src/resolvers/mutations/login';
+import { login } from 'src/resolvers/mutations/auth/login';
 
 jest.mock('bcryptjs');
 jest.mock('jsonwebtoken');

@@ -1,9 +1,11 @@
-import { Button } from '@/components/ui/button';
+import HomePageContainer from '@/components/home/HomePageContainer';
+import { Navbar } from '@/components/Navbar';
 
 const Home = () => {
   return (
     <div>
-      <Button className="bg-red-100">Click</Button>
+      <Navbar />
+      <HomePageContainer />
     </div>
   );
 };

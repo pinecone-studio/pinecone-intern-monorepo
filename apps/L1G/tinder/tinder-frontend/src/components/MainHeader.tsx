@@ -1,5 +1,5 @@
 import React from 'react';
-import { TinderLogo } from './TinderLogo';
+import { TinderLogo } from '@/components/TinderLogo';
 
 export const MainHeader = () => {
   return (

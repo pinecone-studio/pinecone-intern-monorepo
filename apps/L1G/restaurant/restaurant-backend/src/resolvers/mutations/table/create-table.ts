@@ -6,7 +6,7 @@ export const createTable: MutationResolvers['createTable'] = async (_, { input: 
   const existingTable = await TableModel.findOne({ tableName });
   if (existingTable) throw new Error('table already exists');
 
-  const generatedQr = await QRCode.toDataURL(`http://localhost:4201/sign-in?table=${tableName}`);
+  const generatedQr = await QRCode.toDataURL(`https://restaurant-frontend-prod-alpha.vercel.app/sign-in?table=${tableName}`);
   const newTable = await TableModel.create({ tableName, tableQr: generatedQr });
 
   return newTable;

@@ -1,6 +1,6 @@
 import { MutationResolvers } from 'src/generated';
 import { UserModel } from 'src/models/user.model';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 export const resetPassword: MutationResolvers['resetPassword'] = async (_, { input: { email, newPassword } }) => {
   const user = await UserModel.findOne({ email });
