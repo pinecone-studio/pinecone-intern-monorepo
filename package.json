@@ -20,7 +20,7 @@
     "@apollo/experimental-nextjs-app-support": "0.11.2",
     "@apollo/federation-internals": "2.5.7",
     "@apollo/gateway": "2.5.7",
-
+    "@apollo/protobufjs": "^1.2.7",
     "@apollo/rover": "^0.35.0",
     "@apollo/server": "4.3.0",
     "@apollo/subgraph": "2.2.2",
@@ -32,6 +32,7 @@
     "@emotion/cache": "11.11.0",
     "@emotion/react": "11.11.4",
     "@emotion/styled": "11.11.5",
+    "@fontsource/inter": "^5.2.6",
     "@graphql-tools/merge": "9.0.0",
     "@graphql-yoga/node": "^3.9.1",
     "@hookform/resolvers": "^5.0.1",
