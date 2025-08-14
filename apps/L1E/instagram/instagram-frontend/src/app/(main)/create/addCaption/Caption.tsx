@@ -1,7 +1,7 @@
 "use client"
 import { ArrowLeft } from "lucide-react";
-// import CreatePost from "../page";
-// import ImageCarousel from "";
+import { CREATE_POST } from "@/graphql/mutations/createPost/Page";
+import ImageCarousel from "@/components/ImageCarousels";
 import { useMutation } from "@apollo/client";
 
 
