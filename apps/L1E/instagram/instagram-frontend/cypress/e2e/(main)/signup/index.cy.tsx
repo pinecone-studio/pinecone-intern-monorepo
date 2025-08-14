@@ -66,19 +66,49 @@ describe("Sign-up Page", () => {
     })
 
     it('10. When the name user enters on username input already exists on database', () => {
+        cy.intercept('POST', '**/api/graphql', (req) => {
+          if (typeof req.body === 'object' && req.body?.query?.includes('mutation Register')) {
+            req.reply({
+              statusCode: 200,
+              body: { errors: [{ message: 'Username exists' }] },
+            });
+          }
+        });
+      
+        // Fill ALL required fields so submit runs the mutation
+        cy.get('[data-cy=Sign-Up-Email-Input]').type('dup@example.com');
+        cy.get('[data-cy=Sign-Up-Password-Input]').type('Password1');
+        cy.get('[data-cy=Sign-Up-Full-Name-Input]').type('Dup Name');
         cy.get('[data-cy=Sign-Up-Username-Input]').type('Naka');
         cy.get('[data-cy=Sign-Up-Submit-Button]').click();
-        cy.get('[data-cy=Sign-Up-Username-Input-Error-Message]').should('be.visible');
-        cy.get('[data-cy=Sign-Up-Username-Input-Error-Message]').should('contain.text', 'A user with that username already exists.')
-    })
+      
+        cy.get('[data-cy=Sign-Up-Username-Input-Error-Message]')
+          .should('be.visible')
+          .should('contain.text', 'A user with that username already exists.');
+      });
 
     it('11. When user enters all values, it should navigate to login page', () => {
-        cy.get('[data-cy=Sign-Up-Email-Input]').type('Naraa@gmail.com');
-        cy.get('[data-cy=Sign-Up-Password-Input').type('Naraa0121');
-        cy.get('[data-cy=Sign-Up-Full-Name-Input').type('Narangerel');
-        cy.get('[data-cy=Sign-Up-Username-Input]').type('Naraa0121');
+        cy.intercept('POST', '**/api/graphql', (req) => {
+          if (typeof req.body === 'object' && req.body?.query?.includes('mutation Register')) {
+            req.reply({
+              body: {
+                data: {
+                  register: {
+                    token: 'fake-token',
+                    user: { _id: 'u1', email: 'test@example.com' },
+                  },
+                },
+              },
+            });
+          }
+        });
+      
+        cy.get('[data-cy=Sign-Up-Email-Input]').type('any@example.com');
+        cy.get('[data-cy=Sign-Up-Password-Input]').type('Password1');
+        cy.get('[data-cy=Sign-Up-Full-Name-Input]').type('Any Name');
+        cy.get('[data-cy=Sign-Up-Username-Input]').type('anyusername');
         cy.get('[data-cy=Sign-Up-Submit-Button]').click();
-        cy.url().should('include', '');
-    })
+        cy.url().should('include', '/signin');
+      });
 
 })

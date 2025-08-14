@@ -42,12 +42,10 @@ export const register: MutationResolvers['register'] = async (_, { input }) => {
     const hashed = await hashPassword(password);
 
     const user = await User.create({
-      data: {
-        email,
-        password: hashed,
-        userName,
-        fullName,
-      },
+      email,
+      password: hashed,
+      userName,
+      fullName,
     });
 
     const token = jwt.sign({ userId: user._id }, getJwtSecret());

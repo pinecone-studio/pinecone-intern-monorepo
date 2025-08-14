@@ -1,7 +1,7 @@
 import { User } from "src/models";
 import jwt from "jsonwebtoken";
 import { MutationResolvers } from "src/generated";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { getJwtSecret } from "src/utils/check-jwt";
 
 // Input шалгах + narrowing

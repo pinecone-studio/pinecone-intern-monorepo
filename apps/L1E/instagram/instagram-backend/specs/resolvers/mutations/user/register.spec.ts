@@ -3,6 +3,7 @@ import { User } from "src/models";
 import { checkEmailExists } from "src/utils/email-exist";
 import { hashPassword } from "src/utils/hash";
 import jwt from "jsonwebtoken";
+import { getJwtSecret } from "src/utils/check-jwt";
 
 jest.mock("src/models", () => ({
   User: {
@@ -22,6 +23,10 @@ jest.mock("jsonwebtoken", () => ({
   sign: jest.fn(),
 }));
 
+jest.mock("src/utils/check-jwt", () => ({
+  getJwtSecret: jest.fn(),
+}));
+
 describe("register resolver", () => {
   const mockInput = {
     email: "test@example.com",
@@ -38,6 +43,7 @@ describe("register resolver", () => {
   });
 
   it("should register a user successfully", async () => {
+    (getJwtSecret as jest.Mock).mockReturnValue('testsecret');
     (checkEmailExists as jest.Mock).mockResolvedValue(undefined);
     (hashPassword as jest.Mock).mockResolvedValue("hashed123");
     (User.create as jest.Mock).mockResolvedValue({ _id: "123", ...mockInput });
@@ -48,12 +54,10 @@ describe("register resolver", () => {
     expect(checkEmailExists).toHaveBeenCalledWith("test@example.com", "Sorry try another email!");
     expect(hashPassword).toHaveBeenCalledWith("password123");
     expect(User.create).toHaveBeenCalledWith({
-      data: {
-        email: "test@example.com",
-        password: "hashed123",
-        userName: "testuser",
-        fullName: "Test User",
-      },
+      email: "test@example.com",
+      password: "hashed123",
+      userName: "testuser",
+      fullName: "Test User",
     });
     expect(jwt.sign).toHaveBeenCalledWith({ userId: "123" }, "testsecret");
 
@@ -94,11 +98,13 @@ describe("register resolver", () => {
   });
 
   it("should throw error if JWT_SECRET is not configured", async () => {
-    delete process.env.JWT_SECRET;
+    (getJwtSecret as jest.Mock).mockImplementation(() => {
+      throw new Error("JWT_SECRET not configured");
+    });
 
-    await expect(register!(null as any, { input: mockInput }, mockContext as any, {} as any)).rejects.toThrow(
-      "JWT_SECRET not configured"
-    );
+    await expect(
+      register!(null as any, { input: mockInput }, mockContext as any, {} as any)
+    ).rejects.toThrow("JWT_SECRET not configured");
   });
 
   it("should throw error if checkEmailExists throws error", async () => {
