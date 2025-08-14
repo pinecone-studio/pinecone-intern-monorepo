@@ -4,15 +4,15 @@ describe('Create Table Modal', () => {
   });
 
   it('shows validation error if table name is empty', () => {
-    cy.get('[data-testid="Admin-Create-Table-Dialog-Trigger"]').click();
-    cy.get('[data-testid="Admin-Create-Table-Button"]').click();
+    cy.get('[data-testid="Admin-Create-Table-Dialog-Trigger"]').wait(3000).click();
+    cy.get('[data-testid="Admin-Create-Table-Button"]').click().wait(100);
     cy.get('[data-testid="Admin-Create-Table-Error-Message"]').should('be.visible').and('contain.text', 'Ширээний нэр оруулна уу');
   });
 
   it('shows validation error if table name is too long', () => {
     cy.get('[data-testid="Admin-Create-Table-Dialog-Trigger"]').click();
     cy.get('[data-testid="Admin-Create-Table-Input"]').type('12345678901');
-    cy.get('[data-testid="Admin-Create-Table-Button"]').click();
+    cy.get('[data-testid="Admin-Create-Table-Button"]').click().wait(1000);
     cy.get('[data-testid="Admin-Create-Table-Error-Message"]').should('be.visible').and('contain.text', '10-c доош тэмдэгт ашиглана уу');
   });
 
