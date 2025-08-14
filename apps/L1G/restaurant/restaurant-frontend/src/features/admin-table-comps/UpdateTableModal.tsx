@@ -22,7 +22,7 @@ export const UpdateTableModal = ({ data, refetch }: UpdateTableModalProps) => {
   const [UpdateTable, { loading }] = useUpdateTableMutation();
   const [open, setOpen] = useState(false);
   const formSchema = z.object({
-    tableName: z.string().min(1, { message: 'Ширээний нэр оруулна уу' }),
+    tableName: z.string().min(1, { message: 'Ширээний нэр оруулна уу' }).max(10, { message: '10-c доош тэмдэгт ашиглана уу' }),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
