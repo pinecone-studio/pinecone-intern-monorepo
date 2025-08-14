@@ -53,8 +53,6 @@ export const register: MutationResolvers['register'] = async (_, { input }) => {
     const token = jwt.sign({ userId: user._id }, getJwtSecret());
 
     return {
-      success: true,
-      message: "Registration successful",
       user,
       token,
     };

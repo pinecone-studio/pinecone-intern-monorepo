@@ -58,8 +58,6 @@ describe("register resolver", () => {
     expect(jwt.sign).toHaveBeenCalledWith({ userId: "123" }, "testsecret");
 
     expect(result).toEqual({
-      success: true,
-      message: "Registration successful",
       user: {
         _id: "123",
         email: "test@example.com",

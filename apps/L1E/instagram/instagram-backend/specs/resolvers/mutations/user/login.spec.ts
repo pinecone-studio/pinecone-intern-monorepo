@@ -39,8 +39,6 @@ describe('login mutation', () => {
     expect(jwt.sign).toHaveBeenCalledWith({ userId: 'user-id-123' }, 'testsecret');
 
     expect(result).toEqual({
-      success: true,
-      message: "Login successful",
       user: {
         _id: 'user-id-123',
         email: mockInput.email,
