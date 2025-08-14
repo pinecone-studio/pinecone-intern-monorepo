@@ -11,7 +11,7 @@ export type orderListProps = {
 const OrderList = ({ image, foodName, price, count }: orderListProps) => {
   return (
     <div className="flex w-full h-[87px] px-2 py-2 gap-4">
-      <Image alt="food" src={image} width={100} height={100} className="rounded-xl" />
+      <Image alt="food" src={image} width={90} height={90} className="rounded-xl" />
       <div className="flex flex-col justify-between">
         <div className="flex flex-col">
           <p className="text-[14px] truncate">{foodName}</p>

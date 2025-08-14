@@ -6,6 +6,8 @@ import { useGetCategoriesQuery, useGetFoodsQuery } from '@/generated';
 import OrderList from './OrderList';
 import { count } from 'console';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
+import { motion, AnimatePresence } from 'framer-motion';
 const menuItems = [
   {
     id: 1,
@@ -59,7 +61,7 @@ const HomePageContainer = () => {
   const { data: categoriesData } = useGetCategoriesQuery();
   const [activeCategory, setActiveCategory] = useState('Үндсэн хоол');
   const filteredItems = (foodsData?.getFoods ?? []).filter((item): item is NonNullable<typeof item> => item?.category?.categoryName === activeCategory);
-  const [isSelected, setIsSelected] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -93,29 +95,32 @@ const HomePageContainer = () => {
           ))}
         </div>
       </div>
-
-      <div>
-        {isSelected && (
-          <Sheet>
-            <SheetTrigger>Open</SheetTrigger>
-            <SheetContent>
-              <div className="w-full h-[375px] bg-white px-4 py-4 rounded-t-xl overflow-scroll fixed bottom-[87px]">
-                <div className="w-full h-[36px] flex justify-center items-center">
-                  <p>Таны захиалга</p>
-                </div>
-                <div className="flex flex-col gap-4 pb-[100px]">
-                  {menuItems.map((value) => (
-                    <OrderList image={value.image} price={value.price} count={1} foodName={value.name} />
-                  ))}
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
-        )}
+      <Drawer open={open} onOpenChange={setOpen}>
         <div className="fixed bottom-0 left-0 right-0 p-4 flex justify-center items-center w-full h-[85px] bg-white border-t ">
-          <Button className=" w-full h-[36px] bg-amber-800 hover:bg-amber-900 text-white py-4 text-lg font-medium rounded-lg ">Захиалах</Button>
+          <DrawerTrigger className="w-full h-[36px] bg-amber-800 hover:bg-amber-900 text-white py-4 text-lg font-medium rounded-lg flex items-center justify-center">Захиалах</DrawerTrigger>
         </div>
-      </div>
+        <AnimatePresence>
+          {open && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 100 }} transition={{ duration: 1 }}>
+              <DrawerContent>
+                <DrawerHeader className="flex flex-col gap-4">
+                  <DrawerTitle>Таны захиалга</DrawerTitle>
+                  <div className="flex flex-col justify-center items-center w-full h-[375px] bg-white rounded-t-xl overflow-scroll ">
+                    <div className="flex flex-col gap-4 pb-[100px]">
+                      {menuItems.map((value) => (
+                        <OrderList key={value.name} image={value.image} price={value.price} count={1} foodName={value.name} />
+                      ))}
+                    </div>
+                  </div>
+                </DrawerHeader>
+                <DrawerFooter className="fixed bottom-0 left-0 right-0 p-4 flex justify-center items-center w-full h-[85px] bg-white border-t ">
+                  <Button className="w-full h-[36px] bg-amber-800 hover:bg-amber-900 text-white py-4 text-lg font-medium rounded-lg flex items-center justify-center">Захиалах</Button>
+                </DrawerFooter>
+              </DrawerContent>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </Drawer>
     </div>
   );
 };
