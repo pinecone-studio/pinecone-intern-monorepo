@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image";
   import { Button } from "@/components/ui/button";
-export default function SelectImagePage() {
+   const SelectImagePage: React.FC = () => {
   return (
     <div>
       <div className="flex flex-col w-[638px] h-[678px] items-center gap-[196px]">
@@ -32,3 +32,5 @@ export default function SelectImagePage() {
     </div>
   );
 }
+
+export default SelectImagePage;

@@ -12,8 +12,8 @@ type PreviewProps = {
   handleNext: () => void;
   handlePrev: () => void;
   onAddImageClick: () => void;
-  setSelectedImages: (images: string[]) => void;
-  setCaption: (caption: string) => void;
+  setSelectedImages:  (_images: string[]) => void;
+  setCaption: (_caption: string) => void;
 };
 
 const Preview = ({
@@ -22,12 +22,12 @@ const Preview = ({
   handleNext,
   handlePrev,
   setSelectedImages,
-  setCaption
+  setCaption,
+
 }: PreviewProps) => {
   
         const { postStep, setPostStep } = usePost();
         const [showDiscardDialog, setShowDiscardDialog] = useState(false);
-    console.log(showDiscardDialog  , "DIALOGGGGG")
         const handleAddImageClick = () => {
   const input = document.getElementById("global-image-input") as HTMLInputElement;
   if (input) {
@@ -71,7 +71,7 @@ const Preview = ({
     <div className="bg-white rounded-xl   flex flex-col gap-[16px] w-[324px] h-[156px] p-[24px]">
               <div className="flex flex-col gap-[8px] items-start">
                  <h2 className="text-[18px] font-[600]">Discard post?</h2>
-                  <p className="text-gray-600 text-[14px] font-[400]">If you leave, your edits won't be saved.</p>
+                  <p className="text-gray-600 text-[14px] font-[400]">If you leave, your edits won&apos;t be saved.</p>
               </div>
       <div className="flex  justify-end w-[276px] h-[36px] gap-[8px]">
         <button

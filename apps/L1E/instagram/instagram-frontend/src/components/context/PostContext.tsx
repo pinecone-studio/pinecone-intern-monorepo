@@ -3,13 +3,13 @@ import { createContext, useContext, useState } from 'react';
 
 type PostContextType = {
   postStep: 'idle' | 'select-image' | 'add-caption' | 'preview';
-  setPostStep: (step: 'idle' | 'select-image' | 'add-caption' | 'preview') => void;
+  setPostStep: (_step: 'idle' | 'select-image' | 'add-caption' | 'preview') => void;
   handlePostClick: () => void;
 };
 
 const PostContext = createContext<PostContextType | undefined>(undefined);
 
-export function PostProvider({ children }: { children: React.ReactNode }) {
+export const PostProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [postStep, setPostStep] = useState<'idle' | 'select-image' | 'add-caption' | 'preview'>('idle');
 
   const handlePostClick = () => {

@@ -3,7 +3,7 @@ import './global.css';
 import { PropsWithChildren } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { Sidebar } from '@/components/Sidebar';
-import CreatePost from './(main)/create/page';
+import  CreatePost  from './(main)/create/page';
 import { PostProvider } from '@/components/context/PostContext';
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 // export const metadata = {
