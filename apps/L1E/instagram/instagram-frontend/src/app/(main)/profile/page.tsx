@@ -1,9 +1,11 @@
-const Profile = () => {
+import Profile from "@/components/Profile";
+
+const ProfilePage = () => {
     return (
-        <div className="m-[80px_0px_0px_536px]">
-            <h1>Profile</h1>
+        <div className="w-full h-full pt-[34px]">
+           <Profile isMine={true} isPrivate={false} userName={"Naraa0121"} bio={"Naraa_dev"} postsNumber={32} followersNumber={23} followingNumber={24}/>
         </div>
     );
 };
 
-export default Profile;
+export default ProfilePage;

@@ -10,9 +10,15 @@ export const metadata = {
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
-      <body>
-        <Sidebar />
-        {children}
+      <body className="m-0">
+        <div className="flex h-screen">
+          <div className="w-[290px]">
+            <Sidebar />
+          </div>
+          <div className="flex-1 flex items-center justify-center">
+            {children}
+          </div>
+        </div>
       </body>
     </html>
   );

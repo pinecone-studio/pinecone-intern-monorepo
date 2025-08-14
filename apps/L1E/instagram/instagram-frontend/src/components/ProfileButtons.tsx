@@ -10,10 +10,10 @@ const ProfileButtons = ({ isMine, isPrivate }: Props) => {
     return (
       <div className="flex gap-4">
         <div className="flex gap-2">
-          <Button>Edit Profile</Button>
-          <Button>Ad tools</Button>
+          <Button variant="secondary" className="px-[16px] font-medium hover:bg-[#F4F4F5]">Edit Profile</Button>
+          <Button variant="secondary" className="px-[16px] font-medium hover:bg-[#F4F4F5]">Ad tools</Button>
         </div>
-        <Button>Settings</Button>
+        <Button variant="secondary" className="px-[16px] font-medium hover:bg-[#F4F4F5]">Settings</Button>
       </div>
     );
   }
@@ -22,8 +22,8 @@ const ProfileButtons = ({ isMine, isPrivate }: Props) => {
     return (
       <div className="flex gap-4">
         <div className="flex gap-2">
-          <Button>Follow</Button>
-          <Button>Message</Button>
+          <Button className="px-[16px] font-medium bg-[#2563EB] hover:bg-[#2563EB]">Follow</Button>
+          <Button variant="secondary" className="px-[16px] font-medium hover:bg-[#F4F4F5]">Message</Button>
         </div>
         <Button>...</Button>
       </div>
@@ -32,7 +32,7 @@ const ProfileButtons = ({ isMine, isPrivate }: Props) => {
 
   return (
     <div className="flex gap-2">
-      <Button>Request</Button>
+      <Button className="px-[16px] font-medium bg-[#2563EB] hover:bg-[#2563EB]">Request</Button>
       <Button>...</Button>
     </div>
   );

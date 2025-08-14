@@ -25,10 +25,10 @@ const Profile = ({
   followingNumber,
 }: ProfileProps) => {
   return (
-    <div className="flex flex-col gap-[65px]">
-      <div className="flex gap-25">
+    <div className="w-fit mx-auto">
+      <div className="flex gap-[100px] mb-[60px] w-fit mx-auto ">
         <ProfileImage />
-        <div>
+        <div className="space-y-5">
           <ProfileHeader isMine={isMine} isPrivate={isPrivate} userName={userName} />
           <ProfileStats
             postsNumber={postsNumber}

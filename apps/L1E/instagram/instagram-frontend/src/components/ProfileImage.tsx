@@ -3,13 +3,13 @@ import Image from "next/image";
 const ProfileImage = () => (
   <div>
     <Image
-      src="/placeholder-post.jpg"
+      src="/profileImage.webp"
       alt="profileImage"
-      width={200}
-      height={200}
-      style={{ borderRadius: "100%", border: "black" }}
+      width={150}
+      height={150}
+      className="w-[150px] h-[150px] object-cover rounded-full"
     />
-  </div>
+  </div>                    
 );
 
 export default ProfileImage;

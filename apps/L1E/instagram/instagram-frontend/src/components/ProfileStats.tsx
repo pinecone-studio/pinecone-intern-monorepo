@@ -6,9 +6,9 @@ interface StatsProps {
 
 const ProfileStats = ({ postsNumber, followersNumber, followingNumber }: StatsProps) => (
   <div className="flex gap-8">
-    <p><b>{postsNumber}</b> posts</p>
-    <p><b>{followersNumber}</b> followers</p>
-    <p><b>{followingNumber}</b> following</p>
+    <p className="font-normal text-base" data-testid="posts-count">{postsNumber} posts</p>
+    <p className="font-normal text-base" data-testid="followers-count">{followersNumber} followers</p>
+    <p className="font-normal text-base" data-testid="following-count">{followingNumber} following</p>
   </div>
 );
 
