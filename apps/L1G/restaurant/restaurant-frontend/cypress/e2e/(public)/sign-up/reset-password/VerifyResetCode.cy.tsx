@@ -15,13 +15,13 @@ describe('Verify Reset Code Page', () => {
         req.reply({
           statusCode: 200,
           body: {
-            errors: [{ message: 'invalid code' }],
+            errors: [{ message: 'Invalid code' }],
           },
         });
       }
     }).as('mockVerifyResetCode');
     cy.visit('/reset-password/verify-password');
-    cy.get(`[ data-cy="opt-input-test"]`).type('0123').should('have.value', '0123');
+    cy.get(`[ data-cy="opt-input-test"]`).type('0123');
     cy.get(`[data-cy="Error-Message"]`).should('have.text', 'Код буруу байна');
   });
   it(`should navigate to next step when code is matched`, () => {

@@ -23,7 +23,7 @@ const formSchema = z.object({
 });
 
 export const StepTwo = () => {
-  const [verifyResetCode] = useVerifyResetCodeMutation();
+  const [verifyResetCode, { loading }] = useVerifyResetCodeMutation();
   const [sendResetCode] = useSendResetCodeMutation();
   const router = useRouter();
 
@@ -44,7 +44,7 @@ export const StepTwo = () => {
       });
       router.push('/reset-password/verify-password/update-password');
     } catch (error) {
-      if (error instanceof Error && error.message.includes('invalid code')) {
+      if (error instanceof Error && error.message.includes('Invalid code')) {
         form.setError('code', {
           type: 'manual',
           message: 'Код буруу байна',
@@ -82,6 +82,15 @@ export const StepTwo = () => {
         });
       }
     }
+  }
+
+  if (loading) {
+    return (
+      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col gap-2 items-center justify-center">
+        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-gray-900 mr-2"></div>
+        <p className="text-center text-[#441500] ">Уншиж байна</p>
+      </div>
+    );
   }
   return (
     <div data-cy="Verify-Reset-Code-Page" className="w-screen h-screen flex flex-col items-center pt-[105px] gap-8 ">
