@@ -41,6 +41,8 @@ export const login: MutationResolvers["login"] = async (_, { input }) => {
     const token = createJwtToken(user._id);
 
     return {
+      success: true,
+      message: "Login successful",
       user,
       token,
     };

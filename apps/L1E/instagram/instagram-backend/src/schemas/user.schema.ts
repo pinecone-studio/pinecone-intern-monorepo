@@ -15,38 +15,51 @@ posts: [Post!]!
 receivedRequests: [ReceivedRequest!]!
 }
 
-input UpdateProfileInput {
-fullName: String
-userName: String
-isPrivate: Boolean
-profileImage: String
-bio: String
-}
-
-type UpdateProfileResponse {
-message: String
-}
-type AuthResponse {
-user:User!
-token: String!
-}
+# Auth
 input RegisterInput {
- email: String
- password: String
- userName: String
- fullName: String
-}
-input LoginInput{
-email: String
-password: String
-}
-type Query {
-getUsers: [User!]!
+ email: String!
+ password: String!
+ userName: String!
+ fullName: String!
 }
 
-type Mutation {
-updateProfile(input: UpdateProfileInput!): UpdateProfileResponse!
-register (input:RegisterInput!):AuthResponse!
-login (input:LoginInput!): AuthResponse!
+input LoginInput{
+ email: String!
+ password: String!
 }
-`
+
+type AuthResponse {
+ success: Boolean!
+ message: String!
+ token: String
+ user: User
+}
+
+# Follow/Edit profile responses
+type FollowResponse {
+ success: Boolean!
+ message: String!
+ user: User
+}
+
+type EditProfileResponse {
+ success: Boolean!
+ message: String!
+ user: User
+}
+
+# Queries
+type Query {
+ getUsers: [User!]!
+ getUser(_id: ID!): User
+}
+
+# Mutations
+type Mutation {
+ followUser(followerId: ID!, followingId: ID!): FollowResponse!
+ unfollowUser(followerId: ID!, followingId: ID!): FollowResponse!
+ editProfile(userId: ID!, fullName: String, userName: String, bio: String, isPrivate: Boolean, profileImage: String): EditProfileResponse!
+ register (input: RegisterInput!): AuthResponse!
+ login (input: LoginInput!): AuthResponse!
+}
+`;
