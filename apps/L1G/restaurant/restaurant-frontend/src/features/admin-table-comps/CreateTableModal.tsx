@@ -49,8 +49,6 @@ export const CreateTableModal = ({ refetch }: CreateTableModalProps) => {
 
       setOpen(false);
     } catch (err: unknown) {
-      form.reset();
-      setOpen(false);
       toast.error('Ширээ үүссэн байна! өөр нэр сонгоно уу');
     }
   };

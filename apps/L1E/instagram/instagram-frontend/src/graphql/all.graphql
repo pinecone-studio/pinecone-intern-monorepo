@@ -7,3 +7,13 @@ query GetUsers {
     bio
   }
 }
+
+mutation Login($input: LoginInput!) {
+  login(input: $input) {
+    token
+    user {
+      id: _id
+      email
+    }
+  }
+}

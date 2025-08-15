@@ -3,9 +3,10 @@ import React from 'react';
 import { Separator } from '@/components/ui/separator';
 import { SeeTableModal } from './SeeTableModal';
 import { useGetTablesQuery } from '@/generated';
-import { CreateTableModal } from '../../features/create-table-comps/CreateTableModal';
-import { DeleteTableModal } from '../../features/create-table-comps/DeleteTableModal';
 import { Toaster } from 'sonner';
+import { UpdateTableModal } from '@/features/admin-table-comps/UpdateTableModal';
+import { DeleteTableModal } from '@/features/admin-table-comps/DeleteTableModal';
+import { CreateTableModal } from '@/features/admin-table-comps/CreateTableModal';
 
 export const TableGrid = () => {
   const { loading, error, data, refetch } = useGetTablesQuery();
@@ -35,7 +36,7 @@ export const TableGrid = () => {
                   <h1 className="font-bold text-[18px]">{table.tableName}</h1>
                   <div className="flex justify-around gap-2">
                     <SeeTableModal data={table} />
-                    <SeeTableModal data={table} />
+                    <UpdateTableModal refetch={refetch} data={table.tableId} />
                     <DeleteTableModal refetch={refetch} data={table.tableId} />
                   </div>
                 </div>

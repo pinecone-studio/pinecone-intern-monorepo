@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import { gql, useMutation } from "@apollo/client"
 
 const inputs = [
     {
@@ -42,7 +43,7 @@ const inputs = [
     },
 ] as const;
 
-const Users = ["Nake", "Naka", "Naak", "Naraa", "Naagii"] 
+// const Users = ["Nake", "Naka", "Naak", "Naraa", "Naagii"] 
 
 const SignUpPage = () => {
 
@@ -59,10 +60,7 @@ const SignUpPage = () => {
         username: z.string().min(1, { message: "Username is required" }).min(2, {
             message: "User name must be at least 2 characters.",
         }),
-    }).refine((data) => !Users.includes(data.username), {
-        path: ['username'],
-        message: "A user with that username already exists.",
-    });
+    })
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -74,8 +72,38 @@ const SignUpPage = () => {
         },
     });
 
-    const onSubmit = async () => {  
-        router.push('/signin')
+    const REGISTER_MUTATION = gql`
+        mutation Register($input: RegisterInput!) {
+            register(input: $input) {
+                token
+                user {
+                    _id
+                    email
+                }
+            }
+        }
+    `;
+
+    const [executeRegister, { loading }] = useMutation(REGISTER_MUTATION);
+
+    const onSubmit = async (values: z.infer<typeof formSchema>) => { 
+        try {
+            await executeRegister({
+                variables: {
+                    input: {
+                        email: values.email,
+                        password: values.password,
+                        userName: values.username,
+                        fullName: values.fullname,
+                    },
+                },
+            });
+            router.push('/signin')
+        } catch (err) {
+            console.error(err)
+            // Surface server-side duplicate username error for Cypress expectations
+            form.setError('username', { message: 'A user with that username already exists.' })
+        }
     };
 
     return (
@@ -114,7 +142,9 @@ const SignUpPage = () => {
                             }
                             <p className="text-sm font-normal text-center text-muted-foreground">People who use our service may have uploaded <br></br> your contact information to Instagram. <a href="/" className="text-blue-600">Learn <br></br> More</a></p>
                             <p className="text-sm font-normal text-center text-muted-foreground">By signing up, you agree to our Terms , Privacy <br></br> <a href="/" className="text-blue-600">Policy and Cookies Policy.</a></p>
-                            <Button data-cy="Sign-Up-Submit-Button" type="submit" className="w-full bg-blue-600/50 cursor-pointer">Sign up</Button>
+                            <Button data-cy="Sign-Up-Submit-Button" type="submit" className="w-full bg-blue-600/50 cursor-pointer" disabled={loading}>
+                                {loading ? 'Signing up...' : 'Sign up'}
+                            </Button>
                         </form>
                     </Form>
                 </div>

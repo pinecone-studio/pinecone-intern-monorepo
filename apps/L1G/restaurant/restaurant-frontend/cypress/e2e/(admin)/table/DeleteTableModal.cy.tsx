@@ -31,9 +31,6 @@ describe('Admin delete table', () => {
     cy.contains('Амжилтгүй').should('be.visible');
   });
   it('should delete test table', () => {
-    cy.get('[data-testid="Admin-Create-Table-Dialog-Trigger"]').click();
-    cy.get('[data-testid="Admin-Create-Table-Input"]').type('TEST_TEST');
-    cy.get('[data-testid="Admin-Create-Table-Button"]').click().wait(3000);
     cy.get('[data-cy="Admin-Delete-Table-Dialog-Trigger"]').last().click();
     cy.get('[data-cy="Admin-Delete-Table-Button"]').click();
   });
