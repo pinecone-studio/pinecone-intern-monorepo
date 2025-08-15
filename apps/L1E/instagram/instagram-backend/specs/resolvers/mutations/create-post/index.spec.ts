@@ -1,54 +1,43 @@
-// index.spec.ts
+// apps/L1E/instagram/instagram-backend/specs/resolvers/mutations/create-post/index.spec.ts
 import { createPost } from "src/resolvers/mutations";
-import cloudinary from "src/utils/cloudinary";
 import { Post } from "src/models";
+import cloudinary from "src/utils/cloudinary";
 
-
-jest.mock("src/utils/cloudinary", () => ({
-  uploader: {
-    upload: jest.fn(),
-  },
-}));
-
-
-jest.mock("src/models", () => ({
-  Post: jest.fn(),
-}));
-
+jest.mock("src/utils/cloudinary");
+jest.mock("src/models");
+/* eslint-disable camelcase */
 describe("createPost mutation", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
   it("uploads images to Cloudinary and saves a post", async () => {
-    (cloudinary.uploader.upload as jest.Mock)
-      .mockResolvedValueOnce({ SECURE_URL: "https://cloudinary.com/img1.jpg" })
-      .mockResolvedValueOnce({ SECURE_URL: "https://cloudinary.com/img2.jpg" });
-
-    const mockSave = jest.fn();
-    // Make the mock return an object that keeps the passed-in fields
-    (Post as unknown as jest.Mock).mockImplementation((doc) => ({
-      ...doc,
+    // Mock Cloudinary uploader
+    (cloudinary.uploader.upload as jest.Mock).mockImplementation((img: string) => {
+      return Promise.resolve({ secure_url: `https://cloudinary.com/${img}` });
+    });
+/* eslint-disable camelcase */
+    // Mock Post constructor and save method
+    const mockSave = jest.fn().mockResolvedValue(true);
+    (Post as unknown as jest.Mock).mockImplementation((data) => ({
+      ...data,
       save: mockSave,
     }));
 
+    // Call the mutation
     const result = await createPost(null, {
-      image: ["imgBase64-1", "imgBase64-2"],
+      image: ["img1.jpg", "img2.jpg"],
       description: "Test description",
     });
 
+    // Assertions
     expect(cloudinary.uploader.upload).toHaveBeenCalledTimes(2);
+    expect(cloudinary.uploader.upload).toHaveBeenCalledWith("img1.jpg", { folder: "posts" });
+    expect(cloudinary.uploader.upload).toHaveBeenCalledWith("img2.jpg", { folder: "posts" });
+
     expect(Post).toHaveBeenCalledWith({
-      image: [
-        "https://cloudinary.com/img1.jpg",
-        "https://cloudinary.com/img2.jpg",
-      ],
+      image: ["https://cloudinary.com/img1.jpg", "https://cloudinary.com/img2.jpg"],
       description: "Test description",
     });
+
     expect(mockSave).toHaveBeenCalled();
-    expect(result.image).toEqual([
-      "https://cloudinary.com/img1.jpg",
-      "https://cloudinary.com/img2.jpg",
-    ]);
+    expect(result.image).toEqual(["https://cloudinary.com/img1.jpg", "https://cloudinary.com/img2.jpg"]);
+    expect(result.description).toBe("Test description");
   });
 });
