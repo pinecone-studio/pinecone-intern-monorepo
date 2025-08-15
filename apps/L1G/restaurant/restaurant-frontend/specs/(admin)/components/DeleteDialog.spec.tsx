@@ -6,7 +6,7 @@ const mockDataProps = {
   title: 'delete food',
   submitText: 'delete',
   commet: 'are you sure',
-  onClick: () => {},
+  onClick: () => undefined,
   children: <div>test</div>,
 };
 

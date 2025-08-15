@@ -1,11 +1,11 @@
+/* eslint max-lines: "off" */
 import '@testing-library/jest-dom';
 import { SelectCategoryInput } from '@/components/admin';
 import { GetCategoriesDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { findByText, queryByTestId, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { ErrorBoundary } from 'specs/utils/ErrorBoundary';
 import userEvent from '@testing-library/user-event';
 import { formSchemaFood } from '@/utils/FormSchemas';
 
@@ -28,7 +28,6 @@ const getCategoriesMock: MockedResponse = {
     },
   },
 };
-
 const getCategoriesNullMock: MockedResponse = {
   request: {
     query: GetCategoriesDocument,
@@ -39,7 +38,21 @@ const getCategoriesNullMock: MockedResponse = {
     },
   },
 };
-
+const getCategoryNameNullMock: MockedResponse = {
+  request: {
+    query: GetCategoriesDocument,
+  },
+  result: {
+    data: {
+      getCategories: [
+        {
+          categoryId: '1',
+          categoryName: null,
+        },
+      ],
+    },
+  },
+};
 const getCategoriesLoadingMock: MockedResponse = {
   request: {
     query: GetCategoriesDocument,
@@ -60,7 +73,6 @@ const getCategoriesLoadingMock: MockedResponse = {
     },
   },
 };
-
 const getCategoriesErrorMock: MockedResponse = {
   request: {
     query: GetCategoriesDocument,
@@ -110,15 +122,29 @@ describe('SelectCategoryInput', () => {
     expect(categorySelect).toHaveTextContent('Dessert');
   });
 
-  it('should throw an error when getCategories fetch fails', async () => {
+  it('should display "Категори" text when getCategories fetched data is null', async () => {
     const { getByTestId } = render(
-      <ErrorBoundary fallback={<div data-testid="error">Error</div>}>
-        <MockedProvider mocks={[getCategoriesErrorMock]} addTypename={false}>
-          <TestWrapper />
-        </MockedProvider>
-      </ErrorBoundary>
+      <MockedProvider mocks={[getCategoryNameNullMock]} addTypename={false}>
+        <TestWrapper />
+      </MockedProvider>
     );
-    await waitFor(() => expect(getByTestId('error')).toBeDefined());
+    await waitFor(() => expect(getByTestId('create-food-category-select')).not.toHaveTextContent('Loading...'));
+
+    fireEvent.click(getByTestId('create-food-category-select'));
+    await waitFor(() => getByTestId('create-food-category-option-1'));
+
+    fireEvent.click(getByTestId('create-food-category-option-1'));
+
+    await waitFor(() => expect(getByTestId('create-food-category-select')).toHaveTextContent('Категори'));
+  });
+
+  it('should display error message when getCategories fetch fails', async () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[getCategoriesErrorMock]} addTypename={false}>
+        <TestWrapper />
+      </MockedProvider>
+    );
+    await waitFor(() => expect(getByTestId('create-food-category-select')).toHaveTextContent('Категори сонгоход алдаа гарлаа!'));
   });
 
   it('should disbale select button when category is null or empty', async () => {

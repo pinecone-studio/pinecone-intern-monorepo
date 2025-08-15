@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import '@testing-library/jest-dom';
 import { UploadImage } from '@/utils/ImageUpload';
 import axios from 'axios';

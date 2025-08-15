@@ -15,9 +15,46 @@ export const SelectCategoryInput = ({ control }: SelectInputProps) => {
   const { data, error, loading } = useGetCategoriesQuery();
   const [isOpen, setIsOpen] = useState(false);
 
-  if (error) {
-    throw new Error(`Error: ${error.message}`);
-  }
+  const isButtonDisabled = () => {
+    return !loading && (!data?.getCategories || data.getCategories.length === 0);
+  };
+
+  const handleCategorySelect = (categoryId: string | undefined, onChange: (value: any) => void) => {
+    onChange(categoryId);
+    setIsOpen(false);
+  };
+
+  const getButtonText = (fieldValue: string | undefined) => {
+    if (error) return 'Категори сонгоход алдаа гарлаа!';
+    if (loading) return 'Loading...';
+    if (!fieldValue) return 'Категори';
+
+    const category = data?.getCategories.find((cat) => cat?.categoryId === fieldValue);
+    return category?.categoryName || 'Категори';
+  };
+
+  const renderDropdownContent = (onChange: (value: any) => void) => {
+    if (loading) {
+      return (
+        <div className="px-2 py-1.5 text-sm" data-testid="select-category-loading">
+          Loading...
+        </div>
+      );
+    }
+
+    return data?.getCategories.map((category) => (
+      <button
+        key={category?.categoryId}
+        type="button"
+        className="w-full rounded-sm px-2 py-1.5 text-left text-sm hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+        data-testid={`create-food-category-option-${category?.categoryId}`}
+        onClick={() => handleCategorySelect(category?.categoryId, onChange)}
+        role="option"
+      >
+        {category?.categoryName}
+      </button>
+    ));
+  };
 
   return (
     <FormField
@@ -36,9 +73,9 @@ export const SelectCategoryInput = ({ control }: SelectInputProps) => {
                 aria-expanded={isOpen}
                 aria-controls="category-listbox"
                 aria-busy={loading}
-                disabled={!loading && (!data?.getCategories || data.getCategories.length === 0)}
+                disabled={isButtonDisabled() || !!error}
               >
-                <span>{field.value ? data?.getCategories.find((cat) => cat?.categoryId === field.value)?.categoryName : loading ? 'Loading...' : 'Категори'}</span>
+                <span>{getButtonText(field.value)}</span>
                 <ChevronDown className="h-4 w-4 opacity-50" />
               </button>
             </FormControl>
@@ -49,27 +86,7 @@ export const SelectCategoryInput = ({ control }: SelectInputProps) => {
                 className="absolute top-full z-50 w-full rounded-md border bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in-80"
                 role="listbox"
               >
-                {loading ? (
-                  <div className="px-2 py-1.5 text-sm" data-testid="select-category-loading">
-                    Loading...
-                  </div>
-                ) : (
-                  data?.getCategories.map((category) => (
-                    <button
-                      key={category?.categoryId}
-                      type="button"
-                      className="w-full rounded-sm px-2 py-1.5 text-left text-sm hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      data-testid={`create-food-category-option-${category?.categoryId}`}
-                      onClick={() => {
-                        field.onChange(category?.categoryId);
-                        setIsOpen(false);
-                      }}
-                      role="option"
-                    >
-                      {category?.categoryName}
-                    </button>
-                  ))
-                )}
+                {renderDropdownContent(field.onChange)}
               </div>
             )}
           </div>
