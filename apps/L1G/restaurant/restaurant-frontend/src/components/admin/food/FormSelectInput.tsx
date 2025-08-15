@@ -19,7 +19,7 @@ export const SelectCategoryInput = ({ control }: SelectInputProps) => {
     return !loading && (!data?.getCategories || data.getCategories.length === 0);
   };
 
-  const handleCategorySelect = (categoryId: string | undefined, onChange: (value: any) => void) => {
+  const handleCategorySelect = (categoryId: string | undefined, onChange: (_value: string | undefined) => void) => {
     onChange(categoryId);
     setIsOpen(false);
   };
@@ -33,7 +33,7 @@ export const SelectCategoryInput = ({ control }: SelectInputProps) => {
     return category?.categoryName || 'Категори';
   };
 
-  const renderDropdownContent = (onChange: (value: any) => void) => {
+  const renderDropdownContent = (onChange: (_value: string | undefined) => void) => {
     if (loading) {
       return (
         <div className="px-2 py-1.5 text-sm" data-testid="select-category-loading">
@@ -50,6 +50,7 @@ export const SelectCategoryInput = ({ control }: SelectInputProps) => {
         data-testid={`create-food-category-option-${category?.categoryId}`}
         onClick={() => handleCategorySelect(category?.categoryId, onChange)}
         role="option"
+        aria-selected
       >
         {category?.categoryName}
       </button>
