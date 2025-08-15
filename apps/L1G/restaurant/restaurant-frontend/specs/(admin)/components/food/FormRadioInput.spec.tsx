@@ -16,5 +16,8 @@ const TestWrapper = () => {
 describe('RadioInput', () => {
   it('should render', () => {
     const { getByTestId } = render(<TestWrapper />);
+
+    expect(getByTestId('create-food-activestatus-input')).toBeInTheDocument();
+    expect(getByTestId('create-food-inactivestatus-input')).toBeInTheDocument();
   });
 });

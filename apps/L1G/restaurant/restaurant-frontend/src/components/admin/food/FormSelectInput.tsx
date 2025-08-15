@@ -34,6 +34,9 @@ export const SelectCategoryInput = ({ control }: SelectInputProps) => {
                 onClick={() => setIsOpen(!isOpen)}
                 aria-haspopup="listbox"
                 aria-expanded={isOpen}
+                aria-controls="category-listbox"
+                aria-busy={loading}
+                disabled={!loading && (!data?.getCategories || data.getCategories.length === 0)}
               >
                 <span>{field.value ? data?.getCategories.find((cat) => cat?.categoryId === field.value)?.categoryName : loading ? 'Loading...' : 'Категори'}</span>
                 <ChevronDown className="h-4 w-4 opacity-50" />

@@ -16,6 +16,7 @@ const TestWrapper = () => {
 
 describe('TextInput', () => {
   it('should render', () => {
-    const { getByTestId } = render(<TestWrapper />);
+    const { getByPlaceholderText } = render(<TestWrapper />);
+    expect(getByPlaceholderText('price')).toBeInTheDocument();
   });
 });

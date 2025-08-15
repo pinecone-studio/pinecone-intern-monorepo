@@ -9,16 +9,21 @@ import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from '
 import { Plus, X } from 'lucide-react';
 import { useState } from 'react';
 import Image from 'next/image';
-import { toast } from 'react-toastify';
-import { useCreateFoodMutation } from '@/generated';
-import { UploadImage } from '@/utils/image-upload';
+import { GetFoodsQuery, useCreateFoodMutation } from '@/generated';
+import { UploadImage } from '@/utils/ImageUpload';
 import { formSchemaFood, initialValuesFood } from '@/utils/FormSchemas';
 import { RadioInput, SelectCategoryInput, TextInput } from '@/components/admin';
+import { toast } from 'sonner';
+import { ApolloQueryResult } from '@apollo/client';
 
-export const CreateFoodDialog = () => {
-  const [image, setImage] = useState<string>('');
-  const [createFood] = useCreateFoodMutation();
+export const CreateFoodDialog = ({ refetch }: { refetch: () => Promise<ApolloQueryResult<GetFoodsQuery>> }) => {
+  const [foodImage, setFoodImage] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [createFood] = useCreateFoodMutation();
+  const form = useForm<z.infer<typeof formSchemaFood>>({
+    resolver: zodResolver(formSchemaFood),
+    defaultValues: initialValuesFood,
+  });
 
   const onSubmit = async (values: z.infer<typeof formSchemaFood>) => {
     try {
@@ -35,23 +40,23 @@ export const CreateFoodDialog = () => {
           },
         },
       });
+      await refetch();
       form.reset();
-      setImage('');
+      setFoodImage('');
       setIsOpen(false);
+      toast.success('Хоол амжилттай үүслээ!', {
+        position: 'bottom-right',
+      });
     } catch (error) {
+      console.error('Error:', error);
       toast.error('Хоол үүсгэхэд алдаа гарлаа!', {
-        position: 'top-right',
+        position: 'bottom-right',
       });
     }
   };
 
-  const form = useForm<z.infer<typeof formSchemaFood>>({
-    resolver: zodResolver(formSchemaFood),
-    defaultValues: initialValuesFood,
-  });
-
   const handleDeleteImage = () => {
-    setImage('');
+    setFoodImage('');
     form.setValue('image', undefined, { shouldValidate: true });
   };
 
@@ -87,8 +92,8 @@ export const CreateFoodDialog = () => {
               name="image"
               render={({ field }) => (
                 <FormItem>
-                  <Button variant="ghost" className={`flex w-full h-[52px] rounded-md p-4 has-[>svg]:px-0 bg-[#F4F4F5] border solid border-[#E4E4E7] ${image && 'w-full h-[150px] p-0'}`}>
-                    <div className={`flex justify-center items-center gap-2 ${image && 'absolute z-0'} `}>
+                  <Button variant="ghost" className={`flex w-full h-[52px] rounded-md p-4 has-[>svg]:px-0 bg-[#F4F4F5] border solid border-[#E4E4E7] ${foodImage && 'w-full h-[150px] p-0'}`}>
+                    <div className={`flex justify-center items-center gap-2 ${foodImage && 'absolute z-0'} `}>
                       <Plus className="flex w-4 h-4" />
                       <p className="text-sm leading-[20px] text-[#202223]">Зураг нэмэх</p>
                     </div>
@@ -97,19 +102,18 @@ export const CreateFoodDialog = () => {
                         data-testid="create-food-image-input"
                         className="flex absolute opacity-0"
                         type="file"
-                        // {...form.register('image')}
                         onChange={(event) => {
                           const file = event.target.files?.[0];
                           if (!file) return;
                           field.onChange(file);
                           form.setValue('image', file, { shouldValidate: true });
-                          setImage(URL.createObjectURL(file));
+                          setFoodImage(URL.createObjectURL(file));
                         }}
                       />
                     </FormControl>
-                    {image && (
+                    {foodImage && (
                       <div data-testid="create-food-image-preview" className="flex relative w-full h-[150px] justify-center items-center rounded-md">
-                        <Image data-testid="create-food-food-image" fill src={image} alt="image" id="image" className="w-[300px] h-[300px] rounded-md" />
+                        <Image data-testid="create-food-food-image" fill src={foodImage} alt="image" id="image" className="w-[300px] h-[300px] rounded-md" />
                         <div
                           data-testid="create-food-image-delete-button"
                           onClick={handleDeleteImage}

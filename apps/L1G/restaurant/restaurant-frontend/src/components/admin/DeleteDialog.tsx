@@ -6,15 +6,15 @@ import { ReactElement } from 'react';
 export type PropsType = {
   title: string;
   comment: string;
-  submit: string;
+  submitText: string;
   onClick: () => void;
   children: ReactElement;
 };
-export const DeleteDialog = ({ title, comment, submit, children, onClick }: PropsType) => {
+export const DeleteDialog = ({ title, comment, submitText, children, onClick }: PropsType) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="flex w-[89px] h-[40px] rounded-md px-4 py-2 gap-2 border solid border-[#E4E4E7] bg-[#FFFFFF] text-sm leading-[20px] font-medium text-[#09090B]">
+        <Button variant="secondary" className="flex w-[36px] h-[36px] rounded-md px-4 py-2 bg-[#F4F4F5]">
           {children}
         </Button>
       </DialogTrigger>
@@ -28,7 +28,7 @@ export const DeleteDialog = ({ title, comment, submit, children, onClick }: Prop
         <span className="text-base leading-[20px] text-[#71717A]">{comment}</span>
         <DialogClose asChild>
           <Button onClick={onClick} className="flex w-full h-[36px] rounded-md py-2 px-4 bg-[#1D1F24] " type="submit">
-            {submit}
+            {submitText}
           </Button>
         </DialogClose>
       </DialogContent>

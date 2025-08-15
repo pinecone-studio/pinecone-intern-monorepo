@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { SelectCategoryInput } from '@/components/admin';
 import { GetCategoriesDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { render, waitFor } from '@testing-library/react';
+import { findByText, queryByTestId, render, waitFor } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { ErrorBoundary } from 'specs/utils/ErrorBoundary';
@@ -29,6 +29,17 @@ const getCategoriesMock: MockedResponse = {
   },
 };
 
+const getCategoriesNullMock: MockedResponse = {
+  request: {
+    query: GetCategoriesDocument,
+  },
+  result: {
+    data: {
+      getCategories: [],
+    },
+  },
+};
+
 const getCategoriesLoadingMock: MockedResponse = {
   request: {
     query: GetCategoriesDocument,
@@ -40,6 +51,10 @@ const getCategoriesLoadingMock: MockedResponse = {
         {
           categoryId: '1',
           categoryName: 'Dessert',
+        },
+        {
+          categoryId: '2',
+          categoryName: 'Coffee',
         },
       ],
     },
@@ -64,7 +79,7 @@ const TestWrapper = () => {
 
 describe('SelectCategoryInput', () => {
   beforeEach(() => {
-    jest.clearAllMocks;
+    jest.clearAllMocks();
   });
   it('should render', async () => {
     const { getByTestId, queryByTestId } = render(
@@ -106,7 +121,22 @@ describe('SelectCategoryInput', () => {
     await waitFor(() => expect(getByTestId('error')).toBeDefined());
   });
 
+  it('should disbale select button when category is null or empty', async () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[getCategoriesNullMock]} addTypename={false}>
+        <TestWrapper />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(getByTestId('create-food-category-select')).toBeDisabled();
+    });
+  });
+
   describe('Loading state', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
     it('should show loading state initially', () => {
       const { getByTestId } = render(
         <MockedProvider mocks={[getCategoriesLoadingMock]} addTypename={false}>

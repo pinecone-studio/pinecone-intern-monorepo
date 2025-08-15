@@ -1,26 +1,30 @@
+/* eslint max-lines: "off" */
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { CreateFoodDocument, GetCategoriesDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { CreateFoodDialog } from '@/components/admin';
-import { toast } from 'react-toastify';
-import { UploadImage } from '@/utils/image-upload';
+import { UploadImage } from '@/utils/ImageUpload';
+import { toast } from 'sonner';
 
 beforeAll(() => {
+  /* eslint-disable @typescript-eslint/no-empty-function */
   global.ResizeObserver = class {
     observe() {}
     unobserve() {}
     disconnect() {}
   };
+  /* eslint-enable @typescript-eslint/no-empty-function */
 });
 
-jest.mock('react-toastify', () => ({
+jest.mock('sonner', () => ({
   toast: {
+    success: jest.fn(),
     error: jest.fn(),
   },
 }));
 
-jest.mock('@/utils/image-upload', () => ({
+jest.mock('@/utils/ImageUpload', () => ({
   UploadImage: jest.fn(),
 }));
 
@@ -93,6 +97,10 @@ const createFoodErrorMock: MockedResponse = {
 const mockUrl = 'blob:http://localhost/foodimage.png';
 global.URL.createObjectURL = jest.fn().mockReturnValue(mockUrl);
 
+const mockDataProps = {
+  refetch: jest.fn(),
+};
+
 describe('CreateFoodDialog', () => {
   const mockUploadImage = UploadImage as jest.MockedFunction<typeof UploadImage>;
 
@@ -104,7 +112,7 @@ describe('CreateFoodDialog', () => {
   it('should render', async () => {
     const { getByTestId, findByTestId } = render(
       <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
-        <CreateFoodDialog />
+        <CreateFoodDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
 
@@ -120,7 +128,7 @@ describe('CreateFoodDialog', () => {
   it('should closes dialog when close button is clicked', async () => {
     const { getByTestId } = render(
       <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
-        <CreateFoodDialog />
+        <CreateFoodDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
 
@@ -141,7 +149,7 @@ describe('CreateFoodDialog', () => {
 
     const { getByTestId } = render(
       <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
-        <CreateFoodDialog />
+        <CreateFoodDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
     expect(getByTestId('create-food-dialog-open')).toBeInTheDocument();
@@ -166,7 +174,7 @@ describe('CreateFoodDialog', () => {
   it('should handle empty file input', async () => {
     const { getByTestId } = render(
       <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
-        <CreateFoodDialog />
+        <CreateFoodDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
     expect(getByTestId('create-food-dialog-open')).toBeInTheDocument();
@@ -189,7 +197,7 @@ describe('CreateFoodDialog', () => {
 
     const { getByTestId } = render(
       <MockedProvider mocks={[getCategoriesMock]} addTypename={false}>
-        <CreateFoodDialog />
+        <CreateFoodDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
     expect(getByTestId('create-food-dialog-open')).toBeInTheDocument();
@@ -222,7 +230,7 @@ describe('CreateFoodDialog', () => {
 
     const { getByTestId, getByPlaceholderText, queryByTestId } = render(
       <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
-        <CreateFoodDialog />
+        <CreateFoodDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
 
@@ -266,16 +274,18 @@ describe('CreateFoodDialog', () => {
 
     fireEvent.click(submitButton);
 
-    // await waitFor(
-    //   () => {
-    //     expect(mockUploadImage).toHaveBeenCalledWith(mockFile);
-    //   },
-    //   { timeout: 4000 }
-    // );
-
     await waitFor(
       () => {
         expect(queryByTestId('create-food-dialog-title')).not.toBeInTheDocument();
+      },
+      { timeout: 3000 }
+    );
+
+    await waitFor(
+      () => {
+        expect(toast.success).toHaveBeenCalledWith('Хоол амжилттай үүслээ!', {
+          position: 'bottom-right',
+        });
       },
       { timeout: 3000 }
     );
@@ -286,7 +296,7 @@ describe('CreateFoodDialog', () => {
 
     const { getByTestId, getByPlaceholderText } = render(
       <MockedProvider mocks={[getCategoriesMock, createFoodErrorMock]} addTypename={false}>
-        <CreateFoodDialog />
+        <CreateFoodDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
 
@@ -330,7 +340,7 @@ describe('CreateFoodDialog', () => {
     await waitFor(
       () => {
         expect(toast.error).toHaveBeenCalledWith('Хоол үүсгэхэд алдаа гарлаа!', {
-          position: 'top-right',
+          position: 'bottom-right',
         });
       },
       { timeout: 3000 }

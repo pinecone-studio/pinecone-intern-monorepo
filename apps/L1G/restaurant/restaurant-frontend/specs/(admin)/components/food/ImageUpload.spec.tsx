@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { UploadImage } from '@/utils/image-upload';
+import { UploadImage } from '@/utils/ImageUpload';
 import axios from 'axios';
 
 jest.mock('axios');
