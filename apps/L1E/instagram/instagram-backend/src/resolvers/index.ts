@@ -1,7 +1,9 @@
 import * as Query from './queries';
-import * as Mutation from './mutations';
+import { createPost } from './mutations';
 
 export const resolvers = {
   Query,
-  Mutation,
+  Mutation: {
+    createPost
+  }
 };
