@@ -4,6 +4,7 @@ import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { resolvers } from './resolvers';
 import { typeDefs } from './schemas';
 import { connectToDb } from './utils/connect-to-db';
+import 'dotenv/config';
 
 connectToDb();
 
