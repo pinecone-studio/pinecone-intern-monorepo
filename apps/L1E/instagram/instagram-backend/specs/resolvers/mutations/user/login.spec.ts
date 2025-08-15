@@ -1,11 +1,15 @@
 import { login } from 'src/resolvers/mutations/user/login';  // өөрийн файлын замыг зөв оруулна уу
 import { User } from 'src/models';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { getJwtSecret } from 'src/utils/check-jwt';
 
 jest.mock('src/models');
-jest.mock('bcrypt');
+jest.mock('bcryptjs');
 jest.mock('jsonwebtoken');
+jest.mock('src/utils/check-jwt', () => ({
+  getJwtSecret: jest.fn(),
+}));
 
 describe('login mutation', () => {
   const mockInput = {
@@ -22,6 +26,7 @@ describe('login mutation', () => {
   });
 
   it('should login successfully with correct credentials', async () => {
+    (getJwtSecret as jest.Mock).mockReturnValue('testsecret');
     (User.findOne as jest.Mock).mockResolvedValue({
       _id: 'user-id-123',
       email: mockInput.email,
@@ -55,8 +60,9 @@ describe('login mutation', () => {
       .rejects.toThrow('Invalid credentials');
   });
   it('should throw error if JWT_SECRET is not configured', async () => {
-    const originalSecret = process.env.JWT_SECRET;
-    delete process.env.JWT_SECRET;
+    (getJwtSecret as jest.Mock).mockImplementation(() => {
+      throw new Error('JWT_SECRET not configured');
+    });
 
     (User.findOne as jest.Mock).mockResolvedValue({
       _id: 'user-id-123',
@@ -68,8 +74,6 @@ describe('login mutation', () => {
 
     await expect(login!(null as any, { input: mockInput }, null as any, null as any))
       .rejects.toThrow('JWT_SECRET not configured');
-
-    process.env.JWT_SECRET = originalSecret;
   });
   it('should throw error if password does not match', async () => {
     (User.findOne as jest.Mock).mockResolvedValue({

@@ -9,7 +9,7 @@ export const createPost = async (_: unknown, { image, description }: { image: st
     const uploadResponse = await cloudinary.uploader.upload(img, {
       folder: "posts",
     });
-    uploadedUrls.push(uploadResponse.SECURE_URL);
+    uploadedUrls.push(uploadResponse.secure_url);
   }
 
   const newPost = new Post({

@@ -1,5 +1,4 @@
 "use client"
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -14,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-
+import { useAuth } from "@/components/providers/AuthProvider"
 const inputs = [
     {
         name: 'email',
@@ -30,7 +29,7 @@ const inputs = [
     },
 ] as const;
 
-const EmailAdresses = ["Nake@gmail.com", "Naka@gmail.com", "Naak@gmail.com", "Naraa@gmail.com", "Naagii@gmail.com"]
+// const EmailAdresses = ["Nake@gmail.com", "Naka@gmail.com", "Naak@gmail.com", "Naraa@gmail.com", "Naagii@gmail.com"]
 
 const SignInPage = () => {
 
@@ -43,9 +42,6 @@ const SignInPage = () => {
         password: z.string().min(1, { message: "Password is required" }).min(6, {
             message: "Password must be at least 6 characters.",
         }),
-    }).refine((data) => EmailAdresses.includes(data.email), {
-        path: ['email'],
-        message: "A user with that email does not exist.",
     })
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -56,10 +52,18 @@ const SignInPage = () => {
         },
     });
 
-    const onSubmit = async () => { 
-        router.push('/') 
+    const {login} = useAuth()
+    const onSubmit = async (values: z.infer<typeof formSchema>) => { 
+        try {
+            
+            await login(values.email, values.password)
+            router.push('/')
+        } catch (err) {
+            console.error(err)
+            // Surface server-side auth error on the email field for Cypress expectations
+            form.setError('email', { message: 'A user with that email does not exist.' })
+        }
     };
-
     return (
         <div className="bg-gray-50 w-full h-screen" data-cy="Sign-In-Page">
             <div className="w-[364px] h-fit space-y-3 mx-auto pt-[105px] rounded-[10px]">

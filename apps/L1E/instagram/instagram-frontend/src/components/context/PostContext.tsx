@@ -11,7 +11,7 @@ const PostContext = createContext<PostContextType | undefined>(undefined);
 
 export const PostProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [postStep, setPostStep] = useState<'idle' | 'select-image' | 'add-caption' | 'preview'>('idle');
-
+  console.log(postStep, "CHECKKK in Context");
   const handlePostClick = () => {
     setPostStep('select-image');
   };

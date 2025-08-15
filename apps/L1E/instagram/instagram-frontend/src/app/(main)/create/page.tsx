@@ -12,7 +12,7 @@ import Preview from "./preview/Preview";
   const [caption, setCaption] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const { postStep, setPostStep } = usePost();
-
+  console.log(postStep  , "CHECKKK in CReatePAGE")
 
 
   const handleImageLoad = (files: FileList, newImages: string[]) => {
