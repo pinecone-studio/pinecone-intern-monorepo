@@ -11,3 +11,4 @@ export const CREATE_POST = gql`
     }
   }
 `;
+
