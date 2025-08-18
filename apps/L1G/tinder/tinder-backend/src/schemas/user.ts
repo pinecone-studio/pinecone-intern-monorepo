@@ -62,7 +62,7 @@ export const UsertypeDefs = gql`
   type Query {
     getusers: [User]
     getUserAllChatMessages(userId: ID!): [MatchChatMessages!]!
-    getChatWithUser(userId: ID!, participantId: ID!): MatchChatMessages
+getChatWithUser(userId: ID!, participantId: ID!): MatchChatMessages!
   }
   type Mutation {
     forgotPassword(newPassword: String!, otpId: String!): ForgotPasswordPayload!

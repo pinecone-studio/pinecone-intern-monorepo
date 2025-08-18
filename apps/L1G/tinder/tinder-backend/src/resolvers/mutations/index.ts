@@ -1,5 +1,3 @@
-import exp from 'constants';
-
 export * from './interests';
 export * from './dislike';
 export * from './like';

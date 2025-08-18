@@ -3,7 +3,7 @@ import { ChatMessageModel } from 'src/models/chat-message';
 import { MatchModel } from 'src/models/match';
 import { Usermodel } from 'src/models/user';
 import { QueryResolvers } from 'src/generated';
-import { LeanMatch, LeanUser } from 'src/types';
+import { LeanChatMessage, LeanMatch, LeanUser } from 'src/types';
 
 export const getUserAllChatMessages: QueryResolvers['getUserAllChatMessages'] = async (_, { userId }) => {
   const userObjectId = new mongoose.Types.ObjectId(userId);
@@ -26,19 +26,20 @@ export const getUserAllChatMessages: QueryResolvers['getUserAllChatMessages'] = 
       const participant = {
         id: participantUser._id.toString(),
         name: participantUser.name,
-        image: participantUser.images?.[0] || null,
+        image: participantUser.images?.[0] ?? undefined,
       };
 
-      const messages = await ChatMessageModel.find({ matchId: match._id }).sort({ createdAt: 1 }).select('senderId receiverId content createdAt').lean();
-
+      const messages = await ChatMessageModel.find({ matchId: match._id }).sort({ createdAt: 1 }).select('_id senderId receiverId content createdAt seen').lean<LeanChatMessage[]>();
       return {
         matchId: match._id.toString(),
         participant,
         messages: messages.map((msg) => ({
+          id: msg._id.toString(),
           senderId: msg.senderId.toString(),
           receiverId: msg.receiverId.toString(),
           content: msg.content,
-          createdAt: msg.createdAt.toISOString(),
+          createdAt: new Date(msg.createdAt).toISOString(),
+          seen: msg.seen ?? false,
         })),
       };
     })

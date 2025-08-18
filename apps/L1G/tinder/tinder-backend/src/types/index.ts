@@ -50,3 +50,11 @@ export interface LeanMatch {
   users: mongoose.Types.ObjectId[];
   unmatched?: boolean;
 }
+export type LeanChatMessage = {
+  _id: mongoose.Types.ObjectId;
+  senderId: mongoose.Types.ObjectId;
+  receiverId: mongoose.Types.ObjectId;
+  content: string;
+  createdAt: Date;
+  seen?: boolean;
+};
