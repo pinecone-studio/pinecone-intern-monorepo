@@ -8,7 +8,6 @@ import connectToDB from './utils/connect-to-db';
 import { Context } from './types';
 import dotenv from 'dotenv';
 dotenv.config();
-
 connectToDB();
 
 const server = new ApolloServer<Context>({
