@@ -1,9 +1,11 @@
 import Image from "next/image";
 
-const ProfileImage = () => (
+const ProfileImage = ({image}: {image: string |
+   null | undefined
+}) => (
   <div>
     <Image
-      src="/profileImage.webp"
+      src={image || "/profileImage.webp"}
       alt="profileImage"
       width={150}
       height={150}

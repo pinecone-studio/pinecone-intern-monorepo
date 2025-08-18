@@ -15,8 +15,14 @@ const RootLayout = ({ children }: PropsWithChildren) => {
       <body>
         <ApolloWrapper>
           <AuthProvider>
-            <Sidebar />
-            {children}
+           <div className='flex gap-4'>
+            <div className='top-0 left-0 w-[300px] h-screen fixed'>
+               <Sidebar />
+            </div>
+            <div className='flex-1 ml-[300px] h-screen w-full'>
+              {children}
+            </div>
+           </div>
           </AuthProvider>
         </ApolloWrapper>
       </body>

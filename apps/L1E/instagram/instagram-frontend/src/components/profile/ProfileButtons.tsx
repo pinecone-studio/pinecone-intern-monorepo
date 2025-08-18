@@ -22,10 +22,10 @@ const ProfileButtons = ({ isMine, isPrivate }: Props) => {
     return (
       <div className="flex gap-4">
         <div className="flex gap-2">
-          <Button className="px-[16px] font-medium bg-[#2563EB] hover:bg-[#2563EB]">Follow</Button>
+          <Button variant="secondary" className="px-[16px] font-medium text-white bg-[#2563EB] hover:bg-[#2563EB]">Follow</Button>
           <Button variant="secondary" className="px-[16px] font-medium hover:bg-[#F4F4F5]">Message</Button>
         </div>
-        <Button>...</Button>
+        <div>。。。</div>
       </div>
     );
   }
@@ -33,7 +33,7 @@ const ProfileButtons = ({ isMine, isPrivate }: Props) => {
   return (
     <div className="flex gap-2">
       <Button className="px-[16px] font-medium bg-[#2563EB] hover:bg-[#2563EB]">Request</Button>
-      <Button>...</Button>
+      <div> 。。。</div>
     </div>
   );
 };
