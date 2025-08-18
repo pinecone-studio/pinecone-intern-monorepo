@@ -14,11 +14,13 @@ export const UsertypeDefs = gql`
     images: [String!]
     likedBy: [User]
     likedTo: [User]
-    matched: [User]
+    matchIds: [Match]
   }
-
-  type Query {
-    getusers: [User]
+  type Match {
+    id: ID!
+    users: [User!]!
+    matchedAt: String!
+    unmatched: Boolean!
   }
   enum OtpType {
     create
@@ -36,6 +38,31 @@ export const UsertypeDefs = gql`
     input: String!
     output: String!
     otpId: ID!
+  }
+
+  type ChatMessage {
+    id: ID!
+    senderId: ID!
+    receiverId: ID!
+    content: String!
+    createdAt: String!
+    seen: Boolean!
+  }
+  type ChatParticipant {
+    id: ID!
+    name: String!
+    image: String
+  }
+  type MatchChatMessages {
+    matchId: ID!
+    participant: ChatParticipant!
+    messages: [ChatMessage!]!
+  }
+
+  type Query {
+    getusers: [User]
+    getUserAllChatMessages(userId: ID!): [MatchChatMessages!]!
+getChatWithUser(userId: ID!, participantId: ID!): MatchChatMessages!
   }
   type Mutation {
     forgotPassword(newPassword: String!, otpId: String!): ForgotPasswordPayload!
@@ -70,5 +97,8 @@ export const UsertypeDefs = gql`
     like(likedByUser: ID!, likeReceiver: ID!): String
     dislike(dislikedByUser: ID!, dislikeReceiver: ID!): String
     uploadImages(images: [String!]!): User
+
+    sendMessage(senderId: ID!, receiverId: ID!, matchId: ID!, content: String!): ChatMessage!
+    markMessagesAsSeen(matchId: ID!, userId: ID!): Boolean
   }
 `;
