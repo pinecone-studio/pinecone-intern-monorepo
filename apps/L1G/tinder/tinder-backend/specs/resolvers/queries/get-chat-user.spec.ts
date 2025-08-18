@@ -42,7 +42,6 @@ describe('getChatWithUser resolver', () => {
         receiverId: participantObjectId,
         content: 'Hello!',
         createdAt: new Date('2025-01-01T12:00:00Z'),
-        // 'seen' is missing to test fallback
       },
     ];
 
@@ -149,7 +148,7 @@ describe('getChatWithUser resolver', () => {
 
     const result = await getChatWithUser({}, { userId, participantId });
 
-    expect(result?.participant.image).toBeNull();
+    expect(result?.participant.image).toBeUndefined();
     expect(result?.messages).toEqual([]);
   });
 });

@@ -27,7 +27,7 @@ export const getChatWithUser: QueryResolvers['getChatWithUser'] = async (_, { us
   const participant = {
     id: participantUser._id.toString(),
     name: participantUser.name,
-    image: participantUser.images?.[0] ?? null,
+    image: participantUser.images?.[0] ?? undefined,
   };
 
   const messages = await ChatMessageModel.find({ matchId: match._id }).sort({ createdAt: 1 }).select('senderId receiverId content createdAt seen').lean<LeanChatMessage[]>();
