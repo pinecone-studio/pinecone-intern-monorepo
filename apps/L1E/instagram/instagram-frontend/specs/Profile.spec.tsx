@@ -7,7 +7,7 @@ jest.mock("@/components/providers/AuthProvider", () => ({
   useAuth: jest.fn(),
 }));
 
-describe("ProfilePage", () => {
+describe("ProfilePage (user not null)", () => {
   it("renders Profile component with correct props when user exists", () => {
     (useAuth as jest.Mock).mockReturnValue({
       user: {
