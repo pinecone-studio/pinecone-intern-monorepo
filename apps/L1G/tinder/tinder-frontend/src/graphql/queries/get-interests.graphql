@@ -1,0 +1,12 @@
+query GetAllInterests {
+  getAllInterests {
+    interestName
+    _id
+  }
+}
+query GetInterest($id: ID!) {
+  getInterest(_id: $id) {
+    _id
+    interestName
+  }
+}   
