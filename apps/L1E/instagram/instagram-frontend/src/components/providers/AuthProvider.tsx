@@ -3,8 +3,48 @@ import React, { createContext, PropsWithChildren, useContext, useState } from 'r
 import { gql, useMutation } from '@apollo/client';
 
 export type AuthUser = {
-  id: string;
-  email: string;
+  fullName: string,
+  userName: string,
+  isPrivate: boolean,
+  profileImage: string,
+  bio: string,
+  followers: {
+    _id: string,
+    userName: string,
+    profileImage: string
+  }[],
+  following: {
+    _id: string,
+    userName: string,
+    profileImage: string
+  }[],
+  posts: {
+    _id: string,
+    image: string,
+    description: string,
+    createdAt: string,
+    likes: {
+      _id: string,
+      user: {
+        _id: string,
+        userName: string,
+        profileImage: string
+      }
+    }[],
+    comments: {
+      _id: string,
+      text: string,
+      createdAt: string,
+      user: {
+        _id: string,
+        userName: string,
+        profileImage: string
+      }
+    }[]
+  }[]
+};
+export type AuthUserResponse = {
+  user: AuthUser;
 };
 
 type AuthContextValue = {
@@ -18,11 +58,49 @@ export const LOGIN_MUTATION = gql`
     login(input: $input) {
       token
       user {
-        id: _id
-        email
+      fullName
+      userName
+      isPrivate
+      profileImage
+      bio
+      followers {
+        _id
+        userName
+        profileImage
+      }
+      following {
+        _id
+        userName
+        profileImage
+      }
+      posts {
+        _id
+        image
+        description
+        createdAt
+        likes {
+          _id
+          useId {
+            _id
+            userName
+            profileImage
+          }
+        }
+        comments {
+          _id
+          text
+          createdAt
+          userId {
+            _id
+            userName
+            profileImage
+          }
+        }
+        image
       }
     }
-  }
+      }
+    }
 `;
 
 type LoginMutationResult = {

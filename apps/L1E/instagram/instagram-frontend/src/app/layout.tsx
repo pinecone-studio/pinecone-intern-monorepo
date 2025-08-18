@@ -32,7 +32,6 @@ const RootLayout = ({ children }: PropsWithChildren) => {
                 {children}
               </PostProvider>
             </ApolloProvider>
-         
           </AuthProvider>
         </ApolloWrapper>
       </body>
