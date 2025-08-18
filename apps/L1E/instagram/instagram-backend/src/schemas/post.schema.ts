@@ -9,4 +9,8 @@ likes: [Like!]!
 comments: [Comment!]!
 createdAt: Date!
 }
+
+type Mutation {
+  createPost(image: [String!]!, description: String): Post!
+}
 `

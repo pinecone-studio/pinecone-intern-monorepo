@@ -1,3 +1,4 @@
+"use client"
 // import Profile from '@/components/Profile';
 import Follow from '@/components/FollowSection';
 import Post from '@/components/Post';
@@ -14,7 +15,6 @@ const Home = () => {
         </div>
         <Follow />
       </div>
-      {/* <Profile bio={"bio"} userName={"usernaem"} postsNumber={12} followersNumber={12} followingNumber={12} isMine={true} isPrivate={true} ></Profile> */}
     </div>
   );
 };

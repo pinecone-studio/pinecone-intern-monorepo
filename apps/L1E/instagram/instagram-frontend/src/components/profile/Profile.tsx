@@ -7,7 +7,7 @@ import ProfileStats from "./ProfileStats";
 export type PostType = {
   id: string;
   image: string;
-  caption: string;
+  text: string;
   createdAt: string;
   likes: number;
   comments: number;
@@ -25,7 +25,6 @@ export type FollowingType = {
   userName: string;
   image: string | null;
 }
-
 interface ProfileProps {
   isMine: boolean;
   isPrivate: boolean;
