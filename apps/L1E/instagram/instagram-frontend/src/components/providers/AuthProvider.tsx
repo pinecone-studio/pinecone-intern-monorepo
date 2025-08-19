@@ -80,7 +80,7 @@ export const LOGIN_MUTATION = gql`
         createdAt
         likes {
           _id
-          useId {
+          userId {
             _id
             userName
             profileImage
