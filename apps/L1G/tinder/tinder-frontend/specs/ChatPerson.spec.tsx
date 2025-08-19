@@ -2,12 +2,10 @@ import ChatPerson from '@/components/ChatPerson';
 import { render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-jest.mock('next/image', () => ({
-  __esModule: true,
-  default: (props) => {
-    return <img {...props} />;
-  },
-}));
+const mockUsers = [
+  { id: 1, name: 'John', age: 25, job: 'Engineer', avatar: ['/john.jpg'] },
+  { id: 2, name: 'Alice', age: 30, job: 'Designer', avatar: ['/alice.jpg'] },
+];
 
 jest.mock('@/components/ChatWindow', () => ({
   __esModule: true,
