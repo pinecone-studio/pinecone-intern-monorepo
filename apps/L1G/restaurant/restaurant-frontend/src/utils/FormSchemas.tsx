@@ -13,10 +13,13 @@ const formSchemaFood = z.object({
   category: z.string().min(1, {
     message: 'Категори сонгоно уу',
   }),
-  status: z.enum(['Идэвхитэй', 'Идэвхигүй']),
-  image: z.any().refine((file) => file instanceof File && file.size > 0, {
-    message: 'Зураг оруулна уу',
-  }),
+  status: z.enum(['Идэвхитэй', 'Идэвхигүй'] as const),
+  image: z.union([
+    z.any().refine((file) => file instanceof File && file.size > 0, {
+      message: 'Зураг оруулна уу!',
+    }),
+    z.string().url({ message: 'Зурагны URL буруу байна!' }),
+  ]),
 });
 
 const initialValuesFood = {
