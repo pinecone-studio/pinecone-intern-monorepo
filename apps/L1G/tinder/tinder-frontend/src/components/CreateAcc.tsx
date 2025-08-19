@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Separator } from '@/components/ui/separator';
 import { useRouter } from 'next/navigation';
+import { UserData } from '@/app/(auth)/signup/page';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email' }),
@@ -16,9 +17,10 @@ const formSchema = z.object({
 
 type CreateAccountProps = {
   onSuccess: () => void;
+  updateUserData: (newData: Partial<UserData>) => void;
 };
 
-export const CreateAccount = ({ onSuccess }: CreateAccountProps) => {
+export const CreateAccount = ({ onSuccess, updateUserData }: CreateAccountProps) => {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -28,8 +30,8 @@ export const CreateAccount = ({ onSuccess }: CreateAccountProps) => {
     },
   });
 
-  function onSubmit(_values: z.infer<typeof formSchema>) {
-    console.log('working');
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    updateUserData({ email: values.email });
     onSuccess();
   }
 
