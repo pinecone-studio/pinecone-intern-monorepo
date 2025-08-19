@@ -1,12 +1,23 @@
-query GetUsers {
-  getUsers {
-    _id
-    userName
-    isPrivate
-    profileImage
-    bio
+  query GetUsers {
+    getUsers {
+      _id
+      userName
+      isPrivate
+      profileImage
+      bio
+    }
   }
-}
+
+ query GetOthersProfile($userName: String!) {
+    getProfiles(userName: $userName) {
+      _id
+      userName
+      profileImage
+      bio
+    }
+  }
+
+
 
 mutation Login($input: LoginInput!) {
   login(input: $input) {
