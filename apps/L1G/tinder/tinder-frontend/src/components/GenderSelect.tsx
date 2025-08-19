@@ -3,17 +3,20 @@
 import React, { useState } from 'react';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
+import { UserData } from '@/app/(auth)/signup/page';
 
 type GenderSelectProps = {
   onSuccess: () => void;
   onBack?: () => void;
+  updateUserData: (newData: Partial<UserData>) => void;
 };
 
-export const GenderSelect = ({ onSuccess }: GenderSelectProps) => {
+export const GenderSelect = ({ onSuccess, updateUserData }: GenderSelectProps) => {
   const [selectedInterest, setSelectedInterest] = useState('');
 
   const handleNext = () => {
     console.log('Selected interest:', selectedInterest);
+    updateUserData({ genderPreferences: selectedInterest });
     onSuccess();
   };
 

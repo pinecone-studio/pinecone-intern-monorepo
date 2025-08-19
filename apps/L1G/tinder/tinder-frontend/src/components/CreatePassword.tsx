@@ -5,21 +5,30 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
+import { useSignupMutation } from '@/generated';
+import { useState } from 'react';
+import { UserData } from '@/app/(auth)/signup/page';
 
-const formSchema = z.object({
-  password: z.string().min(8, {
-    message: 'Password must be at least 8 characters.',
-  }),
-  repeatPassword: z.string().min(8, {
-    message: 'Confirm password must be at least 8 characters.',
-  }),
-});
+const formSchema = z
+  .object({
+    password: z.string().min(8, {
+      message: 'Password must be at least 8 characters.',
+    }),
+    repeatPassword: z.string().min(8, {
+      message: 'Confirm password must be at least 8 characters.',
+    }),
+  })
+  .refine((data) => data.password === data.repeatPassword, {
+    message: "Passwords don't match",
+  });
 
 type CreatePasswordProps = {
   onSuccess: () => void;
+  updateUserData: (newData: Partial<UserData>) => void;
+  otpId: string;
 };
 
-export const CreatePassword = ({ onSuccess }: CreatePasswordProps) => {
+export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePasswordProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -28,9 +37,29 @@ export const CreatePassword = ({ onSuccess }: CreatePasswordProps) => {
     },
   });
 
-  function onSubmit(_values: z.infer<typeof formSchema>) {
-    console.log('working');
-    onSuccess();
+  const [signup, { loading, error }] = useSignupMutation();
+  const [serverError, setServerError] = useState<string | null>(null);
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setServerError(null);
+    try {
+      const response = await signup({
+        variables: {
+          password: values.password,
+          otpId,
+        },
+      });
+
+      if (response.data?.signup?.email) {
+        updateUserData({ password: values.password });
+        onSuccess();
+      } else {
+        setServerError(error?.message || 'Something went wrong.');
+      }
+    } catch (e) {
+      console.error('Signup failed:', e);
+      setServerError('Something went wrong.');
+    }
   }
 
   return (
@@ -76,8 +105,10 @@ export const CreatePassword = ({ onSuccess }: CreatePasswordProps) => {
             </div>
 
             <Button type="submit" className="bg-[#E11D48] bg-opacity-90 w-[350px] rounded-full">
-              Continue
+              {loading ? 'Please wait...' : 'Continue'}
             </Button>
+
+            {serverError && <p className="text-red-500 mt-2">{serverError}</p>}
           </div>
         </div>
       </form>

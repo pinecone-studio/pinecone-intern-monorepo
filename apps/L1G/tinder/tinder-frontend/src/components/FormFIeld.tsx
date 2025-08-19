@@ -6,11 +6,13 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { MultiSelect } from './MultiSelect';
-import { useGetAllInterestsQuery } from '../generated'; 
+import { useGetAllInterestsQuery } from '../generated';
+import { UserData } from '@/app/(auth)/signup/page';
 
 type ProfileFormProps = {
   onSuccess: () => void;
   onBack: () => void;
+  updateUserData: (newData: Partial<UserData>) => void;
 };
 
 const formSchema = z.object({
@@ -21,7 +23,7 @@ const formSchema = z.object({
   work: z.string().optional(),
 });
 
-const ProfileForm = ({ onSuccess, onBack }: ProfileFormProps) => {
+const ProfileForm = ({ onSuccess, onBack, updateUserData }: ProfileFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,8 +36,9 @@ const ProfileForm = ({ onSuccess, onBack }: ProfileFormProps) => {
   });
   const { data, loading, error } = useGetAllInterestsQuery();
 
-  const onSubmit = (_values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
     onSuccess();
+    updateUserData({ name: values.name, bio: values.bio, interests: values.interest, profession: values.profession, schoolWork: values.work });
   };
   if (loading) {
     return <p className="text-center text-gray-500">Loading interests...</p>;
