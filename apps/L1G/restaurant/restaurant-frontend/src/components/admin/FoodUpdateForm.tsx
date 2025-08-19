@@ -6,15 +6,14 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { formSchemaFood } from '@/utils/FormSchemas';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { FoodUpdateFormProps, statusOptions } from '@/utils/FoodCreateAndUpdate';
 import { TextInput } from './FormTextInput';
 
-export const FoodUpdateForm = ({ foodName, price, status, image, category, onSubmit, isSubmitting = false }: FoodUpdateFormProps) => {
+export const FoodUpdateForm = ({ foodName, price, status, image, category, onSubmit, isSubmitting }: FoodUpdateFormProps) => {
   const [foodImage, setFoodImage] = useState<string>('');
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const form = useForm<z.infer<typeof formSchemaFood>>({
     resolver: zodResolver(formSchemaFood),
@@ -40,15 +39,10 @@ export const FoodUpdateForm = ({ foodName, price, status, image, category, onSub
   useEffect(() => {
     if (image) {
       setFoodImage(image);
-      if (!form.getValues('image') || typeof form.getValues('image') === 'string') {
-        form.setValue('image', image, { shouldValidate: true });
-      }
+      form.setValue('image', image, { shouldValidate: true });
     } else {
       setFoodImage('');
       form.setValue('image', undefined, { shouldValidate: true });
-      if (fileInputRef) {
-        fileInputRef.current!.value = '';
-      }
     }
   }, [image, form]);
 
@@ -58,12 +52,10 @@ export const FoodUpdateForm = ({ foodName, price, status, image, category, onSub
     form.setValue('image', file, { shouldValidate: true });
     setFoodImage(URL.createObjectURL(file));
   };
+
   const handleDeleteImage = () => {
     setFoodImage('');
     form.setValue('image', undefined, { shouldValidate: true });
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
   };
 
   return (
@@ -105,7 +97,7 @@ export const FoodUpdateForm = ({ foodName, price, status, image, category, onSub
                   <p className="text-sm leading-[20px] text-[#202223]">Зураг нэмэх</p>
                 </div>
                 <FormControl>
-                  <Input ref={fileInputRef} data-testid="food-update-image-input" className="flex absolute opacity-0" type="file" accept="image/*" onChange={handleImageChange} />
+                  <Input data-testid="food-update-image-input" className="flex absolute opacity-0" type="file" accept="image/*" onChange={handleImageChange} />
                 </FormControl>
                 {foodImage && (
                   <div data-testid="food-update-image-preview" className="flex relative w-full h-[150px] justify-center items-center rounded-md">
