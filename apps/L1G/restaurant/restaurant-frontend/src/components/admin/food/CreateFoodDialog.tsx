@@ -11,10 +11,10 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { GetFoodsQuery, useCreateFoodMutation } from '@/generated';
 import { UploadImage } from '@/utils/ImageUpload';
-import { formSchemaFood, initialValuesFood } from '@/utils/FormSchemas';
 import { RadioInput, SelectCategoryInput, TextInput } from '@/components/admin';
 import { toast } from 'sonner';
 import { ApolloQueryResult } from '@apollo/client';
+import { formSchemaFood, initialValuesFood } from '@/helpers/form-schemas';
 
 export const CreateFoodDialog = ({ refetch }: { refetch: () => Promise<ApolloQueryResult<GetFoodsQuery>> }) => {
   const [foodImage, setFoodImage] = useState<string>('');

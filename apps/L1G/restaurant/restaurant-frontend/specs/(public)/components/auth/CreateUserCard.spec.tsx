@@ -38,7 +38,7 @@ const createUserErrorMock: MockedResponse = {
       password: 'user1@123',
     },
   },
-  error: new Error('User already exists'),
+  error: new Error('Имэйл хаяг бүртгэлтэй байна.'),
 };
 
 jest.mock('next/navigation', () => ({
@@ -110,7 +110,7 @@ describe('CreateUserComponent', () => {
     fireEvent.change(getByTestId('createUser-confirmPassword-input'), { target: { value: 'user1@123' } });
     fireEvent.click(getByTestId('createUser-submit-btn'));
 
-    expect(await findByText('User already exists')).toBeInTheDocument();
+    expect(await findByText('Имэйл хаяг бүртгэлтэй байна.')).toBeInTheDocument();
   });
 });
 

@@ -1,6 +1,6 @@
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { formSchemaFood } from '@/utils/FormSchemas';
+import { formSchemaFood } from '@/helpers/form-schemas';
 import { Control } from 'react-hook-form';
 import { z } from 'zod';
 

@@ -5,7 +5,7 @@ import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/f
 import { useGetCategoriesQuery } from '@/generated';
 import { Control } from 'react-hook-form';
 import { z } from 'zod';
-import { formSchemaFood } from '@/utils/FormSchemas';
+import { formSchemaFood } from '@/helpers/form-schemas';
 
 type SelectInputProps = {
   control: Control<z.infer<typeof formSchemaFood>>;

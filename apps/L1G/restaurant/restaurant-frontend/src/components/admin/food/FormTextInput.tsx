@@ -1,6 +1,6 @@
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { formSchemaFood } from '@/utils/FormSchemas';
+import { formSchemaFood } from '@/helpers/form-schemas';
 import { Control } from 'react-hook-form';
 import { z } from 'zod';
 
