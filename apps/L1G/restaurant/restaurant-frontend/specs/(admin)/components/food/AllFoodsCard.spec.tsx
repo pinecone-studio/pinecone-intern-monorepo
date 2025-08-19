@@ -3,7 +3,16 @@ import { AllFoodsCard } from '@/components/admin/AllFoodsCard';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { toast } from 'sonner';
-import { deleteFoodByIdMock, deleteFoodErrorMock, deleteFoodWithIdErrorMock, getFoodsAfterDeleteMock, getFoodsErrorMock, getFoodsLoadingMock, getFoodsMock } from 'specs/utils/FoodsMockData';
+import {
+  deleteFoodByIdMock,
+  deleteFoodErrorMock,
+  deleteFoodWithIdErrorMock,
+  getFoodsAfterDeleteMock,
+  getFoodsEmptyArrayMock,
+  getFoodsErrorMock,
+  getFoodsLoadingMock,
+  getFoodsMock,
+} from 'specs/utils/FoodsMockData';
 
 jest.mock('sonner', () => ({
   toast: {
@@ -65,6 +74,21 @@ describe('AllFoodsCard', () => {
 
     await waitFor(() => {
       expect(queryByTestId('allfoods-error')).toBeInTheDocument();
+    });
+  });
+
+  it('should show message when getFoods return empty array ', async () => {
+    const { getByTestId, queryByTestId } = render(
+      <MockedProvider mocks={[getFoodsEmptyArrayMock]} addTypename={false}>
+        <AllFoodsCard />
+      </MockedProvider>
+    );
+
+    const title = getByTestId('allfoods-title');
+    expect(title).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(queryByTestId('allfoods-no-foods')).toBeInTheDocument();
     });
   });
 

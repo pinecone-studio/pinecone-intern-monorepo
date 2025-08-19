@@ -35,6 +35,17 @@ const getFoodsMock: MockedResponse = {
   },
 };
 
+const getFoodsEmptyArrayMock: MockedResponse = {
+  request: {
+    query: GetFoodsDocument,
+  },
+  result: {
+    data: {
+      getFoods: [],
+    },
+  },
+};
+
 const deleteFoodByIdMock: MockedResponse = {
   request: {
     query: DeleteFoodDocument,
@@ -192,4 +203,15 @@ const updateFoodErrorMock: MockedResponse = {
   error: new Error('Network error'),
 };
 
-export { getFoodsMock, deleteFoodByIdMock, getFoodsAfterDeleteMock, deleteFoodErrorMock, deleteFoodWithIdErrorMock, getFoodsLoadingMock, getFoodsErrorMock, updateFoodMock, updateFoodErrorMock };
+export {
+  getFoodsMock,
+  deleteFoodByIdMock,
+  getFoodsAfterDeleteMock,
+  deleteFoodErrorMock,
+  deleteFoodWithIdErrorMock,
+  getFoodsLoadingMock,
+  getFoodsErrorMock,
+  updateFoodMock,
+  updateFoodErrorMock,
+  getFoodsEmptyArrayMock,
+};

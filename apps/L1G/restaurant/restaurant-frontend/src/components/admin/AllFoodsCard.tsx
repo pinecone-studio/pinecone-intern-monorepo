@@ -35,7 +35,7 @@ export const AllFoodsCard = () => {
   };
 
   return (
-    <div className="flex flex-col w-[600px] h-[691px] gap-5 top-[219px] left-[500px]">
+    <div data-cy="allfoods" className="flex flex-col w-[600px] h-[691px] gap-5 top-[219px] left-[500px]">
       <div className="flex items-center justify-between">
         <h2 data-testid="allfoods-title" className="text-[28px] font-semibold text-[#000000] leading-[28px]">
           Хоол
@@ -52,7 +52,11 @@ export const AllFoodsCard = () => {
         </Card>
       ) : (
         <Card data-testid="allfoods-food-list" className="flex flex-col w-full h-[631px] p-8 gap-4 rounded-lg border solid border-[#E4E4E7] bg-[#FFFFFF] overflow-scroll">
-          {data?.getFoods.length === 0 && <div className="text-start text-gray-500 text-base">Одоогоор хоол бүртгэгдээгүй байна.</div>}
+          {data?.getFoods.length === 0 && (
+            <div data-testid="allfoods-no-foods" className="text-start text-gray-500 text-base">
+              Одоогоор хоол бүртгэгдээгүй байна.
+            </div>
+          )}
           {data?.getFoods.map((food) => (
             <div key={food?.foodId} className="flex flex-col gap-4">
               <CardContent className="flex w-full h-[87px] justify-between p-0">

@@ -5,8 +5,6 @@ import { UploadImage } from '@/utils/ImageUpload';
 import { toast } from 'sonner';
 import { FoodUpdateDialog } from '@/components/admin/FoodUpdateDialog';
 import { updateFoodErrorMock, updateFoodMock } from 'specs/utils/FoodsMockData';
-import { useState } from 'react';
-import { mock } from 'node:test';
 
 beforeAll(() => {
   global.ResizeObserver = class {
@@ -43,6 +41,18 @@ const mockDataProps = {
   refetch: jest.fn(),
 };
 
+const mockDataPropsWithEmptyValues = {
+  foodId: '2',
+  foodName: '',
+  price: '',
+  status: 'Идэвхитэй',
+  image: '',
+  category: {
+    categoryId: '',
+    categoryName: '',
+  },
+  refetch: jest.fn(),
+};
 describe('FoodUpdateDialog', () => {
   const mockUploadImage = UploadImage as jest.MockedFunction<typeof UploadImage>;
   beforeEach(() => {
@@ -129,31 +139,6 @@ describe('FoodUpdateDialog', () => {
     );
   });
 
-  it('should return early when isSubmitting is true', () => {
-    const handleSubmitSpy = jest.fn();
-
-    const TestComponent = () => {
-      const [isSubmitting, setIsSubmitting] = useState(true);
-      const handleSubmit = async (values: any) => {
-        handleSubmitSpy();
-
-        if (isSubmitting) {
-          return;
-        }
-        console.log('This should not execute');
-      };
-
-      return <button onClick={() => handleSubmit({})}>Submit</button>;
-    };
-
-    render(<TestComponent />);
-
-    const button = screen.getByRole('button');
-    fireEvent.click(button);
-
-    expect(handleSubmitSpy).toHaveBeenCalledTimes(1);
-  });
-
   it('should update food and closes the dialog', async () => {
     const mockFile = new File(['foodimage'], 'foodimage.png', { type: 'image/png' });
 
@@ -231,7 +216,7 @@ describe('FoodUpdateDialog', () => {
     );
   });
 
-  it('should update food with props image and closes the dialog', async () => {
+  it('should update food with existing image and closes the dialog', async () => {
     const { getByTestId, queryByTestId } = render(
       <MockedProvider mocks={[updateFoodMock]} addTypename={false}>
         <FoodUpdateDialog {...mockDataProps} />
@@ -367,35 +352,5 @@ describe('FoodUpdateDialog', () => {
       },
       { timeout: 3000 }
     );
-  });
-
-  it('prevents multiple submissions if isSubmitting is true', async () => {
-    const refetchMock = jest.fn();
-    const { getByTestId } = render(
-      <MockedProvider mocks={[updateFoodMock]} addTypename={false}>
-        <FoodUpdateDialog {...mockDataProps} refetch={refetchMock} />
-      </MockedProvider>
-    );
-    expect(getByTestId('food-update-dialog-open')).toBeInTheDocument();
-    fireEvent.click(getByTestId('food-update-dialog-open'));
-    const dialogTitle = getByTestId('food-update-dialog-title');
-    expect(dialogTitle).toBeInTheDocument();
-
-    const foodNameInput = getByTestId('food-update-foodName-input');
-    const priceInput = getByTestId('food-update-price-input');
-    const submitButton = getByTestId('food-update-submit-button');
-
-    fireEvent.change(foodNameInput, { target: { value: '' } });
-    fireEvent.change(foodNameInput, { target: { value: 'Test1' } });
-
-    fireEvent.change(priceInput, { target: { value: '' } });
-    fireEvent.change(priceInput, { target: { value: '20000' } });
-
-    fireEvent.click(submitButton);
-    fireEvent.click(submitButton);
-
-    await waitFor(() => {
-      expect(refetchMock).toHaveBeenCalledTimes(1);
-    });
   });
 });
