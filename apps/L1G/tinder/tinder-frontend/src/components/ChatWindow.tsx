@@ -1,18 +1,18 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { MessageSquare, Send, Heart, MessageSquareDashedIcon } from 'lucide-react';
+import { MessageSquare, Send, MessageSquareDashedIcon } from 'lucide-react';
 import UnmatchButton from './UnmatchButton';
+import ViewProfile from './ViewProfile';
+import Avatar from './Avatar';
 
-interface User {
+type User = {
   id: number;
   name: string;
   age: number;
   job: string;
-  avatar: string;
-}
+  avatar: string[];
+};
 
 interface Message {
   id: number;
@@ -20,22 +20,6 @@ interface Message {
   sender: 'me' | 'them';
   timestamp: string;
 }
-
-interface AvatarProps {
-  user: User;
-  size?: number;
-}
-
-const Avatar: React.FC<AvatarProps> = ({ user, size = 48 }) => {
-  const hasImage = !!user.avatar?.trim();
-  const defaultAvatar = '/profile.jpg';
-
-  return (
-    <div className="relative">
-      <Image src={hasImage ? user.avatar : defaultAvatar} alt={user.name || 'Avatar'} width={size} height={size} className="rounded-full object-cover" />
-    </div>
-  );
-};
 
 interface ChatWindowProps {
   selectedUser: User | null;
@@ -46,7 +30,7 @@ interface ChatWindowProps {
   onSend: () => void;
 }
 
-const ChatWindow: React.FC<ChatWindowProps> = ({ selectedUser, messages, inputValue, onInputChange, onKeyDown, onSend }) => {
+const ChatWindow = ({ selectedUser, messages, inputValue, onInputChange, onKeyDown, onSend }: ChatWindowProps) => {
   if (!selectedUser) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -60,21 +44,23 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedUser, messages, inputVa
   }
 
   return (
-    <div className="w-[960px]">
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white">
+    <div className="w-[980px] h-[930px] flex flex-col">
+      <div className="flex items-center justify-between p-4 border-b border-gray-200 border-r">
         <div className="flex items-center gap-3">
           <Avatar user={selectedUser} size={48} />
           <div>
-            <h2 className="font-medium text-gray-900">
+            <h2 className="text-[14px] font-medium text-gray-900">
               {selectedUser.name}, {selectedUser.age}
             </h2>
-            <p className="text-sm text-gray-500">{selectedUser.job}</p>
+            <p className="text-[14px] text-gray-500">{selectedUser.job}</p>
           </div>
         </div>
-        <UnmatchButton />
+        <div className="flex gap-2">
+          <ViewProfile user={selectedUser} />
+          <UnmatchButton />
+        </div>
       </div>
 
-      {/* Message Area */}
       <div className="flex-1 p-4 space-y-4 bg-gray-50 h-[790px] overflow-y-auto">
         {messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center">
@@ -98,7 +84,6 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ selectedUser, messages, inputVa
         )}
       </div>
 
-      {/* Input Field */}
       <div className="p-4 bg-white border-t border-gray-200">
         <div className="flex items-center gap-3">
           <input

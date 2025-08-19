@@ -1,45 +1,100 @@
-import { Matches } from '@/components/Matches';
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-jest.mock('next/image', () => ({
-  __esModule: true,
-  default: (props) => {
-    return <img {...props} />;
-  },
-}));
+jest.mock('../components/Avatar', () => {
+  return ({ user, size }: any) => (
+    <div data-testid={`avatar-${user.id}`} data-size={size} data-user={user.name}>
+      Avatar for {user.name}
+    </div>
+  );
+});
 
-describe('Matches', () => {
-  it('renders correctly', () => {
-    render(<Matches />);
-    
-    expect(screen.getByText('Matches')).toBeInTheDocument();
-    
-    expect(screen.getByText('Mark Zuckerberg, 40')).toBeInTheDocument();
-    expect(screen.getByText('Eleanor Pena, 32')).toBeInTheDocument();
-    expect(screen.getByText('Wade Warren, 32')).toBeInTheDocument();
-    
-    expect(screen.getByAltText('Mark Zuckerberg')).toBeInTheDocument();
-    expect(screen.getByAltText('Eleanor Pena')).toBeInTheDocument();
-    expect(screen.getByAltText('Wade Warren')).toBeInTheDocument();
-    
-    expect(screen.getAllByText('Software Engineer')).toHaveLength(3);
+import Matches from '../components/Matches';
+
+describe('Matches Component', () => {
+  const mockUsers = [
+    { id: 1, name: 'Alice', age: 25, job: 'Designer', avatar: ['profile.jpg'] },
+    { id: 2, name: 'Bob', age: 28, job: 'Engineer', avatar: ['profile.jpg'] },
+    { id: 3, name: 'Charlie', age: 30, job: 'Teacher', avatar: ['profile.jpg'] },
+  ];
+
+  const defaultProps = {
+    topRowUsers: mockUsers,
+    selectedUser: null,
+    onUserSelect: jest.fn(),
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('renders correct number of matches', () => {
-    render(<Matches />);
-    
-    const userCards = screen.getAllByRole('img');
-    expect(userCards).toHaveLength(3);
+  describe('Component Structure', () => {
+    it('renders root and inner containers correctly', () => {
+      render(<Matches {...defaultProps} />);
+      expect(screen.getByTestId('matches-root')).toBeInTheDocument();
+      expect(screen.getByTestId('matches-inner')).toHaveClass('max-w-[1280px]');
+    });
+
+    it('displays Matches title', () => {
+      render(<Matches {...defaultProps} />);
+      expect(screen.getByText('Matches')).toHaveClass('text-[20px]', 'font-medium');
+    });
+
+    it('renders scrollable container', () => {
+      render(<Matches {...defaultProps} />);
+      expect(screen.getByTestId('users-container')).toHaveClass('overflow-x-auto');
+    });
   });
 
-  it('displays user information correctly', () => {
-    render(<Matches />);
-    
-    expect(screen.getByText('Mark Zuckerberg, 40')).toBeInTheDocument();
-    expect(screen.getByText('Eleanor Pena, 32')).toBeInTheDocument();
-    expect(screen.getByText('Wade Warren, 32')).toBeInTheDocument();
-    
-    expect(screen.getAllByText(/32/)).toHaveLength(2);
+  describe('User Rendering', () => {
+    it('renders all users', () => {
+      render(<Matches {...defaultProps} />);
+      expect(screen.getByText('Alice, 25')).toBeInTheDocument();
+      expect(screen.getByText('Bob, 28')).toBeInTheDocument();
+      expect(screen.getByText('Charlie, 30')).toBeInTheDocument();
+    });
+
+    it('renders avatars with correct props', () => {
+      render(<Matches {...defaultProps} />);
+      expect(screen.getByTestId('avatar-1')).toHaveAttribute('data-size', '40');
+      expect(screen.getByTestId('avatar-1')).toHaveAttribute('data-user', 'Alice');
+    });
+
+    it('handles empty user list', () => {
+      render(<Matches {...defaultProps} topRowUsers={[]} />);
+      expect(screen.queryByText(/, \d+/)).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Selection Styling', () => {
+    it('applies unselected styles by default', () => {
+      render(<Matches {...defaultProps} />);
+      const aliceName = screen.getByText('Alice, 25');
+      expect(aliceName).toHaveClass('text-black');
+    });
+
+    it('applies selected styles when user is selected', () => {
+      render(<Matches {...defaultProps} selectedUser={mockUsers[0]} />);
+      const aliceName = screen.getByText('Alice, 25');
+      expect(aliceName).toHaveClass('text-red-600');
+    });
+  });
+
+  describe('Interactions', () => {
+    it('calls onUserSelect when user is clicked', () => {
+      const mockHandler = jest.fn();
+      render(<Matches {...defaultProps} onUserSelect={mockHandler} />);
+      fireEvent.click(screen.getByTestId('user-1'));
+      expect(mockHandler).toHaveBeenCalledWith(mockUsers[0]);
+    });
+  });
+
+  describe('Edge Cases', () => {
+    it('handles long names gracefully', () => {
+      const longUser = [{ id: 99, name: 'VeryLongNameThatMightCauseIssues', age: 99, job: 'Tester', avatar: [] }];
+      render(<Matches {...defaultProps} topRowUsers={longUser} />);
+      expect(screen.getByText('VeryLongNameThatMightCauseIssues, 99')).toBeInTheDocument();
+    });
   });
 });

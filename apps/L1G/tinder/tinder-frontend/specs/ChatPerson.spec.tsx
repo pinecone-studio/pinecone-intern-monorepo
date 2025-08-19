@@ -1,73 +1,41 @@
-import ChatPerson from '@/components/ChatPerson';
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import { render, screen, fireEvent } from '@testing-library/react';
+import ChatPerson from './ChatPerson';
 
-jest.mock('next/image', () => ({
-  __esModule: true,
-  default: (props) => {
-    return <img {...props} />;
-  },
-}));
+const mockUsers = [
+  { id: 1, name: 'John', age: 25, job: 'Engineer', avatar: ['/john.jpg'] },
+  { id: 2, name: 'Alice', age: 30, job: 'Designer', avatar: ['/alice.jpg'] },
+];
 
+describe('ChatPerson Component', () => {
+  it('renders all bottomUsers', () => {
+    render(<ChatPerson selectedUser={null} onUserSelect={() => {}} bottomUsers={mockUsers} />);
 
-jest.mock('@/components/ChatWindow', () => ({
-  __esModule: true,
-  default: () => <div data-testid="chat-window">ChatWindow Component</div>,
-}));
-
-
-
-jest.mock('lucide-react', () => ({
-  MessageSquareDashedIcon: () => <div data-testid="message-icon">MessageIcon</div>,
-  Send: () => <div data-testid="send-icon">SendIcon</div>,
-}));
-
-describe('ChatPerson', () => {
-  it('renders correctly', () => {
-    render(<ChatPerson />);
-    
-    expect(screen.getByTestId('chat-window')).toBeInTheDocument();
-    
-    expect(screen.getByText('Esther Howard, 32')).toBeInTheDocument();
-    expect(screen.getByText('Kathryn Murphy, 24')).toBeInTheDocument();
-    expect(screen.getByText('Guy Hawkins, 41')).toBeInTheDocument();
-    expect(screen.getByText('Jacob Jones, 20')).toBeInTheDocument();
+    // Хэрэглэгчийн нэр+нас харагдах эсэх
+    expect(screen.getByText('John, 25')).toBeInTheDocument();
+    expect(screen.getByText('Alice, 30')).toBeInTheDocument();
   });
 
-  it('displays all user information correctly', () => {
-    render(<ChatPerson />);
-    
-    const jobTitles = screen.getAllByText('Software Engineer');
-    expect(jobTitles).toHaveLength(4);
-    
-    expect(screen.getByAltText('Esther Howard')).toBeInTheDocument();
-    expect(screen.getByAltText('Kathryn Murphy')).toBeInTheDocument();
-    expect(screen.getByAltText('Guy Hawkins')).toBeInTheDocument();
-    expect(screen.getByAltText('Jacob Jones')).toBeInTheDocument();
+  it('calls onUserSelect when a user is clicked', () => {
+    const handleSelect = jest.fn();
+
+    render(<ChatPerson selectedUser={null} onUserSelect={handleSelect} bottomUsers={mockUsers} />);
+
+    fireEvent.click(screen.getByText('Alice, 30'));
+    expect(handleSelect).toHaveBeenCalledWith(mockUsers[1]);
   });
 
-  it('renders correct number of matches', () => {
-    render(<ChatPerson />);
-    
-    const profileImages = screen.getAllByRole('img');
-    expect(profileImages).toHaveLength(4);
+  it('highlights the selected user', () => {
+    render(<ChatPerson selectedUser={mockUsers[0]} onUserSelect={() => {}} bottomUsers={mockUsers} />);
+
+    const selectedName = screen.getByText('John, 25');
+    expect(selectedName).toHaveClass('text-red-600');
   });
 
-  it('has correct layout structure', () => {
-    render(<ChatPerson />);
-    
-    const sidebar = screen.getByText('Esther Howard, 32').closest('.w-\\[300px\\]');
-    expect(sidebar).toBeInTheDocument();
-    
-    expect(screen.getByTestId('chat-window')).toBeInTheDocument();
-  });
+  it("shows 'Chatted' indicator for chatted users", () => {
+    const chatted = new Set([2]); // Alice чатласан
 
-  it('displays users with different ages correctly', () => {
-    render(<ChatPerson />);
-    
-    expect(screen.getByText(/32/)).toBeInTheDocument();
-    expect(screen.getByText(/24/)).toBeInTheDocument();
-    expect(screen.getByText(/41/)).toBeInTheDocument(); 
-    expect(screen.getByText(/20/)).toBeInTheDocument(); 
+    render(<ChatPerson selectedUser={null} onUserSelect={() => {}} bottomUsers={mockUsers} chattedUsers={chatted} />);
+
+    expect(screen.getByText('● Chatted')).toBeInTheDocument();
   });
 });
