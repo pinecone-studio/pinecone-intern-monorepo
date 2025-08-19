@@ -24,7 +24,7 @@ export const Sidebar: React.FC = () => {
   console.log('PostStep in Sidebar:', postStep);
   console.log(handlePostClick , "clickinggg")
   return (
-    <div className="fixed left-0 top-0 h-screen  border-r p-4 bg-red-50">
+    <div className="fixed left-0 top-0 h-screen border-r p-4 bg-red-50">
       <div className="inline-flex flex-col h-[1000px] bg-slate-200   p-[36px_32px_16px_16px] justify-between items-start flex-shrink-0">
       
         <div className='flex flex-col space-y-6 gap-[48px] items-start self-stretch'>       

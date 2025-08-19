@@ -7,8 +7,8 @@ interface HeaderProps {
 }
 
 const ProfileHeader = ({ isMine, isPrivate, userName }: HeaderProps) => (
-  <div>
-    <p>{userName}</p>
+  <div className="flex gap-4">
+    <p className="my-auto text-xl font-semibold">{userName}</p>
     <ProfileButtons isMine={isMine} isPrivate={isPrivate} />
   </div>
 );
