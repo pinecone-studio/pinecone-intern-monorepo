@@ -103,6 +103,17 @@
         "commands": ["graphql-codegen --config ./apps/L1E/ticket-booking/ticket-booking-backend/codegen.ts"]
       }
     },
+    "codegen:local": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["graphql-codegen --config ./apps/L1E/ticket-booking/ticket-booking-backend/codegen.ts"]
+      },
+    "dependsOn": [
+      {
+        "target": "get-secrets:dev"
+      }
+    ]
+    },
     "export": {
       "executor": "@nx/next:export",
       "options": {
