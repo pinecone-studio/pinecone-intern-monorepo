@@ -1,11 +1,12 @@
 'use client';
 import { UserProfile } from '@/app/page';
+import { MainHeader } from '@/components/MainHeader';
 import TinderCard from '@/components/TinderCard';
-import { useDislikeMutation, useGetUsersQuery, useLikeMutation } from '@/generated';
+import { useDislikeMutation, useGetusersQuery, useLikeMutation } from '@/generated';
 import { useState } from 'react';
 
 const HomePage = () => {
-  const { data, loading, error } = useGetUsersQuery();
+  const { data, loading, error } = useGetusersQuery();
   const [like] = useLikeMutation();
   const [dislike] = useDislikeMutation();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -61,7 +62,11 @@ const HomePage = () => {
 
   const currentProfile = profiles[currentIndex];
   return (
-    <div className="relative w-full h-screen flex justify-center items-center bg-gray-100">
+    <div className="relative w-full h-screen flex felx-col justify-center items-center bg-gray-100 ">
+      <div className="relative top-0 left-0">
+        <MainHeader />
+      </div>
+
       {currentProfile ? <TinderCard profile={currentProfile} onLike={handleLike} onDislike={handleDislike} /> : <div className="text-2xl font-bold text-gray-500">No more profiles</div>}
     </div>
   );
