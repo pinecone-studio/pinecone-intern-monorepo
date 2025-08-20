@@ -1,15 +1,18 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import z from 'zod';
+import { useVerifyOtpMutation, useRequestSignupMutation, OtpType } from '@/generated';
+
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Separator } from '@/components/ui/separator';
 import { useRouter } from 'next/navigation';
 import { UserData } from '@/app/(auth)/signup/page';
+import { ConfirmEmail } from './ConfirmEmail';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email' }),
@@ -17,11 +20,13 @@ const formSchema = z.object({
 
 type CreateAccountProps = {
   onSuccess: () => void;
+  userData: UserData;
   updateUserData: (newData: Partial<UserData>) => void;
 };
 
-export const CreateAccount = ({ onSuccess, updateUserData }: CreateAccountProps) => {
+export const CreateAccount = ({ onSuccess, userData, updateUserData }: CreateAccountProps) => {
   const router = useRouter();
+  const [step, setStep] = useState<'email' | 'otp'>('email');
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -32,8 +37,14 @@ export const CreateAccount = ({ onSuccess, updateUserData }: CreateAccountProps)
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     updateUserData({ email: values.email });
-    onSuccess();
+    setStep('otp');
   }
+
+  const handleOtpSuccess = () => {
+    console.log('OTP verified successfully');
+  };
+
+  if (step === 'otp' && userData.email) return <ConfirmEmail email={userData.email} onSuccess={handleOtpSuccess} updateUserData={updateUserData} otpType={OtpType.Create} />;
 
   return (
     <div className="w-full flex flex-col gap-4 justify-center items-center">

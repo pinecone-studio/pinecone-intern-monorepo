@@ -43,7 +43,9 @@ async function handleOtpSubmit(
   verifyOtp: ReturnType<typeof useVerifyOtpMutation>[0],
   setOtpId: React.Dispatch<React.SetStateAction<string | null>>
 ) {
-  if (!email) return;
+  if (!email) return console.log('email bhgui');
+  console.log('email in handleotpSubmit:', email);
+
   try {
     const response = await verifyOtp({
       variables: { email, otp: values.otp, otpType },
@@ -95,6 +97,8 @@ export const ConfirmEmail = ({ onSuccess, email, otpType, updateUserData }: Conf
   const { timeLeft, reset: resetTimer } = useCountdown(60);
 
   const [otpId, setOtpId] = useState<string | null>(null);
+
+  // console.log('email in main:', email, otpType);
 
   async function onSubmit(values: z.infer<typeof FormSchema>) {
     await handleOtpSubmit(values, email, otpType, updateUserData, verifyOtp, setOtpId);

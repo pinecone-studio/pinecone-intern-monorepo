@@ -41,25 +41,26 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
   const [serverError, setServerError] = useState<string | null>(null);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setServerError(null);
-    try {
-      const response = await signup({
-        variables: {
-          password: values.password,
-          otpId,
-        },
-      });
+    // setServerError(null);
+    // try {
+    //   const response = await signup({
+    //     variables: {
+    //       password: values.password,
+    //       otpId,
+    //     },
+    //   });
 
-      if (response.data?.signup?.email) {
-        updateUserData({ password: values.password });
-        onSuccess();
-      } else {
-        setServerError(error?.message || 'Something went wrong.');
-      }
-    } catch (e) {
-      console.error('Signup failed:', e);
-      setServerError('Something went wrong.');
-    }
+    //   if (response.data?.signup?.email) {
+    //     updateUserData({ password: values.password });
+    //     onSuccess();
+    //   } else {
+    //     setServerError(error?.message || 'Something went wrong.');
+    //   }
+    // } catch (e) {
+    //   console.error('Signup failed:', e);
+    //   setServerError('Something went wrong.');
+    // }
+    onSuccess();
   }
 
   return (

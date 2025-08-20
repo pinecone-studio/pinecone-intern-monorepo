@@ -38,28 +38,29 @@ const Signup = () => {
   };
 
   const handleSignup = async () => {
-    if (!userData.email || !userData.otpId || !userData.password) {
-      setMessage('Email, OTP ID, or password missing.');
-      return;
-    }
-    try {
-      const response = await signup({
-        variables: {
-          otpId: userData.otpId,
-          password: userData.password,
-        },
-      });
+    // if (!userData.email || !userData.otpId || !userData.password) {
+    //   setMessage('Email, OTP ID, or password missing.');
+    //   return;
+    // }
+    // try {
+    //   const response = await signup({
+    //     variables: {
+    //       otpId: userData.otpId,
+    //       password: userData.password,
+    //     },
+    //   });
 
-      if (response.data?.signup) {
-        setMessage('Signup successful!');
-        router.push('/dashboard');
-      } else {
-        setMessage('Signup failed.');
-      }
-    } catch (error: any) {
-      console.error('Signup failed:', error);
-      setMessage(`Signup failed: ${error.message}`);
-    }
+    //   if (response.data?.signup) {
+    //     setMessage('Signup successful!');
+    //     router.push('/dashboard');
+    //   } else {
+    //     setMessage('Signup failed.');
+    //   }
+    // } catch (error: any) {
+    //   console.error('Signup failed:', error);
+    //   setMessage(`Signup failed: ${error.message}`);
+    // }
+    console.log('s');
   };
 
   return (
