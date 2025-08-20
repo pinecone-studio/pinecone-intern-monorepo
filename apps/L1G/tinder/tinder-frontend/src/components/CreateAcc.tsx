@@ -42,6 +42,7 @@ export const CreateAccount = ({ onSuccess, userData, updateUserData }: CreateAcc
 
   const handleOtpSuccess = () => {
     console.log('OTP verified successfully');
+    onSuccess();
   };
 
   if (step === 'otp' && userData.email) return <ConfirmEmail email={userData.email} onSuccess={handleOtpSuccess} updateUserData={updateUserData} otpType={OtpType.Create} />;
