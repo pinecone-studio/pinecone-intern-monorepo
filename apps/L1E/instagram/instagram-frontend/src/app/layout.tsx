@@ -14,22 +14,28 @@ import CreatePost from './(main)/create/page';
 
 // };
 const client = new ApolloClient({
-  uri: "http://localhost:4200/api/graphql", 
+  uri: "http://localhost:4200/api/graphql",
   cache: new InMemoryCache(),
 });
 
 const RootLayout = ({ children }: PropsWithChildren) => {
   return (
 
-        <html lang="en">
+    <html lang="en">
       <body>
         <ApolloWrapper>
           <AuthProvider>
             <ApolloProvider client={client}>
               <PostProvider>
                 <CreatePost />
-                <Sidebar />
-                {children}
+                <div className='flex flex-row'>
+                  <div className='w-fit'>
+                    <Sidebar />
+                  </div>
+                  <div className='flex-1 ml-[300px] mx-auto'>
+                    {children}
+                  </div>
+                </div>
               </PostProvider>
             </ApolloProvider>
           </AuthProvider>
