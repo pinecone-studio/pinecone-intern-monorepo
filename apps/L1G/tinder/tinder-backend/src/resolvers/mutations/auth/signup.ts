@@ -2,7 +2,8 @@ import { Usermodel } from 'src/models/user';
 import bcrypt from 'bcryptjs';
 import { MutationResolvers } from 'src/generated';
 import { UserOtpModel } from 'src/models/user-otp.model';
-import mongoose from 'mongoose';
+import mongoose from 'mongoose';  
+import jwt from 'jsonwebtoken';
 
 function validateOtpId(otpId: string) {
   if (!mongoose.Types.ObjectId.isValid(otpId)) {
@@ -32,7 +33,7 @@ function validatePassword(password: string) {
   }
 }
 
-export const signup: MutationResolvers['signup'] = async (_, { otpId, password, genderPreferences, dateOfBirth, name, images, bio, interests, profession, schoolWork }) => {
+export const signup: MutationResolvers['signup'] = async (_, { otpId, password}) => {
   validateOtpId(otpId);
 
   const otpRecord = await getValidOtpRecord(otpId);
@@ -45,38 +46,28 @@ export const signup: MutationResolvers['signup'] = async (_, { otpId, password, 
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const user = new Usermodel({
-    email,
-    password: hashedPassword,
-    genderPreferences,
-    dateOfBirth,
-    name,
-    images,
-    bio,
-    interests,
-    profession,
-    schoolWork,
-    likedBy: [],
-    likedTo: [],
-  });
+const user = new Usermodel({
+  email,
+  password: hashedPassword,
+  likedBy: [],
+  likedTo: [],
+  matchIds: [],
+});
 
-  const savedUser = await user.save();
+const savedUser = await user.save();
 
-  otpRecord.registered = true;
-  await otpRecord.save();
+otpRecord.registered = true;
+await otpRecord.save();
 
-  return {
-    id: savedUser._id.toString(),
-    email: savedUser.email,
-    name: savedUser.name,
-    genderPreferences: savedUser.genderPreferences,
-    dateOfBirth: savedUser.dateOfBirth,
-    bio: savedUser.bio,
-    interests: savedUser.interests,
-    profession: savedUser.profession,
-    schoolWork: savedUser.schoolWork,
-    images: savedUser.images,
-    likedBy: [],
-    likedTo: [],
-  };
+const token = jwt.sign(
+  { userId: savedUser._id.toString(), email: savedUser.email },
+  process.env.JWT_SECRET!,
+  { expiresIn: '7d' }
+);
+
+return {
+  id: savedUser._id.toString(),
+  email: savedUser.email,
+  token, 
 };
+}
