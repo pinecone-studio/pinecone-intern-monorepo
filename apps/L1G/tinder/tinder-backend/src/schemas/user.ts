@@ -40,6 +40,12 @@ export const UsertypeDefs = gql`
     otpId: ID!
   }
 
+type SignupResponse {
+  id: ID!
+  email: String!
+  token: String!
+}
+
   type ChatMessage {
     id: ID!
     senderId: ID!
@@ -58,7 +64,7 @@ export const UsertypeDefs = gql`
     participant: ChatParticipant!
     messages: [ChatMessage!]!
   }
-
+ 
   type Query {
     getusers: [User]
     getUserAllChatMessages(userId: ID!): [MatchChatMessages!]!
@@ -68,18 +74,7 @@ getChatWithUser(userId: ID!, participantId: ID!): MatchChatMessages!
     forgotPassword(newPassword: String!, otpId: String!): ForgotPasswordPayload!
     requestSignup(email: String!, otpType: OtpType!): RequestSignupResponse!
     verifyOtp(email: String!, otp: String!, otpType: OtpType!): VerifyOtpResponse!
-    signup(
-      otpId: String!
-      password: String!
-      genderPreferences: String
-      dateOfBirth: String
-      name: String
-      images: [String!]
-      bio: String
-      interests: [String]
-      profession: String
-      schoolWork: String
-    ): User
+    signup(otpId: String!, password: String!): SignupResponse!
     updateProfile(
       id: ID!
       name: String
