@@ -30,3 +30,6 @@ mutation CreateUser($input: CreateUserInput!) {
       updatedAt
   }
 }
+query {
+  
+}
