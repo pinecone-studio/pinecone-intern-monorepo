@@ -18,15 +18,15 @@ mutation SignIn($input: SignInInput!) {
 
 mutation CreateUser($input: CreateUserInput!) {
   createUser(input: $input) {
-      userId
-      username
-      email
-      profile
-      password
-      bonusPoints
-      role
-      phoneNumber
-      createdAt
-      updatedAt
+    userId
+    username
+    email
+    profile
+    password
+    bonusPoints
+    role
+    phoneNumber
+    createdAt
+    updatedAt
   }
 }
