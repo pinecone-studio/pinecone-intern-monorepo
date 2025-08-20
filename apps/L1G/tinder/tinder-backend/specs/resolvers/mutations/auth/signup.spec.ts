@@ -4,8 +4,10 @@ import bcrypt from 'bcryptjs';
 import { UserOtpModel } from 'src/models/user-otp.model';
 import { Usermodel } from 'src/models/user';
 import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
 
 jest.mock('bcryptjs', () => ({ hash: jest.fn() }));
+jest.mock('jsonwebtoken', () => ({ sign: jest.fn() }));
 jest.mock('src/models/user-otp.model', () => ({
   UserOtpModel: { findOne: jest.fn() },
 }));
@@ -14,6 +16,7 @@ jest.mock('src/models/user', () => {
   const mockConstructor = jest.fn().mockImplementation(function (this: any, data: any) {
     Object.assign(this, data);
     this.save = mockSave;
+    return this;
   });
   return {
     Usermodel: Object.assign(mockConstructor, {
@@ -56,9 +59,20 @@ describe('signup', () => {
     save: jest.fn(),
   };
 
+  const mockUser = {
+    _id: 'mocked_user_id',
+    email: mockOtp.email,
+    password: 'hashed-password',
+    likedBy: [],
+    likedTo: [],
+    matchIds: [],
+    save: jest.fn(),
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
     (mongoose.Types.ObjectId.isValid as jest.Mock).mockReturnValue(true);
+    process.env.JWT_SECRET = 'test-secret';
   });
 
   it('throws if otpId is invalid', async () => {
@@ -73,23 +87,17 @@ describe('signup', () => {
     (UserOtpModel.findOne as jest.Mock).mockResolvedValue(mockOtp);
     (Usermodel.findOne as jest.Mock).mockResolvedValue(null);
     (bcrypt.hash as jest.Mock).mockResolvedValue('hashed-password');
+    (jwt.sign as jest.Mock).mockReturnValue('mocked-jwt-token');
 
-    // mock user.save() to resolve with saved user data
-    const mockSaveUser = jest.fn().mockResolvedValue({
-      _id: 'mocked_user_id',
-      email: mockOtp.email,
-      ...baseArgs,
-      likedBy: [],
-      likedTo: [],
-      images: ['image1', 'image2'],
-    });
-
+    // Mock user save to resolve with the user object
+    const mockSaveUser = jest.fn().mockResolvedValue(mockUser);
     (Usermodel as any).mockImplementation(function (this: any, data: any) {
       Object.assign(this, data);
       this.save = mockSaveUser;
+      return this;
     });
 
-    const result = await signup!({}, { ...baseArgs, images: ['image1', 'image2'] }, {}, {} as GraphQLResolveInfo);
+    const result = await signup!({}, baseArgs, {}, {} as GraphQLResolveInfo);
 
     expect(mongoose.Types.ObjectId.isValid).toHaveBeenCalledWith(baseArgs.otpId);
     expect(UserOtpModel.findOne).toHaveBeenCalledWith({
@@ -102,16 +110,17 @@ describe('signup', () => {
     expect(bcrypt.hash).toHaveBeenCalledWith('password123', 10);
     expect(mockSaveUser).toHaveBeenCalled();
     expect(mockOtp.save).toHaveBeenCalled();
+    expect(jwt.sign).toHaveBeenCalledWith(
+      { userId: mockUser._id.toString(), email: mockUser.email },
+      'test-secret',
+      { expiresIn: '7d' }
+    );
 
-    const { password, otpId, ...expectedFields } = baseArgs;
-
+    // The actual signup function only returns id, email, and token
     expect(result).toEqual({
-      id: 'mocked_user_id',
-      email: mockOtp.email,
-      ...expectedFields,
-      images: ['image1', 'image2'],
-      likedBy: [],
-      likedTo: [],
+      id: mockUser._id.toString(),
+      email: mockUser.email,
+      token: 'mocked-jwt-token',
     });
   });
 
