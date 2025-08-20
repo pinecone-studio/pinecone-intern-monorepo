@@ -14,7 +14,7 @@ const selectedUser = {
 
 const ChatWindow = () => {
   return (
-    <div className="flex-1 flex flex-col h-[900px]">
+    <div className="flex flex-col h-[900px] hidden lg:block w-full">
       <div className="flex items-center gap-4 border-b border-gray-200">
         <div className="flex justify-between w-full p-4">
           <div className="flex gap-2 items-center">

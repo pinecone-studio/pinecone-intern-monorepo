@@ -1,20 +1,26 @@
-query GetUsers {
+query Getusers {
   getusers {
     id
     email
+    genderPreferences
+    dateOfBirth
     name
+    bio
+    interests {
+      _id
+      interestName
+    }
+    profession
+    schoolWork
     images
     likedBy {
       id
-      name
     }
     likedTo {
       id
-      name
     }
-    matched {
+    matchIds {
       id
-      name
     }
   }
 }

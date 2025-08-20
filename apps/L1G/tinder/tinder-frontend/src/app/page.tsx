@@ -1,6 +1,6 @@
 'use client';
 import { HomeFooter, HomeHeader, HomeMain, HomePageBackground } from '@/components/HomePage';
-import { useGetUsersQuery } from '../generated';
+import { useGetusersQuery } from '@/generated';
 
 export interface UserProfile {
   id: string;
@@ -10,7 +10,7 @@ export interface UserProfile {
 }
 
 const Home: React.FC = () => {
-  const { loading } = useGetUsersQuery();
+  const { loading } = useGetusersQuery();
 
   if (loading)
     return (
