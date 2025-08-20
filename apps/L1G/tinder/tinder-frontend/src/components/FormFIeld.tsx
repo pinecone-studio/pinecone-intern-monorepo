@@ -25,7 +25,7 @@ const formSchema = z.object({
   work: z.string().optional(),
 });
 
-const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: ProfileFormProps) => {
+export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: ProfileFormProps) => {
   const [serverError, setServerError] = useState<string | null>(null);
   const [updateProfile] = useUpdateProfileMutation();
 
@@ -67,8 +67,6 @@ const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: ProfileFor
       console.error('Update failed:', e);
       setServerError('Something went wrong.');
     }
-
-    onSuccess();
   };
 
   if (loading) {
@@ -170,5 +168,3 @@ const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: ProfileFor
     </Form>
   );
 };
-
-export default ProfileForm;

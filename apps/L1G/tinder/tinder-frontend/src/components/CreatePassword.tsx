@@ -8,7 +8,6 @@ import { useForm } from 'react-hook-form';
 import { useSignupMutation } from '@/generated';
 import { useState } from 'react';
 import { UserData } from '@/app/(auth)/signup/page';
-import { update } from 'cypress/types/lodash';
 
 const formSchema = z
   .object({
@@ -55,6 +54,7 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
         localStorage.setItem('token', response.data?.signup?.token);
 
         updateUserData({ password: values.password, id: response.data?.signup?.id });
+
         onSuccess();
       } else {
         setServerError(error?.message || 'Something went wrong.');
