@@ -1,55 +1,55 @@
-  query GetUsers {
-    getUsers {
-      _id
-      userName
-      isPrivate
-      profileImage
-      bio
-    }
-  }
-
-  query GetSomeoneProfile($userName: String!) {
-    getSomeoneProfile(userName: $userName) {
-      userName
-      profileImage
-      bio
-      isPrivate
-      posts {
-image
-description
-likes {
-   createdAt
-  userId {
+query GetUsers {
+  getUsers {
+    _id
     userName
+    isPrivate
     profileImage
+    bio
   }
 }
-comments {
-  text
-  createdAt
-  userId {
+
+query GetSomeoneProfile($userName: String!) {
+  getSomeoneProfile(userName: $userName) {
     userName
     profileImage
+    bio
+    isPrivate
+    posts {
+      image
+      description
+      likes {
+        createdAt
+        userId {
+          userName
+          profileImage
+        }
+      }
+      comments {
+        text
+        createdAt
+        userId {
+          userName
+          profileImage
+        }
+      }
+      createdAt
+    }
+    followers {
+      userName
+    }
+    following {
+      userName
+    }
   }
 }
-createdAt
-      }
-      followers {
-userName
-      }
-      following {
-userName
-      }
-    }
-  }
 
- query GetOthersProfile($userName: String!) {
-    getProfiles(userName: $userName) {
-      userName
-      profileImage
-      bio
-    }
+query GetOthersProfile($userName: String!) {
+  getProfiles(userName: $userName) {
+    userName
+    profileImage
+    bio
   }
+}
 
 mutation Login($input: LoginInput!) {
   login(input: $input) {
@@ -98,4 +98,3 @@ mutation Login($input: LoginInput!) {
     }
   }
 }
-
