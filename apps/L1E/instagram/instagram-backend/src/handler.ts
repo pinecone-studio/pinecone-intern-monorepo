@@ -12,6 +12,7 @@ const server = new ApolloServer({
   resolvers,
   typeDefs,
   introspection: true,
+  csrfPrevention: false,
 });
 
 const apolloHandler = startServerAndCreateNextHandler(server);
