@@ -68,10 +68,10 @@ export const userTypeDefs = gql`
   }
 
   input UpdateUserInput {
-    email: String
-    password: String
+    email: String!
+    password: String!
     profile: String
-    phoneNumber: String
+    phoneNumber: String!
     username: String
   }
 `;
