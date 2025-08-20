@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
   genderPreferences: { type: String, default: '' },
   dateOfBirth: { type: String, default: '' },
   name: { type: String, default: '' },
+  gender:{ type: String, default: '' },
   bio: { type: String },
   interests: { type: [String], default: [] },
   profession: { type: String, default: '' },
