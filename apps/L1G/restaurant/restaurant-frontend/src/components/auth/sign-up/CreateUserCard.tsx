@@ -9,12 +9,12 @@ import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { LoginButton } from './LoginButton';
 import { useCreateUserMutation } from '@/generated';
-import { formSchema, initialValues } from '@/utils/SignUpUtils';
+import { formSchemaUser, initialValuesUser } from '@/helpers/form-schemas';
 
 export const CreateUserCard = () => {
   const router = useRouter();
   const [register] = useCreateUserMutation();
-  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+  const handleSubmit = async (values: z.infer<typeof formSchemaUser>) => {
     try {
       await register({
         variables: {
@@ -29,14 +29,14 @@ export const CreateUserCard = () => {
     } catch (error) {
       form.setError('email', {
         type: 'manual',
-        message: 'User already exists',
+        message: 'Имэйл хаяг бүртгэлтэй байна.',
       });
     }
   };
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: initialValues,
+  const form = useForm<z.infer<typeof formSchemaUser>>({
+    resolver: zodResolver(formSchemaUser),
+    defaultValues: initialValuesUser,
   });
 
   return (

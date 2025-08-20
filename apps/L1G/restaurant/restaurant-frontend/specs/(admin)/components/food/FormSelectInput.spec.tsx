@@ -7,7 +7,7 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import userEvent from '@testing-library/user-event';
-import { formSchemaFood } from '@/utils/FormSchemas';
+import { formSchemaFood } from '@/helpers/form-schemas';
 
 const getCategoriesMock: MockedResponse = {
   request: {

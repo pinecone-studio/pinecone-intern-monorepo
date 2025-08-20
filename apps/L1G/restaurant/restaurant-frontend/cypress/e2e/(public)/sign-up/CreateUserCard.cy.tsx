@@ -8,27 +8,27 @@ describe('CreateUserCard', () => {
     cy.get('[data-cy=createUser-username]').type('1');
     cy.get('[data-cy=createUser-submit-btn]').click();
     cy.get('[data-cy=createUser-username-error]').should('be.visible');
-    cy.get('[data-cy=createUser-username-error]').should('have.text', 'Username must be at least 2 characters.');
+    cy.get('[data-cy=createUser-username-error]').should('have.text', 'Хэрэглэгчийн нэр оруулна уу!');
   });
   it('3. an error message should be displayed when the user did not enter an email', () => {
     cy.visit('/sign-up');
     cy.get('[data-cy=createUser-submit-btn]').click();
     cy.get('[data-cy=createUser-email-error]').should('be.visible');
-    cy.get('[data-cy=createUser-email-error]').should('have.text', 'Please enter a valid email');
+    cy.get('[data-cy=createUser-email-error]').should('have.text', 'Имэйл хаяг буруу байна!');
   });
   it('4. an error message should be displayed when the user did not enter password', () => {
     cy.visit('/sign-up');
     cy.get('[data-cy=createUser-password]').type('12');
     cy.get('[data-cy=createUser-submit-btn]').click();
     cy.get('[data-cy=createUser-password-error]').should('be.visible');
-    cy.get('[data-cy=createUser-password-error]').should('have.text', 'Please enter at least 8 letters');
+    cy.get('[data-cy=createUser-password-error]').should('have.text', 'Нууц үг 6 тэмдэгтээс их байх ёстой!');
   });
   it('5. an error message should be displayed when the user did not enter confirm password', () => {
     cy.visit('/sign-up');
     cy.get('[data-cy=createUser-confirmPassword]').type('12');
     cy.get('[data-cy=createUser-submit-btn]').click();
     cy.get('[data-cy=createUser-confirmPassword-error]').should('be.visible');
-    cy.get('[data-cy=createUser-confirmPassword-error]').should('have.text', 'Please enter at least 8 letters');
+    cy.get('[data-cy=createUser-confirmPassword-error]').should('have.text', 'Нууц үг давтан оруулна уу!');
   });
   it('6. when user enters all values, it should navigate to login page', () => {
     cy.intercept('POST', '**/graphql', (req) => {
