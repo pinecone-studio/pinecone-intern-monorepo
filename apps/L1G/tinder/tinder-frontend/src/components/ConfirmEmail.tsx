@@ -85,7 +85,7 @@ async function handleResendOtp(
 }
 
 export const ConfirmEmail = ({ onSuccess, email, otpType, updateUserData }: ConfirmEmailProps) => {
-  const form = useForm<z.infer<typeof FormSchema>>({
+  const form = useForm<z.infer<typeof FormSchema>, any, undefined>({
     resolver: zodResolver(FormSchema),
     defaultValues: { otp: '' },
   });

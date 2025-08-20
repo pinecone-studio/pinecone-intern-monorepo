@@ -28,6 +28,9 @@ export const CreateAccount = ({ onSuccess, userData, updateUserData }: CreateAcc
   const router = useRouter();
   const [step, setStep] = useState<'email' | 'otp'>('email');
 
+  const [requestSignup, { loading, error }] = useRequestSignupMutation();
+  const [message, setMessage] = useState<string | null>(null);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,9 +38,19 @@ export const CreateAccount = ({ onSuccess, userData, updateUserData }: CreateAcc
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    updateUserData({ email: values.email });
-    setStep('otp');
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      setMessage(null);
+      await requestSignup({
+        variables: { email: values.email, otpType: OtpType.Create },
+      });
+      setMessage('OTP resent successfully.');
+      updateUserData({ email: values.email });
+      setStep('otp');
+    } catch (e) {
+      console.error('Failed to resend OTP:', e);
+      setMessage('Failed to resend OTP, please try again.');
+    }
   }
 
   const handleOtpSuccess = () => {
@@ -75,6 +88,7 @@ export const CreateAccount = ({ onSuccess, userData, updateUserData }: CreateAcc
             <Button type="submit" className="rounded-full bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
               Continue
             </Button>
+            {error && <p className="text-[14px] text-red-500 mt-2">{error.message}</p>}
           </form>
         </Form>
         <div className="w-full flex justify-between items-center gap-[10px] py-4">

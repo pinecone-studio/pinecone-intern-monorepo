@@ -3,8 +3,10 @@
 import React, { useState } from 'react';
 import { ConfirmEmail } from './ConfirmEmail';
 import { EmailForm } from './EmailForm';
+import { UserData } from '@/app/(auth)/signup/page';
+import { OtpType } from '@/generated';
 
-export const ForgetPassword = () => {
+export const ForgetPassword = (updateUserData: (newData: Partial<UserData>) => void) => {
   const [step, setStep] = useState<'email' | 'otp'>('email');
   const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
 
@@ -18,7 +20,7 @@ export const ForgetPassword = () => {
   };
 
   if (step === 'otp' && submittedEmail) {
-    return <ConfirmEmail email={submittedEmail} onSuccess={handleOtpSuccess} />;
+    return <ConfirmEmail email={submittedEmail} onSuccess={handleOtpSuccess} updateUserData={updateUserData} otpType={OtpType.Forgot} />;
   }
 
   return <EmailForm onSuccess={handleEmailSubmitSuccess} />;

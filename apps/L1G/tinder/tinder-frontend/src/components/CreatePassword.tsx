@@ -47,15 +47,17 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
       const response = await signup({
         variables: {
           password: values.password,
-          otpId,
-          name: 'chmge',
-          genderPreferences: 'male',
-          dateOfBirth: '2nd Nov 2004',
+          otpId: otpId,
         },
       });
 
-      if (response.data?.signup?.email) {
+      console.log(response, 'response');
+
+      if (response.data?.signup?.token) {
+        console.log('response.data?.signup?.token:', response.data?.signup?.token);
+        localStorage.setItem('token', response.data?.signup?.token);
         updateUserData({ password: values.password });
+        onSuccess();
       } else {
         setServerError(error?.message || 'Something went wrong.');
       }
@@ -63,7 +65,6 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
       console.error('Signup failed:', e);
       setServerError('Something went wrong.');
     }
-    onSuccess();
   }
 
   return (
@@ -73,7 +74,7 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
           <div className="flex flex-col gap-1 justify-center items-center py-2">
             <p className="font-sans text-[24px] font-semibold text-[#09090B]">Create password</p>
             <p className="font-sans text-[14px] text-[#71717A] text-center">
-              Use a minimum of 10 characters, including uppercase <br /> letters, lowercase letters, and numbers
+              Use a minimum of 8 characters, including uppercase <br /> letters, lowercase letters, and numbers
             </p>
           </div>
 
