@@ -64,7 +64,7 @@ export const EmailForm = ({ onSuccess }: EmailFormProps) => {
         <Button type="submit" className="font-sans w-full rounded-full bg-[#E11D48E5]" disabled={loading}>
           {loading ? 'Sending...' : 'Continue'}
         </Button>
-        {error && <p className="text-red-500 mt-2">{error.message}</p>}
+        {error && <p className="text-[14px] text-red-500 mt-2">{error.message}</p>}
       </form>
     </Form>
   );

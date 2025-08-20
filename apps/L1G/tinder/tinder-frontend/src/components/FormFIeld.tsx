@@ -6,11 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { MultiSelect } from './MultiSelect';
-import { useGetAllInterestsQuery } from '../generated'; 
+import { useGetAllInterestsQuery, useUpdateProfileMutation } from '../generated';
+import { UserData } from '@/app/(auth)/signup/page';
+import { useState } from 'react';
 
 type ProfileFormProps = {
   onSuccess: () => void;
   onBack: () => void;
+  userData: UserData;
+  updateUserData: (newData: Partial<UserData>) => void;
 };
 
 const formSchema = z.object({
@@ -21,7 +25,10 @@ const formSchema = z.object({
   work: z.string().optional(),
 });
 
-const ProfileForm = ({ onSuccess, onBack }: ProfileFormProps) => {
+export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: ProfileFormProps) => {
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [updateProfile] = useUpdateProfileMutation();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,9 +41,34 @@ const ProfileForm = ({ onSuccess, onBack }: ProfileFormProps) => {
   });
   const { data, loading, error } = useGetAllInterestsQuery();
 
-  const onSubmit = (_values: z.infer<typeof formSchema>) => {
-    onSuccess();
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    updateUserData({ name: values.name, bio: values.bio, interests: values.interest, profession: values.profession, schoolWork: values.work });
+    setServerError(null);
+
+    try {
+      if (userData.id) {
+        const response = await updateProfile({
+          variables: {
+            updateProfileId: userData.id,
+            name: values.name,
+            bio: values.bio,
+            interests: values.interest,
+            profession: values.profession,
+            schoolWork: values.work,
+          },
+        });
+        if (response.data?.updateProfile) {
+          onSuccess();
+        } else {
+          setServerError('Update failed');
+        }
+      }
+    } catch (e) {
+      console.error('Update failed:', e);
+      setServerError('Something went wrong.');
+    }
   };
+
   if (loading) {
     return <p className="text-center text-gray-500">Loading interests...</p>;
   }
@@ -136,5 +168,3 @@ const ProfileForm = ({ onSuccess, onBack }: ProfileFormProps) => {
     </Form>
   );
 };
-
-export default ProfileForm;
