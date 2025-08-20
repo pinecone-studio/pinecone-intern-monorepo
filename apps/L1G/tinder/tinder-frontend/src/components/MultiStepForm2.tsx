@@ -19,7 +19,7 @@ const MultiStepForm2 = ({ step, setStep, router, userData, updateUserData, handl
   return (
     <>
       {step === 'ageSelect' && <HowOldAreYou updateUserData={updateUserData} onSuccess={() => setStep('details')} onBack={() => setStep('genderSelect')} />}
-      {step === 'details' && <YourDetailsPage updateUserData={updateUserData} onSuccess={() => setStep('uploadImages')} onBack={() => setStep('ageSelect')} />}
+      {step === 'details' && <YourDetailsPage userData={userData} updateUserData={updateUserData} onSuccess={() => setStep('uploadImages')} onBack={() => setStep('ageSelect')} />}
       {step === 'uploadImages' && <ProfileImages onSuccess={() => setStep('allSet')} />}
       {step === 'allSet' && <YouAreAllSet onSuccess={() => router.push('/home')} />}
     </>

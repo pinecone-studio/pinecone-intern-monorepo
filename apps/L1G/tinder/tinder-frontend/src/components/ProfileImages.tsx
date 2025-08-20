@@ -95,6 +95,7 @@ export const ProfileImages = ({ onSuccess }: ProfileImagesProps) => {
       alert('Something went wrong while saving your images.');
     }
   };
+
   return (
     <div className="w-[640px] bg-white flex flex-col items-center justify-center gap-6">
       <div className="w-full max-w-2xl gap-[16px] flex flex-col items-center justify-center">

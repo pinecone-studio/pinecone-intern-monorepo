@@ -51,12 +51,10 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
         },
       });
 
-      console.log(response, 'response');
-
       if (response.data?.signup?.token) {
-        console.log('response.data?.signup?.token:', response.data?.signup?.token);
         localStorage.setItem('token', response.data?.signup?.token);
-        updateUserData({ password: values.password });
+
+        updateUserData({ password: values.password, id: response.data?.signup?.id });
         onSuccess();
       } else {
         setServerError(error?.message || 'Something went wrong.');

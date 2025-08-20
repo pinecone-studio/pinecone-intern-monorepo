@@ -1,11 +1,11 @@
 'use client';
 import { UserProfile } from '@/app/page';
 import TinderCard from '@/components/TinderCard';
-import { useDislikeMutation, useGetUsersQuery, useLikeMutation } from '@/generated';
+import { useDislikeMutation, useGetusersQuery, useLikeMutation } from '@/generated';
 import { useState } from 'react';
 
 const HomePage = () => {
-  const { data, loading, error } = useGetUsersQuery();
+  const { data, loading, error } = useGetusersQuery();
   const [like] = useLikeMutation();
   const [dislike] = useDislikeMutation();
   const [currentIndex, setCurrentIndex] = useState(0);

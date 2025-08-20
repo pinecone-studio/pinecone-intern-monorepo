@@ -5,7 +5,6 @@ import { CreatePassword } from '@/components/CreatePassword';
 import { GenderSelect } from './GenderSelect';
 import { UserData } from '@/app/(auth)/signup/page';
 import { OtpType } from '@/generated';
-import { use } from 'chai';
 
 type Props = {
   step: string;

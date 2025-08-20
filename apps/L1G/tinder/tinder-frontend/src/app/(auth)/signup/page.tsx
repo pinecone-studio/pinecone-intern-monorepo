@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export type UserData = {
+  id?: string;
   email?: string;
   otpId?: string;
   password?: string;
