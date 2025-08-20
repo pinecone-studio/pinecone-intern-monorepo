@@ -8,16 +8,48 @@
     }
   }
 
+  query GetSomeoneProfile($userName: String!) {
+    getSomeoneProfile(userName: $userName) {
+      userName
+      profileImage
+      bio
+      isPrivate
+      posts {
+image
+description
+likes {
+   createdAt
+  userId {
+    userName
+    profileImage
+  }
+}
+comments {
+  text
+  createdAt
+  userId {
+    userName
+    profileImage
+  }
+}
+createdAt
+      }
+      followers {
+userName
+      }
+      following {
+userName
+      }
+    }
+  }
+
  query GetOthersProfile($userName: String!) {
     getProfiles(userName: $userName) {
-      _id
       userName
       profileImage
       bio
     }
   }
-
-
 
 mutation Login($input: LoginInput!) {
   login(input: $input) {
