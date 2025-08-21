@@ -9,14 +9,21 @@ import '@testing-library/jest-dom';
 import { DatePickerAdmin } from '@/components/DatePickerAdmin';
 
 describe('DatePickerAdmin', () => {
+    const mockOnDateChange = jest.fn();
+    const mockSelectedDate = new Date('2024-01-01');
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
     it('renders without crashing', () => {
-        render(<DatePickerAdmin />);
+        render(<DatePickerAdmin selectedDate={mockSelectedDate} onDateChange={mockOnDateChange} />);
         const input = screen.getByPlaceholderText('Өдөр сонгох');
         expect(input).toBeInTheDocument();
     });
 
     it('opens calendar on input click', () => {
-        render(<DatePickerAdmin />);
+        render(<DatePickerAdmin selectedDate={mockSelectedDate} onDateChange={mockOnDateChange} />);
         const input = screen.getByPlaceholderText('Өдөр сонгох');
         fireEvent.click(input);
         const calendar = screen.getByRole('dialog'); // react-datepicker uses role="dialog"
@@ -24,7 +31,7 @@ describe('DatePickerAdmin', () => {
     });
 
     it('selects a date', () => {
-        render(<DatePickerAdmin />);
+        render(<DatePickerAdmin selectedDate={mockSelectedDate} onDateChange={mockOnDateChange} />);
         const input = screen.getByPlaceholderText('Өдөр сонгох');
         fireEvent.click(input);
 
@@ -32,6 +39,18 @@ describe('DatePickerAdmin', () => {
         const day = screen.getByText(today.getDate().toString());
 
         fireEvent.click(day);
-        expect((input as HTMLInputElement).value).toMatch(/\d{4}\/\d{2}\/\d{2}/); // yyyy/mm/dd
+        expect(mockOnDateChange).toHaveBeenCalled();
+    });
+
+    it('calls onDateChange when date is selected', () => {
+        render(<DatePickerAdmin selectedDate={mockSelectedDate} onDateChange={mockOnDateChange} />);
+        const input = screen.getByPlaceholderText('Өдөр сонгох');
+        fireEvent.click(input);
+
+        const today = new Date();
+        const day = screen.getByText(today.getDate().toString());
+
+        fireEvent.click(day);
+        expect(mockOnDateChange).toHaveBeenCalledWith(expect.any(Date));
     });
 });
