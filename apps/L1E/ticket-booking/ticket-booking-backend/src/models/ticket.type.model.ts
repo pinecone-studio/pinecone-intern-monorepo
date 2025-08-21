@@ -11,12 +11,15 @@ export type TicketTypeType = {
   updatedAt?: Date;
 };
 
-const TicketTypeSchema = new Schema<TicketTypeType>({
-  eventId: { type: mongoose.SchemaTypes.ObjectId, ref: 'Event', required: true },
-  type: { type: String, enum: ['VIP', 'REGULAR', 'GENERAL'], required: true },
-  price: { type: Number, required: true },
-  totalCount: { type: Number, required: true },
-  remainingCount: { type: Number, required: true }
-}, { timestamps: true });
+const TicketTypeSchema = new Schema<TicketTypeType>(
+  {
+    eventId: { type: mongoose.SchemaTypes.ObjectId, ref: 'Event', required: true },
+    type: { type: String, enum: ['VIP', 'REGULAR', 'GENERAL'], required: true },
+    price: { type: Number, required: true },
+    totalCount: { type: Number, required: true },
+    remainingCount: { type: Number, required: true },
+  },
+  { timestamps: true }
+);
 
 export const TicketType = models['TicketType'] || model<TicketTypeType>('TicketType', TicketTypeSchema);

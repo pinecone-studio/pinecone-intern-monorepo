@@ -1,1 +1,3 @@
-export { userQueries } from './user.queries'
+import { userQueries } from './user.queries';
+
+export const { getUser, getUsers } = userQueries;
