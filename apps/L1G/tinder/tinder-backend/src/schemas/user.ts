@@ -40,11 +40,11 @@ export const UsertypeDefs = gql`
     otpId: ID!
   }
 
-type SignupResponse {
-  id: ID!
-  email: String!
-  token: String!
-}
+  type SignupResponse {
+    id: ID!
+    email: String!
+    token: String!
+  }
 
   type ChatMessage {
     id: ID!
@@ -64,11 +64,12 @@ type SignupResponse {
     participant: ChatParticipant!
     messages: [ChatMessage!]!
   }
- 
+
   type Query {
     getusers: [User]
+    getUser(_id: ID!): User
     getUserAllChatMessages(userId: ID!): [MatchChatMessages!]!
-getChatWithUser(userId: ID!, participantId: ID!): MatchChatMessages!
+    getChatWithUser(userId: ID!, participantId: ID!): MatchChatMessages!
   }
   type Mutation {
     forgotPassword(newPassword: String!, otpId: String!): ForgotPasswordPayload!
