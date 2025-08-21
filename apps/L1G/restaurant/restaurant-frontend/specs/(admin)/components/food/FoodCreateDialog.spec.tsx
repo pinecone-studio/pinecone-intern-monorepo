@@ -241,7 +241,7 @@ describe('FoodCreateDialog', () => {
     expect(dialogTitle).toBeInTheDocument();
 
     const foodNameInput = getByPlaceholderText('Хоолны нэр');
-    const statusInput = getByTestId('create-food-activestatus-input');
+    const statusInput = getByTestId('food-status-active');
     const priceInput = getByPlaceholderText('Үнэ');
     const imageInput = getByTestId('create-food-image-input');
     const categorySelect = getByTestId('create-food-category-select');
@@ -307,7 +307,7 @@ describe('FoodCreateDialog', () => {
     expect(dialogTitle).toBeInTheDocument();
 
     const foodNameInput = getByPlaceholderText('Хоолны нэр');
-    const statusInput = getByTestId('create-food-activestatus-input');
+    const statusInput = getByTestId('food-status-active');
     const priceInput = getByPlaceholderText('Үнэ');
     const imageInput = getByTestId('create-food-image-input');
     const categorySelect = getByTestId('create-food-category-select');

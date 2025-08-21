@@ -1,5 +1,5 @@
 'use client';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, Plus, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -7,26 +7,27 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { FoodUpdateFormProps, statusOptions } from '@/utils/FoodTypes';
+import { FoodUpdateFormProps } from '@/utils/FoodTypes';
 import { TextInput } from './FormTextInput';
 import { formSchemaFood } from '@/helpers/form-schemas';
+import Image from 'next/image';
+import { RadioInput } from './FormRadioInput';
+
+const updateFormDefaults = (foodName: string, price: string, image: string | undefined, categoryId: string, status: string) => ({
+  foodName: foodName || '',
+  price: price || '',
+  image: image || undefined,
+  category: categoryId || '',
+  status: status as 'Идэвхитэй' | 'Идэвхигүй',
+});
 
 export const FoodUpdateForm = ({ foodName, price, status, image, category, onSubmit, isSubmitting }: FoodUpdateFormProps) => {
   const [foodImage, setFoodImage] = useState<string>('');
 
   const form = useForm<z.infer<typeof formSchemaFood>>({
     resolver: zodResolver(formSchemaFood),
-    defaultValues: {
-      foodName: foodName || '',
-      price: price || '',
-      image: image || undefined,
-      category: category.categoryId || '',
-      status: status as 'Идэвхитэй' | 'Идэвхигүй',
-    },
+    defaultValues: updateFormDefaults(foodName, price, image, category.categoryId, status),
   });
-
   useEffect(() => {
     form.reset({
       foodName: foodName || '',
@@ -63,34 +64,11 @@ export const FoodUpdateForm = ({ foodName, price, status, image, category, onSub
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <TextInput data-cy="food-update-foodName-input" data-testid="food-update-foodName-input" control={form.control} fieldName="foodName" placeholder="Хоолны нэр" />
-        <FormField
-          control={form.control}
-          name="status"
-          render={({ field }) => (
-            <FormItem className="space-y-3">
-              <FormControl>
-                <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex justify-center items-center">
-                  {statusOptions.map((option, i) => (
-                    <FormItem key={i}>
-                      <div className="flex justify-center items-center gap-3">
-                        <FormControl>
-                          <RadioGroupItem data-testid={`food-update-status-${option.id}`} value={option.value} checked={option.value === field.value} />
-                        </FormControl>
-                        <FormLabel data-testid="food-update-status-label" className="font-normal">
-                          {option.label}
-                        </FormLabel>
-                      </div>
-                    </FormItem>
-                  ))}
-                </RadioGroup>
-              </FormControl>
-            </FormItem>
-          )}
-        />
+        <RadioInput control={form.control} />
         <FormField
           control={form.control}
           name="image"
-          render={({ field }) => (
+          render={({ field: _field }) => (
             <FormItem>
               <Button variant="ghost" className={`flex w-full h-[52px] rounded-md p-4 has-[>svg]:px-0 bg-[#F4F4F5] border solid border-[#E4E4E7] ${foodImage && 'w-full h-[150px] p-0'}`}>
                 <div className={`flex justify-center items-center gap-2 ${foodImage && 'absolute z-0'} `}>
@@ -120,7 +98,7 @@ export const FoodUpdateForm = ({ foodName, price, status, image, category, onSub
         <FormField
           control={form.control}
           name="category"
-          render={({ field }) => (
+          render={({ field: _field }) => (
             <FormItem>
               <div className="relative">
                 <FormControl>
