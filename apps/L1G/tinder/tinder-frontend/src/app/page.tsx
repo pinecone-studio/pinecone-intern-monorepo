@@ -1,5 +1,6 @@
 'use client';
 import { HomeFooter, HomeHeader, HomeMain, HomePageBackground } from '@/components/HomePage';
+import Loading from '@/components/Loading';
 import { useGetusersQuery } from '@/generated';
 
 export interface UserProfile {
@@ -14,8 +15,8 @@ const Home: React.FC = () => {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="text-pink-500 text-2xl font-bold animate-pulse">Loading...</div>
+      <div>
+        <Loading />
       </div>
     );
 
