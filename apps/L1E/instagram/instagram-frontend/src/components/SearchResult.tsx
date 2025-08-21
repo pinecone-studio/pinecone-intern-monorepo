@@ -40,9 +40,9 @@ const SearchResults = () => {
 
           {!loading && !error && data?.getProfiles?.length ? (
             <div>
-              {data.getProfiles.map((user) => (
-                <a href={`/${user.userName}`}>
-                  <div key={user.userName} className="flex gap-2 items-center">
+              {data.getProfiles.map((user, index) => (
+                <a href={`/${user.userName}`}  key={user.userName + index}>
+                  <div className="flex gap-2 items-center">
                     <img src={`/${user.profileImage}`} className="w-[44px] h-[44px] rounded-full"></img>
                    <div>
                      <p className="font-medium text-sm">{user.userName}</p>
