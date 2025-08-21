@@ -3,8 +3,21 @@ query Getusers {
     id
     email
     genderPreferences
-
-
-  
+    gender
+    dateOfBirth
+    name
+    bio
+    profession
+    schoolWork
+    images
+    likedBy {
+      id
+    }
+    likedTo {
+      id
+    }
+    matchIds {
+      id
+    }
   }
 }

@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, X, Heart } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, Check } from 'lucide-react';
 import { UserProfile } from '@/app/page';
 
 export const ImageNavigation = ({ onPrev, onNext, images, currentIndex }: { onPrev: () => void; onNext: () => void; images: string[]; currentIndex: number }) => (
@@ -28,19 +28,19 @@ export const LikeDislikeButtons = ({ onLike, onDislike }: { onLike: () => void; 
       data-testid="dislike"
       variant="outline"
       size="icon"
-      className="w-14 h-14 rounded-full border-2 border-red-200 hover:border-red-300 hover:bg-red-50 group bg-transparent"
+      className="w-16 h-16 rounded-full border shadow-md border-[#E4E4E7] hover:border-red-300 hover:bg-red-50 group bg-white"
       onClick={onDislike}
     >
-      <X className="w-6 h-6 text-red-500 group-hover:text-red-600" />
+      <X size={20} className="w-6 h-6 text-[#E11D48] group-hover:text-red-600" />
     </Button>
     <Button
       data-testid="like"
       variant="outline"
       size="icon"
-      className="w-14 h-14 rounded-full border-2 border-green-200 hover:border-green-300 hover:bg-green-50 group bg-transparent"
+      className="w-16 h-16 rounded-full border shadow-md border-[#E4E4E7] hover:border-green-300 hover:bg-green-50 group bg-white"
       onClick={onLike}
     >
-      <Heart className="w-6 h-6 text-green-500 group-hover:text-green-600 fill-current" />
+      <Check size={20} className="w-6 h-6 text-[#18BA51] group-hover:text-green-600 " />
     </Button>
   </div>
 );
