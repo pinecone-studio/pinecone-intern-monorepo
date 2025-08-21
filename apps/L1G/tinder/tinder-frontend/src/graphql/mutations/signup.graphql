@@ -1,7 +1,8 @@
-mutation Signup($otpId: String!, $password: String!) {
+
+mutation Mutation($otpId: String!, $password: String!) {
   signup(otpId: $otpId, password: $password) {
-    id
     email
+    id
     token
   }
 }

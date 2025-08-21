@@ -1,6 +1,6 @@
 'use client';
 import { HomeFooter, HomeHeader, HomeMain, HomePageBackground } from '@/components/HomePage';
-import { useGetusersQuery } from '../generated';
+import { useGetusersQuery } from '@/generated';
 
 export interface UserProfile {
   id: string;

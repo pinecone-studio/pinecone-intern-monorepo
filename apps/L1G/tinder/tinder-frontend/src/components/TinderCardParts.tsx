@@ -64,7 +64,7 @@ export const CardWithImageAndInfo = ({
   nextImage: () => void;
   prevImage: () => void;
 }) => (
-  <Card className="relative w-[400px] h-[600px] max-w-sm aspect-[3/4] overflow-hidden border-0 shadow-2xl">
+  <Card className="relative w-[330px] h-[480px] max-w-sm aspect-[3/4] overflow-hidden border-0 shadow-2xl">
     <div className="relative w-full h-full">
       <ProfileImageDisplay imageError={imageError} imageSrc={images[currentImageIndex]} alt={`${profile.name} - Photo ${currentImageIndex + 1}`} handleImageError={handleImageError} />
 

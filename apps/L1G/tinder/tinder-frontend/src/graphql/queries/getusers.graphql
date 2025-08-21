@@ -5,6 +5,15 @@ query Getusers {
     email
     genderPreferences
     id
+    dateOfBirth
+    name
+    bio
+    interests {
+      _id
+      interestName
+    }
+    profession
+    schoolWork
     images
     interests {
       _id
@@ -23,6 +32,7 @@ query Getusers {
       users {
         id
       }
+
     }
     name
     profession
