@@ -20,14 +20,16 @@ export const DeleteDialog = ({ title, comment, submitText, children, onClick }: 
       </DialogTrigger>
       <DialogContent>
         <div className="flex w-full justify-between items-center">
-          <DialogTitle className="flex justify-start text-[18px] leading-[18px] font-semibold text-[#09090B]">{title}</DialogTitle>
+          <DialogTitle data-testid="delete-dialog-title" className="flex justify-start text-[18px] leading-[18px] font-semibold text-[#09090B]">
+            {title}
+          </DialogTitle>
           <DialogClose>
             <X className="w-4 h-4" />
           </DialogClose>
         </div>
         <span className="text-base leading-[20px] text-[#71717A]">{comment}</span>
         <DialogClose asChild>
-          <Button onClick={onClick} className="flex w-full h-[36px] rounded-md py-2 px-4 bg-[#1D1F24] " type="submit">
+          <Button data-cy="delete-dialog-delete-button" data-testid="delete-dialog-delete-button" onClick={onClick} className="flex w-full h-[36px] rounded-md py-2 px-4 bg-[#1D1F24] " type="submit">
             {submitText}
           </Button>
         </DialogClose>

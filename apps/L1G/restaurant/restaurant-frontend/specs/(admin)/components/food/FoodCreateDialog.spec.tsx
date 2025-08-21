@@ -3,9 +3,9 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { CreateFoodDocument, GetCategoriesDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { CreateFoodDialog } from '@/components/admin';
 import { UploadImage } from '@/utils/ImageUpload';
 import { toast } from 'sonner';
+import { FoodCreateDialog } from '@/components/admin';
 
 beforeAll(() => {
   /* eslint-disable @typescript-eslint/no-empty-function */
@@ -101,7 +101,7 @@ const mockDataProps = {
   refetch: jest.fn(),
 };
 
-describe('CreateFoodDialog', () => {
+describe('FoodCreateDialog', () => {
   const mockUploadImage = UploadImage as jest.MockedFunction<typeof UploadImage>;
 
   beforeEach(() => {
@@ -112,7 +112,7 @@ describe('CreateFoodDialog', () => {
   it('should render', async () => {
     const { getByTestId, findByTestId } = render(
       <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
-        <CreateFoodDialog refetch={mockDataProps.refetch} />
+        <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
 
@@ -128,7 +128,7 @@ describe('CreateFoodDialog', () => {
   it('should closes dialog when close button is clicked', async () => {
     const { getByTestId } = render(
       <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
-        <CreateFoodDialog refetch={mockDataProps.refetch} />
+        <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
 
@@ -149,7 +149,7 @@ describe('CreateFoodDialog', () => {
 
     const { getByTestId } = render(
       <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
-        <CreateFoodDialog refetch={mockDataProps.refetch} />
+        <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
     expect(getByTestId('create-food-dialog-open')).toBeInTheDocument();
@@ -174,7 +174,7 @@ describe('CreateFoodDialog', () => {
   it('should handle empty file input', async () => {
     const { getByTestId } = render(
       <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
-        <CreateFoodDialog refetch={mockDataProps.refetch} />
+        <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
     expect(getByTestId('create-food-dialog-open')).toBeInTheDocument();
@@ -197,7 +197,7 @@ describe('CreateFoodDialog', () => {
 
     const { getByTestId } = render(
       <MockedProvider mocks={[getCategoriesMock]} addTypename={false}>
-        <CreateFoodDialog refetch={mockDataProps.refetch} />
+        <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
     expect(getByTestId('create-food-dialog-open')).toBeInTheDocument();
@@ -225,12 +225,12 @@ describe('CreateFoodDialog', () => {
     });
   });
 
-  it('should create new food and closes the dialog', async () => {
+  it('should create new food and show toast success', async () => {
     const mockFile = new File(['foodimage'], 'foodimage.png', { type: 'image/png' });
 
     const { getByTestId, getByPlaceholderText, queryByTestId } = render(
       <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
-        <CreateFoodDialog refetch={mockDataProps.refetch} />
+        <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
 
@@ -291,12 +291,12 @@ describe('CreateFoodDialog', () => {
     );
   });
 
-  it('should show a toast when an error is thrown', async () => {
+  it('should show toast error when an error is thrown', async () => {
     const mockFile = new File(['foodimage'], 'foodimage.png', { type: 'image/png' });
 
     const { getByTestId, getByPlaceholderText } = render(
       <MockedProvider mocks={[getCategoriesMock, createFoodErrorMock]} addTypename={false}>
-        <CreateFoodDialog refetch={mockDataProps.refetch} />
+        <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
 
