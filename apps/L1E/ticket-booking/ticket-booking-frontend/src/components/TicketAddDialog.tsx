@@ -120,7 +120,6 @@ export const TicketAddDialog = ({ ticketAddDialog, setTicketAddDialog }: TicketA
                 className="py-[10px] px-3 border border-[#E4E4E7] rounded-md focus:outline-none w-full placeholder-[#71717A] mb-2 placeholder:text-sm placeholder:font-normal"
               />
             </div>
-
             <div>
               <h6 className="text-base font-medium mb-2">Regular*</h6>
               <input
@@ -156,3 +155,6 @@ export const TicketAddDialog = ({ ticketAddDialog, setTicketAddDialog }: TicketA
     </>
   );
 };
+
+
+// sadfaskj
