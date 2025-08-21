@@ -12,7 +12,6 @@ type FoodUpdateDialogProps = {
   status: Food['status'];
   category: Food['category'];
 };
-
 type FoodUpdateFormProps = {
   foodName: string;
   price: string;
@@ -22,16 +21,8 @@ type FoodUpdateFormProps = {
     categoryName: string;
   };
   status: string | string;
-  onSubmit: (values: z.infer<typeof formSchemaFood>) => void;
+  onSubmit: (_values: z.infer<typeof formSchemaFood>) => void;
   isSubmitting: boolean;
 };
 
-const statusOptions = [
-  { id: 'active', label: 'Идэвхитэй', value: 'Идэвхитэй' },
-  {
-    id: 'inactive',
-    label: 'Идэвхигүй',
-    value: 'Идэвхигүй',
-  },
-];
-export { type FoodUpdateDialogProps, type FoodUpdateFormProps, statusOptions };
+export { type FoodUpdateDialogProps, type FoodUpdateFormProps };

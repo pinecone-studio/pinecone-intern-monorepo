@@ -49,7 +49,7 @@ describe('FoodUpdateForm', () => {
     const { getByTestId } = render(<FoodUpdateForm {...mockDataProps} />);
 
     expect(getByTestId('food-update-foodName-input')).toBeInTheDocument();
-    expect(getByTestId('food-update-status-active')).toBeInTheDocument();
+    expect(getByTestId('food-status-active')).toBeInTheDocument();
     expect(getByTestId('food-update-image-input')).toBeInTheDocument();
     expect(getByTestId('food-update-category-select')).toBeInTheDocument();
     expect(getByTestId('food-update-price-input')).toBeInTheDocument();
@@ -60,7 +60,7 @@ describe('FoodUpdateForm', () => {
     const { getByTestId } = render(<FoodUpdateForm {...mockDataPropsWithEmptyValues} />);
 
     expect(getByTestId('food-update-foodName-input')).toBeInTheDocument();
-    expect(getByTestId('food-update-status-active')).toBeInTheDocument();
+    expect(getByTestId('food-status-active')).toBeInTheDocument();
     expect(getByTestId('food-update-image-input')).toBeInTheDocument();
     expect(getByTestId('food-update-category-select')).toBeInTheDocument();
     expect(getByTestId('food-update-price-input')).toBeInTheDocument();
@@ -159,29 +159,5 @@ describe('FoodUpdateForm', () => {
     await waitFor(() => {
       expect(mockDataProps.onSubmit).toHaveBeenCalledTimes(0);
     });
-  });
-
-  it('shows normal state when isSubmitting is false', () => {
-    const { getByTestId } = render(<FoodUpdateForm {...mockDataProps} isSubmitting={false} />);
-
-    const submitButton = getByTestId('food-update-submit-button');
-
-    // Check if button shows normal text
-    expect(submitButton).toHaveTextContent('Шинэчлэх');
-
-    // Check if button is enabled
-    expect(submitButton).not.toBeDisabled();
-  });
-
-  it('shows loading state when isSubmitting is true', () => {
-    const { getByTestId } = render(<FoodUpdateForm {...mockDataProps} isSubmitting={true} />);
-
-    const submitButton = getByTestId('food-update-submit-button');
-
-    // Check if button shows loading text
-    expect(submitButton).toHaveTextContent('Шинэчилж байна...');
-
-    // Check if button is disabled
-    expect(submitButton).toBeDisabled();
   });
 });

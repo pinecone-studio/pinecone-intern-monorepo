@@ -97,7 +97,7 @@ describe('FoodUpdateDialog', () => {
     expect(getByTestId('food-update-dialog-title')).toBeInTheDocument();
 
     const foodNameInput = getByTestId('food-update-foodName-input');
-    const activeStatusInput = getByTestId('food-update-status-active');
+    const activeStatusInput = getByTestId('food-status-active');
     const priceInput = getByTestId('food-update-price-input');
     const imageInput = getByTestId('food-update-image-input');
     const categorySelect = getByTestId('food-update-category-select');
@@ -172,9 +172,8 @@ describe('FoodUpdateDialog', () => {
     expect(getByTestId('food-update-dialog-title')).toBeInTheDocument();
 
     const foodNameInput = getByTestId('food-update-foodName-input');
-    const activeStatusInput = getByTestId('food-update-status-active');
+    const activeStatusInput = getByTestId('food-status-active');
     const priceInput = getByTestId('food-update-price-input');
-    const imageInput = getByTestId('food-update-image-input');
     const categorySelect = getByTestId('food-update-category-select');
     const submitButton = getByTestId('food-update-submit-button');
 
@@ -237,7 +236,7 @@ describe('FoodUpdateDialog', () => {
     expect(getByTestId('food-update-dialog-title')).toBeInTheDocument();
 
     const foodNameInput = getByTestId('food-update-foodName-input');
-    const activeStatusInput = getByTestId('food-update-status-active');
+    const activeStatusInput = getByTestId('food-status-active');
     const priceInput = getByTestId('food-update-price-input');
     const imageInput = getByTestId('food-update-image-input');
     const categorySelect = getByTestId('food-update-category-select');

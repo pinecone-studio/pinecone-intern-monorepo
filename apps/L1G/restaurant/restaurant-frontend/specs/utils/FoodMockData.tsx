@@ -1,3 +1,4 @@
+/* eslint max-lines: "off" */
 import { DeleteFoodDocument, GetFoodsDocument, UpdateFoodDocument } from '@/generated';
 import { MockedResponse } from '@apollo/client/testing';
 
