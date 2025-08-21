@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { useRouter } from 'next/navigation';
 
 const UnmatchButton = () => {
   const router = useRouter();
@@ -11,7 +11,7 @@ const UnmatchButton = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className="w-[112px] h-[40px] text-[14px] font-medium bg-white border hover:bg-gray-100">
+        <Button variant="outline" className="w-[112px] h-[40px] text-sm font-medium bg-white border hover:bg-gray-100">
           Unmatch
         </Button>
       </DialogTrigger>
@@ -19,18 +19,20 @@ const UnmatchButton = () => {
       <DialogContent className="w-[400px]">
         <DialogHeader>
           <DialogTitle>Unmatch this person?</DialogTitle>
-          <DialogDescription>If you unmatch, you won’t be able to chat with this person again. This action cannot be undone.</DialogDescription>
+          <DialogDescription>If you unmatch, you will not be able to chat with this person again. This action cannot be undone.</DialogDescription>
         </DialogHeader>
 
         <DialogFooter className="flex justify-between gap-2">
           <DialogClose asChild>
-            <button onClick={() => router.push('/chat')} className="bg-white border rounded-full text-black hover:bg-[#E11D48E5] hover:text-white px-4 py-2">
+            <Button variant="outline" className="rounded-full hover:bg-[#E11D48E5] hover:text-white border" onClick={() => router.push('/chat')}>
               Keep match
-            </button>
+            </Button>
           </DialogClose>
 
           <DialogClose asChild>
-            <button className="bg-white border rounded-full text-black hover:bg-[#E11D48E5] hover:text-white px-4 py-2">Unmatch</button>
+            <Button variant="outline" className="rounded-full hover:bg-[#E11D48E5] hover:text-white border">
+              Unmatch
+            </Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

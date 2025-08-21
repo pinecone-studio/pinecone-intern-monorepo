@@ -2,19 +2,6 @@ query GetUsers {
   getusers {
     id
     email
-    name
-    images
-    likedBy {
-      id
-      name
-    }
-    likedTo {
-      id
-      name
-    }
-    matched {
-      id
-      name
-    }
+    genderPreferences
   }
 }

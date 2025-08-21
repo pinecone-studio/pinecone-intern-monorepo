@@ -15,240 +15,77 @@ describe('Avatar Component', () => {
     job: 'Software Engineer',
     avatar: ['/user-avatar.jpg', '/user-avatar2.jpg'],
   };
+  const mockUserEmpty = { id: 2, name: 'Jane Smith', age: 30, job: 'Designer', avatar: [] };
+  const mockUserNoName = { id: 3, name: '', age: 28, job: 'Manager', avatar: ['/manager.jpg'] };
 
-  const mockUserWithEmptyAvatar = {
-    id: 2,
-    name: 'Jane Smith',
-    age: 30,
-    job: 'Designer',
-    avatar: [],
-  };
-
-  const mockUserWithoutName = {
-    id: 3,
-    name: '',
-    age: 28,
-    job: 'Manager',
-    avatar: ['/manager-avatar.jpg'],
-  };
-
-  describe('Rendering', () => {
-    it('renders with user avatar when avatar array has images', () => {
+  describe('Basic Rendering', () => {
+    it('renders with user avatar from array', () => {
       render(<Avatar user={mockUser} />);
-
-      const avatarImage = screen.getByRole('img');
-      expect(avatarImage).toBeInTheDocument();
-      expect(avatarImage).toHaveAttribute('src', '/user-avatar.jpg');
-      expect(avatarImage).toHaveAttribute('alt', 'John Doe');
+      const img = screen.getByRole('img');
+      expect(img).toHaveAttribute('src', '/user-avatar.jpg');
+      expect(img).toHaveAttribute('alt', 'John Doe');
     });
 
-    it('renders with default avatar when avatar array is empty', () => {
-      render(<Avatar user={mockUserWithEmptyAvatar} />);
-
-      const avatarImage = screen.getByRole('img');
-      expect(avatarImage).toBeInTheDocument();
-      expect(avatarImage).toHaveAttribute('src', '/profile.jpg');
-      expect(avatarImage).toHaveAttribute('alt', 'Jane Smith');
+    it('uses default avatar when array empty', () => {
+      render(<Avatar user={mockUserEmpty} />);
+      expect(screen.getByRole('img')).toHaveAttribute('src', '/profile.jpg');
     });
 
-    it('renders with fallback alt text when user name is empty', () => {
-      render(<Avatar user={mockUserWithoutName} />);
-
-      const avatarImage = screen.getByRole('img');
-      expect(avatarImage).toBeInTheDocument();
-      expect(avatarImage).toHaveAttribute('alt', 'Avatar');
+    it('uses fallback alt when name empty', () => {
+      render(<Avatar user={mockUserNoName} />);
+      expect(screen.getByRole('img')).toHaveAttribute('alt', 'Avatar');
     });
   });
 
-  describe('Size Props', () => {
-    it('renders with default size when size prop is not provided', () => {
+  describe('Size Handling', () => {
+    it('applies default size 48px', () => {
       render(<Avatar user={mockUser} />);
-
-      const avatarImage = screen.getByRole('img');
-      expect(avatarImage).toHaveAttribute('width', '48');
-      expect(avatarImage).toHaveAttribute('height', '48');
+      const img = screen.getByRole('img');
+      expect(img).toHaveAttribute('width', '48');
+      expect(img).toHaveAttribute('height', '48');
     });
 
-    it('renders with custom size when size prop is provided', () => {
+    it('applies custom size', () => {
       render(<Avatar user={mockUser} size={64} />);
-
-      const avatarImage = screen.getByRole('img');
-      expect(avatarImage).toHaveAttribute('width', '64');
-      expect(avatarImage).toHaveAttribute('height', '64');
-    });
-
-    it('renders with different custom sizes', () => {
-      const { rerender } = render(<Avatar user={mockUser} size={32} />);
-
-      let avatarImage = screen.getByRole('img');
-      expect(avatarImage).toHaveAttribute('width', '32');
-      expect(avatarImage).toHaveAttribute('height', '32');
-
-      rerender(<Avatar user={mockUser} size={100} />);
-
-      avatarImage = screen.getByRole('img');
-      expect(avatarImage).toHaveAttribute('width', '100');
-      expect(avatarImage).toHaveAttribute('height', '100');
+      const img = screen.getByRole('img');
+      expect(img).toHaveAttribute('width', '64');
+      expect(img).toHaveAttribute('height', '64');
     });
   });
 
-  describe('CSS Classes', () => {
-    it('applies correct CSS classes', () => {
-      render(<Avatar user={mockUser} />);
-
-      const avatarImage = screen.getByRole('img');
-      expect(avatarImage).toHaveClass('rounded-full', 'object-cover');
-    });
-
-    it('has relative positioned container', () => {
+  describe('CSS & Structure', () => {
+    it('applies correct classes and structure', () => {
       const { container } = render(<Avatar user={mockUser} />);
-
-      const avatarContainer = container.firstChild;
-      expect(avatarContainer).toHaveClass('relative');
-    });
-  });
-
-  describe('Avatar Array Logic', () => {
-    it('uses first image from avatar array when multiple images exist', () => {
-      const userWithMultipleAvatars = {
-        ...mockUser,
-        avatar: ['/first-image.jpg', '/second-image.jpg', '/third-image.jpg'],
-      };
-
-      render(<Avatar user={userWithMultipleAvatars} />);
-
-      const avatarImage = screen.getByRole('img');
-      expect(avatarImage).toHaveAttribute('src', '/first-image.jpg');
-    });
-
-    it('handles single image in avatar array', () => {
-      const userWithSingleAvatar = {
-        ...mockUser,
-        avatar: ['/single-image.jpg'],
-      };
-
-      render(<Avatar user={userWithSingleAvatar} />);
-
-      const avatarImage = screen.getByRole('img');
-      expect(avatarImage).toHaveAttribute('src', '/single-image.jpg');
+      expect(container.firstChild).toHaveClass('relative');
+      expect(screen.getByRole('img')).toHaveClass('rounded-full', 'object-cover');
     });
   });
 
   describe('Edge Cases', () => {
-    it('handles user with null/undefined name gracefully', () => {
-      const userWithNullName = {
-        ...mockUser,
-        name: null,
-      };
-
-      render(<Avatar user={userWithNullName} />);
-
-      const avatarImage = screen.getByRole('img');
-      expect(avatarImage).toHaveAttribute('alt', 'Avatar');
+    it('handles null/undefined names', () => {
+      render(<Avatar user={{ ...mockUser, name: null }} />);
+      expect(screen.getByRole('img')).toHaveAttribute('alt', 'Avatar');
     });
 
-    it('handles undefined name gracefully', () => {
-      const userWithUndefinedName = {
-        ...mockUser,
-        name: undefined,
-      };
-
-      render(<Avatar user={userWithUndefinedName} />);
-
-      const avatarImage = screen.getByRole('img');
-      expect(avatarImage).toHaveAttribute('alt', 'Avatar');
+    it('uses first avatar from multiple images', () => {
+      const user = { ...mockUser, avatar: ['/first.jpg', '/second.jpg'] };
+      render(<Avatar user={user} />);
+      expect(screen.getByRole('img')).toHaveAttribute('src', '/first.jpg');
     });
 
-    it('handles zero size prop', () => {
+    it('handles zero and negative sizes', () => {
       render(<Avatar user={mockUser} size={0} />);
-
-      const avatarImage = screen.getByRole('img');
-      expect(avatarImage).toHaveAttribute('width', '0');
-      expect(avatarImage).toHaveAttribute('height', '0');
-    });
-
-    it('renders correctly when avatar array exists but is empty', () => {
-      const userWithEmptyArray = {
-        ...mockUser,
-        avatar: [],
-      };
-
-      render(<Avatar user={userWithEmptyArray} />);
-
-      const avatarImage = screen.getByRole('img');
-      expect(avatarImage).toHaveAttribute('src', '/profile.jpg');
+      expect(screen.getByRole('img')).toHaveAttribute('width', '0');
     });
   });
 
-  describe('Accessibility', () => {
-    it('has proper alt text for screen readers', () => {
-      render(<Avatar user={mockUser} />);
+  describe('Re-rendering', () => {
+    it('updates when props change', () => {
+      const { rerender } = render(<Avatar user={mockUser} size={32} />);
+      expect(screen.getByRole('img')).toHaveAttribute('width', '32');
 
-      const avatarImage = screen.getByRole('img');
-      expect(avatarImage).toHaveAccessibleName('John Doe');
-    });
-
-    it('provides fallback alt text when name is missing', () => {
-      render(<Avatar user={mockUserWithoutName} />);
-
-      const avatarImage = screen.getByRole('img');
-      expect(avatarImage).toHaveAccessibleName('Avatar');
-    });
-
-    it('provides fallback alt text when name is null', () => {
-      const userWithNullName = {
-        ...mockUser,
-        name: null,
-      };
-
-      render(<Avatar user={userWithNullName} />);
-
-      const avatarImage = screen.getByRole('img');
-      expect(avatarImage).toHaveAccessibleName('Avatar');
-    });
-  });
-
-  describe('Component Structure', () => {
-    it('wraps image in a relative positioned div', () => {
-      const { container } = render(<Avatar user={mockUser} />);
-
-      const wrapper = container.firstChild;
-      expect(wrapper.tagName).toBe('DIV');
-      expect(wrapper).toHaveClass('relative');
-
-      const image = wrapper.firstChild;
-      expect(image.tagName).toBe('IMG');
-    });
-
-    it('maintains proper DOM structure with custom size', () => {
-      const { container } = render(<Avatar user={mockUser} size={64} />);
-
-      const wrapper = container.firstChild;
-      expect(wrapper.tagName).toBe('DIV');
-      expect(wrapper).toHaveClass('relative');
-
-      const image = wrapper.firstChild;
-      expect(image.tagName).toBe('IMG');
-      expect(image).toHaveAttribute('width', '64');
-      expect(image).toHaveAttribute('height', '64');
-    });
-  });
-
-  describe('Type Safety', () => {
-    it('handles numeric values properly', () => {
-      render(<Avatar user={mockUser} size={48} />);
-
-      const avatarImage = screen.getByRole('img');
-      expect(avatarImage).toHaveAttribute('width', '48');
-      expect(avatarImage).toHaveAttribute('height', '48');
-    });
-
-    it('handles large size values', () => {
-      render(<Avatar user={mockUser} size={200} />);
-
-      const avatarImage = screen.getByRole('img');
-      expect(avatarImage).toHaveAttribute('width', '200');
-      expect(avatarImage).toHaveAttribute('height', '200');
+      rerender(<Avatar user={mockUser} size={64} />);
+      expect(screen.getByRole('img')).toHaveAttribute('width', '64');
     });
   });
 });

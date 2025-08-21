@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import ChatPerson from '@/components/ChatPerson';
 import ChatWindow from '@/components/ChatWindow';
 import Matches from '@/components/Matches';
@@ -24,67 +24,117 @@ const matches: User[] = [
   { id: 1, name: 'Leslie Alexander', age: 24, job: 'Software Engineer', avatar: ['/profile.jpg'] },
   { id: 2, name: 'Eleanor Pena', age: 32, job: 'Software Engineer', avatar: ['/profile.jpg'] },
   { id: 3, name: 'Wade Warren', age: 32, job: 'Software Engineer', avatar: ['/profile.jpg'] },
-  { id: 4, name: 'Courtney Henry', age: 32, job: 'Software Engineer', avatar: ['/profile.jpg'] },
+  { id: 4, name: 'Courtney Henry', age: 32, job: 'Software Engineer', avatar: ['/profile.jpg', '/profile.jpg'] },
   { id: 5, name: 'Marvin McKinney', age: 32, job: 'Software Engineer', avatar: ['/profile.jpg'] },
   { id: 6, name: 'Dianne Russell', age: 32, job: 'Software Engineer', avatar: ['/profile.jpg'] },
   { id: 7, name: 'Brooklyn Simmons', age: 25, job: 'Software Engineer', avatar: ['/profile.jpg'] },
   { id: 8, name: 'Bessie Cooper', age: 32, job: 'Software Engineer', avatar: ['/profile.jpg'] },
   { id: 9, name: 'Esther Howard', age: 32, job: 'Software Engineer', avatar: ['/profile.jpg'] },
-  { id: 10, name: 'Kathryn Murphy', age: 24, job: 'Software Engineer', avatar: ['/profile.jpg'] },
-  { id: 11, name: 'Guy Hawkins', age: 41, job: 'Software Engineer', avatar: ['/profile.jpg', '/profile.jpg'] },
-  { id: 12, name: 'Jacob Jones', age: 20, job: 'Software Engineer', avatar: ['/profile.jpg', '/profile.jpg'] },
 ];
 
-const ChatPage = () => {
-  const [selectedUser, setSelectedUser] = useState<User | null>(matches[8] || null);
-  const [topRowUsers, setTopRowUsers] = useState<User[]>(matches.slice(0, 7));
-  const [bottomUsers, setBottomUsers] = useState<User[]>(matches.slice(7));
+const initialConversations: Record<number, Message[]> = {
+  9: [
+    { id: 1, text: "Hey there! How's your day going?", sender: 'them', timestamp: '2:47' },
+    { id: 2, text: "Hi! It's going well, thanks! Just finished a hike. How about you?", sender: 'me', timestamp: '2:47' },
+    { id: 3, text: "That sounds awesome! I'm just relaxing at home. Do you hike often?", sender: 'them', timestamp: '2:47' },
+    { id: 4, text: "I'd love to join you sometime.", sender: 'them', timestamp: '2:47' },
+  ],
+};
+
+const generateTimestamp = (): string => {
+  return new Date().toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+};
+
+const getInitialBottomUsers = (): User[] => {
+  return matches.slice(7);
+};
+
+const getInitialTopRowUsers = (): User[] => {
+  return matches.slice(0, 7);
+};
+
+export default function ChatPage() {
+  const [selectedUser, setSelectedUser] = useState<User | null>(() => {
+    const defaultUser = matches.find((user) => user.id === 9);
+    return defaultUser || null;
+  });
+
+  const [topRowUsers, setTopRowUsers] = useState<User[]>(getInitialTopRowUsers);
+  const [bottomUsers, setBottomUsers] = useState<User[]>(getInitialBottomUsers);
   const [chattedUsers, setChattedUsers] = useState<Set<number>>(new Set());
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [conversations, setConversations] = useState<Record<number, Message[]>>(initialConversations);
   const [inputValue, setInputValue] = useState('');
 
-  const handleUserSelect = (user: User) => {
+  const messages = useMemo(() => {
+    return selectedUser ? conversations[selectedUser.id] || [] : [];
+  }, [selectedUser, conversations]);
+
+  const handleUserSelect = useCallback((user: User) => {
     setSelectedUser(user);
+  }, []);
 
-    if (user.id === 9) {
-      setMessages([
-        { id: 1, text: "Hey there! How's your day going?", sender: 'them', timestamp: '2:47' },
-        { id: 2, text: "Hi! It's going well, thanks! Just finished a hike. How about you?", sender: 'me', timestamp: '2:47' },
-        { id: 3, text: "That sounds awesome! I'm just relaxing at home. Do you hike often?", sender: 'them', timestamp: '2:47' },
-        { id: 4, text: "I'd love to join you sometime.", sender: 'them', timestamp: '2:47' },
-      ]);
-    } else {
-      setMessages([]);
-    }
-  };
+  const moveUserToBottom = useCallback((user: User) => {
+    setTopRowUsers((prev) => prev.filter((u) => u.id !== user.id));
 
-  const handleSend = () => {
+    setBottomUsers((prev) => {
+      const exists = prev.some((u) => u.id === user.id);
+      if (!exists) {
+        return [user, ...prev];
+      }
+      return prev;
+    });
+  }, []);
+
+  const handleSend = useCallback(() => {
     if (!inputValue.trim() || !selectedUser) return;
 
-    const currentTime = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-    const newMessage: Message = { id: Date.now(), text: inputValue.trim(), sender: 'me', timestamp: currentTime };
+    const newMessage: Message = {
+      id: Date.now(),
+      text: inputValue.trim(),
+      sender: 'me',
+      timestamp: generateTimestamp(),
+    };
 
-    setMessages((prev) => [...prev, newMessage]);
+    setConversations((prev) => ({
+      ...prev,
+      [selectedUser.id]: [...(prev[selectedUser.id] || []), newMessage],
+    }));
+
     setInputValue('');
 
     setChattedUsers((prev) => new Set([...prev, selectedUser.id]));
 
-    if (topRowUsers.find((u) => u.id === selectedUser.id)) {
-      setTopRowUsers((prev) => prev.filter((u) => u.id !== selectedUser.id));
-    }
-    if (!bottomUsers.find((u) => u.id === selectedUser.id)) {
-      setBottomUsers((prev) => [selectedUser, ...prev]);
-    }
-  };
+    moveUserToBottom(selectedUser);
+  }, [inputValue, selectedUser, moveUserToBottom]);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') handleSend();
-  };
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleSend();
+      }
+    },
+    [handleSend]
+  );
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  }, []);
+
+  if (matches.length === 0) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-gray-500">No matches available</p>
+      </div>
+    );
+  }
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50">
       <Matches topRowUsers={topRowUsers} selectedUser={selectedUser} onUserSelect={handleUserSelect} />
 
       <div className="flex justify-center">
@@ -93,6 +143,4 @@ const ChatPage = () => {
       </div>
     </div>
   );
-};
-
-export default ChatPage;
+}
