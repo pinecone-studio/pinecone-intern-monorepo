@@ -20,7 +20,7 @@ export const RadioInput = ({ control }: RadioInputProps) => {
               <FormItem>
                 <div className="flex justify-center items-center gap-3">
                   <FormControl>
-                    <RadioGroupItem data-testid="create-food-activestatus-input" value="Идэвхитэй" />
+                    <RadioGroupItem data-cy="create-food-activestatus-input" data-testid="create-food-activestatus-input" value="Идэвхитэй" />
                   </FormControl>
                   <FormLabel className="font-normal">Идэвхитэй</FormLabel>
                 </div>
@@ -28,7 +28,7 @@ export const RadioInput = ({ control }: RadioInputProps) => {
               <FormItem>
                 <div className="flex justify-center items-center gap-3">
                   <FormControl>
-                    <RadioGroupItem data-testid="create-food-inactivestatus-input" value="Идэвхигүй" />
+                    <RadioGroupItem data-cy="create-food-inactivestatus-input" data-testid="create-food-inactivestatus-input" value="Идэвхигүй" />
                   </FormControl>
                   <FormLabel className="font-normal">Идэвхигүй</FormLabel>
                 </div>
