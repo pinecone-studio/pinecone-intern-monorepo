@@ -65,6 +65,10 @@ export const UsertypeDefs = gql`
     participant: ChatParticipant!
     messages: [ChatMessage!]!
   }
+  type LikeResponse {
+    isMatch: Boolean!
+    message: String!
+  }
 
   type Query {
     getusers: [User]
@@ -92,8 +96,8 @@ export const UsertypeDefs = gql`
     ): User
 
     login(email: String!, password: String!): String
-    like(likedByUser: ID!, likeReceiver: ID!): String
-    dislike(dislikedByUser: ID!, dislikeReceiver: ID!): String
+    like(likedByUser: ID!, likeReceiver: ID!): LikeResponse!
+    dislike(dislikedByUser: ID!, dislikeReceiver: ID!): LikeResponse!
     uploadImages(images: [String!]!): User
 
     sendMessage(senderId: ID!, receiverId: ID!, matchId: ID!, content: String!): ChatMessage!
