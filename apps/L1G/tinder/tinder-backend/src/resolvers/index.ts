@@ -25,6 +25,6 @@ export const resolvers = {
     forgotPassword,
     sendMessage,
     markMessagesAsSeen,
-    updateProfile
+    updateProfile,
   },
 };

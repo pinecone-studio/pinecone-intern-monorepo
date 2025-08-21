@@ -72,7 +72,7 @@ export const MyImages = () => {
     updateUploadingState(index, false);
   };
   return (
-    <div className="flex flex-col w-[672px] max-w-[672px]">
+    <div className="flex flex-col md:w-[672px] max-w-[672px]">
       <div className="flex flex-col gap-[1px] justify-start items-start ">
         <p className="text-[18px] font-sans font-[500] text-[#09090B]">Your Images</p>
         <p className="text-[14px] font-sans font-[400] text-[#71717A]">Please choose an image that represents you.</p>
@@ -82,15 +82,19 @@ export const MyImages = () => {
         <Separator />
       </div>
 
-      <div className="flex flex-col gap-6">
-        <div className="grid grid-cols-3 gap-6">
+      <div className="flex flex-col gap-2 md:gap-4 lg:gap-6">
+        <div className="grid grid-cols-3 gap-2 md:gap-4 lg:gap-6">
           {uploadedImages.map((image, index) => (
-            <div key={index} data-testid={`image-slot-${index}`} className="relative w-[197px] h-[296px] bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center">
+            <div
+              key={index}
+              data-testid={`image-slot-${index}`}
+              className="relative w-[100px] h-[150px] md:w-[157px] md:h-[226px] lg:w-[197px] lg:h-[296px] bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center"
+            >
               {isUploading[index] ? (
                 <Loader2 className="animate-spin w-8 h-8 text-gray-500" aria-label="Uploading" data-testid={`loader-${index}`} />
               ) : image ? (
                 <>
-                  <Image src={image} alt={`Uploaded image ${index + 1}`} fill className="object-cover" data-testid={`uploaded-image-${index}`} />
+                  <Image src={image} alt={`Uploaded image ${index + 1}`} fill className="object-cover " data-testid={`uploaded-image-${index}`} />
                   <button
                     onClick={() => handleRemoveImage(index)}
                     className="absolute top-4 right-4 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:shadow-lg transition-shadow"

@@ -1,31 +1,25 @@
 query Getusers {
   getusers {
-    bio
-    dateOfBirth
     email
-    genderPreferences
     id
     images
     interests {
       _id
-      interestName
     }
+    name
+    bio
+    dateOfBirth
+    genderPreferences
     likedBy {
       id
     }
     likedTo {
       id
     }
-    matchIds {
-      id
-      matchedAt
-      unmatched
-      users {
-        id
-      }
-    }
-    name
     profession
     schoolWork
+    matchIds {
+      id
+    }
   }
 }
