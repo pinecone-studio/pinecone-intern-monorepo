@@ -2,9 +2,8 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ChatPerson from '../src/components/ChatPerson';
 
-// Mock clsx
 jest.mock('clsx', () => {
-  return (...classes: any[]) => classes.filter(Boolean).join(' ');
+  return (...classes: (string | boolean | undefined | null)[]) => classes.filter(Boolean).join(' ');
 });
 
 const mockUsers = [
@@ -38,9 +37,8 @@ describe('ChatPerson', () => {
   it('renders avatars for all users', () => {
     render(<ChatPerson {...defaultProps} />);
 
-    // Test that avatars are rendered (without specific testid)
     const avatars = screen.getAllByRole('generic').filter((el) => el.textContent?.includes('Avatar') || el.querySelector('img'));
-    expect(avatars.length).toBeGreaterThanOrEqual(0); // Avatar component exists
+    expect(avatars.length).toBeGreaterThanOrEqual(0);
   });
 
   it('calls onUserSelect when user is clicked', () => {
@@ -48,7 +46,9 @@ describe('ChatPerson', () => {
     render(<ChatPerson {...defaultProps} onUserSelect={onUserSelect} />);
 
     const userItem = screen.getByText('John Doe, 25').closest('div');
-    fireEvent.click(userItem!);
+    if (userItem) {
+      fireEvent.click(userItem);
+    }
 
     expect(onUserSelect).toHaveBeenCalledTimes(1);
     expect(onUserSelect).toHaveBeenCalledWith(mockUsers[0]);
@@ -58,7 +58,6 @@ describe('ChatPerson', () => {
     render(<ChatPerson {...defaultProps} selectedUser={mockUsers[0]} />);
 
     const selectedUserName = screen.getByText('John Doe, 25');
-    // Find the clickable container (parent div with cursor-pointer class)
     const selectedUserContainer = selectedUserName.closest('.cursor-pointer');
 
     expect(selectedUserName.className).toContain('text-red-600');
@@ -79,7 +78,6 @@ describe('ChatPerson', () => {
     const chattedUsers = new Set([1, 2]);
     render(<ChatPerson {...defaultProps} chattedUsers={chattedUsers} />);
 
-    // Component should still render all users (the test validates that hasChatted is calculated correctly)
     expect(screen.getByText('John Doe, 25')).toBeTruthy();
     expect(screen.getByText('Jane Smith, 28')).toBeTruthy();
     expect(screen.getByText('Bob Wilson, 32')).toBeTruthy();
@@ -88,7 +86,6 @@ describe('ChatPerson', () => {
   it('handles undefined chattedUsers prop', () => {
     render(<ChatPerson {...defaultProps} chattedUsers={undefined} />);
 
-    // Should render without errors
     expect(screen.getByText('John Doe, 25')).toBeTruthy();
     expect(screen.getByText('Jane Smith, 28')).toBeTruthy();
     expect(screen.getByText('Bob Wilson, 32')).toBeTruthy();
@@ -97,7 +94,6 @@ describe('ChatPerson', () => {
   it('renders empty state when bottomUsers is empty', () => {
     render(<ChatPerson {...defaultProps} bottomUsers={[]} />);
 
-    // Find the main container by its specific class
     const container = document.querySelector('.flex.flex-col.w-\\[300px\\].border-r.border-gray-300');
     expect(container).toBeTruthy();
     expect(container?.children.length).toBe(0);
@@ -118,8 +114,10 @@ describe('ChatPerson', () => {
     render(<ChatPerson {...defaultProps} onUserSelect={onUserSelect} />);
 
     const userItem = screen.getByText('John Doe, 25').closest('div');
-    fireEvent.click(userItem!);
-    fireEvent.click(userItem!);
+    if (userItem) {
+      fireEvent.click(userItem);
+      fireEvent.click(userItem);
+    }
 
     expect(onUserSelect).toHaveBeenCalledTimes(2);
     expect(onUserSelect).toHaveBeenNthCalledWith(1, mockUsers[0]);
@@ -133,8 +131,8 @@ describe('ChatPerson', () => {
     const johnItem = screen.getByText('John Doe, 25').closest('div');
     const janeItem = screen.getByText('Jane Smith, 28').closest('div');
 
-    fireEvent.click(johnItem!);
-    fireEvent.click(janeItem!);
+    if (johnItem) fireEvent.click(johnItem);
+    if (janeItem) fireEvent.click(janeItem);
 
     expect(onUserSelect).toHaveBeenCalledTimes(2);
     expect(onUserSelect).toHaveBeenNthCalledWith(1, mockUsers[0]);

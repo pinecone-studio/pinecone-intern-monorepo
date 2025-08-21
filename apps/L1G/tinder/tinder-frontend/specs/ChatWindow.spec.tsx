@@ -79,7 +79,6 @@ describe('ChatWindow', () => {
 
   it('calls onInputChange when typing in input', () => {
     render(<ChatWindow {...defaultProps} />);
-    // Бодит placeholder text ашиглах
     const input = screen.getByPlaceholderText(/say something nice/i);
     fireEvent.change(input, { target: { value: 'New message' } });
     expect(mockOnInputChange).toHaveBeenCalled();
@@ -87,7 +86,6 @@ describe('ChatWindow', () => {
 
   it('calls onKeyDown when key pressed in input', () => {
     render(<ChatWindow {...defaultProps} />);
-    // Бодит placeholder text ашиглах
     const input = screen.getByPlaceholderText(/say something nice/i);
     fireEvent.keyDown(input, { key: 'Enter' });
     expect(mockOnKeyDown).toHaveBeenCalled();

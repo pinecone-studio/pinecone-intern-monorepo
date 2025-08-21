@@ -4,9 +4,10 @@ import '@testing-library/jest-dom';
 import Matches from '../src/components/Matches';
 
 jest.mock('../src/components/Avatar', () => {
-  return function MockAvatar({ user }) {
+  const MockAvatar = ({ user }) => {
     return <div data-testid={`avatar-${user.id}`}>{user.name} Avatar</div>;
   };
+  return MockAvatar;
 });
 
 const mockUsers = [

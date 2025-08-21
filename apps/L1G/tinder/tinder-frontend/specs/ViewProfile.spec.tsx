@@ -18,7 +18,7 @@ jest.mock('@/components/ui/dialog', () => ({
 
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: ({ src, alt, width, height, className }) => <img src={src} alt={alt} width={width} height={height} className={className} />,
+  default: ({ src, alt, width, height, className }) => <img src={src} alt={alt} width={width} height={height} className={className} data-testid="mocked-next-image" />,
 }));
 
 jest.mock('lucide-react', () => ({
@@ -66,12 +66,12 @@ describe('ViewProfile', () => {
   it('navigates between images', () => {
     render(<ViewProfile user={mockUser} />);
     const img = screen.getByRole('img');
-    const nextBtn = screen.getByTestId('next').closest('button');
+    const nextBtn = screen.getByTestId('next');
 
     fireEvent.click(nextBtn);
     expect(img).toHaveAttribute('src', '/img2.jpg');
 
-    const prevBtn = screen.getByTestId('prev').closest('button');
+    const prevBtn = screen.getByTestId('prev');
     fireEvent.click(prevBtn);
     expect(img).toHaveAttribute('src', '/img1.jpg');
   });
@@ -79,8 +79,8 @@ describe('ViewProfile', () => {
   it('cycles through images', () => {
     render(<ViewProfile user={mockUser} />);
     const img = screen.getByRole('img');
-    const nextBtn = screen.getByTestId('next').closest('button');
-    const prevBtn = screen.getByTestId('prev').closest('button');
+    const nextBtn = screen.getByTestId('next');
+    const prevBtn = screen.getByTestId('prev');
 
     fireEvent.click(nextBtn);
     fireEvent.click(nextBtn);

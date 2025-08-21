@@ -20,7 +20,11 @@ type Message = {
   timestamp: string;
 };
 
-const matches: User[] = [
+type ChatPageProps = {
+  matches?: User[];
+};
+
+const defaultMatches: User[] = [
   { id: 1, name: 'Leslie Alexander', age: 24, job: 'Software Engineer', avatar: ['/profile.jpg'] },
   { id: 2, name: 'Eleanor Pena', age: 32, job: 'Software Engineer', avatar: ['/profile.jpg'] },
   { id: 3, name: 'Wade Warren', age: 32, job: 'Software Engineer', avatar: ['/profile.jpg'] },
@@ -41,36 +45,30 @@ const initialConversations: Record<number, Message[]> = {
   ],
 };
 
-const generateTimestamp = (): string => {
-  return new Date().toLocaleTimeString('en-US', {
+const generateTimestamp = (): string =>
+  new Date().toLocaleTimeString('en-US', {
     hour: '2-digit',
     minute: '2-digit',
     hour12: false,
   });
-};
 
-const getInitialBottomUsers = (): User[] => {
-  return matches.slice(7);
-};
+const getInitialTopRowUsers = (matches: User[]) => matches.slice(0, 7);
+const getInitialBottomUsers = (matches: User[]) => matches.slice(7);
 
-const getInitialTopRowUsers = (): User[] => {
-  return matches.slice(0, 7);
-};
-
-export default function ChatPage() {
+const ChatPage: React.FC<ChatPageProps> = ({ matches = defaultMatches }) => {
   const [selectedUser, setSelectedUser] = useState<User | null>(() => {
-    const defaultUser = matches.find((user) => user.id === 9);
-    return defaultUser || null;
+    return matches.find((user) => user.id === 9) || matches[0] || null;
   });
 
-  const [topRowUsers, setTopRowUsers] = useState<User[]>(getInitialTopRowUsers);
-  const [bottomUsers, setBottomUsers] = useState<User[]>(getInitialBottomUsers);
+  const [topRowUsers, setTopRowUsers] = useState<User[]>(() => getInitialTopRowUsers(matches));
+  const [bottomUsers, setBottomUsers] = useState<User[]>(() => getInitialBottomUsers(matches));
   const [chattedUsers, setChattedUsers] = useState<Set<number>>(new Set());
   const [conversations, setConversations] = useState<Record<number, Message[]>>(initialConversations);
   const [inputValue, setInputValue] = useState('');
 
   const messages = useMemo(() => {
-    return selectedUser ? conversations[selectedUser.id] || [] : [];
+    if (!selectedUser) return [];
+    return conversations[selectedUser.id] || [];
   }, [selectedUser, conversations]);
 
   const handleUserSelect = useCallback((user: User) => {
@@ -79,14 +77,7 @@ export default function ChatPage() {
 
   const moveUserToBottom = useCallback((user: User) => {
     setTopRowUsers((prev) => prev.filter((u) => u.id !== user.id));
-
-    setBottomUsers((prev) => {
-      const exists = prev.some((u) => u.id === user.id);
-      if (!exists) {
-        return [user, ...prev];
-      }
-      return prev;
-    });
+    setBottomUsers((prev) => (prev.some((u) => u.id === user.id) ? prev : [user, ...prev]));
   }, []);
 
   const handleSend = useCallback(() => {
@@ -105,9 +96,7 @@ export default function ChatPage() {
     }));
 
     setInputValue('');
-
-    setChattedUsers((prev) => new Set([...prev, selectedUser.id]));
-
+    setChattedUsers((prev) => new Set(prev).add(selectedUser.id));
     moveUserToBottom(selectedUser);
   }, [inputValue, selectedUser, moveUserToBottom]);
 
@@ -125,22 +114,17 @@ export default function ChatPage() {
     setInputValue(e.target.value);
   }, []);
 
-  if (matches.length === 0) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-gray-500">No matches available</p>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Matches topRowUsers={topRowUsers} selectedUser={selectedUser} onUserSelect={handleUserSelect} />
 
       <div className="flex justify-center">
         <ChatPerson selectedUser={selectedUser} onUserSelect={handleUserSelect} bottomUsers={bottomUsers} chattedUsers={chattedUsers} />
+
         <ChatWindow selectedUser={selectedUser} messages={messages} inputValue={inputValue} onInputChange={handleInputChange} onKeyDown={handleKeyDown} onSend={handleSend} />
       </div>
     </div>
   );
-}
+};
+
+export default ChatPage;
