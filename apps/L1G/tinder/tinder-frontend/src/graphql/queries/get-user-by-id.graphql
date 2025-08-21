@@ -1,0 +1,14 @@
+query GetUser($id: ID!) {
+  getUser(_id: $id) {
+    bio
+    dateOfBirth
+    email
+    schoolWork
+    profession
+    name
+    images
+    id
+    genderPreferences
+    gender
+  }
+}

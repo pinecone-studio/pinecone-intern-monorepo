@@ -13,28 +13,56 @@ import { NameEmailFields } from './NameEmailFields';
 import { BirthDateField } from './BirthDateField';
 import { Separator } from '@/components/ui/separator';
 import { ProfessionSchoolFields } from './ProfessionSchoolFields';
+import { useGetAllInterestsQuery } from '@/generated';
 
-export const MyProfileForm = () => {
+interface MyProfileFormProps {
+  user?: {
+    name?: string;
+    email?: string;
+    birthDate?: string; 
+    genderPreferences?: string;
+    bio?: string;
+    interests?: string[];
+    profession?: string;
+    schoolWork?: string;
+  };
+}
+
+export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user }) => {
   const form = useForm<z.infer<typeof profileFormSchema>>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
-      name: 'John Doe',
-      email: 'johndoe@example.com',
-      birthDate: new Date('2000-01-01'),
-      genderPreference: 'Female',
-      bio: 'my bio',
-      interests: ['art', 'music', 'sports'],
-      profession: 'Software Engineer',
-      school: 'Facebook',
+      name: user?.name ?? '',
+      email: user?.email ?? '',
+      birthDate: user?.birthDate ? new Date(user.birthDate) : new Date('2000-01-01'),
+      genderPreference: user?.genderPreferences ?? 'Female',
+      bio: user?.bio ?? '',
+      interests: user?.interests ?? [],
+      profession: user?.profession ?? '',
+      school: user?.schoolWork ?? '',
     },
   });
 
-  const onSubmit = async (_data: z.infer<typeof profileFormSchema>) => {
-    console.log('working');
+  const onSubmit = async (data: z.infer<typeof profileFormSchema>) => {
+    console.log('Updated profile data:', data);
   };
 
-  return (
-    <div className="flex flex-col w-full max-w-[672px]">
+const { data, loading, error } = useGetAllInterestsQuery();
+  if (loading) {
+    return <p className="text-center text-gray-500">Loading interests...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center text-red-500">Error: {error.message}</p>;
+  }
+
+ const interestOptions =
+    data?.getAllInterests.map((i) => ({
+      value: i._id,
+      label: i.interestName,
+    })) || [];
+
+  return ( <div className="flex flex-col w-full max-w-[672px]">
       <div className="flex flex-col gap-[1px] justify-start items-start ">
         <p className="text-[18px] font-sans font-[500] text-[#09090B]">Personal Information</p>
         <p className="text-[14px] font-sans font-[400] text-[#71717A]">This is how others will see you on the site.</p>
@@ -42,9 +70,9 @@ export const MyProfileForm = () => {
 
       <div className="py-6">
         <Separator />
-      </div>
+      </div>    
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-6">
             <NameEmailFields control={form.control} />
             <BirthDateField control={form.control} />
@@ -100,24 +128,7 @@ export const MyProfileForm = () => {
                 <FormItem>
                   <FormLabel className="flex">Interests</FormLabel>
                   <FormControl>
-                    <MultiSelect
-                      data-testid="multi-select-trigger"
-                      options={[
-                        { value: 'music', label: 'Music' },
-                        { value: 'sports', label: 'Sports' },
-                        { value: 'reading', label: 'Reading' },
-                        { value: 'coding', label: 'Coding' },
-                        { value: 'travel', label: 'Travel' },
-                        { value: 'gaming', label: 'Gaming' },
-                        { value: 'cooking', label: 'Cooking' },
-                        { value: 'art', label: 'Art' },
-                        { value: 'photography', label: 'Photography' },
-                        { value: 'fitness', label: 'Fitness' },
-                      ]}
-                      value={field.value}
-                      onChange={field.onChange}
-                      maxCount={10}
-                    />
+                  <MultiSelect options={interestOptions} value={field.value} maxCount={10} />
                   </FormControl>
                   <FormDescription>You can select up to a maximum of 10 interests.</FormDescription>
                   <FormMessage />
