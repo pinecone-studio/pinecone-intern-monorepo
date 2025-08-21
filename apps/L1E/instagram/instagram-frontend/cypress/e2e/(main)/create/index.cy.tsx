@@ -13,7 +13,7 @@ describe("Create Post Full Flow", () => {
 
 cy.contains("Share").click({ force: true });
 
-cy.on("window:alert", (txt) => {
+cy.on("window:alert", (txt) => {  
 expect(txt).to.include("Post created!");
 });
   });

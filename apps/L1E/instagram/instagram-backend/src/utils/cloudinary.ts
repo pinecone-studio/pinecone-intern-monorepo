@@ -6,5 +6,4 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 /* eslint-disable camelcase */
-
 export default cloudinary;
