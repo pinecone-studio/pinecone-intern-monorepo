@@ -6,13 +6,13 @@ import DatePickerConcert from '@/components/DatePickerConcert';
 // Mock react-datepicker to avoid complex UI interactions in unit tests
 jest.mock('react-datepicker', () => ({
   __esModule: true,
-  default: ({ placeholderText, className, onChange }: any) => (
+  default: ({ placeholderText, className, onChange }: { placeholderText: string; className: string; onChange: (_date: Date) => void }) => (
     <input
       data-testid="date-input"
       type="text"
       placeholder={placeholderText}
       className={className}
-      onChange={() => onChange(new Date('2024-01-01'))}
+      onChange={() => onChange(new Date('2024-01-01'))} // <-- you don't use 'date' param here
     />
   ),
 }));

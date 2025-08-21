@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { DatePickerAdmin } from './DatePickerAdmin';
 import { TicketAddDialog } from './TicketAddDialog';
 
-type TicketTabProps = {
+export type TicketTabProps = {
   activeTab: 'ticket' | 'cancelRequest';
 };
 
