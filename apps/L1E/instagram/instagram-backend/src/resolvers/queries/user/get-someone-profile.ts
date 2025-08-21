@@ -9,7 +9,7 @@ export const getSomeoneProfile = async (_: unknown, args: GetUserArgs) => {
   try {
     const user = await User.findOne({ userName: userName });
     if (!user) {
-      throw new Error('User not found');
+      throw new Error('Profile not found');
     }
     return user;
   } catch (error) {
@@ -17,6 +17,6 @@ export const getSomeoneProfile = async (_: unknown, args: GetUserArgs) => {
     if (error instanceof Error) {
       throw error;
     }
-    throw new Error('Failed to get user');
+    throw new Error('Failed to get profile');
   }
 };
