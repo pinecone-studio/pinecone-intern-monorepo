@@ -1,7 +1,7 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -13,10 +13,10 @@ import { NameEmailFields } from './NameEmailFields';
 import { BirthDateField } from './BirthDateField';
 import { Separator } from '@/components/ui/separator';
 import { ProfessionSchoolFields } from './ProfessionSchoolFields';
+import { useGetAllInterestsQuery } from '@/generated';
 
 export const MyProfileForm = () => {
   const form = useForm<z.infer<typeof profileFormSchema>>({
-    resolver: zodResolver(profileFormSchema),
     defaultValues: {
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -28,6 +28,13 @@ export const MyProfileForm = () => {
       school: 'Facebook',
     },
   });
+
+  const { data } = useGetAllInterestsQuery();
+  const interestOptions =
+    data?.getAllInterests.map((i) => ({
+      value: i._id,
+      label: i.interestName,
+    })) || [];
 
   const onSubmit = async (_data: z.infer<typeof profileFormSchema>) => {
     console.log('working');
@@ -100,24 +107,7 @@ export const MyProfileForm = () => {
                 <FormItem>
                   <FormLabel className="flex">Interests</FormLabel>
                   <FormControl>
-                    <MultiSelect
-                      data-testid="multi-select-trigger"
-                      options={[
-                        { value: 'music', label: 'Music' },
-                        { value: 'sports', label: 'Sports' },
-                        { value: 'reading', label: 'Reading' },
-                        { value: 'coding', label: 'Coding' },
-                        { value: 'travel', label: 'Travel' },
-                        { value: 'gaming', label: 'Gaming' },
-                        { value: 'cooking', label: 'Cooking' },
-                        { value: 'art', label: 'Art' },
-                        { value: 'photography', label: 'Photography' },
-                        { value: 'fitness', label: 'Fitness' },
-                      ]}
-                      value={field.value}
-                      onChange={field.onChange}
-                      maxCount={10}
-                    />
+                    <MultiSelect onValueChange={(val) => field.onChange(val)} options={interestOptions} value={field.value} maxCount={10} />
                   </FormControl>
                   <FormDescription>You can select up to a maximum of 10 interests.</FormDescription>
                   <FormMessage />

@@ -8,7 +8,7 @@ import { UserData } from '@/app/(auth)/signup/page';
 type GenderSelectProps = {
   onSuccess: () => void;
   onBack?: () => void;
-  updateUserData: (newData: Partial<UserData>) => void;
+  updateUserData: (_: Partial<UserData>) => void;
 };
 
 export const GenderSelect = ({ onSuccess, updateUserData }: GenderSelectProps) => {

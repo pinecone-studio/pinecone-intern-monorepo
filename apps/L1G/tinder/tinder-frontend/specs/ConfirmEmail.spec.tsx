@@ -1,19 +1,23 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { ConfirmEmail } from '@/components/ConfirmEmail';
+import '@testing-library/jest-dom';
+import { OtpType } from '@/generated';
+
+const mockUpdateUserData = jest.fn();
 
 jest.mock('@/generated', () => ({
   useVerifyOtpMutation: () => [jest.fn(() => Promise.resolve({ data: { verifyOtp: { otpId: '1234' } } })), { loading: false, error: undefined }],
   useRequestSignupMutation: () => [jest.fn(() => Promise.resolve()), { loading: false, error: undefined }],
-  OtpType: { Forgot: 'Forgot' },
+  OtpType: { Create: 'Create', Forgot: 'Forgot' },
 }));
 
-jest.mock('../src/components/ResetPassword', () => ({
-  ResetPassword: jest.fn(({ otpId }) => <div data-testid="reset-password">ResetPassword otpId: {otpId}</div>),
+jest.mock('@/components/ResetPassword', () => ({
+  ResetPassword: jest.fn(({ otpId }: any) => <div data-testid="reset-password">ResetPassword otpId: {otpId}</div>),
 }));
 
-jest.mock('../src/components/OtpForm', () => ({
-  OtpForm: jest.fn(({ onSubmit, timeLeft, handleResend, message }) => (
+jest.mock('@/components/OtpForm', () => ({
+  OtpForm: jest.fn(({ onSubmit, timeLeft, handleResend, message }: any) => (
     <div data-testid="otp-form">
       <button onClick={() => onSubmit({ otp: '1234' })}>Submit OTP</button>
       <button onClick={handleResend}>Resend OTP</button>
@@ -39,14 +43,14 @@ describe('ConfirmEmail', () => {
   });
 
   it('renders initial text and components', () => {
-    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" />);
+    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" updateUserData={mockUpdateUserData} otpType={OtpType.Forgot} />);
     expect(screen.getByText('Confirm email'));
     expect(screen.getByText(/To continue, enter the secure code we sent to test@example.com/i));
     expect(screen.getByTestId('otp-form'));
   });
 
   it('calls verifyOtp on OTP submit and renders ResetPassword on success', async () => {
-    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" />);
+    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" updateUserData={mockUpdateUserData} otpType={OtpType.Forgot} />);
 
     fireEvent.click(screen.getByText('Submit OTP'));
 
@@ -57,7 +61,7 @@ describe('ConfirmEmail', () => {
   });
 
   it('calls requestSignup on resend and shows success message', async () => {
-    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" />);
+    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" updateUserData={mockUpdateUserData} otpType={OtpType.Forgot} />);
 
     fireEvent.click(screen.getByText('Resend OTP'));
 
@@ -67,12 +71,12 @@ describe('ConfirmEmail', () => {
   });
 
   it('does not render ResetPassword if otpId is not set', () => {
-    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" />);
+    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" updateUserData={mockUpdateUserData} otpType={OtpType.Forgot} />);
     expect(screen.queryByTestId('reset-password'));
   });
 
   it('handles missing email gracefully', async () => {
-    render(<ConfirmEmail onSuccess={mockOnSuccess} />);
+    render(<ConfirmEmail onSuccess={mockOnSuccess} updateUserData={mockUpdateUserData} otpType={OtpType.Forgot} />);
 
     fireEvent.click(screen.getByText('Submit OTP'));
     fireEvent.click(screen.getByText('Resend OTP'));
@@ -92,7 +96,7 @@ describe('ConfirmEmail', () => {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     jest.spyOn(require('@/generated'), 'useRequestSignupMutation').mockReturnValue([jest.fn(), { loading: false, error: null }]);
 
-    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" />);
+    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" updateUserData={mockUpdateUserData} otpType={OtpType.Forgot} />);
 
     fireEvent.click(screen.getByText('Submit OTP'));
 
@@ -108,7 +112,7 @@ describe('ConfirmEmail', () => {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     jest.spyOn(require('@/generated'), 'useRequestSignupMutation').mockReturnValue([jest.fn(), { loading: false, error: null }]);
 
-    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" />);
+    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" updateUserData={mockUpdateUserData} otpType={OtpType.Forgot} />);
 
     fireEvent.click(screen.getByText('Submit OTP'));
 
@@ -124,7 +128,7 @@ describe('ConfirmEmail', () => {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     jest.spyOn(require('@/generated'), 'useVerifyOtpMutation').mockReturnValue([jest.fn(), { loading: false, error: null }]);
 
-    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" />);
+    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" updateUserData={mockUpdateUserData} otpType={OtpType.Forgot} />);
 
     fireEvent.click(screen.getByText('Resend OTP'));
 
@@ -133,7 +137,7 @@ describe('ConfirmEmail', () => {
     });
   });
   test('stops countdown at zero', () => {
-    render(<ConfirmEmail onSuccess={jest.fn()} email="test@example.com" />);
+    render(<ConfirmEmail onSuccess={jest.fn()} email="test@example.com" updateUserData={mockUpdateUserData} otpType={OtpType.Forgot} />);
 
     expect(screen.getByText(/Send again in 60s/));
 
