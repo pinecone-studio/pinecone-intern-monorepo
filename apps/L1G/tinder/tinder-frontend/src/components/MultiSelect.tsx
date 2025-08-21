@@ -1,10 +1,16 @@
+/* eslint-disable max-lines */
+
+'use client';
+
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { ChevronDown } from 'lucide-react';
+
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '@/components/ui/command';
+
 import { BadgeList } from './BadgeList';
 import OptionList from './OptionList';
 
@@ -22,20 +28,21 @@ export const multiSelectVariants = cva('m-1 transition ease-in-out delay-150 hov
   },
 });
 
+interface Option {
+  label: string;
+  value: string;
+  icon?: React.ComponentType<{ className?: string }>;
+}
+
 interface MultiSelectProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof multiSelectVariants> {
-  options: {
-    label: string;
-    value: string;
-    icon?: React.ComponentType<{ className?: string }>;
-  }[];
-  defaultValue?: string[];
+  options: Option[];
+  value: string[];
+  onValueChange?: (_value: string[]) => void;
   placeholder?: string;
   maxCount?: number;
   modalPopover?: boolean;
   asChild?: boolean;
   className?: string;
-  value: string[];
-  onValueChange?: (value: string[]) => void;
 }
 
 export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
@@ -46,22 +53,26 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
       if (event.key === 'Enter') {
         setIsPopoverOpen(true);
       } else if (event.key === 'Backspace' && !event.currentTarget.value) {
-        const newSelectedValues = value.slice(0, -1);
-        onValueChange?.(newSelectedValues);
+        onValueChange?.(value.slice(0, -1));
       }
     };
 
     const toggleOption = (option: string) => {
-      const newSelectedValues = value.includes(option) ? value.filter((v) => v !== option) : [...value, option];
-      if (maxCount && newSelectedValues.length > maxCount) return;
-      onValueChange?.(newSelectedValues);
+      const newValues = value.includes(option) ? value.filter((v) => v !== option) : [...value, option];
+
+      if (maxCount && maxCount > 0 && newValues.length <= maxCount) {
+        onValueChange?.(newValues);
+      }
     };
 
     const handleClear = () => onValueChange?.([]);
 
     const clearExtraOptions = () => onValueChange?.(value.slice(0, maxCount));
 
-    const toggleAll = () => onValueChange?.(value.length === options.length ? [] : options.map((o) => o.value));
+    const toggleAll = () => {
+      const allSelected = value.length === options.length;
+      onValueChange?.(allSelected ? [] : options.map((o) => o.value));
+    };
 
     return (
       <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen} modal={modalPopover}>
@@ -71,7 +82,7 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
             ref={ref}
             {...props}
             onClick={() => setIsPopoverOpen((prev) => !prev)}
-            className="flex w-full p-1 rounded-md border min-h-10 h-auto items-center justify-between bg-inherit hover:bg-inherit [&_svg]:pointer-events-auto"
+            className={`flex w-full p-1 rounded-md border min-h-10 h-auto items-center justify-between bg-inherit hover:bg-inherit [&_svg]:pointer-events-auto ${className}`}
           >
             {value.length > 0 ? (
               <BadgeList selectedValues={value} options={options} maxCount={maxCount} clearExtraOptions={clearExtraOptions} handleClear={handleClear} />
@@ -83,37 +94,47 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
             )}
           </Button>
         </PopoverTrigger>
+
         <PopoverContent className="w-auto p-0" align="start" onEscapeKeyDown={() => setIsPopoverOpen(false)}>
           <Command>
             <CommandInput placeholder="Search..." onKeyDown={handleInputKeyDown} />
             <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
-              <OptionList options={options} selectedValues={value} toggleOption={toggleOption} toggleAll={toggleAll} />
-              <CommandSeparator />
-              <CommandGroup>
-                <div className="flex items-center justify-between">
-                  {process.env.NODE_ENV === 'test' && (
-                    <CommandItem className="flex-1 justify-center max-w-full">
-                      <button type="button" onClick={clearExtraOptions} data-testid="trigger-clear-extra" className="w-full text-center cursor-pointer">
-                        Trigger Clear Extra (Test Only)
-                      </button>
-                    </CommandItem>
-                  )}
-                  {value.length > 0 && (
-                    <>
-                      <CommandItem className="flex-1 justify-center max-w-full">
-                        <button type="button" onClick={handleClear} data-testid="clear-extra-button" aria-label="Clear all" className="w-full text-center cursor-pointer">
-                          Clear
-                        </button>
+              {options.length === 0 ? (
+                <CommandEmpty>No results found.</CommandEmpty>
+              ) : (
+                <>
+                  <OptionList options={options} selectedValues={value} toggleOption={toggleOption} toggleAll={toggleAll} />
+
+                  <CommandSeparator />
+
+                  <CommandGroup>
+                    <div className="flex items-center justify-between">
+                      {process.env.NODE_ENV === 'test' && (
+                        <CommandItem className="flex-1 justify-center max-w-full">
+                          <button type="button" onClick={clearExtraOptions} data-testid="trigger-clear-extra" className="w-full text-center cursor-pointer">
+                            Trigger Clear Extra (Test Only)
+                          </button>
+                        </CommandItem>
+                      )}
+
+                      {value.length > 0 && (
+                        <>
+                          <CommandItem className="flex-1 justify-center max-w-full">
+                            <button type="button" onClick={handleClear} data-testid="clear-extra-button" aria-label="Clear all" className="w-full text-center cursor-pointer">
+                              Clear
+                            </button>
+                          </CommandItem>
+                          <Separator orientation="vertical" className="flex min-h-6 h-full" />
+                        </>
+                      )}
+
+                      <CommandItem onSelect={() => setIsPopoverOpen(false)} className="flex-1 justify-center cursor-pointer max-w-full">
+                        Close
                       </CommandItem>
-                      <Separator orientation="vertical" className="flex min-h-6 h-full" />
-                    </>
-                  )}
-                  <CommandItem onSelect={() => setIsPopoverOpen(false)} className="flex-1 justify-center cursor-pointer max-w-full">
-                    Close
-                  </CommandItem>
-                </div>
-              </CommandGroup>
+                    </div>
+                  </CommandGroup>
+                </>
+              )}
             </CommandList>
           </Command>
         </PopoverContent>

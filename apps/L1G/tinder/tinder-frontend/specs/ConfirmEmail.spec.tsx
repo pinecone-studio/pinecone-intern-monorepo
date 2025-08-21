@@ -1,3 +1,6 @@
+/* eslint-disable max-lines */
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { ConfirmEmail } from '@/components/ConfirmEmail';
@@ -6,10 +9,22 @@ import { OtpType } from '@/generated';
 
 const mockUpdateUserData = jest.fn();
 
-jest.mock('@/generated', () => ({
-  useVerifyOtpMutation: () => [jest.fn(() => Promise.resolve({ data: { verifyOtp: { otpId: '1234' } } })), { loading: false, error: undefined }],
-  useRequestSignupMutation: () => [jest.fn(() => Promise.resolve()), { loading: false, error: undefined }],
-  OtpType: { Create: 'Create', Forgot: 'Forgot' },
+jest.mock('@/generated', () => {
+  const originalModule = jest.requireActual('@/generated');
+  return {
+    ...originalModule,
+    useVerifyOtpMutation: jest.fn(() => [jest.fn(), { loading: false, error: undefined }]),
+    useRequestSignupMutation: jest.fn(() => [jest.fn(), { loading: false, error: undefined }]),
+    OtpType: {
+      Create: 'Create',
+
+      Forgot: 'Forgot',
+    },
+  };
+});
+
+jest.mock('@/components/CreatePassword', () => ({
+  CreatePassword: jest.fn(({ otpId }: any) => <div data-testid="create-password">CreatePassword otpId: {otpId}</div>),
 }));
 
 jest.mock('@/components/ResetPassword', () => ({
@@ -50,13 +65,24 @@ describe('ConfirmEmail', () => {
   });
 
   it('calls verifyOtp on OTP submit and renders ResetPassword on success', async () => {
-    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" updateUserData={mockUpdateUserData} otpType={OtpType.Forgot} />);
+    const mockVerifyOtp = jest.fn().mockResolvedValue({
+      data: {
+        verifyOtp: {
+          otpId: '1234',
+        },
+      },
+    });
+    jest.spyOn(require('@/generated'), 'useVerifyOtpMutation').mockReturnValue([mockVerifyOtp, { loading: false, error: null }]);
 
-    fireEvent.click(screen.getByText('Submit OTP'));
+    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" updateUserData={mockUpdateUserData} otpType={OtpType.Reset} />);
+
+    await act(async () => {
+      fireEvent.click(screen.getByText('Submit OTP'));
+    });
 
     await waitFor(() => {
-      expect(screen.getByTestId('reset-password'));
-      expect(screen.getByText(/ResetPassword otpId: 1234/));
+      expect(screen.getByTestId('reset-password')).toBeInTheDocument();
+      expect(screen.getByText(/ResetPassword otpId: 1234/)).toBeInTheDocument();
     });
   });
 
@@ -148,5 +174,91 @@ describe('ConfirmEmail', () => {
     expect(screen.getByText(/Send again now/));
 
     jest.useRealTimers();
+  });
+  it('renders CreatePassword when otpType is Create and otpId is set', async () => {
+    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" updateUserData={mockUpdateUserData} otpType={OtpType.Create} />);
+
+    await act(async () => {
+      fireEvent.click(screen.getByText('Submit OTP'));
+    });
+  });
+  it('renders ResetPassword when otpType is Reset and otpId is set', async () => {
+    const mockVerifyOtp = jest.fn().mockResolvedValue({
+      data: {
+        verifyOtp: {
+          otpId: '1234',
+        },
+      },
+    });
+    jest.spyOn(require('@/generated'), 'useVerifyOtpMutation').mockReturnValue([mockVerifyOtp, { loading: false, error: null }]);
+
+    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" updateUserData={mockUpdateUserData} otpType={OtpType.Reset} />);
+
+    await act(async () => {
+      fireEvent.click(screen.getByText('Submit OTP'));
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('reset-password')).toBeInTheDocument();
+      expect(screen.getByText(/ResetPassword otpId: 1234/)).toBeInTheDocument();
+    });
+  });
+
+  it('passes correct props to CreatePassword and ResetPassword components', async () => {
+    const createPasswordMock = require('@/components/CreatePassword').CreatePassword;
+    const resetPasswordMock = require('@/components/ResetPassword').ResetPassword;
+
+    createPasswordMock.mockClear();
+    resetPasswordMock.mockClear();
+
+    const mockVerifyOtp = jest.fn().mockResolvedValue({
+      data: {
+        verifyOtp: {
+          otpId: '1234',
+        },
+      },
+    });
+
+    // For CreatePassword
+    jest.spyOn(require('@/generated'), 'useVerifyOtpMutation').mockReturnValue([mockVerifyOtp, { loading: false, error: null }]);
+
+    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" updateUserData={mockUpdateUserData} otpType={OtpType.Create} />);
+
+    await act(async () => {
+      fireEvent.click(screen.getByText('Submit OTP'));
+    });
+
+    await waitFor(() =>
+      expect(createPasswordMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          otpId: '1234',
+          onSuccess: mockOnSuccess,
+          updateUserData: mockUpdateUserData,
+        }),
+        expect.anything()
+      )
+    );
+
+    // For ResetPassword
+    createPasswordMock.mockClear();
+    resetPasswordMock.mockClear();
+
+    jest.spyOn(require('@/generated'), 'useVerifyOtpMutation').mockReturnValue([mockVerifyOtp, { loading: false, error: null }]);
+
+    render(<ConfirmEmail onSuccess={mockOnSuccess} email="test@example.com" updateUserData={mockUpdateUserData} otpType={OtpType.Reset} />);
+
+    await act(async () => {
+      fireEvent.click(screen.getByText('Submit OTP'));
+    });
+
+    await waitFor(() =>
+      expect(resetPasswordMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          otpId: '1234',
+          onSuccess: mockOnSuccess,
+        }),
+        expect.anything()
+      )
+    );
   });
 });

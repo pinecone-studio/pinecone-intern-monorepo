@@ -1,10 +1,6 @@
 'use client';
 import { HomeFooter, HomeHeader, HomeMain, HomePageBackground } from '@/components/HomePage';
-<<<<<<< HEAD
 import { useGetusersQuery } from '@/generated';
-=======
-import { useGetusersQuery } from '../generated';
->>>>>>> 2cb7e980b (huuchin branchnas ymnuda oruulj irsn)
 
 export interface UserProfile {
   id: string;

@@ -19,6 +19,7 @@ const formSchema = z
     }),
   })
   .refine((data) => data.password === data.repeatPassword, {
+    path: ['repeatPassword'],
     message: "Passwords don't match",
   });
 
@@ -59,9 +60,9 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
       } else {
         setServerError(error?.message || 'Something went wrong.');
       }
-    } catch (e) {
+    } catch (e: any) {
       console.error('Signup failed:', e);
-      setServerError('Something went wrong.');
+      setServerError(e?.message || 'Something went wrong.');
     }
   }
 
@@ -106,6 +107,8 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
                 )}
               />
             </div>
+
+            {form.formState.errors.root?.message && <p className="text-red-500 mt-2">{form.formState.errors.root.message}</p>}
 
             <Button type="submit" className="bg-[#E11D48] bg-opacity-90 w-[350px] rounded-full">
               {loading ? 'Please wait...' : 'Continue'}
