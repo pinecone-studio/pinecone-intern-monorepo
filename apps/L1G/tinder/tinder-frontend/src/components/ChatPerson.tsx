@@ -39,21 +39,10 @@ const ChatPerson = () => {
   return (
     <div className="w-full h-[900px] flex justify-center items-start">
       <div className="w-full max-w-[1280px] flex h-full">
-        <div className="w-[300px] border-r border-gray-300 flex flex-col">
+        <div data-testid="sidebar" className="w-full lg:w-[300px] border-r border-gray-300 flex flex-col">
           {matches.map((user, idx) => (
-            <div
-              key={user.id}
-              className={`flex items-center gap-3 p-3 cursor-pointer hover:bg-gray-100 ${
-                idx !== matches.length - 1 ? 'border-b border-gray-300' : ''
-              }`}
-            >
-              <Image 
-                src={user.avatar} 
-                alt={user.name} 
-                width={40} 
-                height={40} 
-                className="rounded-full object-cover" 
-              />
+            <div key={user.id} className={`flex items-center gap-3 p-3 cursor-pointer hover:bg-gray-100 ${idx !== matches.length - 1 ? 'border-b border-gray-300' : ''}`}>
+              <Image src={user.avatar} alt={user.name} width={40} height={40} className="rounded-full object-cover" />
               <div>
                 <p className="text-[14px] font-medium text-gray-900">
                   {user.name}, {user.age}

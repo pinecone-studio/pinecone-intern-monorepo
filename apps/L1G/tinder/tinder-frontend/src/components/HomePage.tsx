@@ -69,7 +69,7 @@ export const HomeMain = () => {
   const router = useRouter();
   return (
     <div className="flex flex-col justify-between items-center px-4 gap-4">
-      <p className="font-[700] text-[64px] py-2 px-4 text-[#FAFAFA] font-sans rounded-full">Swipe Right®</p>
+      <p className="font-[700] text-[36px] md:text-[64px] py-2 px-4 text-[#FAFAFA] font-sans rounded-full text-center">Swipe Right®</p>
       <Button className="flex h-[40px] justify-center items-center bg-[#E11D48] font-[700] text-[14px] py-2 px-4 text-[#FAFAFA] font-sans rounded-full" onClick={() => router.push('/signup')}>
         Create Account
       </Button>
