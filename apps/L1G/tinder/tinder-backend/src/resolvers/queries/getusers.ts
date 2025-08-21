@@ -5,6 +5,13 @@ interface IUserLean {
   _id: string | mongoose.Types.ObjectId;
   email: string;
   name: string;
+  gender?: string | null;
+  genderPreferences?: string | null;
+  dateOfBirth?: string | null;
+  bio?: string | null;
+  interests?: string[] | null;
+  profession?: string | null;
+  schoolWork?: string | null;
   images?: string[] | null;
   likedBy?: IUserLean[] | null;
   likedTo?: IUserLean[] | null;
@@ -15,6 +22,14 @@ export const mapSimpleUser = (user: IUserLean) => ({
   id: user._id.toString(),
   email: user.email,
   name: user.name,
+  dateOfBirth: user.dateOfBirth,
+    genderPreferences: user.genderPreferences,
+    gender: user.gender, 
+    bio:user.bio,
+    interests: user.interests,
+    profession: user.profession,
+    schoolWork: user.schoolWork,
+    images: user.images ?? [],
   likedBy: [],
   likedTo: [],
   matchIds: [],
@@ -33,12 +48,19 @@ const transformUser = (user: IUserLean) => ({
   id: user._id.toString(),
   email: user.email,
   name: user.name,
+    dateOfBirth: user.dateOfBirth,
+    genderPreferences: user.genderPreferences,
+    gender: user.gender, 
+    bio:user.bio,
+    interests: user.interests,
+    profession: user.profession,
+    schoolWork: user.schoolWork,
   images: user.images ?? [],
   matchIds: mapMatchedUsers(user.matchIds),
   likedBy: mapLikedByUsers(user.likedBy),
   likedTo: mapLikedToUsers(user.likedTo),
 });
-
+ 
 export const getusers = async () => {
   try {
     const users = await Usermodel.find()
