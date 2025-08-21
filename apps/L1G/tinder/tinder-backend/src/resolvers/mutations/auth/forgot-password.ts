@@ -40,25 +40,17 @@ async function validateUserAndHashPassword(email: string, newPassword: string) {
   return updatedUser;
 }
 
-export const forgotPassword: MutationResolvers['forgotPassword'] = async (_, { otpId, Newpassword }) => {
+export const forgotPassword: MutationResolvers['forgotPassword'] = async (_, { otpId, newPassword }) => {
   const otpRecord = await validateOtpRecord(otpId);
-  const updatedUser = await validateUserAndHashPassword(otpRecord.email, Newpassword);
+  const updatedUser = await validateUserAndHashPassword(otpRecord.email, newPassword);
 
-  otpRecord.registered = true;
-  await otpRecord.save();
+  await UserOtpModel.deleteOne({ _id: otpRecord._id });
+
+  const userObject = updatedUser.toObject();
+  userObject.id = updatedUser._id.toString();
 
   return {
-    id: updatedUser._id.toString(),
-    email: updatedUser.email,
-    name: updatedUser.name,
-    genderPreferences: updatedUser.genderPreferences,
-    dateOfBirth: updatedUser.dateOfBirth,
-    bio: updatedUser.bio,
-    interests: updatedUser.interests,
-    profession: updatedUser.profession,
-    schoolWork: updatedUser.schoolWork,
-    images: updatedUser.images,
-    likedBy: updatedUser.likedBy,
-    likedTo: updatedUser.likedTo,
+    message: 'Password updated successfully',
+    user: userObject,
   };
 };

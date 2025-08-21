@@ -50,3 +50,4 @@ const ChatPerson: React.FC<ChatPersonProps> = ({ selectedUser, onUserSelect, bot
 };
 
 export default ChatPerson;
+

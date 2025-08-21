@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { MultiSelect } from './MultiSelect';
+import { useGetAllInterestsQuery } from '../generated'; 
 
 type ProfileFormProps = {
   onSuccess: () => void;
@@ -31,11 +32,24 @@ const ProfileForm = ({ onSuccess, onBack }: ProfileFormProps) => {
       work: '',
     },
   });
+  const { data, loading, error } = useGetAllInterestsQuery();
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = (_values: z.infer<typeof formSchema>) => {
     onSuccess();
   };
+  if (loading) {
+    return <p className="text-center text-gray-500">Loading interests...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center text-red-500">Error: {error.message}</p>;
+  }
+
+  const interestOptions =
+    data?.getAllInterests.map((i) => ({
+      value: i._id,
+      label: i.interestName,
+    })) || [];
 
   return (
     <Form {...form}>
@@ -75,22 +89,7 @@ const ProfileForm = ({ onSuccess, onBack }: ProfileFormProps) => {
             <FormItem>
               <FormLabel>Interest</FormLabel>
               <FormControl>
-                <MultiSelect
-                  options={[
-                    { value: 'music', label: 'Music' },
-                    { value: 'sports', label: 'Sports' },
-                    { value: 'reading', label: 'Reading' },
-                    { value: 'coding', label: 'Coding' },
-                    { value: 'travel', label: 'Travel' },
-                    { value: 'gaming', label: 'Gaming' },
-                    { value: 'cooking', label: 'Cooking' },
-                    { value: 'art', label: 'Art' },
-                    { value: 'photography', label: 'Photography' },
-                    { value: 'fitness', label: 'Fitness' },
-                  ]}
-                  value={field.value}
-                  maxCount={10}
-                />
+                <MultiSelect options={interestOptions} value={field.value} maxCount={10} />
               </FormControl>
               <FormMessage />
             </FormItem>

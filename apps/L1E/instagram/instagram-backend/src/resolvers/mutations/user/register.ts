@@ -35,28 +35,38 @@ function validateRegisterInput(input: {
 
 export const register: MutationResolvers['register'] = async (_, { input }) => {
   try {
+    console.log("Register resolver called with input:", input);
     validateRegisterInput(input); // narrowing хийсэн тул дараа нь `as string` хэрэггүй
     const { email, password, userName, fullName } = input;
+    console.log("Validated input - email:", email, "userName:", userName, "fullName:", fullName);
 
     await checkEmailExists(email, "Sorry try another email!");
+    console.log("Email check passed");
+    
     const hashed = await hashPassword(password);
+    console.log("Password hashed successfully");
 
     const user = await User.create({
-      data: {
-        email,
-        password: hashed,
-        userName,
-        fullName,
-      },
+      email,
+      password: hashed,
+      userName,
+      fullName,
     });
+    console.log("User created with ID:", user._id);
 
     const token = jwt.sign({ userId: user._id }, getJwtSecret());
+    console.log("JWT token created");
 
-    return {
+    const result = {
+      success: true,
+      message: "Registration successful",
       user,
       token,
     };
+    console.log("Returning result:", result);
+    return result;
   } catch (error) {
+    console.error("Register resolver error:", error);
     if (error instanceof Error) throw error;
     throw new Error("Registration failed");
   }

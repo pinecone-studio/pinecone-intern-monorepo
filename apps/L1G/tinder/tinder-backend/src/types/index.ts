@@ -40,3 +40,21 @@ export type disLikeArgs = {
   dislikedByUser: string;
   dislikeReceiver: string;
 };
+export interface LeanUser {
+  _id: mongoose.Types.ObjectId;
+  name: string;
+  images?: string[];
+}
+export interface LeanMatch {
+  _id: mongoose.Types.ObjectId;
+  users: mongoose.Types.ObjectId[];
+  unmatched?: boolean;
+}
+export type LeanChatMessage = {
+  _id: mongoose.Types.ObjectId;
+  senderId: mongoose.Types.ObjectId;
+  receiverId: mongoose.Types.ObjectId;
+  content: string;
+  createdAt: Date;
+  seen?: boolean;
+};

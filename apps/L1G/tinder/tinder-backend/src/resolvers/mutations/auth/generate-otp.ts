@@ -22,7 +22,6 @@ async function validateUserForOtp(email: string, otpType: string) {
 
   validate();
 }
-
 export const requestSignup: MutationResolvers['requestSignup'] = async (_, { email, otpType }) => {
   await validateUserForOtp(email, otpType);
 
@@ -33,5 +32,8 @@ export const requestSignup: MutationResolvers['requestSignup'] = async (_, { ema
 
   await sendOtpEmail(email, otp);
 
-  return { input: email, output: 'OTP sent to your email' };
+  return {
+    input: email,
+    output: 'OTP sent to your email',
+  };
 };

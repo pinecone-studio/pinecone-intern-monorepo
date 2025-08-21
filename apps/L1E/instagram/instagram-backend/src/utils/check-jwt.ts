@@ -1,8 +1,8 @@
-
-
 export function getJwtSecret(): string {
-    if (!process.env.JWT_SECRET) {
-      throw new Error("JWT_SECRET not configured");
+    const devFallback = process.env.NODE_ENV !== 'production' ? 'dev-secret' : undefined;
+    const secret = process.env.JWT_SECRET ?? devFallback;
+    if (!secret) {
+        throw new Error("JWT_SECRET not configured");
     }
-    return process.env.JWT_SECRET;
-  }
+    return secret;
+}

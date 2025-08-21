@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 
 export const Header = () => {
   return (
-    <div className="w-full h-[64px] py-4 flex justify-center items-center border border-b-[#E4E4E7] ">
+    <div className="w-full h-[64px] py-4 flex justify-center items-center border border-b-[#E4E4E7] px-4">
       <div className="w-[1280px] max-w-[1280px] flex justify-between items-center">
         <TinderLogo />
 

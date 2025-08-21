@@ -1,7 +1,10 @@
-query GetUsers {
+query Getusers {
   getusers {
     id
     email
     genderPreferences
+
+
+  
   }
 }

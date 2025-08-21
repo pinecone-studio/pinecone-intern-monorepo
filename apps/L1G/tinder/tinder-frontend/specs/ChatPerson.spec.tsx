@@ -139,3 +139,4 @@ describe('ChatPerson', () => {
     expect(onUserSelect).toHaveBeenNthCalledWith(2, mockUsers[1]);
   });
 });
+
