@@ -5,6 +5,7 @@ export const UsertypeDefs = gql`
     id: ID!
     email: String!
     genderPreferences: String
+    gender: String
     dateOfBirth: String
     name: String
     bio: String
@@ -81,6 +82,7 @@ getChatWithUser(userId: ID!, participantId: ID!): MatchChatMessages!
       email: String
       dateOfBirth: String
       genderPreferences: String
+      gender: String
       bio: String
       interests: [String]
       profession: String
