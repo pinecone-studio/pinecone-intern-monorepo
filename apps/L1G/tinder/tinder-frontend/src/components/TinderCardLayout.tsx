@@ -22,7 +22,7 @@ export const TinderCardLayout = ({
   handleLike: () => void;
   handleDislike: () => void;
 }) => (
-  <>
+  <div className="flex flex-col gap-6">
     <CardWithImageAndInfo
       profile={profile}
       images={images}
@@ -33,5 +33,5 @@ export const TinderCardLayout = ({
       prevImage={prevImage}
     />
     <LikeDislikeButtons onLike={handleLike} onDislike={handleDislike} />
-  </>
+  </div>
 );
