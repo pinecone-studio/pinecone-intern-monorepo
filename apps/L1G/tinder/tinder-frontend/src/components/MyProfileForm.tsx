@@ -19,7 +19,8 @@ interface MyProfileFormProps {
   user?: {
     name?: string;
     email?: string;
-    birthDate?: string; 
+    gender?: string;
+    birthDate?: string;
     genderPreferences?: string;
     bio?: string;
     interests?: string[];
@@ -34,6 +35,7 @@ export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user }) => {
     defaultValues: {
       name: user?.name ?? '',
       email: user?.email ?? '',
+      gender: user?.gender ?? '',
       birthDate: user?.birthDate ? new Date(user.birthDate) : new Date('2000-01-01'),
       genderPreference: user?.genderPreferences ?? 'Female',
       bio: user?.bio ?? '',
@@ -47,7 +49,7 @@ export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user }) => {
     console.log('Updated profile data:', data);
   };
 
-const { data, loading, error } = useGetAllInterestsQuery();
+  const { data, loading, error } = useGetAllInterestsQuery();
   if (loading) {
     return <p className="text-center text-gray-500">Loading interests...</p>;
   }
@@ -56,13 +58,14 @@ const { data, loading, error } = useGetAllInterestsQuery();
     return <p className="text-center text-red-500">Error: {error.message}</p>;
   }
 
- const interestOptions =
+  const interestOptions =
     data?.getAllInterests.map((i) => ({
       value: i._id,
       label: i.interestName,
     })) || [];
 
-  return ( <div className="flex flex-col w-full max-w-[672px]">
+  return (
+    <div className="flex flex-col w-full max-w-[672px]">
       <div className="flex flex-col gap-[1px] justify-start items-start ">
         <p className="text-[18px] font-sans font-[500] text-[#09090B]">Personal Information</p>
         <p className="text-[14px] font-sans font-[400] text-[#71717A]">This is how others will see you on the site.</p>
@@ -70,44 +73,13 @@ const { data, loading, error } = useGetAllInterestsQuery();
 
       <div className="py-6">
         <Separator />
-      </div>    
+      </div>
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-6">
             <NameEmailFields control={form.control} />
             <BirthDateField control={form.control} />
-            <FormField
-              control={form.control}
-              name="genderPreference"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="flex" htmlFor="genderPreference">
-                    Gender Preference
-                  </FormLabel>
-                  <FormControl>
-                    <Select {...field} onValueChange={field.onChange} defaultValue={field.value}>
-                      <SelectTrigger id="genderPreference" className="w-[180px]">
-                        <SelectValue placeholder="" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem data-testid="option-male" value="Male">
-                            Male
-                          </SelectItem>
-                          <SelectItem data-testid="option-female" value="Female">
-                            Female
-                          </SelectItem>
-                          <SelectItem data-testid="option-both" value="Both">
-                            Both
-                          </SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
             <FormField
               control={form.control}
               name="bio"
@@ -128,7 +100,7 @@ const { data, loading, error } = useGetAllInterestsQuery();
                 <FormItem>
                   <FormLabel className="flex">Interests</FormLabel>
                   <FormControl>
-                  <MultiSelect options={interestOptions} value={field.value} maxCount={10} />
+                    <MultiSelect options={interestOptions} value={field.value} maxCount={10} />
                   </FormControl>
                   <FormDescription>You can select up to a maximum of 10 interests.</FormDescription>
                   <FormMessage />

@@ -3,6 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Control } from 'react-hook-form';
 import { profileFormSchema } from './schema/ProfileFormSchema';
 import z from 'zod';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 type NameEmailFieldsProps = {
   control: Control<z.infer<typeof profileFormSchema>>;
@@ -29,12 +30,29 @@ export const NameEmailFields = ({ control }: NameEmailFieldsProps) => {
       <div className="space-y-2 w-1/2">
         <FormField
           control={control}
-          name="email"
+          name="genderPreference"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="email">Email</FormLabel>
+              <FormLabel htmlFor="genderPreference">Gender Preference</FormLabel>
               <FormControl>
-                <Input id="email" autoComplete="email" {...field} />
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger id="genderPreference" className="w-[240px]">
+                    <SelectValue placeholder="Select gender preference" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem data-testid="option-male" value="Male">
+                        Male
+                      </SelectItem>
+                      <SelectItem data-testid="option-female" value="Female">
+                        Female
+                      </SelectItem>
+                      <SelectItem data-testid="option-both" value="Both">
+                        Both
+                      </SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </FormControl>
               <FormMessage />
             </FormItem>

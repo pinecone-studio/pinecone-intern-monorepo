@@ -146,7 +146,7 @@ export const MenuContent = ({ menu, user }: { menu: MenuType; user?: any }) => {
 
 export const MyProfileHeader = ({ setIsOpen, user }: { isOpen: boolean; setIsOpen: (_open: boolean) => void; user?: any }) => {
   return (
-    <div className="w-full sticky top-0 z-40 bg-white shadow-sm">
+    <div className="w-full top-0 z-40 bg-white shadow-sm">
       <div className="flex items-center justify-start gap-3 px-4 sm:px-6 py-4">
         <div className="md:hidden">
           <Button variant="ghost" data-testid="open-mobile-menu" onClick={() => setIsOpen(true)} className="p-2" aria-label="Open mobile menu">

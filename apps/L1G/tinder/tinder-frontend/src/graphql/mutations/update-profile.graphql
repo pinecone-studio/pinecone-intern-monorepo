@@ -1,0 +1,14 @@
+mutation UpdateProfile($updateProfileId: ID!, $name: String, $bio: String, $dateOfBirth: String, $genderPreferences: String, $gender: String, $profession: String, $schoolWork: String, $images: [String!]) {
+  updateProfile(id: $updateProfileId, name: $name, bio: $bio, dateOfBirth: $dateOfBirth, genderPreferences: $genderPreferences, gender: $gender, profession: $profession, schoolWork: $schoolWork, images: $images) {
+    email
+    id
+    name
+    bio
+    dateOfBirth
+    gender
+    genderPreferences
+    images
+    profession
+    schoolWork
+  }
+}
