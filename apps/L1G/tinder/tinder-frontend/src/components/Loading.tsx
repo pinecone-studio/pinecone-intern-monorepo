@@ -2,14 +2,22 @@ import { Flame } from 'lucide-react';
 
 const Loading = () => {
   return (
-    <div>
-      <div className="flex flex-col justify-center items-center h-screen">
-        <div className="flex">
-          <Flame fill="#FD267D" color="#FD267D" />
-          <div className="text-pink-500 text-2xl font-bold animate-pulse">tinder</div>
+    <div className="flex flex-col items-center justify-center h-screen bg-white">
+      <div className="flex flex-col items-center justify-center flex-1">
+        <div className="flex items-center mb-8">
+          <Flame fill="#FD267D" color="#FD267D" size={32} className="mr-2" />
+          <div className="text-3xl font-bold tracking-tight text-[#424242]">tinder</div>
         </div>
-        <p>Please Wait...</p>
-        <div className="justify-end">©2024 Tinder</div>
+
+        <div className="relative mb-4">
+          <div className="w-8 h-8 border-4 border-gray-200 rounded-full border-t-pink-500 animate-spin"></div>
+        </div>
+
+        <p className="text-sm text-gray-400">Please Wait...</p>
+      </div>
+
+      <div className="pb-8">
+        <p className="text-xs text-gray-400">©2024 Tinder</p>
       </div>
     </div>
   );
