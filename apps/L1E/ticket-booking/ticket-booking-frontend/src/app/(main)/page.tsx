@@ -14,18 +14,18 @@ const HomePage = () => {
 
       {/* Home */}
 
-      {/* <CarouselConcert />
+      <CarouselConcert />
       <div className='py-12 px-[117px]'>
         <ConcertsHome />
-      </div> */}
+      </div>
 
 
       {/* List */}
 
-      <div className='py-12 px-[117px]'>
+      {/* <div className='py-12 px-[117px]'>
         <SearchConcert />
         <ConcertsList />
-      </div>
+      </div> */}
 
 
       {/* Detail */}
