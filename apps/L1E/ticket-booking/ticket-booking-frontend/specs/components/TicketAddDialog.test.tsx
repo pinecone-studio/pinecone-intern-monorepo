@@ -23,10 +23,10 @@ jest.mock('react-datepicker', () => {
         placeholder={placeholderText}
         className={className}
         value={selected ? selected.toISOString().split('T')[0] : ''}
-        onChange={(e) => {
+        onChange={(_e) => {
           // For testing purposes, just call onChange with a mock date
           // The actual value will be set by the input's value prop
-          onChange(new Date('2024-12-25'));
+          onChange(new Date('2024-01-01'));
         }}
       />
     );
@@ -34,7 +34,23 @@ jest.mock('react-datepicker', () => {
 });
 
 jest.mock('@/components/TimePicker', () => ({
-  TimePicker: () => <input data-testid="time-picker" type="time" />,
+  TimePicker: ({ selected, onChange, placeholderText, className }: {
+    selected: Date | null;
+    onChange: (date: Date | null) => void;
+    placeholderText: string;
+    className: string;
+  }) => (
+    <input
+      data-testid="time-picker"
+      type="text"
+      placeholder={placeholderText}
+      className={className}
+      value={selected ? selected.toTimeString().split(' ')[0] : ''}
+      onChange={(_e) => {
+        onChange(new Date('2024-01-01T10:00:00'));
+      }}
+    />
+  ),
 }));
 
 describe('TicketAddDialog', () => {

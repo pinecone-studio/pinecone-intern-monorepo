@@ -19,7 +19,7 @@ export const TicketBuy = () => {
 
                             <div>
                                 <h6 className="text-xs font-normal text-[#C772C4]">Завсарын тасалбар (38)</h6>
-                                <p className="text-white">99'000₮</p>
+                                <p className="text-white">99&apos;000₮</p>
                             </div>
                         </div>
 
@@ -47,7 +47,7 @@ export const TicketBuy = () => {
 
                             <div>
                                 <h6 className="text-xs font-normal text-[#D7D7F8]">Арын тасалбар (123)</h6>
-                                <p className="text-white">129’000₮</p>
+                                <p className="text-white">129&apos;000₮</p>
                             </div>
                         </div>
 
@@ -75,7 +75,7 @@ export const TicketBuy = () => {
 
                             <div>
                                 <h6 className="text-xs font-normal text-[#4651C9]">Нүүрний тасалбар (38)</h6>
-                                <p className="text-white">159’000₮</p>
+                                <p className="text-white">159&apos;000₮</p>
                             </div>
                         </div>
 
@@ -97,15 +97,15 @@ export const TicketBuy = () => {
             <div className="pt-6 px-6 space-y-4">
                 <div className="flex justify-between">
                     <p className="text-[#A1A1AA] text-sm font-light">Энгийн тасалбар x 3</p>
-                    <p className="text-[#A1A1AA] text-sm font-normal">267’000₮</p>
+                    <p className="text-[#A1A1AA] text-sm font-normal">267&apos;000₮</p>
                 </div>
                 <div className="flex justify-between">
                     <p className="text-[#A1A1AA] text-sm font-light">VIP тасалбар x 2</p>
-                    <p className="text-[#A1A1AA] text-sm font-normal">258’000₮</p>
+                    <p className="text-[#A1A1AA] text-sm font-normal">258&apos;000₮</p>
                 </div>
                 <div className="flex justify-between">
                     <p className="text-[#A1A1AA] text-sm font-light">Нийт төлөх дүн:</p>
-                    <p className="text-[#FAFAFA] text-xl font-bold">258’000₮</p>
+                    <p className="text-[#FAFAFA] text-xl font-bold">258&apos;000₮</p>
                 </div>
             </div>
 

@@ -6,11 +6,15 @@ import { TimePicker } from './TimePicker';
 
 type TicketAddDialogType = {
   ticketAddDialog: boolean;
-  setTicketAddDialog: (value: boolean) => void;
+  setTicketAddDialog: (_value: boolean) => void;
 };
 
 export const TicketAddDialog = ({ ticketAddDialog, setTicketAddDialog }: TicketAddDialogType) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const handleDateChange = (_value: Date | null) => {
+    setSelectedDate(_value);
+  };
 
   return (
     <>
@@ -81,7 +85,7 @@ export const TicketAddDialog = ({ ticketAddDialog, setTicketAddDialog }: TicketA
                 <div className="flex flex-col gap-2 w-full relative">
                   <DatePicker
                     selected={selectedDate}
-                    onChange={(date) => setSelectedDate(date)}
+                    onChange={handleDateChange}
                     dateFormat="yyyy/MM/dd"
                     placeholderText="Өдөр сонгох"
                     className="border rounded-md px-3 py-3 w-full text-sm bg-white border-[#E4E4E7] focus:outline-none text-black placeholder-[#71717A]"

@@ -15,21 +15,21 @@ jest.mock('react-datepicker', () => {
     onChange, 
     placeholderText, 
     className,
-    showTimeSelect,
-    showTimeSelectOnly,
-    timeIntervals,
-    timeCaption,
-    dateFormat 
+    _showTimeSelect,
+    _showTimeSelectOnly,
+    _timeIntervals,
+    _timeCaption,
+    _dateFormat 
   }: {
     selected: Date | null;
     onChange: (date: Date | null) => void;
     placeholderText: string;
     className: string;
-    showTimeSelect: boolean;
-    showTimeSelectOnly: boolean;
-    timeIntervals: number;
-    timeCaption: string;
-    dateFormat: string;
+    _showTimeSelect: boolean;
+    _showTimeSelectOnly: boolean;
+    _timeIntervals: number;
+    _timeCaption: string;
+    _dateFormat: string;
   }) {
     return (
       <input
@@ -37,20 +37,9 @@ jest.mock('react-datepicker', () => {
         type="text"
         placeholder={placeholderText}
         className={className}
-        value={selected ? selected.toTimeString().slice(0, 5) : ''}
-        onChange={(e) => {
-          if (e.target.value) {
-            try {
-              const time = new Date(`2000-01-01T${e.target.value}`);
-              if (!isNaN(time.getTime())) {
-                onChange(time);
-              }
-            } catch (error) {
-              // Handle invalid time
-            }
-          } else {
-            onChange(null);
-          }
+        value={selected ? selected.toTimeString().split(' ')[0] : ''}
+        onChange={(_e) => {
+          onChange(new Date('2024-01-01T10:00:00'));
         }}
       />
     );

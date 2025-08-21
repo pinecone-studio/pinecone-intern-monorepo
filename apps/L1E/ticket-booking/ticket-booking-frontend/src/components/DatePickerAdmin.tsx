@@ -1,23 +1,30 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 type DatePickerAdminProps = {
   selectedDate: Date | null;
-  onDateChange: (date: Date | null) => void;
+  onDateChange: (_date: Date | null) => void;
 };
 
 export const DatePickerAdmin = ({ selectedDate, onDateChange }: DatePickerAdminProps) => {
+  const [internalDate, setInternalDate] = useState<Date | null>(selectedDate);
+
   return (
     <div className="flex flex-col gap-2 w-[280px] relative">
       <DatePicker
-        selected={selectedDate}
-        onChange={(date) => onDateChange(date)}
+        selected={internalDate}
+        onChange={(_date: Date | null) => {
+          if (_date) {
+            setInternalDate(_date);
+            onDateChange(_date);
+          }
+        }}
         dateFormat="yyyy/MM/dd"
         placeholderText="Өдөр сонгох"
-        className="border rounded-md px-3 py-3 w-full text-sm bg-white border-[#E4E4E7] focus:outline-none text-black placeholder-[#71717A]"
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <div className="absolute top-[14px] right-4 pointer-events-none">
         {/* Календрын жижиг дүрсийг энд SVG-р хийж болно */}

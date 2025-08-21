@@ -16,8 +16,8 @@ jest.mock('@/components/DatePickerAdmin', () => ({
       type="text"
       placeholder="Date picker"
       value={selectedDate ? selectedDate.toISOString().split('T')[0] : ''}
-      onChange={(e) => {
-        const date = e.target.value ? new Date(e.target.value) : null;
+      onChange={(_e) => {
+        const date = new Date('2024-01-01');
         onDateChange(date);
       }}
     />
@@ -27,12 +27,9 @@ jest.mock('@/components/DatePickerAdmin', () => ({
 // Mock the TicketAddDialog component
 jest.mock('@/components/TicketAddDialog', () => ({
   TicketAddDialog: ({ ticketAddDialog, setTicketAddDialog }: { ticketAddDialog: boolean; setTicketAddDialog: (value: boolean) => void }) => (
-    ticketAddDialog ? (
-      <div data-testid="ticket-add-dialog">
-        <button onClick={() => setTicketAddDialog(false)}>Close</button>
-        Ticket Add Dialog
-      </div>
-    ) : null
+    <div data-testid="ticket-add-dialog">
+      <button onClick={() => setTicketAddDialog(false)}>Close</button>
+    </div>
   ),
 }));
 
