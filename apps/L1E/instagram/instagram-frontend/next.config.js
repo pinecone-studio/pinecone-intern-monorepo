@@ -9,7 +9,7 @@ const nextConfig = {
     svgr: false,
   },
   env: {
-    BACKEND_URL: process.env.BACKEND_URL ?? '',
+    BACKEND_URL: process.env.BACKEND_URL,
   },
   images: {
     remotePatterns: [

@@ -13,7 +13,7 @@ const RootLayout = ({ children }: PropsWithChildren) => {
     <html lang="en">
       <body>
         <Apollo>{children}</Apollo>
-      </body>{' '}
+      </body>
     </html>
   );
 };

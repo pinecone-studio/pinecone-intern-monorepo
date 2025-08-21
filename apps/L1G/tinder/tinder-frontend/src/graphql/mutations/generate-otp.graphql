@@ -1,0 +1,10 @@
+mutation RequestSignup($email: String!, $otpType: OtpType!) {
+  requestSignup(email: $email, otpType: $otpType) {
+    input
+    output
+  }
+}
+enum OtpType {
+  create
+  forgot
+}

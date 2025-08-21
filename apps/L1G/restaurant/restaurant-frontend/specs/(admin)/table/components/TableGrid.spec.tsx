@@ -3,6 +3,7 @@ import { GetTablesDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import { ErrorBoundary } from 'specs/utils/ErrorBoundary';
+import '@testing-library/jest-dom';
 
 const getTablesMock: MockedResponse = {
   request: {
@@ -12,16 +13,27 @@ const getTablesMock: MockedResponse = {
     data: {
       getTables: [
         {
-          tableId: 'test',
-          tableName: 'test',
-          tableQr: 'https://test.png',
+          tableId: 'test1',
+          tableName: 'Table1',
+          tableQr: 'https://test1.png',
         },
         {
-          tableId: 'test',
-          tableName: 'test',
-          tableQr: 'https://test.png',
+          tableId: 'test2',
+          tableName: 'Table2',
+          tableQr: 'https://test2.png',
         },
       ],
+    },
+  },
+};
+
+const getTablesEmptyMock: MockedResponse = {
+  request: {
+    query: GetTablesDocument,
+  },
+  result: {
+    data: {
+      getTables: [],
     },
   },
 };
@@ -30,29 +42,38 @@ const getTablesErrorMock: MockedResponse = {
   request: {
     query: GetTablesDocument,
   },
-  error: new Error('Error: Network error'),
+  error: new Error('Network error'),
 };
 
-jest.mock('@/components/table/CreateTableModal', () => ({
-  CreateTableModal: ({ refetch }: { refetch: () => void }) => {
-    refetch();
-    return <div>CreateTableModal Mock</div>;
-  },
-}));
-const mocks = [getTablesMock, getTablesMock];
-describe('getTables', () => {
-  it('should render', async () => {
+describe('TableGrid Component', () => {
+  it('should render table list', async () => {
     const { getAllByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={[getTablesMock]} addTypename={false}>
         <TableGrid />
       </MockedProvider>
     );
+
     await waitFor(() => {
-      const tables = getAllByTestId('admin-table')[0];
-      expect(tables).toBeDefined();
+      const tables = getAllByTestId('admin-table');
+      expect(tables).toHaveLength(2);
+      expect(tables[0]).toHaveTextContent('Table1');
+      expect(tables[1]).toHaveTextContent('Table2');
     });
   });
-  it('should throw error when getTables failed', async () => {
+
+  it('should display empty message when no tables', async () => {
+    const { getByTestId } = render(
+      <MockedProvider mocks={[getTablesEmptyMock]} addTypename={false}>
+        <TableGrid />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(getByTestId('admin-empty-message')).toBeDefined();
+    });
+  });
+
+  it('should show error boundary on query error', async () => {
     const { getByTestId } = render(
       <ErrorBoundary fallback={<div data-testid="error">Error</div>}>
         <MockedProvider mocks={[getTablesErrorMock]} addTypename={false}>
@@ -61,6 +82,8 @@ describe('getTables', () => {
       </ErrorBoundary>
     );
 
-    await waitFor(() => expect(getByTestId('error')).toBeDefined());
+    await waitFor(() => {
+      expect(getByTestId('error')).toBeDefined();
+    });
   });
 });

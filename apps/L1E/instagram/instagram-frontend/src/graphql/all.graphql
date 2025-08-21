@@ -7,3 +7,52 @@ query GetUsers {
     bio
   }
 }
+
+mutation Login($input: LoginInput!) {
+  login(input: $input) {
+    token
+    user {
+      fullName
+      userName
+      isPrivate
+      profileImage
+      bio
+      followers {
+        _id
+        userName
+        profileImage
+      }
+      following {
+        _id
+        userName
+        profileImage
+      }
+      posts {
+        _id
+        image
+        description
+        createdAt
+        likes {
+          _id
+          userId {
+            _id
+            userName
+            profileImage
+          }
+        }
+        comments {
+          _id
+          text
+          createdAt
+          userId {
+            _id
+            userName
+            profileImage
+          }
+        }
+        image
+      }
+    }
+  }
+}
+
