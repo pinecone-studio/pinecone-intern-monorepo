@@ -1,4 +1,3 @@
-import { query } from 'express';
 import mongoose from 'mongoose';
 import { Usermodel } from 'src/models/user';
 
