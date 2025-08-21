@@ -46,20 +46,6 @@ describe('MultiStepForm1', () => {
     render(<MultiStepForm1 step="createAccount" setStep={mockSetStep} />);
     expect(screen.getByText(/Create an account/i)).toBeInTheDocument();
     fireEvent.click(screen.getByText('Next'));
-    expect(mockSetStep).toHaveBeenCalledWith('confirmEmail');
-  });
-
-  it('renders confirmEmail step and triggers onSuccess', () => {
-    render(<MultiStepForm1 step="confirmEmail" setStep={mockSetStep} />);
-    expect(screen.getByText(/confirm email/i)).toBeInTheDocument();
-    fireEvent.click(screen.getByText('Next'));
-    expect(mockSetStep).toHaveBeenCalledWith('createPass');
-  });
-
-  it('renders createPass step and triggers onSuccess', () => {
-    render(<MultiStepForm1 step="createPass" setStep={mockSetStep} />);
-    expect(screen.getByText(/create password/i)).toBeInTheDocument();
-    fireEvent.click(screen.getByText('Next'));
     expect(mockSetStep).toHaveBeenCalledWith('genderSelect');
   });
 

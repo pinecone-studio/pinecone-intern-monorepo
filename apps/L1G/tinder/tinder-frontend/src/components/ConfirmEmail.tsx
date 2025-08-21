@@ -7,7 +7,7 @@ import { useVerifyOtpMutation, useRequestSignupMutation, OtpType } from '@/gener
 import { ResetPassword } from './ResetPassword';
 import { OtpForm } from './OtpForm';
 import { CreatePassword } from './CreatePassword';
-import { UserData } from '@/app/(auth)/signup/page';
+import type { UserData } from '@/app/(auth)/signup/page';
 
 export const FormSchema = z.object({
   otp: z.string().length(4, { message: 'Your one-time password must be 4 digits.' }).regex(/^\d+$/, { message: 'OTP must contain only digits.' }),
@@ -43,8 +43,7 @@ async function handleOtpSubmit(
   verifyOtp: ReturnType<typeof useVerifyOtpMutation>[0],
   setOtpId: React.Dispatch<React.SetStateAction<string | null>>
 ) {
-  if (!email) return console.log('email bhgui');
-  console.log('email in handleotpSubmit:', email);
+  if (!email) return;
 
   try {
     const response = await verifyOtp({

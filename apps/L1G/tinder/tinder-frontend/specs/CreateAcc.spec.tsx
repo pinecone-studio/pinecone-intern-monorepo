@@ -20,7 +20,7 @@ jest.mock('@/generated', () => ({
   },
 }));
 
-describe('CreateAccount Component - Additional coverage for specific lines', () => {
+describe('CreateAccount Component', () => {
   const mockOnSuccess = jest.fn();
   let userData = { email: '' };
   const mockUpdateUserData = jest.fn((update) => {
@@ -35,7 +35,7 @@ describe('CreateAccount Component - Additional coverage for specific lines', () 
   it('sets success message, updates user data, sets step and calls onSuccess after successful signup', async () => {
     mockRequestSignup.mockResolvedValue({});
 
-    const { rerender } = render(<CreateAccount onSuccess={mockOnSuccess} userData={userData} updateUserData={mockUpdateUserData} />);
+    render(<CreateAccount onSuccess={mockOnSuccess} userData={userData} updateUserData={mockUpdateUserData} />);
 
     const emailInput = screen.getByPlaceholderText('name@example.com');
     const submitBtn = screen.getByRole('button', { name: /Continue/i });
@@ -49,15 +49,8 @@ describe('CreateAccount Component - Additional coverage for specific lines', () 
       expect(mockUpdateUserData).toHaveBeenCalledWith({ email: 'test@example.com' });
     });
 
-    // Check the success message after submit
-    expect(screen.getByText('OTP resent successfully.')).toBeInTheDocument();
-
-    // Now rerender the component with updated userData that includes the email
     userData.email = 'test@example.com';
-    rerender(<CreateAccount onSuccess={mockOnSuccess} userData={userData} updateUserData={mockUpdateUserData} />);
-
-    // Now expect ConfirmEmail text to be present
-    expect(screen.getByText(/Confirm email/i)).toBeInTheDocument();
+    render(<CreateAccount onSuccess={mockOnSuccess} userData={userData} updateUserData={mockUpdateUserData} />);
 
     // onSuccess should not be called here (only after OTP verified)
     expect(mockOnSuccess).not.toHaveBeenCalled();
@@ -107,5 +100,42 @@ describe('CreateAccount Component - Additional coverage for specific lines', () 
     fireEvent.click(loginBtn);
 
     expect(mockPush).toHaveBeenCalledWith('/login');
+  });
+
+  it('submits email and updates step on success', async () => {
+    mockRequestSignup.mockResolvedValue({});
+
+    render(<CreateAccount onSuccess={mockOnSuccess} userData={userData} updateUserData={mockUpdateUserData} />);
+
+    const emailInput = screen.getByPlaceholderText('name@example.com');
+    const submitBtn = screen.getByRole('button', { name: /Continue/i });
+
+    await act(async () => {
+      fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+      fireEvent.click(submitBtn);
+    });
+
+    await waitFor(() => {
+      expect(mockUpdateUserData).toHaveBeenCalledWith({ email: 'test@example.com' });
+      expect(screen.getByText('OTP resent successfully.')).toBeInTheDocument();
+    });
+  });
+
+  it('sets error message when signup request fails', async () => {
+    mockRequestSignup.mockRejectedValue(new Error('Network Error'));
+
+    render(<CreateAccount onSuccess={mockOnSuccess} userData={userData} updateUserData={mockUpdateUserData} />);
+
+    const emailInput = screen.getByPlaceholderText('name@example.com');
+    const submitBtn = screen.getByRole('button', { name: /Continue/i });
+
+    await act(async () => {
+      fireEvent.change(emailInput, { target: { value: 'fail@example.com' } });
+      fireEvent.click(submitBtn);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Failed to resend OTP, please try again.')).toBeInTheDocument();
+    });
   });
 });

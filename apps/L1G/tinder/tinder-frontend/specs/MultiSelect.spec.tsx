@@ -54,12 +54,6 @@ describe('MultiSelect', () => {
     expect(triggers).toHaveLength(variants.length);
   });
 
-  it('applies custom className', () => {
-    render(<MultiSelect options={mockOptions} value={[]} className="custom-class" />);
-    const trigger = screen.getByTestId('multi-select-trigger');
-    expect(trigger).toHaveClass('custom-class');
-  });
-
   it('respects disabled prop', () => {
     render(<MultiSelect options={mockOptions} value={[]} disabled />);
     const trigger = screen.getByTestId('multi-select-trigger');

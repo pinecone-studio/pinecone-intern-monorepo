@@ -5,6 +5,8 @@ import { GenderSelect } from '@/components/GenderSelect';
 
 const mockOnSuccess = jest.fn();
 const mockOnBack = jest.fn();
+const mockUpdateUserData = jest.fn();
+
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
@@ -75,7 +77,25 @@ describe('GenderSelect', () => {
     render(<GenderSelect onSuccess={mockOnSuccess} onBack={mockOnBack} />);
     fireEvent.click(screen.getByTestId('option-both'));
     fireEvent.click(screen.getByTestId('Next-Button'));
+
     expect(consoleSpy).toHaveBeenCalledWith('Selected interest:', 'Both');
+    expect(mockOnSuccess).toHaveBeenCalled();
+    expect(mockUpdateUserData).toHaveBeenCalledWith({ genderPreferences: 'Both' });
+
     consoleSpy.mockRestore();
+  });
+
+  it('updates selectedInterest state when an option is clicked', () => {
+    render(<GenderSelect onSuccess={mockOnSuccess} updateUserData={jest.fn()} />);
+
+    const optionMale = screen.getByTestId('option-male');
+    fireEvent.click(optionMale);
+
+    // Clicking Next should log 'Male' and enable onSuccess
+    const nextBtn = screen.getByTestId('Next-Button');
+    fireEvent.click(nextBtn);
+
+    // This indirectly confirms state was updated
+    expect(mockOnSuccess).toHaveBeenCalled();
   });
 });

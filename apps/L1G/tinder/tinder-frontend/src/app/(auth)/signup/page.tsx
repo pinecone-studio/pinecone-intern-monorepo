@@ -30,7 +30,6 @@ const Signup = () => {
   const updateUserData = (newData: Partial<UserData>) => {
     setUserData((prev) => {
       const updated = { ...prev, ...newData };
-      console.log('Updated userData', updated);
       return updated;
     });
   };

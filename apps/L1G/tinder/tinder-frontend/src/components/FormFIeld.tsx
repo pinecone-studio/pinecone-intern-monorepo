@@ -48,11 +48,11 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
         const response = await updateProfile({
           variables: {
             updateProfileId: userData.id,
-            name: userData.name,
-            bio: userData.bio,
-            interests: userData.interests,
-            profession: userData.profession,
-            schoolWork: userData.schoolWork,
+            name: values.name,
+            bio: values.bio ?? '',
+            interests: values.interest ?? [],
+            profession: values.profession ?? '',
+            schoolWork: values.work ?? '',
           },
         });
         if (response.data?.updateProfile) {

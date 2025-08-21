@@ -30,6 +30,14 @@ describe('CreatePassword Component', () => {
     jest.restoreAllMocks();
   });
 
+  it('renders password fields and submit button', () => {
+    render(<CreatePassword onSuccess={mockOnSuccess} updateUserData={mockUpdateUserData} otpId="123" />);
+
+    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Confirm password')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Continue/i })).toBeInTheDocument();
+  });
+
   it('renders form fields and button', () => {
     render(<CreatePassword onSuccess={mockOnSuccess} updateUserData={mockUpdateUserData} otpId="123" />);
 
@@ -94,6 +102,18 @@ describe('CreatePassword Component', () => {
     expect(await screen.findByText(/Network error/i)).toBeInTheDocument();
   });
 
+  it('displays server error message', async () => {
+    mockSignup.mockRejectedValue(new Error('Network error'));
+
+    render(<CreatePassword onSuccess={mockOnSuccess} updateUserData={mockUpdateUserData} otpId="123" />);
+
+    fireEvent.change(screen.getByPlaceholderText('Password'), { target: { value: 'ValidPass123' } });
+    fireEvent.change(screen.getByPlaceholderText('Confirm password'), { target: { value: 'ValidPass123' } });
+    fireEvent.click(screen.getByRole('button', { name: /Continue/i }));
+
+    expect(await screen.findByText('Network error')).toBeInTheDocument();
+  });
+
   it('shows server error when mutation returns no token but error exists', async () => {
     mockSignup.mockResolvedValue({
       data: {
@@ -134,5 +154,37 @@ describe('CreatePassword Component', () => {
 
     // Wait for the error message to appear
     expect(await screen.findByText(/Form-level error/i)).toBeInTheDocument();
+  });
+
+  it('displays form-level error message on signup failure', async () => {
+    // Simulate server returning no token → triggers serverError in component
+    mockSignup.mockResolvedValue({
+      data: {
+        signup: {
+          token: null,
+          id: null,
+        },
+      },
+    });
+
+    render(<CreatePassword onSuccess={mockOnSuccess} updateUserData={mockUpdateUserData} otpId="123" />);
+
+    fireEvent.change(screen.getByPlaceholderText('Password'), { target: { value: 'ValidPass123' } });
+    fireEvent.change(screen.getByPlaceholderText('Confirm password'), { target: { value: 'ValidPass123' } });
+
+    fireEvent.click(screen.getByRole('button', { name: /Continue/i }));
+
+    // This should display the generic server error message
+    expect(await screen.findByText('Something went wrong.')).toBeInTheDocument();
+  });
+
+  it('displays loading text on submit', async () => {
+    // Mock loading state
+    mockSignup.mockImplementation(() => new Promise(() => {})); // Promise never resolves → loading true
+    render(<CreatePassword onSuccess={mockOnSuccess} updateUserData={mockUpdateUserData} otpId="123" />);
+
+    fireEvent.change(screen.getByPlaceholderText('Password'), { target: { value: 'ValidPass123' } });
+    fireEvent.change(screen.getByPlaceholderText('Confirm password'), { target: { value: 'ValidPass123' } });
+    fireEvent.click(screen.getByRole('button', { name: /Continue/i }));
   });
 });

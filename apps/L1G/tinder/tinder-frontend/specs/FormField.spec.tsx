@@ -177,4 +177,23 @@ describe('ProfileForm', () => {
 
     expect(mockOnBack).toHaveBeenCalled();
   });
+
+  it('displays serverError message when updateProfile returns falsy', async () => {
+    // Mock mutation to return falsy response
+    mockUpdateProfile.mockResolvedValue({ data: { updateProfile: null } });
+
+    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userData} updateUserData={mockUpdateUserData} />);
+
+    // Fill at least required field
+    fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'New Name' } });
+
+    fireEvent.click(screen.getByRole('button', { name: /Next/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/Update failed/i)).toBeInTheDocument();
+    });
+
+    // onSuccess should NOT be called
+    expect(mockOnSuccess).not.toHaveBeenCalled();
+  });
 });

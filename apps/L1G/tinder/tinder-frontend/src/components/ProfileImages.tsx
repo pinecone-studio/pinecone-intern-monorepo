@@ -5,12 +5,14 @@ import { X, Plus, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import axios from 'axios';
 import { useUploadImagesMutation } from '@/generated';
+import { UserData } from '@/app/(auth)/signup/page';
 
 type ProfileImagesProps = {
   onSuccess: () => void;
+  updateUserData: (_: Partial<UserData>) => void;
 };
 
-export const ProfileImages = ({ onSuccess }: ProfileImagesProps) => {
+export const ProfileImages = ({ onSuccess, updateUserData }: ProfileImagesProps) => {
   const [uploadedImages, setUploadedImages] = useState<string[]>(['', '', '', '', '', '']);
   const [isUploading, setIsUploading] = useState<boolean[]>([false, false, false, false, false, false]);
   const [uploadImagesMutation, { loading }] = useUploadImagesMutation();
@@ -78,6 +80,7 @@ export const ProfileImages = ({ onSuccess }: ProfileImagesProps) => {
   };
   const handleNext = async () => {
     const nonEmptyImages = uploadedImages.filter((url) => url);
+    updateUserData({ images: nonEmptyImages });
 
     if (nonEmptyImages.length === 0) {
       alert('Please upload at least one image.');
@@ -89,6 +92,7 @@ export const ProfileImages = ({ onSuccess }: ProfileImagesProps) => {
           images: nonEmptyImages,
         },
       });
+
       onSuccess();
     } catch (err) {
       console.error('Failed to upload images to backend:', err);
