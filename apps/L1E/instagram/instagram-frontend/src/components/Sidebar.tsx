@@ -18,7 +18,7 @@ import {
 
 import Image from 'next/image';
 import { useState } from 'react';
-import SearchResults from './SearchResult';
+import SearchResults from './search/Search';
 
 export const Sidebar: React.FC = () => {
 

@@ -1,16 +1,15 @@
-"use client";
+'use client';
 
-import Profile from "@/components/profile/Profile";
-import { useAuth } from "@/components/providers/AuthProvider";
-import { useGetSomeoneProfileQuery } from "@/generated";
-import { useParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import Profile from '@/components/profile/Profile';
+import { useAuth } from '@/components/providers/AuthProvider';
+import { useGetSomeoneProfileQuery } from '@/generated';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const InstagramProfile = () => {
   const params = useParams();
   const userName = params?.userName as string;
-
-  const [isMine, setIsMine] = useState(false);
+  const router = useRouter();
 
   const { data, loading, error } = useGetSomeoneProfileQuery({
     variables: { userName },
@@ -21,7 +20,7 @@ const InstagramProfile = () => {
   console.log('User in InstagramProfile:', user);
   useEffect(() => {
     if (user?.userName && data?.getSomeoneProfile?.userName) {
-      setIsMine(user.userName === data.getSomeoneProfile.userName);
+      router.push('/profile');
     }
   }, [user, data]);
 
@@ -31,7 +30,7 @@ const InstagramProfile = () => {
   return (
     <div className="p-4">
       <Profile
-        isMine={isMine}
+        isMine={false}
         userName={data?.getSomeoneProfile.userName as string}
         bio={data?.getSomeoneProfile.bio}
         isPrivate={data?.getSomeoneProfile.isPrivate as boolean}

@@ -1,116 +1,24 @@
-"use client";
-import React, { createContext, PropsWithChildren, useContext, useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
+'use client';
+import React, { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { jwtDecode } from 'jwt-decode';
+import { useGetUserQuery } from '@/generated';
+import { AuthUser, DecodedTokenType, LOGIN_MUTATION } from '../Types';
 
-export type AuthUser = {
-  fullName: string,
-  userName: string,
-  isPrivate: boolean,
-  profileImage: string,
-  bio: string,
-  followers: {
-    _id: string,
-    userName: string,
-    profileImage: string
-  }[],
-  following: {
-    _id: string,
-    userName: string,
-    profileImage: string
-  }[],
-  posts: {
-    _id: string,
-    image: string,
-    description: string,
-    createdAt: string,
-    likes: {
-      _id: string,
-      user: {
-        _id: string,
-        userName: string,
-        profileImage: string
-      }
-    }[],
-    comments: {
-      _id: string,
-      text: string,
-      createdAt: string,
-      user: {
-        _id: string,
-        userName: string,
-        profileImage: string
-      }
-    }[]
-  }[]
-};
-export type AuthUserResponse = {
-  user: AuthUser;
-};
-
-type AuthContextValue = {
+export type AuthContextValue = {
   user: AuthUser | null;
   login: (_email: string, _password: string) => Promise<void>;
   logout: () => void;
 };
 
-export const LOGIN_MUTATION = gql`
-  mutation Login($input: LoginInput!) {
-    login(input: $input) {
-      token
-      user {
-      fullName
-      userName
-      isPrivate
-      profileImage
-      bio
-      followers {
-        _id
-        userName
-        profileImage
-      }
-      following {
-        _id
-        userName
-        profileImage
-      }
-      posts {
-        _id
-        image
-        description
-        createdAt
-        likes {
-          _id
-          userId {
-            _id
-            userName
-            profileImage
-          }
-        }
-        comments {
-          _id
-          text
-          createdAt
-          userId {
-            _id
-            userName
-            profileImage
-          }
-        }
-        image
-      }
-    }
-      }
-    }
-`;
-
-type LoginMutationResult = {
+export type LoginMutationResult = {
   login: {
     token: string;
     user: AuthUser;
   };
 };
 
-type LoginMutationVars = {
+export type LoginMutationVars = {
   input: {
     email: string;
     password: string;
@@ -135,6 +43,75 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     setUser(loggedInUser);
   };
 
+  // Refresh hiih uyed ene ajillah yum.
+    const token = localStorage.getItem('token');
+    let userId: string | undefined;
+
+    if (token) {
+      try {
+        const decodedToken: DecodedTokenType = jwtDecode(token);
+        userId = decodedToken?.userId;
+      } catch (err) {
+        console.error('Invalid token');
+      }
+    }
+
+    const { data, loading, error } = useGetUserQuery({
+      variables: { id: userId || '' },
+      skip: !userId,
+    });
+
+    useEffect(() => {
+      if (data?.getUser) {
+        const normalizedUser: AuthUser = {
+          fullName: data.getUser.fullName,
+          userName: data.getUser.userName,
+          isPrivate: data.getUser.isPrivate ?? false,
+          profileImage: data.getUser.profileImage ?? '',
+          bio: data.getUser.bio ?? '',
+          followers: data.getUser.followers.map((f) => ({
+            _id: f._id,
+            userName: f.userName,
+            profileImage: f.profileImage ?? '',
+          })),
+          following: data.getUser.following.map((f) => ({
+            _id: f._id,
+            userName: f.userName,
+            profileImage: f.profileImage ?? '',
+          })),
+          posts: data.getUser.posts.map((p) => ({
+            _id: p._id,
+            image: Array.isArray(p.image) ? p.image[0] ?? '' : p.image,
+            text: p.description ?? '',
+            createdAt: p.createdAt,
+            likes: p.likes.map((like) => ({
+              _id: like._id,
+              user: {
+                _id: like.userId._id,
+                userName: like.userId.userName,
+                profileImage: like.userId.profileImage ?? '',
+              },
+            })),
+            comments: p.comments.map((comment) => ({
+              _id: comment._id,
+              text: comment.text,
+              createdAt: comment.createdAt,
+              user: {
+                _id: comment.userId._id,
+                userName: comment.userId.userName,
+                profileImage: comment.userId.profileImage ?? '',
+              },
+            })),
+          })),
+        };
+
+        setUser(normalizedUser);
+      }
+    }, [data]);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error fetching user</p>;
+
   const logout = () => {
     setUser(null);
     if (typeof window !== 'undefined') {
@@ -152,4 +129,3 @@ export const useAuth = (): AuthContextValue => {
   if (!ctx) throw new Error('useAuth must be used within an AuthProvider');
   return ctx;
 };
-
