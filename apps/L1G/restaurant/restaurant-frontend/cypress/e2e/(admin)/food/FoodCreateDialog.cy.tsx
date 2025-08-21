@@ -17,7 +17,7 @@ describe('FoodCreateDialog', () => {
     cy.get('[data-cy=create-food-category-option-Амттан]').click();
     cy.get('[data-cy=create-food-price-input]').type('20000');
     cy.get('[data-cy=create-food-submit-button]').click();
-    cy.get('body').should('contain.text', 'Хоол амжилттай үүслээ!').should('be.visible');
+    cy.contains('Хоол амжилттай үүслээ!').should('be.visible');
   });
   it('should show toast error whe create food fails', () => {
     cy.intercept('POST', '**/graphql', (req) => {

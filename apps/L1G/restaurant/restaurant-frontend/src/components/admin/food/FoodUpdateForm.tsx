@@ -70,13 +70,13 @@ export const FoodUpdateForm = ({ foodName, price, status, image, category, onSub
           name="image"
           render={({ field: _field }) => (
             <FormItem>
-              <Button variant="ghost" className={`flex w-full h-[52px] rounded-md p-4 has-[>svg]:px-0 bg-[#F4F4F5] border solid border-[#E4E4E7] ${foodImage && 'w-full h-[150px] p-0'}`}>
+              <Button type="button" variant="ghost" className={`flex w-full h-[52px] rounded-md p-4 has-[>svg]:px-0 bg-[#F4F4F5] border solid border-[#E4E4E7] ${foodImage && 'w-full h-[150px] p-0'}`}>
                 <div className={`flex justify-center items-center gap-2 ${foodImage && 'absolute z-0'} `}>
                   <Plus className="flex w-4 h-4" />
                   <p className="text-sm leading-[20px] text-[#202223]">Зураг нэмэх</p>
                 </div>
                 <FormControl>
-                  <Input data-testid="food-update-image-input" className="flex absolute opacity-0" type="file" accept="image/*" onChange={handleImageChange} />
+                  <Input data-testid="food-update-image-input" className="absolute opacity-0" type="file" accept="image/*" onChange={handleImageChange} />
                 </FormControl>
                 {foodImage && (
                   <div data-testid="food-update-image-preview" className="flex relative w-full h-[150px] justify-center items-center rounded-md">
