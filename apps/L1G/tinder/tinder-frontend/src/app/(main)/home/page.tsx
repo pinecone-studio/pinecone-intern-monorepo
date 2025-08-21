@@ -10,6 +10,7 @@ const HomePage = () => {
   const [like] = useLikeUserMutation();
   const [dislike] = useDislikeMutation();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [matchedProfile, setMatchedProfile] = useState<UserProfile | null>(null);
 
   const currentUserId = '689453c9fb642555405b451c';
   console.log(data, 'data');
