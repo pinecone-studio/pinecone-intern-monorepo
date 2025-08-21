@@ -5,6 +5,7 @@ export const UsertypeDefs = gql`
     id: ID!
     email: String!
     genderPreferences: String
+    gender: String
     dateOfBirth: String
     name: String
     bio: String
@@ -82,6 +83,7 @@ export const UsertypeDefs = gql`
       email: String
       dateOfBirth: String
       genderPreferences: String
+      gender: String
       bio: String
       interests: [String]
       profession: String
