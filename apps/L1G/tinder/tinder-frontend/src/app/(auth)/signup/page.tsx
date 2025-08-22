@@ -1,4 +1,5 @@
 'use client';
+import HowOldAreYou from '@/components/HowOldAreYou';
 import { MainHeader } from '@/components/MainHeader';
 import { MultiStepForm1 } from '@/components/MultiStepForm1';
 import MultiStepForm2 from '@/components/MultiStepForm2';
@@ -16,8 +17,9 @@ const Signup = () => {
         <MainHeader />
 
         <div className="w-fit max-w-[640px] h-fit flex flex-col gap-4">
-          <MultiStepForm1 step={step} setStep={setStep} />
-          <MultiStepForm2 step={step} setStep={setStep} router={router} />
+          <HowOldAreYou onSuccess={() => setStep('details')} onBack={() => setStep('genderSelect')} />
+          {/* <MultiStepForm1 step={step} setStep={setStep} />
+          <MultiStepForm2 step={step} setStep={setStep} router={router} /> */}
         </div>
       </div>
     </div>

@@ -1,94 +1,83 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { format } from 'date-fns';
-import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { useForm } from 'react-hook-form';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
 
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { cn } from '../../../../../../libs/shadcn/src/lib/utils';
+
+const FormSchema = z.object({
+  dob: z.date({
+    required_error: 'A date of birth is required.',
+  }),
+});
 type HowOldAreYouProps = { onSuccess: () => void; onBack: () => void };
 
-const HowOldAreYou = ({ onSuccess, onBack }: HowOldAreYouProps) => {
-  const formSchema = z.object({
-    date: z
-      .date({
-        message: 'A date of birth is required.',
-      })
-      .nullable(),
+export default function HowOldAreYou({ onSuccess, onBack }: HowOldAreYouProps) {
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
   });
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      date: null,
-    },
-  });
-
-  function onSubmit(_values: z.infer<typeof formSchema>) {
-    console.log('working');
-    onSuccess();
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    toast('You submitted the following values', {
+      description: (
+        <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    });
   }
 
-  const handleBack = () => {
-    onBack();
-  };
-
   return (
-    <div className="w-[400px] flex flex-col items-center px-4 gap-6">
-      <div className="w-full max-w-[400px] flex flex-col items-center gap-6">
-        <div className="flex justify-center items-center flex-col">
-          <h1 className="font-sans font-semibold text-2xl ">How old are you</h1>
-          <p className="font-sans text-sm font-normal leading-5 text-muted-foreground">Please enter your age to continue</p>
-        </div>
-      </div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 w-full">
-          <FormField
-            control={form.control}
-            name="date"
-            render={({ field }) => (
-              <FormItem className="flex w-full flex-col">
-                <FormLabel>Date of birth</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button data-testid="date-picker-button" variant="outline" className={`border w-full pl-3 text-left font-normal ${!field.value ? 'text-muted-foreground' : ''}`}>
-                        {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
-                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={field.value ?? undefined}
-                      onSelect={field.onChange}
-                      disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
-                      captionLayout="dropdown"
-                    />
-                  </PopoverContent>
-                </Popover>
-                <FormDescription>Your date of birth is used to calculate your age.</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="flex justify-between">
-            <Button onClick={handleBack} className="bg-white text-black border border-gray-200 rounded-full px-4" type="button">
-              Back
-            </Button>
-            <Button data-testid="next-button" className="bg-red-600 rounded-full px-4" type="submit">
-              Next
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="dob"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Date of birth</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button variant="outline" className={cn('w-[280px] pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}>
+                      {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    captionLayout="dropdown"
+                    fromYear={1900}
+                    toYear={new Date().getFullYear()}
+                    classNames={{
+                      caption: 'flex justify-between px-4 py-2',
+                      dropdown: 'bg-white flex border text-sm px-2 py-1 rounded-md shadow-sm',
+                      dropdown_month: 'mr-2 text-gray-900',
+                      dropdown_year: 'text-gray-900',
+                    }}
+                    disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
+                  />
+                </PopoverContent>
+              </Popover>
+              <FormDescription>Your date of birth is used to calculate your age.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
   );
-};
-
-export default HowOldAreYou;
+}
