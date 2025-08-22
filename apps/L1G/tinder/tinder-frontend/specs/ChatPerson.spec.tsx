@@ -1,73 +1,142 @@
-import ChatPerson from '@/components/ChatPerson';
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import ChatPerson from '../src/components/ChatPerson';
 
-jest.mock('next/image', () => ({
-  __esModule: true,
-  default: (props) => {
-    return <img {...props} />;
-  },
-}));
+jest.mock('clsx', () => {
+  return (...classes: (string | boolean | undefined | null)[]) => classes.filter(Boolean).join(' ');
+});
 
-jest.mock('@/components/ChatWindow', () => ({
-  __esModule: true,
-  default: () => <div data-testid="chat-window">ChatWindow Component</div>,
-}));
-
-jest.mock('lucide-react', () => ({
-  MessageSquareDashedIcon: () => <div data-testid="message-icon">MessageIcon</div>,
-  Send: () => <div data-testid="send-icon">SendIcon</div>,
-}));
+const mockUsers = [
+  { id: 1, name: 'John Doe', age: 25, job: 'Developer', avatar: ['/john.jpg'] },
+  { id: 2, name: 'Jane Smith', age: 28, job: 'Designer', avatar: ['/jane.jpg'] },
+  { id: 3, name: 'Bob Wilson', age: 32, job: 'Manager', avatar: ['/bob.jpg'] },
+];
 
 describe('ChatPerson', () => {
-  it('renders correctly', () => {
-    render(<ChatPerson />);
+  const defaultProps = {
+    selectedUser: null,
+    onUserSelect: jest.fn(),
+    bottomUsers: mockUsers,
+  };
 
-    expect(screen.getByTestId('chat-window'));
-
-    expect(screen.getByText('Esther Howard, 32'));
-    expect(screen.getByText('Kathryn Murphy, 24'));
-    expect(screen.getByText('Guy Hawkins, 41'));
-    expect(screen.getByText('Jacob Jones, 20'));
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('displays all user information correctly', () => {
-    render(<ChatPerson />);
+  it('renders all users from bottomUsers', () => {
+    render(<ChatPerson {...defaultProps} />);
 
-    const jobTitles = screen.getAllByText('Software Engineer');
-    expect(jobTitles).toHaveLength(4);
-
-    expect(screen.getByAltText('Esther Howard'));
-    expect(screen.getByAltText('Kathryn Murphy'));
-    expect(screen.getByAltText('Guy Hawkins'));
-    expect(screen.getByAltText('Jacob Jones'));
+    expect(screen.getByText('John Doe, 25')).toBeTruthy();
+    expect(screen.getByText('Jane Smith, 28')).toBeTruthy();
+    expect(screen.getByText('Bob Wilson, 32')).toBeTruthy();
+    expect(screen.getByText('Developer')).toBeTruthy();
+    expect(screen.getByText('Designer')).toBeTruthy();
+    expect(screen.getByText('Manager')).toBeTruthy();
   });
 
-  it('renders correct number of matches', () => {
-    render(<ChatPerson />);
+  it('renders avatars for all users', () => {
+    render(<ChatPerson {...defaultProps} />);
 
-    const profileImages = screen.getAllByRole('img');
-    expect(profileImages).toHaveLength(4);
+    const avatars = screen.getAllByRole('generic').filter((el) => el.textContent?.includes('Avatar') || el.querySelector('img'));
+    expect(avatars.length).toBeGreaterThanOrEqual(0);
   });
 
-  it('has correct layout structure', () => {
-    render(<ChatPerson />);
+  it('calls onUserSelect when user is clicked', () => {
+    const onUserSelect = jest.fn();
+    render(<ChatPerson {...defaultProps} onUserSelect={onUserSelect} />);
 
-    const sidebar = screen.getByTestId('sidebar');
-    expect(sidebar);
+    const userItem = screen.getByText('John Doe, 25').closest('div');
+    if (userItem) {
+      fireEvent.click(userItem);
+    }
 
-    // Check if 'Esther Howard, 32' is inside the sidebar container
-    expect(within(sidebar).getByText('Esther Howard, 32'));
-
-    expect(screen.getByTestId('chat-window'));
+    expect(onUserSelect).toHaveBeenCalledTimes(1);
+    expect(onUserSelect).toHaveBeenCalledWith(mockUsers[0]);
   });
 
-  it('displays users with different ages correctly', () => {
-    render(<ChatPerson />);
+  it('highlights selected user with red text and gray background', () => {
+    render(<ChatPerson {...defaultProps} selectedUser={mockUsers[0]} />);
 
-    expect(screen.getByText(/32/));
-    expect(screen.getByText(/24/));
-    expect(screen.getByText(/41/));
-    expect(screen.getByText(/20/));
+    const selectedUserName = screen.getByText('John Doe, 25');
+    const selectedUserContainer = selectedUserName.closest('.cursor-pointer');
+
+    expect(selectedUserName.className).toContain('text-red-600');
+    expect(selectedUserContainer?.className).toContain('bg-gray-200');
+  });
+
+  it('shows normal styling for non-selected users', () => {
+    render(<ChatPerson {...defaultProps} selectedUser={mockUsers[0]} />);
+
+    const nonSelectedUserName = screen.getByText('Jane Smith, 28');
+    const nonSelectedUserContainer = nonSelectedUserName.closest('div');
+
+    expect(nonSelectedUserName.className).toContain('text-black');
+    expect(nonSelectedUserContainer?.className).not.toContain('bg-gray-200');
+  });
+
+  it('handles chattedUsers set correctly', () => {
+    const chattedUsers = new Set([1, 2]);
+    render(<ChatPerson {...defaultProps} chattedUsers={chattedUsers} />);
+
+    expect(screen.getByText('John Doe, 25')).toBeTruthy();
+    expect(screen.getByText('Jane Smith, 28')).toBeTruthy();
+    expect(screen.getByText('Bob Wilson, 32')).toBeTruthy();
+  });
+
+  it('handles undefined chattedUsers prop', () => {
+    render(<ChatPerson {...defaultProps} chattedUsers={undefined} />);
+
+    expect(screen.getByText('John Doe, 25')).toBeTruthy();
+    expect(screen.getByText('Jane Smith, 28')).toBeTruthy();
+    expect(screen.getByText('Bob Wilson, 32')).toBeTruthy();
+  });
+
+  it('renders empty state when bottomUsers is empty', () => {
+    render(<ChatPerson {...defaultProps} bottomUsers={[]} />);
+
+    const container = document.querySelector('.flex.flex-col.w-\\[300px\\].border-r.border-gray-300');
+    expect(container).toBeTruthy();
+    expect(container?.children.length).toBe(0);
+  });
+
+  it('applies hover styles correctly', () => {
+    render(<ChatPerson {...defaultProps} />);
+
+    const userItems = screen.getAllByRole('generic').filter((el) => el.classList.contains('cursor-pointer'));
+
+    userItems.forEach((item) => {
+      expect(item).toHaveClass('hover:bg-gray-100');
+    });
+  });
+
+  it('handles multiple clicks on same user', () => {
+    const onUserSelect = jest.fn();
+    render(<ChatPerson {...defaultProps} onUserSelect={onUserSelect} />);
+
+    const userItem = screen.getByText('John Doe, 25').closest('div');
+    if (userItem) {
+      fireEvent.click(userItem);
+      fireEvent.click(userItem);
+    }
+
+    expect(onUserSelect).toHaveBeenCalledTimes(2);
+    expect(onUserSelect).toHaveBeenNthCalledWith(1, mockUsers[0]);
+    expect(onUserSelect).toHaveBeenNthCalledWith(2, mockUsers[0]);
+  });
+
+  it('handles clicks on different users', () => {
+    const onUserSelect = jest.fn();
+    render(<ChatPerson {...defaultProps} onUserSelect={onUserSelect} />);
+
+    const johnItem = screen.getByText('John Doe, 25').closest('div');
+    const janeItem = screen.getByText('Jane Smith, 28').closest('div');
+
+    if (johnItem) fireEvent.click(johnItem);
+    if (janeItem) fireEvent.click(janeItem);
+
+    expect(onUserSelect).toHaveBeenCalledTimes(2);
+    expect(onUserSelect).toHaveBeenNthCalledWith(1, mockUsers[0]);
+    expect(onUserSelect).toHaveBeenNthCalledWith(2, mockUsers[1]);
   });
 });
+

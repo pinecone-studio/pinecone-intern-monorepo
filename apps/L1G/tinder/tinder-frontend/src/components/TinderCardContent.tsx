@@ -37,7 +37,7 @@ export const TinderCardContent = ({
       rotate: direction === 'left' ? -15 : 15,
       transition: { duration: 0.3 },
     }}
-    className="absolute flex-col items-center gap-6 p-4"
+    className="absolute flex flex-col items-center gap-6 p-4"
   >
     <TinderCardLayout
       profile={profile}

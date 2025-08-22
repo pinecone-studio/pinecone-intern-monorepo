@@ -16,7 +16,7 @@ import { toast } from 'sonner';
 import { ApolloQueryResult } from '@apollo/client';
 import { formSchemaFood, initialValuesFood } from '@/helpers/form-schemas';
 
-export const CreateFoodDialog = ({ refetch }: { refetch: () => Promise<ApolloQueryResult<GetFoodsQuery>> }) => {
+export const FoodCreateDialog = ({ refetch }: { refetch: () => Promise<ApolloQueryResult<GetFoodsQuery>> }) => {
   const [foodImage, setFoodImage] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [createFood] = useCreateFoodMutation();
@@ -64,6 +64,7 @@ export const CreateFoodDialog = ({ refetch }: { refetch: () => Promise<ApolloQue
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button
+          data-cy="create-food-dialog-open"
           data-testid="create-food-dialog-open"
           variant="link"
           className="flex w-[89px] h-[40px] rounded-md px-4 py-2 gap-2 border solid border-[#E4E4E7] bg-[#FFFFFF] text-sm leading-[20px] font-medium text-[#09090B]"
@@ -76,7 +77,7 @@ export const CreateFoodDialog = ({ refetch }: { refetch: () => Promise<ApolloQue
       </DialogTrigger>
       <DialogContent>
         <div className="flex w-full justify-between items-center">
-          <DialogTitle data-testid="create-food-dialog-title" className="flex justify-start text-[18px] leading-[18px] font-semibold text-[#09090B]">
+          <DialogTitle data-cy="create-food-dialog-title" data-testid="create-food-dialog-title" className="flex justify-start text-[18px] leading-[18px] font-semibold text-[#09090B]">
             Хоол нэмэх
           </DialogTitle>
           <DialogClose data-testid="create-food-dialog-close">
@@ -85,7 +86,7 @@ export const CreateFoodDialog = ({ refetch }: { refetch: () => Promise<ApolloQue
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <TextInput data-testid="create-food-foodname-input" control={form.control} fieldName="foodName" placeholder="Хоолны нэр" />
+            <TextInput data-cy="create-food-foodName-input" data-testid="create-food-foodname-input" control={form.control} fieldName="foodName" placeholder="Хоолны нэр" />
             <RadioInput control={form.control} />
             <FormField
               control={form.control}
@@ -99,6 +100,7 @@ export const CreateFoodDialog = ({ refetch }: { refetch: () => Promise<ApolloQue
                     </div>
                     <FormControl>
                       <Input
+                        data-cy="create-food-image-input"
                         data-testid="create-food-image-input"
                         className="flex absolute opacity-0"
                         type="file"
@@ -124,13 +126,13 @@ export const CreateFoodDialog = ({ refetch }: { refetch: () => Promise<ApolloQue
                       </div>
                     )}
                   </Button>
-                  <FormMessage />
+                  <FormMessage data-cy="create-food-image-error-message" />
                 </FormItem>
               )}
             />
             <SelectCategoryInput control={form.control} />
-            <TextInput data-testid="create-food-price-input" control={form.control} fieldName="price" placeholder="Үнэ" />
-            <Button data-testid="create-food-submit-button" className="flex w-full h-[36px] rounded-md py-2 px-4 bg-[#1D1F24] " type="submit">
+            <TextInput data-cy="create-food-price-input" data-testid="create-food-price-input" control={form.control} fieldName="price" placeholder="Үнэ" />
+            <Button data-cy="create-food-submit-button" data-testid="create-food-submit-button" className="flex w-full h-[36px] rounded-md py-2 px-4 bg-[#1D1F24] " type="submit">
               Үүсгэх
             </Button>
           </form>

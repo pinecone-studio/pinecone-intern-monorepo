@@ -25,16 +25,16 @@ const initialValuesUser = {
 
 const formSchemaFood = z.object({
   foodName: z.string().min(1, {
-    message: 'Хоолны нэр оруулна уу',
+    message: 'Хоолны нэр оруулна уу!',
   }),
   price: z
     .string()
     .min(1, {
-      message: 'Үнэ оруулна уу',
+      message: 'Үнэ оруулна уу!',
     })
-    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, { message: 'Зөв үнэ оруулна уу' }),
+    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, { message: 'Зөв үнэ оруулна уу!' }),
   category: z.string().min(1, {
-    message: 'Категори сонгоно уу',
+    message: 'Категори сонгоно уу!',
   }),
   status: z.enum(['Идэвхитэй', 'Идэвхигүй']),
   image: z.union([

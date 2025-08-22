@@ -9,9 +9,10 @@ type TextInputProps = {
   placeholder: string;
   fieldName: 'foodName' | 'price' | 'category';
   'data-testid'?: string;
+  'data-cy'?: string;
 };
 
-export const TextInput = ({ control, placeholder, fieldName, 'data-testid': dataTestId }: TextInputProps) => {
+export const TextInput = ({ control, placeholder, fieldName, 'data-testid': dataTestId, 'data-cy': dataCy }: TextInputProps) => {
   return (
     <FormField
       control={control}
@@ -19,9 +20,9 @@ export const TextInput = ({ control, placeholder, fieldName, 'data-testid': data
       render={({ field }) => (
         <FormItem>
           <FormControl>
-            <Input data-testid={dataTestId} placeholder={placeholder} type="text" {...field} />
+            <Input data-cy={dataCy} data-testid={dataTestId} placeholder={placeholder} type="text" {...field} />
           </FormControl>
-          <FormMessage />
+          <FormMessage data-cy={`food-${fieldName}-error-message`} />
         </FormItem>
       )}
     />

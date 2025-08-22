@@ -11,33 +11,33 @@ jest.mock('next/navigation', () => ({ useRouter: () => ({ push: mockPush }) }));
 const localStorageMock = {
   setItem: jest.fn(),
   getItem: jest.fn(),
-  clear: jest.fn()
+  clear: jest.fn(),
 };
 Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 
 // Test data
 const successMock = {
-  request: { 
-    query: LoginDocument, 
-    variables: { email: 'test@example.com', password: 'password123' } 
+  request: {
+    query: LoginDocument,
+    variables: { email: 'test@example.com', password: 'password123' },
   },
-  result: { data: { login: 'mock-token' } }
+  result: { data: { login: 'mock-token' } },
 };
 
 const noTokenMock = {
-  request: { 
+  request: {
     query: LoginDocument,
-    variables: { email: 'test@example.com', password: 'password123' }
+    variables: { email: 'test@example.com', password: 'password123' },
   },
-  result: { data: { login: null } }
+  result: { data: { login: null } },
 };
 
 const errorMock = {
-  request: { 
+  request: {
     query: LoginDocument,
-    variables: { email: 'test@example.com', password: 'wrongpassword' }
+    variables: { email: 'test@example.com', password: 'wrongpassword' },
   },
-  error: new Error('Invalid credentials')
+  error: new Error('Invalid credentials'),
 };
 
 describe('LoginForm', () => {
@@ -46,11 +46,12 @@ describe('LoginForm', () => {
     localStorageMock.clear();
   });
 
-  const renderForm = (mocks = []) => render(
-    <MockedProvider mocks={mocks} addTypename={false}>
-      <LoginForm />
-    </MockedProvider>
-  );
+  const renderForm = (mocks = []) =>
+    render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <LoginForm />
+      </MockedProvider>
+    );
 
   const fillForm = async (email: string, password: string) => {
     await act(async () => {
@@ -100,6 +101,6 @@ describe('LoginForm', () => {
     await act(async () => {
       fireEvent.click(screen.getByText(/Forgot Password\?/i));
     });
-    expect(mockPush).toHaveBeenCalledWith('/login/forgot-password');
+    expect(mockPush).toHaveBeenCalledWith('/forgot-password');
   });
 });

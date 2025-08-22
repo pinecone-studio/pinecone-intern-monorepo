@@ -7,6 +7,7 @@ const buildUpdateData = (fields: {
   email?: string | null;
   dateOfBirth?: string | null;
   genderPreferences?: string | null;
+  gender?: string | null;
   bio?: string | null;
   interests?: string[] | null;
   profession?: string | null;
@@ -32,6 +33,7 @@ export const updateProfile: MutationResolvers['updateProfile'] = async (
     email,
     dateOfBirth,
     genderPreferences,
+    gender,
     bio,
     interests,
     profession,
@@ -52,6 +54,7 @@ export const updateProfile: MutationResolvers['updateProfile'] = async (
     email,
     dateOfBirth,
     genderPreferences,
+    gender,
     bio,
     interests,
     profession,

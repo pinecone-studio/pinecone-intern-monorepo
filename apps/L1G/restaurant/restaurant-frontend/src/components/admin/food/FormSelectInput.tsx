@@ -48,6 +48,7 @@ export const SelectCategoryInput = ({ control }: SelectInputProps) => {
         type="button"
         className="w-full rounded-sm px-2 py-1.5 text-left text-sm hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
         data-testid={`create-food-category-option-${category?.categoryId}`}
+        data-cy={`create-food-category-option-${category?.categoryName}`}
         onClick={() => handleCategorySelect(category?.categoryId, onChange)}
         role="option"
         aria-selected
@@ -67,6 +68,7 @@ export const SelectCategoryInput = ({ control }: SelectInputProps) => {
             <FormControl>
               <button
                 type="button"
+                data-cy="create-food-category-select"
                 data-testid="create-food-category-select"
                 className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 onClick={() => setIsOpen(!isOpen)}
@@ -91,7 +93,7 @@ export const SelectCategoryInput = ({ control }: SelectInputProps) => {
               </div>
             )}
           </div>
-          <FormMessage />
+          <FormMessage data-cy="create-food-category-select-error-message" />
         </FormItem>
       )}
     />

@@ -8,6 +8,15 @@ type RadioInputProps = {
   control: Control<z.infer<typeof formSchemaFood>>;
 };
 
+const statusOptions = [
+  { id: 'active', label: 'Идэвхитэй', value: 'Идэвхитэй' },
+  {
+    id: 'inactive',
+    label: 'Идэвхигүй',
+    value: 'Идэвхигүй',
+  },
+];
+
 export const RadioInput = ({ control }: RadioInputProps) => {
   return (
     <FormField
@@ -17,22 +26,18 @@ export const RadioInput = ({ control }: RadioInputProps) => {
         <FormItem className="space-y-3">
           <FormControl>
             <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="flex justify-center items-center">
-              <FormItem>
-                <div className="flex justify-center items-center gap-3">
-                  <FormControl>
-                    <RadioGroupItem data-testid="create-food-activestatus-input" value="Идэвхитэй" />
-                  </FormControl>
-                  <FormLabel className="font-normal">Идэвхитэй</FormLabel>
-                </div>
-              </FormItem>
-              <FormItem>
-                <div className="flex justify-center items-center gap-3">
-                  <FormControl>
-                    <RadioGroupItem data-testid="create-food-inactivestatus-input" value="Идэвхигүй" />
-                  </FormControl>
-                  <FormLabel className="font-normal">Идэвхигүй</FormLabel>
-                </div>
-              </FormItem>
+              {statusOptions.map((option, i) => (
+                <FormItem key={i}>
+                  <div className="flex justify-center items-center gap-3">
+                    <FormControl>
+                      <RadioGroupItem data-testid={`food-status-${option.id}`} value={option.value} checked={option.value === field.value} />
+                    </FormControl>
+                    <FormLabel data-testid="food-status-label" className="font-normal">
+                      {option.label}
+                    </FormLabel>
+                  </div>
+                </FormItem>
+              ))}
             </RadioGroup>
           </FormControl>
         </FormItem>
