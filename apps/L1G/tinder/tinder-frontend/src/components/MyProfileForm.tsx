@@ -7,16 +7,18 @@ import { z } from 'zod';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { MultiSelect } from './MultiSelect';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { profileFormSchema } from './schema/ProfileFormSchema';
-import { NameEmailFields } from './NameEmailFields';
+import { NameGenderPreferenceFields } from './NameGenderPreferenceFields';
 import { BirthDateField } from './BirthDateField';
 import { Separator } from '@/components/ui/separator';
 import { ProfessionSchoolFields } from './ProfessionSchoolFields';
-import { useGetAllInterestsQuery } from '@/generated';
+import { UpdateProfileDocument, useGetAllInterestsQuery } from '@/generated';
+import { useMutation } from '@apollo/client';
+
 
 interface MyProfileFormProps {
   user?: {
+    id?: string;
     name?: string;
     email?: string;
     gender?: string;
@@ -45,8 +47,29 @@ export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user }) => {
     },
   });
 
+const [updateProfile, { loading: updating, error: updateError }] = useMutation(UpdateProfileDocument);
+
   const onSubmit = async (data: z.infer<typeof profileFormSchema>) => {
     console.log('Updated profile data:', data);
+    try {
+      const res = await updateProfile({
+        variables: {
+          updateProfileId: user?.id,
+          name: data.name,
+          bio: data.bio,
+          dateOfBirth: data.birthDate.toISOString().split("T")[0],
+          genderPreferences: data.genderPreference,
+          gender: data.gender,
+          profession: data.profession,
+          schoolWork: data.school,
+          images: [],
+        },
+      });
+
+      console.log("Profile updated:", res.data.updateProfile);
+    } catch (err) {
+      console.error("Update failed:", err);
+    }
   };
 
   const { data, loading, error } = useGetAllInterestsQuery();
@@ -77,7 +100,7 @@ export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user }) => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-6">
-            <NameEmailFields control={form.control} />
+            <NameGenderPreferenceFields control={form.control} />
             <BirthDateField control={form.control} />
 
             <FormField
@@ -109,8 +132,9 @@ export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user }) => {
             />
             <ProfessionSchoolFields control={form.control} />
             <Button type="submit" className="rounded-md w-fit py-2 px-4 bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
-              Update Profile
+              {updating ? "Updating..." : "Update Profile"}
             </Button>
+             {updateError && <p className="text-red-500">{updateError.message}</p>}
           </div>
         </form>
       </Form>

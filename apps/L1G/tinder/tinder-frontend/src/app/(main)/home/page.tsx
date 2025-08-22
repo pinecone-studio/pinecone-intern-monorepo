@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 import { UserProfile } from '@/app/page';
 import { Header } from '@/components/Header';
 import TinderCard from '@/components/TinderCard';
-import { useDislikeMutation, useGetusersQuery, useLikeMutation } from '@/generated';
+import { useDislikeMutation, useGetusersQuery } from '@/generated';
 
 const HomePage = () => {
   const { data, loading, error } = useGetusersQuery();
-  const [like] = useLikeMutation();
+  // const [like] = useLikeMutation();
   const [dislike] = useDislikeMutation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);

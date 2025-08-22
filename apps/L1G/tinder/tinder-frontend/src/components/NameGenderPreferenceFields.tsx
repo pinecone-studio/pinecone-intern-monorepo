@@ -3,13 +3,21 @@ import { Input } from '@/components/ui/input';
 import { Control } from 'react-hook-form';
 import { profileFormSchema } from './schema/ProfileFormSchema';
 import z from 'zod';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
-type NameEmailFieldsProps = {
+
+type NameGenderPreferenceFieldsProps = {
   control: Control<z.infer<typeof profileFormSchema>>;
 };
 
-export const NameEmailFields = ({ control }: NameEmailFieldsProps) => {
+export const NameGenderPreferenceFields = ({ control }: NameGenderPreferenceFieldsProps) => {
   return (
     <div className="flex gap-6">
       <div className="space-y-2 w-1/2">
@@ -35,7 +43,13 @@ export const NameEmailFields = ({ control }: NameEmailFieldsProps) => {
             <FormItem>
               <FormLabel htmlFor="genderPreference">Gender Preference</FormLabel>
               <FormControl>
-                <Select value={field.value} onValueChange={field.onChange}>
+                <Select
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  onOpenChange={(open) => {
+                    if (!open) field.onBlur(); // ✅ simulate blur when dropdown closes
+                  }}
+                >
                   <SelectTrigger id="genderPreference" className="w-[240px]">
                     <SelectValue placeholder="Select gender preference" />
                   </SelectTrigger>
