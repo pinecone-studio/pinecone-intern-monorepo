@@ -108,9 +108,13 @@ export const ProfileImages = ({ onSuccess, onBack, updateUserData }: ProfileImag
           <p className="font-sans font-[400] text-[14px] text-gray-500">Please choose an image that represents you.</p>
         </div>
 
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 gap-2 md:gap-4 lg:gap-6">
           {uploadedImages.map((image, index) => (
-            <div key={index} data-testid={`image-slot-${index}`} className="relative w-[197px] h-[296px] bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center">
+            <div
+              key={index}
+              data-testid={`image-slot-${index}`}
+              className="relative w-[100px] h-[150px] md:w-[157px] md:h-[226px] lg:w-[197px] lg:h-[296px] bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center"
+            >
               {isUploading[index] ? (
                 <Loader2 className="animate-spin w-8 h-8 text-gray-500" aria-label="Uploading" data-testid={`loader-${index}`} />
               ) : image ? (
@@ -132,10 +136,10 @@ export const ProfileImages = ({ onSuccess, onBack, updateUserData }: ProfileImag
           ))}
         </div>
 
-        <div className="w-full">
+        <div className="w-full flex justify-center items-center ">
           <Button
             variant="outline"
-            className="py-2 flex gap-2 relative w-full h-[36px] font-[400] text-md font-sans border border-red-400 text-[#18181B] hover:bg-red-50 rounded-full bg-transparent overflow-hidden"
+            className="w-[300px] md:w-full py-2 flex gap-2 relative h-[36px] font-[400] text-md font-sans border border-red-400 text-[#18181B] hover:bg-red-50 rounded-full bg-transparent overflow-hidden"
             aria-label="Upload image"
           >
             <Plus size={16} color="#E4345A" />
@@ -144,7 +148,7 @@ export const ProfileImages = ({ onSuccess, onBack, updateUserData }: ProfileImag
           </Button>
         </div>
 
-        <div className="w-full h-[36px] flex justify-between items-center">
+        <div className="w-[300px] md:w-full h-[36px] flex justify-between items-center">
           <Button onClick={onBack} variant="outline" className="px-4 py-2 text-[14px] font-[400] border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-full bg-transparent">
             Back
           </Button>

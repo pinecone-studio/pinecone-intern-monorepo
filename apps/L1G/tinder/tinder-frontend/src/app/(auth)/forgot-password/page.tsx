@@ -1,7 +1,7 @@
 'use client';
 import { ForgetPassword } from '@/components/ForgetPassword';
 import { MainHeader } from '@/components/MainHeader';
-import { UserData } from '../../signup/page';
+import { UserData } from '../signup/page';
 
 const ForgotPasswordPage = () => {
   const updateUserData: (_: Partial<UserData>) => void = () => {

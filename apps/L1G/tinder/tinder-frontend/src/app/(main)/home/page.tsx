@@ -11,7 +11,7 @@ const HomePage = () => {
   const [dislike] = useDislikeMutation();
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const currentUserId = '689453c9fb642555405b451c';
+  const currentUserId = '68a7dd5a3435c832c6c97b7d';
   console.log(data, 'data');
 
   const handleLike = async (profileId: string) => {

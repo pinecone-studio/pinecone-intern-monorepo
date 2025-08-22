@@ -102,7 +102,7 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
         <ProfileInputField control={form.control} name="name" label="Name" placeholder="Enter your name" testId="profile-name-input" />
         <ProfileInputField control={form.control} name="bio" label="Bio" placeholder="Tell us about yourself" testId="profile-bio-input" />
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="interest"
           data-testid="interest"
@@ -115,7 +115,7 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         <ProfileInputField control={form.control} name="profession" label="Profession" placeholder="Enter your profession" testId="profile-profession-input" />
         <ProfileInputField control={form.control} name="work" label="School/Work" placeholder="What do you do?" testId="profile-work-input" />
