@@ -2,12 +2,14 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import MatchDialogClose from '@/components/MatchDialogClose';
 
-jest.mock('@/components/ItsAmAtch', () => (props: any) => {
-  return (
+jest.mock('@/components/ItsAmAtch', () => {
+  const MockMatch = (props: any) => (
     <div data-testid="match-component">
       Match Component<button onClick={props.onClose}>Close</button>
     </div>
   );
+  MockMatch.displayName = 'MockMatch';
+  return MockMatch;
 });
 
 describe('MatchDialogClose', () => {

@@ -11,5 +11,6 @@ const MatchDialogClose: React.FC<MatchDialogCloseProps> = ({ onClose }) => (
     </div>
   </div>
 );
+MatchDialogClose.displayName = 'MatchDialogClose';
 
 export default MatchDialogClose;
