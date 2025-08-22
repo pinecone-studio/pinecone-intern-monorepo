@@ -9,29 +9,67 @@ import {
 export const userMutations = {
   createUser: async (
     _: ResolversParentTypes['Mutation'], 
-    { email, name }: MutationCreateUserArgs
+    { email, fullName, password, role, phone }: MutationCreateUserArgs
   ) => {
-    // Note: I noticed a mismatch - your mutation uses 'name' but creates with different fields
-    // You may need to adjust based on your actual User model structure
-    const user = new User({ email, name });
-    return await user.save();
+    try {
+      // Check if user already exists
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        throw new Error('User with this email already exists');
+      }
+
+      // Create new user
+      const user = new User({ 
+        email, 
+        fullName,
+        password, 
+        role: role || 'USER',
+        phone 
+      });
+      
+      const savedUser = await user.save();
+      return savedUser;
+    } catch (error) {
+      console.error('Error creating user:', error);
+      throw error;
+    }
   },
   
   updateUser: async (
     _: ResolversParentTypes['Mutation'], 
-    { _id, name, email }: MutationUpdateUserArgs
+    { _id, fullName, email, role, phone }: MutationUpdateUserArgs
   ) => {
-    const updateFields: Partial<{ name?: string; email?: string }> = {};
-    if (name !== undefined) updateFields.name = name;
-    if (email !== undefined) updateFields.email = email;
-    
-    return await User.findByIdAndUpdate(_id, updateFields, { new: true });
+    try {
+      const updateFields: Partial<{ fullName?: string; email?: string; role?: string; phone?: string }> = {};
+      if (fullName !== undefined) updateFields.fullName = fullName;
+      if (email !== undefined) updateFields.email = email;
+      if (role !== undefined) updateFields.role = role;
+      if (phone !== undefined) updateFields.phone = phone;
+      
+      const updatedUser = await User.findByIdAndUpdate(_id, updateFields, { new: true });
+      if (!updatedUser) {
+        throw new Error('User not found');
+      }
+      return updatedUser;
+    } catch (error) {
+      console.error('Error updating user:', error);
+      throw error;
+    }
   },
   
   deleteUser: async (
     _: ResolversParentTypes['Mutation'], 
     { _id }: MutationDeleteUserArgs
   ) => {
-    return await User.findByIdAndDelete(_id);
+    try {
+      const deletedUser = await User.findByIdAndDelete(_id);
+      if (!deletedUser) {
+        throw new Error('User not found');
+      }
+      return deletedUser;
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      throw error;
+    }
   },
 };
