@@ -14,7 +14,7 @@ import CreatePost from './(main)/create/page';
 
 // };
 const client = new ApolloClient({
-  uri: "http://localhost:4200/api/graphql",
+  uri: process.env.BACK_URL ?? "http://localhost:4200/api/graphql",
   cache: new InMemoryCache(),
 });
 

@@ -27,10 +27,80 @@ export type LoginMutationVars = {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
+function getTokenAndUserId() {
+  if (typeof window === 'undefined') return { token: null, userId: undefined };
+  const token = window.localStorage.getItem('token');
+  if (!token) return { token: null, userId: undefined };
+  try {
+    const decodedToken: DecodedTokenType = jwtDecode(token);
+    return { token, userId: decodedToken?.userId };
+  } catch {
+    console.error('Invalid token');
+    return { token: null, userId: undefined };
+  }
+}
+
+function normalizeUser(data: any): AuthUser {
+  return {
+    fullName: data.fullName,
+    userName: data.userName,
+    isPrivate: data.isPrivate ?? false,
+    profileImage: data.profileImage ?? '',
+    bio: data.bio ?? '',
+    followers: data.followers.map((f: any) => ({
+      _id: f._id,
+      userName: f.userName,
+      profileImage: f.profileImage ?? '',
+    })),
+    following: data.following.map((f: any) => ({
+      _id: f._id,
+      userName: f.userName,
+      profileImage: f.profileImage ?? '',
+    })),
+    posts: data.posts.map((p: any) => ({
+      _id: p._id,
+      image: Array.isArray(p.image) ? p.image[0] ?? '' : p.image,
+      text: p.description ?? '',
+      createdAt: p.createdAt,
+      likes: p.likes.map((like: any) => ({
+        _id: like._id,
+        user: {
+          _id: like.userId._id,
+          userName: like.userId.userName,
+          profileImage: like.userId.profileImage ?? '',
+        },
+      })),
+      comments: p.comments.map((comment: any) => ({
+        _id: comment._id,
+        text: comment.text,
+        createdAt: comment.createdAt,
+        user: {
+          _id: comment.userId._id,
+          userName: comment.userId.userName,
+          profileImage: comment.userId.profileImage ?? '',
+        },
+      })),
+    })),
+  };
+}
+
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<AuthUser | null>(null);
 
   const [executeLogin] = useMutation<LoginMutationResult, LoginMutationVars>(LOGIN_MUTATION);
+
+  const { userId } = getTokenAndUserId();
+
+  const { data, loading } = useGetUserQuery({
+    variables: { id: userId || '' },
+    skip: !userId,
+  });
+
+  useEffect(() => {
+    if (data?.getUser) {
+      setUser(normalizeUser(data.getUser));
+    }
+  }, [data]);
 
   const login = async (email: string, password: string) => {
     const response = await executeLogin({ variables: { input: { email, password } } });
@@ -43,74 +113,6 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     setUser(loggedInUser);
   };
 
-  // Refresh hiih uyed ene ajillah yum.
-    const token = localStorage.getItem('token');
-    let userId: string | undefined;
-
-    if (token) {
-      try {
-        const decodedToken: DecodedTokenType = jwtDecode(token);
-        userId = decodedToken?.userId;
-      } catch (err) {
-        console.error('Invalid token');
-      }
-    }
-
-    const { data, loading} = useGetUserQuery({
-      variables: { id: userId || '' },
-      skip: !userId,
-    });
-
-    useEffect(() => {
-      if (data?.getUser) {
-        const normalizedUser: AuthUser = {
-          fullName: data.getUser.fullName,
-          userName: data.getUser.userName,
-          isPrivate: data.getUser.isPrivate ?? false,
-          profileImage: data.getUser.profileImage ?? '',
-          bio: data.getUser.bio ?? '',
-          followers: data.getUser.followers.map((f) => ({
-            _id: f._id,
-            userName: f.userName,
-            profileImage: f.profileImage ?? '',
-          })),
-          following: data.getUser.following.map((f) => ({
-            _id: f._id,
-            userName: f.userName,
-            profileImage: f.profileImage ?? '',
-          })),
-          posts: data.getUser.posts.map((p) => ({
-            _id: p._id,
-            image: Array.isArray(p.image) ? p.image[0] ?? '' : p.image,
-            text: p.description ?? '',
-            createdAt: p.createdAt,
-            likes: p.likes.map((like) => ({
-              _id: like._id,
-              user: {
-                _id: like.userId._id,
-                userName: like.userId.userName,
-                profileImage: like.userId.profileImage ?? '',
-              },
-            })),
-            comments: p.comments.map((comment) => ({
-              _id: comment._id,
-              text: comment.text,
-              createdAt: comment.createdAt,
-              user: {
-                _id: comment.userId._id,
-                userName: comment.userId.userName,
-                profileImage: comment.userId.profileImage ?? '',
-              },
-            })),
-          })),
-        };
-
-        setUser(normalizedUser);
-      }
-    }, [data]);
-
-    if (loading) return <p>Loading...</p>;
-
   const logout = () => {
     setUser(null);
     if (typeof window !== 'undefined') {
@@ -119,6 +121,8 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   };
 
   const value: AuthContextValue = { user, login, logout };
+
+  if (loading) return <p>Loading...</p>;
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
