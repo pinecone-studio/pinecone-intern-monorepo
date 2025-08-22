@@ -56,7 +56,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
       }
     }
 
-    const { data, loading, error } = useGetUserQuery({
+    const { data, loading} = useGetUserQuery({
       variables: { id: userId || '' },
       skip: !userId,
     });
@@ -110,7 +110,6 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }, [data]);
 
     if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error fetching user</p>;
 
   const logout = () => {
     setUser(null);

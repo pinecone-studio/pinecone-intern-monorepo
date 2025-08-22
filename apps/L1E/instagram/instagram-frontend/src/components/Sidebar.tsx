@@ -22,7 +22,7 @@ import SearchResults from './search/Search';
 
 export const Sidebar: React.FC = () => {
 
-  const { handlePostClick, postStep } = usePost();
+  const { handlePostClick} = usePost();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const handleSearchClick = () => {
     setIsSearchOpen(!isSearchOpen);
