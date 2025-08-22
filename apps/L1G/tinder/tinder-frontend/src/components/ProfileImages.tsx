@@ -9,10 +9,11 @@ import { UserData } from '@/app/(auth)/signup/page';
 
 type ProfileImagesProps = {
   onSuccess: () => void;
+  onBack: () => void;
   updateUserData: (_: Partial<UserData>) => void;
 };
 
-export const ProfileImages = ({ onSuccess, updateUserData }: ProfileImagesProps) => {
+export const ProfileImages = ({ onSuccess, onBack, updateUserData }: ProfileImagesProps) => {
   const [uploadedImages, setUploadedImages] = useState<string[]>(['', '', '', '', '', '']);
   const [isUploading, setIsUploading] = useState<boolean[]>([false, false, false, false, false, false]);
   const [uploadImagesMutation, { loading }] = useUploadImagesMutation();
@@ -144,7 +145,7 @@ export const ProfileImages = ({ onSuccess, updateUserData }: ProfileImagesProps)
         </div>
 
         <div className="w-full h-[36px] flex justify-between items-center">
-          <Button variant="outline" className="px-4 py-2 text-[14px] font-[400] border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-full bg-transparent">
+          <Button onClick={onBack} variant="outline" className="px-4 py-2 text-[14px] font-[400] border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-full bg-transparent">
             Back
           </Button>
           <Button onClick={handleNext} disabled={loading} className="px-4 py-2 text-[14px] font-[400] bg-[#E11D48E5] bg-opacity-90 hover:bg-red-500 text-white rounded-full">
@@ -155,3 +156,5 @@ export const ProfileImages = ({ onSuccess, updateUserData }: ProfileImagesProps)
     </div>
   );
 };
+
+ProfileImages.displayName = 'ProfileImages';

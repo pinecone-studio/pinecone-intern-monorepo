@@ -46,6 +46,7 @@ interface MultiSelectProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
 }
 
 export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
+  // eslint-disable-next-line no-unused-vars
   ({ options, value = [], onValueChange, variant = 'default', placeholder = 'Select options', maxCount = 3, modalPopover = false, className, ...props }, ref) => {
     const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);
 

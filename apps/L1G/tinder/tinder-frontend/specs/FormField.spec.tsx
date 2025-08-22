@@ -4,7 +4,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useGetAllInterestsQuery, useUpdateProfileMutation } from '@/generated';
-import { ProfileForm } from '@/components/FormFIeld';
+import { ProfileForm } from '@/components/FormField';
 
 // Mock GraphQL hooks
 const mockUpdateProfile = jest.fn();
@@ -91,17 +91,10 @@ describe('ProfileForm', () => {
 
     render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userData} updateUserData={mockUpdateUserData} />);
 
-    // Fill in form fields
     fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'New Name' } });
     fireEvent.change(screen.getByLabelText(/Bio/i), { target: { value: 'New bio' } });
     fireEvent.change(screen.getByLabelText(/Profession/i), { target: { value: 'New profession' } });
     fireEvent.change(screen.getByLabelText(/School\/Work/i), { target: { value: 'New school/work' } });
-
-    // Select interests - simulate MultiSelect change by firing change event on the hidden input or call onChange handler
-    // Since MultiSelect is custom, you can either:
-    // - mock MultiSelect component, or
-    // - simulate onValueChange event by calling field.onChange directly
-    // For simplicity, skipping multi-select simulation here (or if accessible, test with MultiSelect separately)
 
     fireEvent.click(screen.getByRole('button', { name: /Next/i }));
 
@@ -115,15 +108,14 @@ describe('ProfileForm', () => {
         schoolWork: 'New school/work',
       });
 
-      // updateProfile mutation called with userData values (note: your component uses userData values in variables)
       expect(mockUpdateProfile).toHaveBeenCalledWith({
         variables: {
           updateProfileId: userData.id,
-          name: userData.name,
-          bio: userData.bio,
-          interests: userData.interests,
-          profession: userData.profession,
-          schoolWork: userData.schoolWork,
+          name: 'New Name',
+          bio: 'New bio',
+          interests: [],
+          profession: 'New profession',
+          schoolWork: 'New school/work',
         },
       });
 
@@ -179,12 +171,10 @@ describe('ProfileForm', () => {
   });
 
   it('displays serverError message when updateProfile returns falsy', async () => {
-    // Mock mutation to return falsy response
     mockUpdateProfile.mockResolvedValue({ data: { updateProfile: null } });
 
     render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userData} updateUserData={mockUpdateUserData} />);
 
-    // Fill at least required field
     fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'New Name' } });
 
     fireEvent.click(screen.getByRole('button', { name: /Next/i }));
@@ -193,7 +183,15 @@ describe('ProfileForm', () => {
       expect(screen.getByText(/Update failed/i)).toBeInTheDocument();
     });
 
-    // onSuccess should NOT be called
     expect(mockOnSuccess).not.toHaveBeenCalled();
+  });
+
+  it('displays server error when user ID is missing', async () => {
+    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={{ email: 'test@example.com' }} updateUserData={mockUpdateUserData} />);
+    fireEvent.change(screen.getByTestId('profile-name-input'), { target: { value: 'John Doe' } });
+    fireEvent.submit(screen.getByTestId('profile-form'));
+    await waitFor(() => {
+      expect(screen.getByText('User ID is missing.')).toBeInTheDocument();
+    });
   });
 });

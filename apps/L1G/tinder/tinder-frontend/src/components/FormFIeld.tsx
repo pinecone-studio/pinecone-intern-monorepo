@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 'use client';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -24,6 +25,15 @@ const formSchema = z.object({
   work: z.string().optional(),
 });
 
+const prepareProfileVariables = (values: z.infer<typeof formSchema>, userId: string) => ({
+  updateProfileId: userId,
+  name: values.name,
+  bio: values.bio ?? '',
+  interests: values.interest ?? [],
+  profession: values.profession ?? '',
+  schoolWork: values.work ?? '',
+});
+
 export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: ProfileFormProps) => {
   const [serverError, setServerError] = useState<string | null>(null);
   const [updateProfile] = useUpdateProfileMutation();
@@ -39,27 +49,32 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
   });
   const { data, loading, error } = useGetAllInterestsQuery();
 
+  const handleUpdateProfile = async (variables: ReturnType<typeof prepareProfileVariables>) => {
+    const response = await updateProfile({ variables });
+    return response.data?.updateProfile;
+  };
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    updateUserData({ name: values.name, bio: values.bio, interests: values.interest, profession: values.profession, schoolWork: values.work });
+    updateUserData({
+      name: values.name,
+      bio: values.bio,
+      interests: values.interest,
+      profession: values.profession,
+      schoolWork: values.work,
+    });
     setServerError(null);
 
+    if (!userData.id) {
+      setServerError('User ID is missing.');
+      return;
+    }
+
     try {
-      if (userData.id) {
-        const response = await updateProfile({
-          variables: {
-            updateProfileId: userData.id,
-            name: values.name,
-            bio: values.bio ?? '',
-            interests: values.interest ?? [],
-            profession: values.profession ?? '',
-            schoolWork: values.work ?? '',
-          },
-        });
-        if (response.data?.updateProfile) {
-          onSuccess();
-        } else {
-          setServerError('Update failed');
-        }
+      const success = await handleUpdateProfile(prepareProfileVariables(values, userData.id));
+      if (success) {
+        onSuccess();
+      } else {
+        setServerError('Update failed');
       }
     } catch (e) {
       console.error('Update failed:', e);
@@ -90,6 +105,7 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
         <FormField
           control={form.control}
           name="interest"
+          data-testid="interest"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Interest</FormLabel>
@@ -109,8 +125,8 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
             Back
           </Button>
           {serverError && <p className="text-red-500 mt-2">{serverError}</p>}
-          <Button className="bg-[#E11D48E5] w-16 h-9 rounded-full py-2 px-4 hover:bg-[#eb5e7de5]" type="submit">
-            Next
+          <Button className="bg-[#E11D48E5] w-16 h-9 rounded-full py-2 px-4 hover:bg-[#eb5e7de5]" type="submit" disabled={form.formState.isSubmitting} data-testid="submit-button">
+            {form.formState.isSubmitting ? 'Submitting...' : 'Next'}
           </Button>
         </div>
       </form>

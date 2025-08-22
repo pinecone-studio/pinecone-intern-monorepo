@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import { GenderSelect } from '@/components/GenderSelect';
 
 const mockOnSuccess = jest.fn();
-const mockOnBack = jest.fn();
 const mockUpdateUserData = jest.fn();
 
 jest.mock('next/navigation', () => ({
@@ -12,7 +11,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 jest.mock('@/components/ui/select', () => ({
-  Select: ({ _, value, onValueChange }: any) => (
+  Select: ({ value, onValueChange }: any) => (
     <div>
       <button data-testid="select-trigger">{value || 'Select'}</button>
       <div data-testid="select-options">
@@ -44,7 +43,7 @@ describe('GenderSelect', () => {
   });
 
   it('renders all static content correctly', () => {
-    render(<GenderSelect onSuccess={mockOnSuccess} onBack={mockOnBack} />);
+    render(<GenderSelect onSuccess={mockOnSuccess} updateUserData={mockUpdateUserData} />);
     expect(screen.getByText('Who are you interested in?')).toBeInTheDocument();
     expect(screen.getByText('Pick the one that feels right for you!')).toBeInTheDocument();
     expect(screen.getByTestId('select-trigger')).toBeInTheDocument();
@@ -52,29 +51,38 @@ describe('GenderSelect', () => {
   });
 
   it('initially renders with Next button disabled', () => {
-    render(<GenderSelect onSuccess={mockOnSuccess} onBack={mockOnBack} />);
+    render(<GenderSelect onSuccess={mockOnSuccess} updateUserData={mockUpdateUserData} />);
     expect(screen.getByTestId('Next-Button')).toBeDisabled();
   });
 
   it('does not navigate when Next is clicked without selection', () => {
-    render(<GenderSelect onSuccess={mockOnSuccess} onBack={mockOnBack} />);
+    render(<GenderSelect onSuccess={mockOnSuccess} updateUserData={mockUpdateUserData} />);
     fireEvent.click(screen.getByTestId('Next-Button'));
-    expect(mockPush).not.toHaveBeenCalled();
+    expect(mockOnSuccess).not.toHaveBeenCalled();
   });
 
-  it.each([
-    ['male', 'Male'],
-    ['female', 'Female'],
-    ['both', 'Both'],
-  ])('enables Next button when %s is selected', (testId: string) => {
-    render(<GenderSelect onSuccess={mockOnSuccess} onBack={mockOnBack} />);
-    fireEvent.click(screen.getByTestId(`option-${testId}`));
+  it('enables Next button when Male is selected', () => {
+    render(<GenderSelect onSuccess={mockOnSuccess} updateUserData={mockUpdateUserData} />);
+    fireEvent.click(screen.getByTestId('option-male'));
     expect(screen.getByTestId('Next-Button')).not.toBeDisabled();
   });
 
-  it('logs selected interest when Next is clicked', () => {
-    const consoleSpy = jest.spyOn(console, 'log');
-    render(<GenderSelect onSuccess={mockOnSuccess} onBack={mockOnBack} />);
+  it('enables Next button when Female is selected', () => {
+    render(<GenderSelect onSuccess={mockOnSuccess} updateUserData={mockUpdateUserData} />);
+    fireEvent.click(screen.getByTestId('option-female'));
+    expect(screen.getByTestId('Next-Button')).not.toBeDisabled();
+  });
+
+  it('enables Next button when Both is selected', () => {
+    render(<GenderSelect onSuccess={mockOnSuccess} updateUserData={mockUpdateUserData} />);
+    fireEvent.click(screen.getByTestId('option-both'));
+    expect(screen.getByTestId('Next-Button')).not.toBeDisabled();
+  });
+
+  it('logs selected interest and calls onSuccess & updateUserData when Next is clicked', () => {
+    const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+    render(<GenderSelect onSuccess={mockOnSuccess} updateUserData={mockUpdateUserData} />);
+
     fireEvent.click(screen.getByTestId('option-both'));
     fireEvent.click(screen.getByTestId('Next-Button'));
 
@@ -83,19 +91,5 @@ describe('GenderSelect', () => {
     expect(mockUpdateUserData).toHaveBeenCalledWith({ genderPreferences: 'Both' });
 
     consoleSpy.mockRestore();
-  });
-
-  it('updates selectedInterest state when an option is clicked', () => {
-    render(<GenderSelect onSuccess={mockOnSuccess} updateUserData={jest.fn()} />);
-
-    const optionMale = screen.getByTestId('option-male');
-    fireEvent.click(optionMale);
-
-    // Clicking Next should log 'Male' and enable onSuccess
-    const nextBtn = screen.getByTestId('Next-Button');
-    fireEvent.click(nextBtn);
-
-    // This indirectly confirms state was updated
-    expect(mockOnSuccess).toHaveBeenCalled();
   });
 });

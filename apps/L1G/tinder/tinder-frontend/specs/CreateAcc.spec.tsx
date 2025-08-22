@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React from 'react';
 import { CreateAccount } from '@/components/CreateAcc';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
@@ -17,6 +18,12 @@ jest.mock('@/generated', () => ({
   useVerifyOtpMutation: () => [jest.fn(), { loading: false, error: null }],
   OtpType: {
     Create: 'CREATE',
+  },
+}));
+
+jest.mock('@/components/ConfirmEmail', () => ({
+  ConfirmEmail: ({ onSuccess }: any) => {
+    return <button data-testid="confirm-email-btn" onClick={onSuccess} />;
   },
 }));
 
@@ -52,7 +59,6 @@ describe('CreateAccount Component', () => {
     userData.email = 'test@example.com';
     render(<CreateAccount onSuccess={mockOnSuccess} userData={userData} updateUserData={mockUpdateUserData} />);
 
-    // onSuccess should not be called here (only after OTP verified)
     expect(mockOnSuccess).not.toHaveBeenCalled();
   });
 
@@ -61,7 +67,6 @@ describe('CreateAccount Component', () => {
       // Intentionally empty
     });
 
-    // Mock useVerifyOtpMutation to simulate OTP success
     const mockVerifyOtp = jest.fn();
 
     jest.mock('@/generated', () => ({
@@ -72,16 +77,8 @@ describe('CreateAccount Component', () => {
       },
     }));
 
-    // We can't redefine jest.mock inside a test like this due to hoisting, so
-    // Instead, test OTP verified by simulating ConfirmEmail component calling onSuccess
-
-    // So render component with userData.email set, showing ConfirmEmail
     render(<CreateAccount onSuccess={mockOnSuccess} userData={{ email: 'test@example.com' }} updateUserData={mockUpdateUserData} />);
 
-    // Simulate OTP success by calling onSuccess prop passed to ConfirmEmail (mocked inside CreateAccount)
-    // You might need to mock ConfirmEmail or trigger whatever calls onSuccess
-
-    // For coverage, just call onSuccess manually (simulate OTP verified)
     await act(async () => {
       mockOnSuccess();
       console.log('OTP verified successfully');
@@ -119,6 +116,51 @@ describe('CreateAccount Component', () => {
       expect(mockUpdateUserData).toHaveBeenCalledWith({ email: 'test@example.com' });
       expect(screen.getByText('OTP resent successfully.')).toBeInTheDocument();
     });
+  });
+
+  it('sets error message when signup request fails', async () => {
+    mockRequestSignup.mockRejectedValue(new Error('Network Error'));
+
+    render(<CreateAccount onSuccess={mockOnSuccess} userData={userData} updateUserData={mockUpdateUserData} />);
+
+    const emailInput = screen.getByPlaceholderText('name@example.com');
+    const submitBtn = screen.getByRole('button', { name: /Continue/i });
+
+    await act(async () => {
+      fireEvent.change(emailInput, { target: { value: 'fail@example.com' } });
+      fireEvent.click(submitBtn);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Failed to resend OTP, please try again.')).toBeInTheDocument();
+    });
+  });
+
+  it('calls handleOtpSuccess when ConfirmEmail onSuccess is triggered', async () => {
+    const mockOnSuccess = jest.fn();
+    mockRequestSignup.mockResolvedValue({});
+
+    const { rerender } = render(<CreateAccount onSuccess={mockOnSuccess} userData={{ email: '' }} updateUserData={mockUpdateUserData} />);
+
+    const emailInput = screen.getByPlaceholderText('name@example.com');
+    const submitBtn = screen.getByRole('button', { name: /Continue/i });
+
+    await act(async () => {
+      fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+      fireEvent.click(submitBtn);
+    });
+
+    userData.email = 'test@example.com';
+
+    rerender(<CreateAccount onSuccess={mockOnSuccess} userData={userData} updateUserData={mockUpdateUserData} />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('confirm-email-btn')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByTestId('confirm-email-btn'));
+
+    expect(mockOnSuccess).toHaveBeenCalled();
   });
 
   it('sets error message when signup request fails', async () => {

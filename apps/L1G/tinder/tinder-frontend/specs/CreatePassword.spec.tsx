@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -139,25 +140,19 @@ describe('CreatePassword Component', () => {
   it('displays form-level error message', async () => {
     render(<CreatePassword onSuccess={mockOnSuccess} updateUserData={mockUpdateUserData} otpId="123" />);
 
-    // Manually set a root error in the form
-    // You might need to expose the form object or simulate this through a submission failure
-    // For simplicity, trigger submission and simulate server error setting a root error
     fireEvent.change(screen.getByPlaceholderText('Password'), { target: { value: 'ValidPass123' } });
     fireEvent.change(screen.getByPlaceholderText('Confirm password'), { target: { value: 'ValidPass123' } });
 
-    // Simulate a server error by mocking signup to fail with a root form error
     mockSignup.mockImplementationOnce(() => {
       throw new Error('Form-level error');
     });
 
     fireEvent.click(screen.getByRole('button', { name: /Continue/i }));
 
-    // Wait for the error message to appear
     expect(await screen.findByText(/Form-level error/i)).toBeInTheDocument();
   });
 
   it('displays form-level error message on signup failure', async () => {
-    // Simulate server returning no token → triggers serverError in component
     mockSignup.mockResolvedValue({
       data: {
         signup: {
@@ -174,13 +169,11 @@ describe('CreatePassword Component', () => {
 
     fireEvent.click(screen.getByRole('button', { name: /Continue/i }));
 
-    // This should display the generic server error message
     expect(await screen.findByText('Something went wrong.')).toBeInTheDocument();
   });
 
   it('displays loading text on submit', async () => {
-    // Mock loading state
-    mockSignup.mockImplementation(() => new Promise(() => {})); // Promise never resolves → loading true
+    mockSignup.mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 1000)));
     render(<CreatePassword onSuccess={mockOnSuccess} updateUserData={mockUpdateUserData} otpId="123" />);
 
     fireEvent.change(screen.getByPlaceholderText('Password'), { target: { value: 'ValidPass123' } });
