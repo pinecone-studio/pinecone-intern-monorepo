@@ -48,7 +48,7 @@ describe('getSomeoneProfile query', () => {
             throw 'Some non-error string';
         });
 
-        await expect(getSomeoneProfile(null, { userName })).rejects.toThrow('Failed to get profiles');
+        await expect(getSomeoneProfile(null, { userName })).rejects.toThrow('Failed to get profile');
     });
 
 });
