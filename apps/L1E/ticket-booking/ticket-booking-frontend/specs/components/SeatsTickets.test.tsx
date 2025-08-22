@@ -4,7 +4,7 @@ import { SeatsTickets } from '@/components/SeatsTickets';
 // Mock the TicketBuy component to isolate SeatsTickets testing
 jest.mock('@/components/TicketBuy', () => ({
     __esModule: true,
-    default: () => <div data-testid="ticket-buy-mock">TicketBuy Mock</div>
+    TicketBuy: () => <div data-testid="ticket-buy-mock">TicketBuy Mock</div>
 }));
 
 describe('SeatsTickets Component', () => {

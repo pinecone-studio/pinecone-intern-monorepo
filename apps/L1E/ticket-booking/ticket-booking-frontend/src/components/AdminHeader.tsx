@@ -24,16 +24,14 @@ export const AdminHeader: FC<AdminHeaderProps> = ({ activeTab, setActiveTab }) =
             <p className="text-sm text-gray-600">Welcome back!</p>
           </div>
         </div>
-
-        {/* Tabs */}
-        <div className="flex gap-4">
-          <button onClick={() => setActiveTab('ticket')} className={`px-3 py-1 ${activeTab === 'ticket' ? 'border-b border-black' : ''}`}>
-            Тасалбар
-          </button>
-          <button onClick={() => setActiveTab('cancelRequest')} className={`px-3 py-1 ${activeTab === 'cancelRequest' ? 'border-b border-black' : ''}`}>
-            Цуцлах хүсэлт
-          </button>
-        </div>
+      </div>
+      <div className="flex gap-4">
+        <button onClick={() => setActiveTab('ticket')} className={`px-3 py-1 ${activeTab === 'ticket' ? 'border-b border-black' : ''}`}>
+          Тасалбар
+        </button>
+        <button onClick={() => setActiveTab('cancelRequest')} className={`px-3 py-1 ${activeTab === 'cancelRequest' ? 'border-b border-black' : ''}`}>
+          Цуцлах хүсэлт
+        </button>
       </div>
     </header>
   );

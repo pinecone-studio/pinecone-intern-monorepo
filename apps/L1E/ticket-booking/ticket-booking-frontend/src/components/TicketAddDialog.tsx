@@ -73,7 +73,7 @@ export const TicketAddDialog = ({ ticketAddDialog, setTicketAddDialog }: TicketA
                 <button className="flex gap-2 items-center py-2 px-4 rounded-md border border-[#E4E4E7]">
                   Бусад артист нэмэх
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M8 3.33325V12.6666M3.33333 7.99992H12.6667" stroke="#09090B" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M8 3.33325V12.6666M3.33333 7.99992H12.6667" stroke="#09090B" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>
               </div>

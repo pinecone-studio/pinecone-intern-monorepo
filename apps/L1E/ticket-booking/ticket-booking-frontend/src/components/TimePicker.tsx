@@ -23,7 +23,7 @@ export const TimePicker = () => {
 
       <div className="absolute top-[14px] right-4 pointer-events-none">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" fill="none">
-          <path d="M4 6L8 10L12 6" stroke="#09090B" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M4 6L8 10L12 6" stroke="#09090B" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
     </div>

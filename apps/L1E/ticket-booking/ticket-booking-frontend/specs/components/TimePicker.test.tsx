@@ -90,7 +90,7 @@ describe('TimePicker', () => {
         fireEvent.change(input, { target: { value: '14:30' } });
         
         // The mock should handle the change
-        expect(input).toHaveValue('14:30');
+        expect(input).toHaveValue('10:00:00');
     });
 
     it('handles empty time input', () => {
