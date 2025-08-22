@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { UserProfile } from '@/app/page';
@@ -24,19 +25,50 @@ describe('ProfileSwiper', () => {
   ];
 
   it('renders the current profile with TinderCard', () => {
-    render(<ProfileSwiper profiles={mockProfiles} currentIndex={0} onLike={() => {}} onDislike={() => {}} />);
+    render(
+      <ProfileSwiper
+        profiles={mockProfiles}
+        currentIndex={0}
+        onLike={() => {
+          //intentionally left empty for test
+        }}
+        onDislike={() => {
+          //intentionally left empty for test
+        }}
+      />
+    );
 
     expect(screen.getByTestId('profile-name'));
   });
 
   it('shows "No more profiles" message when currentIndex is out of bounds', () => {
-    render(<ProfileSwiper profiles={mockProfiles} currentIndex={mockProfiles.length} onLike={() => {}} onDislike={() => {}} />);
+    render(
+      <ProfileSwiper
+        profiles={mockProfiles}
+        currentIndex={mockProfiles.length}
+        onLike={() => {
+          //intentionally left empty for test
+        }}
+        onDislike={() => {
+          //intentionally left empty for test
+        }}
+      />
+    );
     expect(screen.getByText('No more profiles'));
   });
 
   it('calls onLike with the correct profile id', () => {
     const onLike = jest.fn();
-    render(<ProfileSwiper profiles={mockProfiles} currentIndex={0} onLike={onLike} onDislike={() => {}} />);
+    render(
+      <ProfileSwiper
+        profiles={mockProfiles}
+        currentIndex={0}
+        onLike={onLike}
+        onDislike={() => {
+          // intentionally left empty for test
+        }}
+      />
+    );
 
     fireEvent.click(screen.getByTestId('like-button'));
     expect(onLike).toHaveBeenCalledWith('1');
@@ -44,7 +76,16 @@ describe('ProfileSwiper', () => {
 
   it('calls onDislike with the correct profile id', () => {
     const onDislike = jest.fn();
-    render(<ProfileSwiper profiles={mockProfiles} currentIndex={1} onLike={() => {}} onDislike={onDislike} />);
+    render(
+      <ProfileSwiper
+        profiles={mockProfiles}
+        currentIndex={1}
+        onLike={() => {
+          //intentionally left empty for test
+        }}
+        onDislike={onDislike}
+      />
+    );
 
     fireEvent.click(screen.getByTestId('dislike-button'));
     expect(onDislike).toHaveBeenCalledWith('2');
