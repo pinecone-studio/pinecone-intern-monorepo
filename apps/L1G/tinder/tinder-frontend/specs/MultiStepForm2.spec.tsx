@@ -19,7 +19,7 @@ jest.mock('@/components/HowOldAreYou', () => ({
 
 jest.mock('@/components/YourDetailsPage', () => ({
   __esModule: true,
-  default: ({ onSuccess, onBack }) => (
+  YourDetailsPage: ({ onSuccess, onBack }) => (
     <div>
       Your details
       <button data-testid="next" onClick={onSuccess}>

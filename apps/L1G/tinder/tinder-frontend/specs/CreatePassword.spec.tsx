@@ -4,8 +4,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { CreatePassword } from '@/components/CreatePassword';
 
-// Import useSignupMutation for mocking in the test
-import { useSignupMutation } from '@/generated';
+import { useSignupUserMutation } from '@/generated';
 
 const mockSignup = jest.fn();
 const mockOnSuccess = jest.fn();
@@ -13,7 +12,7 @@ const mockUpdateUserData = jest.fn();
 
 // Mock the entire module including useSignupMutation hook
 jest.mock('@/generated', () => ({
-  useSignupMutation: jest.fn(() => [mockSignup, { loading: false, error: null }]),
+  useSignupUserMutation: jest.fn(() => [mockSignup, { loading: false, error: null }]),
 }));
 
 describe('CreatePassword Component', () => {
@@ -126,7 +125,7 @@ describe('CreatePassword Component', () => {
     });
 
     // Use jest.mocked() properly with imported useSignupMutation
-    jest.mocked(useSignupMutation).mockReturnValueOnce([mockSignup, { loading: false, error: { message: 'Server error message' } }]);
+    jest.mocked(useSignupUserMutation).mockReturnValueOnce([mockSignup, { loading: false, error: { message: 'Server error message' } }]);
 
     render(<CreatePassword onSuccess={mockOnSuccess} updateUserData={mockUpdateUserData} otpId="123" />);
 
