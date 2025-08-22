@@ -150,7 +150,7 @@ describe('ConcertsList Component', () => {
             images.forEach(img => {
                 expect(img).toHaveAttribute(
                     'src',
-                    'https://cdn.pixabay.com/photo/2015/08/09/14/26/frog-881654_1280.jpg'
+                    expect.stringContaining('frog-881654_1280.jpg')
                 );
             });
         });
@@ -167,10 +167,10 @@ describe('ConcertsList Component', () => {
             });
         });
 
-        it('images lack alt text for accessibility', () => {
+        it('images have alt text for accessibility', () => {
             const images = screen.getAllByRole('img');
             images.forEach(img => {
-                expect(img).not.toHaveAttribute('alt');
+                expect(img).toHaveAttribute('alt');
             });
         });
     });

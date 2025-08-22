@@ -3,13 +3,11 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-const images = [
-  'https://as2.ftcdn.net/v2/jpg/10/62/03/07/1000_F_1062030789_yaKuxV8QuIRqIgAfTA0wYlc797DinmdH.jpg',
-  'https://media.istockphoto.com/id/1154370446/photo/funny-raccoon-in-green-sunglasses-showing-a-rock-gesture-isolated-on-white-background.jpg?s=1024x1024&w=is&k=20&c=pDRbcAdAzUMJ6c1BL3y-jfnJ9uvlDHTFSkJ6_LpZSzU=',
-  'https://as1.ftcdn.net/jpg/03/73/16/86/1000_F_373168623_jTLasKYUB5Li0g5dI6uemZywfICeiZTI.webp',
-];
+interface CarouselConcertProps {
+  images: string[];
+}
 
-export const CarouselConcert = () => {
+export const CarouselConcert = ({ images }: CarouselConcertProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const goToNext = () => {
@@ -25,9 +23,11 @@ export const CarouselConcert = () => {
   };
 
   useEffect(() => {
-    const interval = setInterval(goToNext, 5000);
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [images.length]);
 
   return (
     <div className="w-full h-[550px] relative overflow-hidden">
@@ -43,7 +43,7 @@ export const CarouselConcert = () => {
         />
       ))}
 
-      {/* ⬅ Зүүн сум */}
+      {/* Зүүн сум */}
       <button
         onClick={goToPrev}
         className="absolute top-1/2 left-6 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all duration-300 z-20"
@@ -54,7 +54,7 @@ export const CarouselConcert = () => {
         </svg>
       </button>
 
-      {/* ➡ Баруун сум */}
+      {/* Баруун сум */}
       <button
         onClick={goToNext}
         className="absolute top-1/2 right-6 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all duration-300 z-20"
@@ -65,7 +65,7 @@ export const CarouselConcert = () => {
         </svg>
       </button>
 
-      {/* ● Доод талын навигац цэгүүд */}
+      {/* Доод талын навигац цэгүүд */}
       <div className="absolute bottom-6 w-full flex justify-center gap-3 z-20">
         {images.map((_, index) => (
           <button

@@ -151,7 +151,7 @@ describe('ConcertsHome Component', () => {
             images.forEach(img => {
                 expect(img).toHaveAttribute(
                     'src',
-                    'https://cdn.pixabay.com/photo/2015/08/09/14/26/frog-881654_1280.jpg'
+                    expect.stringContaining('frog-881654_1280.jpg')
                 );
             });
         });
@@ -170,9 +170,8 @@ describe('ConcertsHome Component', () => {
 
         it('images should have alt text for accessibility', () => {
             const images = screen.getAllByRole('img');
-            // Note: Current implementation doesn't have alt text
             images.forEach(img => {
-                expect(img).not.toHaveAttribute('alt');
+                expect(img).toHaveAttribute('alt');
             });
         });
     });
