@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Settings } from "lucide-react";
 
 interface Props {
   isMine: boolean;
@@ -8,12 +9,12 @@ interface Props {
 const ProfileButtons = ({ isMine, isPrivate }: Props) => {
   if (isMine) {
     return (
-      <div className="flex gap-4">
+      <div className="flex gap-4 items-center">
         <div className="flex gap-2">
           <Button variant="secondary" className="px-[16px] font-medium hover:bg-[#F4F4F5]">Edit Profile</Button>
           <Button variant="secondary" className="px-[16px] font-medium hover:bg-[#F4F4F5]">Ad tools</Button>
         </div>
-        <Button variant="secondary" className="px-[16px] font-medium hover:bg-[#F4F4F5]">Settings</Button>
+        <Settings strokeWidth={1} />
       </div>
     );
   }
