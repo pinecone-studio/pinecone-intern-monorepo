@@ -7,16 +7,17 @@ import { useDislikeMutation, useGetusersQuery, useLikeUserMutation } from '@/gen
 import { UserProfile } from '@/app/page';
 import MatchDialogClose from '@/components/MatchDialogClose';
 import ProfileSwiper from '@/components/ProfileSwiper';
+import { useCurrentUser } from '@/app/contexts/CurrentUserContext';
 
 const HomePage = () => {
+  const { currentUser } = useCurrentUser();
+
   const { data, loading, error } = useGetusersQuery();
   const [like] = useLikeUserMutation();
   const [like] = useLikeUserMutation();
   const [dislike] = useDislikeMutation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMatched, setIsMatched] = useState(false);
-
-  const currentUserId = '68a7b842f11c5ff030e65958';
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -30,10 +31,11 @@ const HomePage = () => {
   }, [isMatched]);
 
   const handleLike = async (profileId: string) => {
+    if (!currentUser) return;
     try {
       const response = await like({
         variables: {
-          likedByUser: currentUserId,
+          likedByUser: currentUser.id,
           likeReceiver: profileId,
         },
       });
@@ -51,10 +53,11 @@ const HomePage = () => {
   };
 
   const handleDislike = async (profileId: string) => {
+    if (!currentUser) return;
     try {
       await dislike({
         variables: {
-          dislikedByUser: currentUserId,
+          dislikedByUser: currentUser.id,
           dislikeReceiver: profileId,
         },
       });
@@ -83,12 +86,15 @@ const HomePage = () => {
 
   if (error) return <div>Error loading profiles.</div>;
 
+  if (!currentUser) return <div>User not found.</div>;
+
   const profiles: UserProfile[] = (data?.getusers ?? [])
-    .filter((user): user is NonNullable<typeof user> => user !== null)
-    .map((user) => ({
-      id: user.id,
-      name: user.name,
-      images: user.images?.filter((img): img is string => img !== null) ?? [],
+    .filter((u): u is NonNullable<typeof u> => u !== null)
+    .filter((u) => u.id !== currentUser?.id)
+    .map((u) => ({
+      id: u.id,
+      name: u.name,
+      images: u.images?.filter((img): img is string => img !== null) ?? [],
     }));
 
   return (
