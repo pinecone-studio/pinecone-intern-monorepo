@@ -10,14 +10,19 @@ query Getusers {
     bio
     dateOfBirth
     genderPreferences
+    gender
+    dateOfBirth
+    name
+    bio
+    profession
+    schoolWork
+    images
     likedBy {
       id
     }
     likedTo {
       id
     }
-    profession
-    schoolWork
     matchIds {
       id
     }

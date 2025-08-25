@@ -41,9 +41,11 @@ const HomePage = () => {
       console.error('Error disliking user:', err);
     }
   };
+
   const goToNextProfile = () => {
     setCurrentIndex((prevIndex) => prevIndex + 1);
   };
+
   if (loading)
     return (
       <div className="flex justify-center items-center h-screen">
