@@ -9,6 +9,8 @@ export const eventTypeDefs = gql`
     location: String!
     createdBy: User!
     tickets: [Ticket!]
+    createdAt: String!
+    updatedAt: String!
   }
 
   type Query {

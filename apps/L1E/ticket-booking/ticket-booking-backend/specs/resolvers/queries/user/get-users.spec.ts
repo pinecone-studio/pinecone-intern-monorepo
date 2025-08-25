@@ -20,7 +20,7 @@ describe('🎯 Get Users Query', () => {
 
   test('✅ Should get all users', async () => {
     // Arrange: Seed multiple users
-    const seededUsers = await seedUsers();
+    await seedUsers();
     
     // Act: Get all users
     const users = await User.find();

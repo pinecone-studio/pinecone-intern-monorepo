@@ -145,7 +145,10 @@
       "options": {
         "commands": [
           "npx dotenv -v VERCEL_ORG_ID=team_puLVHNFpVLxyXCwomoMRkucw -v VERCEL_PROJECT_ID=prj_qPfsjESqt5wjMVPJcDshE7bjb9sn -- vercel pull --yes --environment=preview --token=wsZ8QIWpp8RAnnmDsUPc4p0m",
-          "npx env-cmd -f apps/L1E/ticket-booking/ticket-booking-backend/.env vercel build --token=wsZ8QIWpp8RAnnmDsUPc4p0m",
+          "npx nx build ticket-booking-backend --skip-nx-cache",
+          "mkdir -p .vercel/output",
+          "echo '{\"version\":3,\"functions\":{\"./api/graphql\":{\"runtime\":\"@vercel/node\"}}}' > .vercel/output/config.json",
+          "cp -r dist/apps/L1E/ticket-booking/ticket-booking-backend/.next .vercel/output/",
           "npx dotenv -v VERCEL_ORG_ID=team_puLVHNFpVLxyXCwomoMRkucw -v VERCEL_PROJECT_ID=prj_qPfsjESqt5wjMVPJcDshE7bjb9sn -- vercel --archive=tgz --prebuilt --token=wsZ8QIWpp8RAnnmDsUPc4p0m"
         ],
         "parallel": false,

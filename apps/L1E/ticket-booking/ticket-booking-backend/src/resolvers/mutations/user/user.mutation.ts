@@ -6,6 +6,22 @@ import {
   ResolversParentTypes 
 } from "../../../generated";
 
+// Helper function to build update fields
+const buildUpdateFields = (updates: {
+  fullName?: string;
+  email?: string;
+  role?: string;
+  phone?: string;
+}) => {
+  const updateFields: Partial<typeof updates> = {};
+  Object.entries(updates).forEach(([key, value]) => {
+    if (value !== undefined) {
+      updateFields[key as keyof typeof updates] = value;
+    }
+  });
+  return updateFields;
+};
+
 export const userMutations = {
   createUser: async (
     _: ResolversParentTypes['Mutation'], 
@@ -40,11 +56,7 @@ export const userMutations = {
     { _id, fullName, email, role, phone }: MutationUpdateUserArgs
   ) => {
     try {
-      const updateFields: Partial<{ fullName?: string; email?: string; role?: string; phone?: string }> = {};
-      if (fullName !== undefined) updateFields.fullName = fullName;
-      if (email !== undefined) updateFields.email = email;
-      if (role !== undefined) updateFields.role = role;
-      if (phone !== undefined) updateFields.phone = phone;
+      const updateFields = buildUpdateFields({ fullName, email, role, phone });
       
       const updatedUser = await User.findByIdAndUpdate(_id, updateFields, { new: true });
       if (!updatedUser) {

@@ -7,6 +7,8 @@ export const ticketTypeDefs = gql`
     user: User!
     price: Float!
     status: String!
+    createdAt: String!
+    updatedAt: String!
   }
 
   type Query {

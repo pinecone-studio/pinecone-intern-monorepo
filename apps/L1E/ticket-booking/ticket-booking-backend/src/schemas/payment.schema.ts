@@ -7,6 +7,7 @@ export const paymentTypeDefs = gql`
     amount: Float!
     status: String!
     createdAt: String!
+    updatedAt: String!
   }
 
   type Query {

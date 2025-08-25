@@ -1,6 +1,6 @@
 import { User } from '../../../../src/models/user.model';
 import { connectToDatabase } from '../../../../src/utils/database';
-import { clearAllUsers, insertUserDirectly } from '../../../../src/utils/seed-data';
+import { clearAllUsers } from '../../../../src/utils/seed-data';
 
 /**
  * 🧪 Test: Get User Query
@@ -20,14 +20,23 @@ describe('🎯 Get User Query', () => {
 
   test('✅ Should get user by ID', async () => {
     // Arrange: Create a user
-    const user = await insertUserDirectly();
+    const timestamp = Date.now();
+    const userData = {
+      email: `john.${timestamp}@example.com`,
+      fullName: 'John Doe',
+      password: 'password123',
+      role: 'USER' as const,
+      phone: '+1234567890'
+    };
+    const user = new User(userData);
+    const savedUser = await user.save();
     
     // Act: Get user by ID
-    const foundUser = await User.findById(user._id);
+    const foundUser = await User.findById(savedUser._id);
     
     // Assert: User should be found
     expect(foundUser).toBeDefined();
-    expect(foundUser?.email).toMatch(/john\.doe\.\d+@example\.com/);
+    expect(foundUser?.email).toBe(userData.email);
     expect(foundUser?.fullName).toBe('John Doe');
     expect(foundUser?.role).toBe('USER');
   });
@@ -45,15 +54,24 @@ describe('🎯 Get User Query', () => {
 
   test('✅ Should get user with all fields', async () => {
     // Arrange: Create a user
-    const user = await insertUserDirectly();
+    const timestamp = Date.now();
+    const userData = {
+      email: `john.${timestamp}@example.com`,
+      fullName: 'John Doe',
+      password: 'password123',
+      role: 'USER' as const,
+      phone: '+1234567890'
+    };
+    const user = new User(userData);
+    const savedUser = await user.save();
     
     // Act: Get user by ID
-    const foundUser = await User.findById(user._id);
+    const foundUser = await User.findById(savedUser._id);
     
     // Assert: All fields should be present
-    expect(foundUser?.email).toMatch(/john\.doe\.\d+@example\.com/);
+    expect(foundUser?.email).toBe(userData.email);
     expect(foundUser?.fullName).toBe('John Doe');
-    expect(foundUser?.password).toBe('hashedPassword123');
+    expect(foundUser?.password).toBe('password123');
     expect(foundUser?.role).toBe('USER');
     expect(foundUser?.phone).toBe('+1234567890');
     expect(foundUser?._id).toBeDefined();

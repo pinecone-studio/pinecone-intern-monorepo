@@ -20,8 +20,9 @@ describe('🎯 Create User Mutation', () => {
 
   test('✅ Should create user with all required fields', async () => {
     // Arrange: User data
+    const timestamp = Date.now();
     const userData = {
-      email: 'test@example.com',
+      email: `test.${timestamp}@example.com`,
       fullName: 'Test User',
       password: 'password123',
       role: 'USER' as const,
@@ -44,8 +45,9 @@ describe('🎯 Create User Mutation', () => {
 
   test('✅ Should create user with default role when not specified', async () => {
     // Arrange: User data without role
+    const timestamp = Date.now();
     const userData = {
-      email: 'test@example.com',
+      email: `test.${timestamp}@example.com`,
       fullName: 'Test User',
       password: 'password123',
       phone: '+1234567890'
@@ -61,8 +63,10 @@ describe('🎯 Create User Mutation', () => {
 
   test('❌ Should not create user with duplicate email', async () => {
     // Arrange: Create first user
+    const timestamp = Date.now();
+    const email = `test.${timestamp}@example.com`;
     const userData = {
-      email: 'test@example.com',
+      email,
       fullName: 'Test User',
       password: 'password123',
       role: 'USER' as const
@@ -93,8 +97,9 @@ describe('🎯 Create User Mutation', () => {
 
   test('❌ Should not create user with invalid role', async () => {
     // Arrange: User data with invalid role
+    const timestamp = Date.now();
     const userData = {
-      email: 'test@example.com',
+      email: `test.${timestamp}@example.com`,
       fullName: 'Test User',
       password: 'password123',
       role: 'INVALID_ROLE' // Not in enum
@@ -107,8 +112,9 @@ describe('🎯 Create User Mutation', () => {
 
   test('✅ Should create admin user', async () => {
     // Arrange: Admin user data
+    const timestamp = Date.now();
     const adminData = {
-      email: 'admin@example.com',
+      email: `admin.${timestamp}@example.com`,
       fullName: 'Admin User',
       password: 'admin123',
       role: 'ADMIN' as const,
