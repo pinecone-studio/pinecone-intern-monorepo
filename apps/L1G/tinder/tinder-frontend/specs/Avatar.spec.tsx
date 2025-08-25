@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 /*eslint-disable max-lines */
+=======
+>>>>>>> adc4e6da7 (chat garh heseg)
 import Avatar from '@/components/Avatar';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
