@@ -1,4 +1,5 @@
 /*eslint-disable max-lines */
+
 import Avatar from '@/components/Avatar';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -250,6 +251,7 @@ describe('Avatar Component', () => {
       const avatarImage = screen.getByRole('img');
       expect(avatarImage).toHaveAttribute('width', '200');
       expect(avatarImage).toHaveAttribute('height', '200');
+
     });
   });
 });

@@ -2,15 +2,15 @@ query Getusers {
 query Getusers {
   getusers {
     email
-    id
-    images
-    interests {
-      _id
-    }
+
+    genderPreferences
+    gender
+    dateOfBirth
     name
     bio
-    dateOfBirth
-    genderPreferences
+    profession
+    schoolWork
+    images
     likedBy {
       id
     }

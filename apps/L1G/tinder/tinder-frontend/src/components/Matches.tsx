@@ -1,63 +1,26 @@
 import React from 'react';
 
-const matches = [
-  {
-    name: 'Mark Zuckerberg',
-    age: 40,
-    job: 'Software Engineer',
-    avatar: '/profile.jpg',
-  },
-  {
-    name: 'Eleanor Pena',
-    age: 32,
-    job: 'Software Engineer',
-    avatar: '/profile.jpg',
-  },
-  {
-    name: 'Wade Warren',
-    age: 32,
-    job: 'Software Engineer',
-    avatar: '/profile.jpg',
-  },
-  {
-    name: 'Wade Warren',
-    age: 32,
-    job: 'Software Engineer',
-    avatar: '/profile.jpg',
-  },
-  {
-    name: 'Wade Warren ahahjad ajdjajka askjdh',
-    age: 32,
-    job: 'Software Engineer',
-    avatar: '/profile.jpg',
-  },
-];
+import clsx from 'clsx';
+import Avatar from './Avatar';
 
-interface AvatarProps {
-  user: User;
-  size?: number;
+interface User {
+  id: number;
+  name: string;
+  age: number;
+  job: string;
+  avatar: string[];
 }
-
-const Avatar: React.FC<AvatarProps> = ({ user, size = 48 }) => {
-  const hasImage = !!user.avatar?.trim();
-  const defaultAvatar = '/profile.jpg';
-
-  return (
-    <div className="relative">
-      <Image src={hasImage ? user.avatar : defaultAvatar} alt={user.name || 'Avatar'} width={size} height={size} className="rounded-full object-cover" />
-    </div>
-  );
-};
 
 interface MatchesProps {
   topRowUsers: User[];
   selectedUser: User | null;
-  onUserSelect: (user: User) => void;
+  onUserSelect: (_user: User) => void;
 }
 
 const Matches: React.FC<MatchesProps> = ({ topRowUsers, selectedUser, onUserSelect }) => {
   return (
-    <div className="w-full flex justify-center items-center">
+
+    <div className="flex items-center justify-center w-full">
       <div className="w-full max-w-[1280px] px-4 border-b border-gray-200">
         <p className="text-[20px] font-medium py-4">Matches</p>
 

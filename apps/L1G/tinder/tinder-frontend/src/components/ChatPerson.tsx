@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
+
 import Avatar from './Avatar';
+import clsx from 'clsx';
 
 interface User {
   id: number;
@@ -11,20 +12,22 @@ interface User {
   avatar: string[];
 }
 
-interface AvatarProps {
-  user: User;
-  size?: number;
+interface ChatPersonProps {
+  selectedUser: User | null;
+  onUserSelect: (_user: User) => void;
+  bottomUsers: User[];
+  chattedUsers?: Set<number>;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ user, size = 48 }) => {
-  const hasImage = !!user.avatar?.trim();
-  const defaultAvatar = '/profile.jpg';
+const ChatPerson: React.FC<ChatPersonProps> = ({ selectedUser, onUserSelect, bottomUsers, chattedUsers }) => {
+  const chattedSet = chattedUsers ?? new Set<number>();
 
   return (
     <div className="flex flex-col w-[300px] border-r border-gray-300">
       {bottomUsers.map((chatUser) => {
         const isSelected = selectedUser?.id === chatUser.id;
         const hasChatted = chattedSet.has(chatUser.id);
+
 
         return (
           <div
@@ -49,3 +52,4 @@ const Avatar: React.FC<AvatarProps> = ({ user, size = 48 }) => {
 };
 
 export default ChatPerson;
+

@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import ChatPerson from '../src/components/ChatPerson';
 
 const mockUsers = [
   { id: 1, name: 'John', age: 25, job: 'Engineer', avatar: ['/john.jpg'] },
@@ -11,10 +12,12 @@ jest.mock('@/components/ChatWindow', () => ({
   default: () => <div data-testid="chat-window">ChatWindow Component</div>,
 }));
 
-jest.mock('lucide-react', () => ({
-  MessageSquareDashedIcon: () => <div data-testid="message-icon">MessageIcon</div>,
-  Send: () => <div data-testid="send-icon">SendIcon</div>,
-}));
+
+const mockUsers = [
+  { id: 1, name: 'John Doe', age: 25, job: 'Developer', avatar: ['/john.jpg'] },
+  { id: 2, name: 'Jane Smith', age: 28, job: 'Designer', avatar: ['/jane.jpg'] },
+  { id: 3, name: 'Bob Wilson', age: 32, job: 'Manager', avatar: ['/bob.jpg'] },
+];
 
 describe('ChatPerson', () => {
   const defaultProps = {
@@ -137,6 +140,8 @@ describe('ChatPerson', () => {
 
     expect(onUserSelect).toHaveBeenCalledTimes(2);
     expect(onUserSelect).toHaveBeenNthCalledWith(1, mockUsers[0]);
+
     expect(onUserSelect).toHaveBeenNthCalledWith(2, mockUsers[1]);
   });
 });
+

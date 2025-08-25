@@ -1,87 +1,67 @@
-<<<<<<< HEAD
+
 import { Matches } from '@/components/Matches';
 import { render, screen, within } from '@testing-library/react';
+import React from 'react'
 import '@testing-library/jest-dom';
+import Matches from '../src/components/Matches';
 
-jest.mock('next/image', () => ({
-  __esModule: true,
-  default: (props) => <img {...props} />,
-}));
+jest.mock('../src/components/Avatar', () => {
+  const MockAvatar = ({ user }) => {
+    return <div data-testid={`avatar-${user.id}`}>{user.name} Avatar</div>;
+  };
+  return MockAvatar;
+});
 
-function getExpectedAgeByName(name) {
-  switch (name) {
-    case 'Mark Zuckerberg':
-      return '40';
-    case 'Eleanor Pena':
-    case 'Wade Warren':
-    case 'Wade Warren ahahjad ajdjajka askjdh':
-      return '32';
-    default:
-      return null;
-  }
-}
+const mockUsers = [
+  { id: 1, name: 'Leslie', age: 25, job: 'Designer', avatar: ['avatar1.jpg'] },
+  { id: 2, name: 'Eleanor', age: 30, job: 'Engineer', avatar: ['avatar2.jpg'] },
+];
 
-function includesText(textToFind) {
-  return (content) => content.includes(textToFind);
-}
+describe('Matches Component', () => {
+  const mockOnUserSelect = jest.fn();
+  const defaultProps = {
+    topRowUsers: mockUsers,
+    selectedUser: null,
+    onUserSelect: mockOnUserSelect,
+  };
 
-function checkUserCardContent(img) {
-  const userName = img.getAttribute('alt');
-  expect(userName).toBeTruthy();
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-  const userCard = img.closest('div.flex.flex-col');
-  expect(userCard).toBeInTheDocument();
-
-  if (!userCard || !userName) return;
-
-  const { getByText, queryByText } = within(userCard);
-
-  expect(getByText(includesText(userName))).toBeInTheDocument();
-
-  const expectedAge = getExpectedAgeByName(userName);
-  if (expectedAge) {
-    expect(queryByText(includesText(expectedAge))).toBeInTheDocument();
-  }
-}
-
-describe('Matches', () => {
-  it('renders correctly', () => {
-    render(<Matches />);
-
-    const avatars = screen.getAllByRole('img');
-    expect(avatars).toHaveLength(5);
-
-    avatars.forEach(checkUserCardContent);
+  it('renders users correctly', () => {
+    render(<Matches {...defaultProps} />);
 
     expect(screen.getByText('Matches')).toBeInTheDocument();
-    expect(screen.getAllByText('Software Engineer')).toHaveLength(5);
+    expect(screen.getByText('Leslie, 25')).toBeInTheDocument();
+    expect(screen.getByText('Eleanor, 30')).toBeInTheDocument();
+    expect(screen.getByText('Designer')).toBeInTheDocument();
   });
 
-  it('renders correct number of matches', () => {
-    render(<Matches />);
-    expect(screen.getAllByRole('img')).toHaveLength(5);
+  it('handles user selection', () => {
+    render(<Matches {...defaultProps} />);
+
+    const userElement = screen.getByText('Leslie, 25');
+    fireEvent.click(userElement.closest('div'));
+
+    expect(mockOnUserSelect).toHaveBeenCalledWith(mockUsers[0]);
   });
 
-  it('displays user information correctly', () => {
-    render(<Matches />);
-    const names = ['Mark Zuckerberg', 'Eleanor Pena', 'Wade Warren', 'Wade Warren ahahjad ajdjajka askjdh'];
+  it('shows selected user styling', () => {
+    const props = { ...defaultProps, selectedUser: mockUsers[0] };
+    render(<Matches {...props} />);
 
-    names.forEach((name) => {
-      const userImages = screen.getAllByAltText(name);
-      expect(userImages.length).toBeGreaterThan(0);
-
-      userImages.forEach((userImage) => {
-        const userCard = userImage.closest('div.flex.flex-col');
-        expect(userCard).toBeInTheDocument();
-
-        if (!userCard) return;
-
-        const { getByText } = within(userCard);
-        expect(getByText(includesText(name))).toBeInTheDocument();
-      });
-    });
+    expect(screen.getByText('Leslie, 25')).toHaveClass('text-red-600');
+    expect(screen.getByText('Eleanor, 30')).toHaveClass('text-black');
   });
-=======
+
+  it('handles empty user list', () => {
+    const props = { ...defaultProps, topRowUsers: [] };
+    render(<Matches {...props} />);
+
+    expect(screen.getByText('Matches')).toBeInTheDocument();
+    expect(screen.queryByText('Leslie, 25')).not.toBeInTheDocument();
+  });
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -188,5 +168,4 @@ describe('Matches Component', () => {
       expect(screen.getByText('VeryLongNameThatMightCauseIssues, 99')).toBeInTheDocument();
     });
   });
->>>>>>> adc4e6da7 (chat garh heseg)
 });

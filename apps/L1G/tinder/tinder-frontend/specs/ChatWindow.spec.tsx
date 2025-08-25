@@ -3,6 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import ChatWindow from '@/components/ChatWindow';
 
 // Mock the imported components before importing ChatWindow
 jest.mock('../components/UnmatchButton', () => {
@@ -33,6 +34,7 @@ jest.mock('../components/Avatar', () => {
     );
   };
 });
+
 
 // Mock lucide-react icons
 jest.mock('../components/ViewProfile', () => {
@@ -59,6 +61,7 @@ jest.mock('lucide-react', () => ({
   MessageSquare: ({ size, className }) => <div data-testid="lucide-message-square" data-size={size} className={className} />,
   Send: ({ size }) => <div data-testid="lucide-send" data-size={size} />,
   MessageSquareDashedIcon: ({ size, color }) => <div data-testid="lucide-message-square-dashed" data-size={size} data-color={color} />,
+
 }));
 
 import ChatWindow from '../components/ChatWindow';
@@ -118,12 +121,12 @@ describe('ChatWindow', () => {
     onInputChange: jest.fn(),
     onKeyDown: jest.fn(),
     onSend: jest.fn(),
+
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
-
   describe('when no user is selected', () => {
     it('should display empty state message', () => {
       render(<ChatWindow {...defaultProps} />);
@@ -586,5 +589,6 @@ describe('ChatWindow', () => {
         expect(messageArea).toHaveClass('overflow-y-auto');
       });
     });
+
   });
 });
