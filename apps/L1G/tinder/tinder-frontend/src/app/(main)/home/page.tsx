@@ -9,6 +9,23 @@ import MatchDialogClose from '@/components/MatchDialogClose';
 import ProfileSwiper from '@/components/ProfileSwiper';
 import { useCurrentUser } from '@/app/contexts/CurrentUserContext';
 
+const handleKeyDown = (e: KeyboardEvent, isMatched: boolean, closeMatchDialog: () => void) => {
+  if (e.key === 'Escape' && isMatched) {
+    closeMatchDialog();
+  }
+};
+
+const getFilteredProfiles = (data: any, currentUserId: string) => {
+  return (data?.getusers ?? [])
+    .filter((u: any): u is NonNullable<typeof u> => u !== null)
+    .filter((u: any) => u.id !== currentUserId)
+    .map((u: any) => ({
+      id: u.id,
+      name: u.name,
+      images: u.images?.filter((img: any): img is string => img !== null) ?? [],
+    }));
+};
+
 const HomePage = () => {
   const { currentUser } = useCurrentUser();
 
@@ -20,14 +37,9 @@ const HomePage = () => {
   const [isMatched, setIsMatched] = useState(false);
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isMatched) {
-        closeMatchDialog();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    const listener = (e: KeyboardEvent) => handleKeyDown(e, isMatched, closeMatchDialog);
+    window.addEventListener('keydown', listener);
+    return () => window.removeEventListener('keydown', listener);
   }, [isMatched]);
 
   const handleLike = async (profileId: string) => {
@@ -88,14 +100,7 @@ const HomePage = () => {
 
   if (!currentUser) return <div>User not found.</div>;
 
-  const profiles: UserProfile[] = (data?.getusers ?? [])
-    .filter((u): u is NonNullable<typeof u> => u !== null)
-    .filter((u) => u.id !== currentUser?.id)
-    .map((u) => ({
-      id: u.id,
-      name: u.name,
-      images: u.images?.filter((img): img is string => img !== null) ?? [],
-    }));
+  const profiles: UserProfile[] = getFilteredProfiles(data, currentUser.id);
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">

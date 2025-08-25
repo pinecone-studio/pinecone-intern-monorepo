@@ -47,32 +47,62 @@ export const CurrentUserProvider = ({ children }: { children: React.ReactNode })
     getMe();
   }, [getMe]);
 
+  const cleanMatches = (matches: any[] | undefined) => {
+    if (!matches) return null;
+    return matches.filter(Boolean).map((m) => ({
+      id: m.id,
+      matchedAt: m.matchedAt,
+      unmatched: m.unmatched,
+    }));
+  };
+
+  const cleanUserArray = (users: any[] | undefined) => {
+    if (!users) return null;
+    return users.filter(Boolean).map((u) => ({
+      id: u.id,
+      email: u.email,
+    }));
+  };
+
+  const cleanBasicInfo = (u: any) => ({
+    name: u.name ?? null,
+    bio: u.bio ?? null,
+    dateOfBirth: u.dateOfBirth ?? null,
+  });
+
+  const cleanPreferences = (u: any) => ({
+    gender: u.gender ?? null,
+    genderPreferences: u.genderPreferences ?? null,
+  });
+
+  const cleanExtras = (u: any) => ({
+    profession: u.profession ?? null,
+    schoolWork: u.schoolWork ?? null,
+    images: u.images ?? null,
+  });
+
+  const cleanProfileInfo = (u: any) => ({
+    ...cleanBasicInfo(u),
+    ...cleanPreferences(u),
+    ...cleanExtras(u),
+  });
+
+  const cleanRelations = (u: any) => ({
+    likedBy: cleanUserArray(u.likedBy),
+    likedTo: cleanUserArray(u.likedTo),
+    matchIds: cleanMatches(u.matchIds),
+  });
+
+  const cleanUserData = (u: any): CurrentUser => ({
+    id: u.id,
+    email: u.email,
+    ...cleanProfileInfo(u),
+    ...cleanRelations(u),
+  });
+
   useEffect(() => {
     if (data?.getMe) {
-      const u = data.getMe;
-
-      const cleanedUser: CurrentUser = {
-        id: u.id,
-        email: u.email,
-        name: u.name ?? null,
-        bio: u.bio ?? null,
-        gender: u.gender ?? null,
-        genderPreferences: u.genderPreferences ?? null,
-        profession: u.profession ?? null,
-        schoolWork: u.schoolWork ?? null,
-        images: u.images ?? null,
-        dateOfBirth: u.dateOfBirth ?? null,
-        likedBy: (u.likedBy?.filter(Boolean) as { id: string; email: string }[]) ?? null,
-        likedTo: (u.likedTo?.filter(Boolean) as { id: string; email: string }[]) ?? null,
-        matchIds:
-          u.matchIds?.filter(Boolean).map((m) => ({
-            id: m!.id,
-            matchedAt: m!.matchedAt,
-            unmatched: m!.unmatched,
-          })) ?? null,
-      };
-
-      setCurrentUser(cleanedUser);
+      setCurrentUser(cleanUserData(data.getMe));
     }
   }, [data]);
 
