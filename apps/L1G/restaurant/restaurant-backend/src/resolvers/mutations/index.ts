@@ -14,3 +14,6 @@ export * from './table/update-table';
 export * from './food/create-food';
 export * from './food/update-food';
 export * from './food/delete-food';
+export * from './discount/create-discount';
+export * from './discount/delete-discount';
+export * from './discount/update-discount';
