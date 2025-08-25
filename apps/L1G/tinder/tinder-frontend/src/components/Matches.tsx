@@ -9,10 +9,26 @@ interface User {
   avatar: string[];
 }
 
+interface AvatarProps {
+  user: User;
+  size?: number;
+}
+
+const Avatar: React.FC<AvatarProps> = ({ user, size = 48 }) => {
+  const hasImage = !!user.avatar?.trim();
+  const defaultAvatar = '/profile.jpg';
+
+  return (
+    <div className="relative">
+      <Image src={hasImage ? user.avatar : defaultAvatar} alt={user.name || 'Avatar'} width={size} height={size} className="rounded-full object-cover" />
+    </div>
+  );
+};
+
 interface MatchesProps {
   topRowUsers: User[];
   selectedUser: User | null;
-  onUserSelect: (_user: User) => void;
+  onUserSelect: (user: User) => void;
 }
 
 const Matches: React.FC<MatchesProps> = ({ topRowUsers, selectedUser, onUserSelect }) => {

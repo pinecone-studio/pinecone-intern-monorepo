@@ -1,25 +1,24 @@
 'use client';
 
+import Image from 'next/image';
 import React from 'react';
-import Avatar from './Avatar';
 
 interface User {
   id: number;
   name: string;
   age: number;
   job: string;
-  avatar: string[];
+  avatar: string;
 }
 
-interface ChatPersonProps {
-  selectedUser: User | null;
-  onUserSelect: (_user: User) => void;
-  bottomUsers: User[];
-  chattedUsers?: Set<number>;
+interface AvatarProps {
+  user: User;
+  size?: number;
 }
 
-const ChatPerson: React.FC<ChatPersonProps> = ({ selectedUser, onUserSelect, bottomUsers, chattedUsers }) => {
-  const chattedSet = chattedUsers ?? new Set<number>();
+const Avatar: React.FC<AvatarProps> = ({ user, size = 48 }) => {
+  const hasImage = !!user.avatar?.trim();
+  const defaultAvatar = '/profile.jpg';
 
   return (
     <div className="flex flex-col w-[300px] border-r border-gray-300">
@@ -47,9 +46,6 @@ const ChatPerson: React.FC<ChatPersonProps> = ({ selectedUser, onUserSelect, bot
       })}
     </div>
   );
-};
-
-export default ChatPerson;
 };
 
 export default ChatPerson;
