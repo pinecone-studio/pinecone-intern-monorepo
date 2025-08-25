@@ -5,3 +5,4 @@ export * from './category/get-category-by-id';
 export * from './table/get-tables';
 export * from './food/get-foods';
 export * from './food/get-food-by-id';
+export * from './discount/get-discounts';
