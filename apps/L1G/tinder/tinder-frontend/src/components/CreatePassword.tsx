@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
 import { UserData } from '@/app/(auth)/signup/page';
 import { useSignupUserMutation } from '@/generated';
 
@@ -39,10 +38,8 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
   });
 
   const [signup, { loading, error }] = useSignupUserMutation();
-  const [serverError, setServerError] = useState<string | null>(null);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setServerError(null);
     try {
       const response = await signup({
         variables: {
@@ -58,11 +55,12 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
 
         onSuccess();
       } else {
-        setServerError(error?.message || 'Something went wrong.');
+        form.setError('root', {
+          message: error?.message || 'Something went wrong.',
+        });
       }
     } catch (e: any) {
       console.error('Signup failed:', e);
-      setServerError(e?.message || 'Something went wrong.');
     }
   }
 
@@ -113,8 +111,6 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
             <Button type="submit" className="bg-[#E11D48] bg-opacity-90 w-[350px] rounded-full">
               {loading ? 'Please wait...' : 'Continue'}
             </Button>
-
-            {serverError && <p className="text-red-500 mt-2">{serverError}</p>}
           </div>
         </div>
       </form>

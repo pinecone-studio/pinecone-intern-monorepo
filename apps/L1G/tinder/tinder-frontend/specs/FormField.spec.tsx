@@ -6,7 +6,6 @@ import '@testing-library/jest-dom';
 import { useGetAllInterestsQuery, useUpdateProfileMutation } from '@/generated';
 import { ProfileForm } from '@/components/FormField';
 
-// Mock GraphQL hooks
 const mockUpdateProfile = jest.fn();
 
 jest.mock('@/generated', () => ({
@@ -57,6 +56,31 @@ describe('ProfileForm', () => {
     expect(screen.getByRole('button', { name: /Back/i }));
     expect(screen.getByRole('button', { name: /Next/i }));
   });
+  it('renders all interest options from getAllInterests', () => {
+    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userData} updateUserData={mockUpdateUserData} />);
+
+    const dropdownTrigger = screen.getByTestId('multi-select-trigger');
+    fireEvent.click(dropdownTrigger);
+
+    expect(screen.getByText('Interest 1')).toBeInTheDocument();
+    expect(screen.getByText('Interest 2')).toBeInTheDocument();
+  });
+  it('handles case when data is undefined and interestOptions falls back to empty array', () => {
+    (useGetAllInterestsQuery as jest.Mock).mockReturnValue({
+      data: undefined,
+      loading: false,
+      error: null,
+    });
+
+    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userData} updateUserData={mockUpdateUserData} />);
+    const dropdownTrigger = screen.getByTestId('multi-select-trigger');
+    expect(dropdownTrigger).toBeInTheDocument();
+
+    fireEvent.click(dropdownTrigger);
+
+    expect(screen.queryByText('Interest 1')).not.toBeInTheDocument();
+    expect(screen.queryByText('Interest 2')).not.toBeInTheDocument();
+  });
 
   it('shows loading state when interests are loading', () => {
     (useGetAllInterestsQuery as jest.Mock).mockReturnValue({
@@ -99,7 +123,6 @@ describe('ProfileForm', () => {
     fireEvent.click(screen.getByRole('button', { name: /Next/i }));
 
     await waitFor(() => {
-      // updateUserData should be called with form values
       expect(mockUpdateUserData).toHaveBeenCalledWith({
         name: 'New Name',
         bio: 'New bio',
@@ -119,7 +142,6 @@ describe('ProfileForm', () => {
         },
       });
 
-      // onSuccess called after mutation returns success
       expect(mockOnSuccess).toHaveBeenCalled();
     });
   });
@@ -199,25 +221,18 @@ describe('ProfileForm', () => {
     const userWithNoInterests = { ...userData, interests: [] };
     render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userWithNoInterests} updateUserData={mockUpdateUserData} />);
 
-    // Check MultiSelect is rendered
     expect(screen.getByText(/Interest/i)).toBeInTheDocument();
-
-    // The value of MultiSelect should be empty array initially
-    // (Check UI reflects no selected interests)
   });
   it('calls onValueChange when selecting interests in MultiSelect', () => {
     render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userData} updateUserData={mockUpdateUserData} />);
 
-    // Find the MultiSelect component or its trigger element
-    const multiSelectTrigger = screen.getByTestId('multi-select-trigger'); // or adjust based on your data-testid
+    const multiSelectTrigger = screen.getByTestId('multi-select-trigger');
 
     fireEvent.click(multiSelectTrigger);
 
-    // Select an interest option
     const interestOption = screen.getByText('Interest 2');
     fireEvent.click(interestOption);
 
-    // Expect updateUserData or onValueChange handler to be called accordingly
     expect(mockUpdateUserData);
   });
 });

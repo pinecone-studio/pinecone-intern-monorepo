@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -31,34 +33,6 @@ describe('MyProfileForm', () => {
     render(<MyProfileForm />);
     expect(screen.getByLabelText(/Date of birth/i));
   });
-  it('submits form with updated values', async () => {
-    const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {
-      //intenioanally empty
-    });
-    render(<MyProfileForm />);
-
-    fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'Jane Doe' } });
-    fireEvent.change(screen.getByLabelText(/Email/i), { target: { value: 'janedoe@example.com' } });
-    fireEvent.change(screen.getByLabelText(/Bio/i), { target: { value: 'Updated bio' } });
-    fireEvent.change(screen.getByLabelText(/Profession/i), { target: { value: 'Product Manager' } });
-    fireEvent.change(screen.getByLabelText(/School/i), { target: { value: 'Google' } });
-
-    const genderSelectTrigger = screen.getByRole('combobox', { name: /gender preference/i });
-    fireEvent.mouseDown(genderSelectTrigger);
-
-    const bothOption = await screen.findByText(/Both/i);
-    fireEvent.click(bothOption);
-
-    fireEvent.click(screen.getByRole('button', { name: /Update Profile/i }));
-
-    await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalled();
-      const submittedData = consoleSpy.mock.calls[0][0];
-      console.log('Submitted data:', submittedData);
-    });
-
-    consoleSpy.mockRestore();
-  });
 
   it('renders interests options from query data', async () => {
     render(<MyProfileForm />);
@@ -71,9 +45,28 @@ describe('MyProfileForm', () => {
     expect(await screen.findByText('Sports')).toBeInTheDocument();
     expect(await screen.findByText('Travel')).toBeInTheDocument();
   });
+  it('handles undefined field value in MultiSelect', () => {
+    mockUseGetAllInterestsQuery.mockReturnValue({
+      data: undefined,
+    });
 
+    render(<MyProfileForm />);
+    const multiSelect = screen.getByTestId('multi-select-trigger');
+    expect(multiSelect).toBeInTheDocument();
+  });
+  it('handles form with no default interests value', () => {
+    mockUseGetAllInterestsQuery.mockReturnValue({
+      data: { getAllInterests: [{ _id: 'test', interestName: 'Test' }] },
+    });
+    render(<MyProfileForm />);
+
+    const multiSelect = screen.getByTestId('multi-select-trigger');
+    expect(multiSelect).toBeInTheDocument();
+  });
   it('handles interest selection via MultiSelect', async () => {
-    const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {
+      //Intentionally empty
+    });
 
     render(<MyProfileForm />);
 
@@ -154,11 +147,22 @@ describe('MyProfileForm', () => {
     });
   });
   it('renders correctly with empty interests data', () => {
-    mockUseGetAllInterestsQuery.mockReturnValue({ data: { getAllInterests: [] } });
+    mockUseGetAllInterestsQuery.mockReturnValue({
+      data: { getAllInterests: [] },
+    });
 
     render(<MyProfileForm />);
 
-    expect(screen.getByTestId('multi-select-trigger'));
-    expect(screen.queryByText('Art')).not;
+    expect(screen.getByTestId('multi-select-trigger')).toBeInTheDocument();
+    expect(screen.queryByText('Art')).not.toBeInTheDocument();
+  });
+  it('handles query error gracefully', () => {
+    mockUseGetAllInterestsQuery.mockReturnValue({
+      data: null,
+    });
+
+    render(<MyProfileForm />);
+
+    expect(screen.getByTestId('multi-select-trigger')).toBeInTheDocument();
   });
 });

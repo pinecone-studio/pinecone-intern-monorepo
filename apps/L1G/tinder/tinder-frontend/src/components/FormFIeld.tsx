@@ -28,10 +28,10 @@ const formSchema = z.object({
 const prepareProfileVariables = (values: z.infer<typeof formSchema>, userId: string) => ({
   updateProfileId: userId,
   name: values.name,
-  bio: values.bio ?? '',
-  interests: values.interest ?? [],
-  profession: values.profession ?? '',
-  schoolWork: values.work ?? '',
+  bio: values.bio,
+  interests: values.interest,
+  profession: values.profession,
+  schoolWork: values.work,
 });
 
 export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: ProfileFormProps) => {

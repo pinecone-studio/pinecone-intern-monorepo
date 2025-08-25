@@ -180,4 +180,33 @@ describe('CreateAccount Component', () => {
       expect(screen.getByText('Failed to resend OTP, please try again.')).toBeInTheDocument();
     });
   });
+  it('renders email form when step would be otp but userData.email is empty', () => {
+    const mockSetStep = jest.fn();
+    const mockSetMessage = jest.fn();
+
+    jest
+      .spyOn(React, 'useState')
+      .mockImplementationOnce(() => ['otp', mockSetStep])
+      .mockImplementationOnce(() => [null, mockSetMessage]);
+
+    render(<CreateAccount onSuccess={mockOnSuccess} userData={{ email: '' }} updateUserData={mockUpdateUserData} />);
+
+    expect(screen.getByText('Create an account')).toBeInTheDocument();
+    expect(screen.queryByTestId('confirm-email-btn')).not.toBeInTheDocument();
+
+    jest.restoreAllMocks();
+  });
+  it('displays error when mutation hook returns error state', () => {
+    const mockWithError = jest.fn();
+    const mockError = { message: 'Server error occurred' };
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const originalMock = require('@/generated').useRequestSignupMutation;
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require('@/generated').useRequestSignupMutation = jest.fn(() => [mockWithError, { error: mockError }]);
+
+    render(<CreateAccount onSuccess={mockOnSuccess} userData={userData} updateUserData={mockUpdateUserData} />);
+    expect(screen.getByText('Server error occurred')).toBeInTheDocument();
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require('@/generated').useRequestSignupMutation = originalMock;
+  });
 });

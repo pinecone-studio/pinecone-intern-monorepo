@@ -6,27 +6,23 @@ import Image from 'next/image';
 import axios from 'axios';
 import { useUploadImagesMutation } from '@/generated';
 import { UserData } from '@/app/(auth)/signup/page';
-
 type ProfileImagesProps = {
   onSuccess: () => void;
   onBack: () => void;
   updateUserData: (_: Partial<UserData>) => void;
 };
-
 export const ProfileImages = ({ onSuccess, onBack, updateUserData }: ProfileImagesProps) => {
   const [uploadedImages, setUploadedImages] = useState<string[]>(['', '', '', '', '', '']);
   const [isUploading, setIsUploading] = useState<boolean[]>([false, false, false, false, false, false]);
   const [uploadImagesMutation, { loading }] = useUploadImagesMutation();
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
   const handleRemoveImage = (index: number) => {
     setUploadedImages((prev) => {
       const newImages = prev.filter((_, i) => i !== index);
       newImages.push('');
       return newImages;
     });
-
     setIsUploading((prev) => {
       const newUploading = prev.filter((_, i) => i !== index);
       newUploading.push(false);
@@ -46,11 +42,9 @@ export const ProfileImages = ({ onSuccess, onBack, updateUserData }: ProfileImag
       console.error('Cloudinary cloud name is missing!');
       return null;
     }
-
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_preset', 'my_unsigned_preset');
-
     try {
       const res = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formData);
       return res.data.secure_url || null;
@@ -62,12 +56,9 @@ export const ProfileImages = ({ onSuccess, onBack, updateUserData }: ProfileImag
   const handleUploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-
     const index = getFirstEmptyIndex();
     if (index === -1) return;
-
     updateUploadingState(index, true);
-
     const url = await uploadToCloudinary(file);
     if (url) {
       setUploadedImages((prev) => {
@@ -76,7 +67,6 @@ export const ProfileImages = ({ onSuccess, onBack, updateUserData }: ProfileImag
         return newImages;
       });
     }
-
     updateUploadingState(index, false);
   };
   const handleNext = async () => {
@@ -93,7 +83,6 @@ export const ProfileImages = ({ onSuccess, onBack, updateUserData }: ProfileImag
           images: nonEmptyImages,
         },
       });
-
       onSuccess();
     } catch (err) {
       console.error('Failed to upload images to backend:', err);
@@ -107,7 +96,6 @@ export const ProfileImages = ({ onSuccess, onBack, updateUserData }: ProfileImag
           <h1 className="font-sans font-[500] text-[24px] text-gray-900 ">Upload your image</h1>
           <p className="font-sans font-[400] text-[14px] text-gray-500">Please choose an image that represents you.</p>
         </div>
-
         <div className="grid grid-cols-3 gap-2 md:gap-4 lg:gap-6">
           {uploadedImages.map((image, index) => (
             <div
@@ -135,7 +123,6 @@ export const ProfileImages = ({ onSuccess, onBack, updateUserData }: ProfileImag
             </div>
           ))}
         </div>
-
         <div className="w-full flex justify-center items-center ">
           <Button
             variant="outline"
@@ -147,7 +134,6 @@ export const ProfileImages = ({ onSuccess, onBack, updateUserData }: ProfileImag
             <input ref={fileInputRef} type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={handleUploadImage} data-testid="upload-input" />
           </Button>
         </div>
-
         <div className="w-[300px] md:w-full h-[36px] flex justify-between items-center">
           <Button onClick={onBack} variant="outline" className="px-4 py-2 text-[14px] font-[400] border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-full bg-transparent">
             Back

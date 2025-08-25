@@ -24,7 +24,7 @@ export const MyProfileForm = () => {
       birthDate: new Date('2000-01-01'),
       genderPreference: 'Female',
       bio: 'my bio',
-      interests: [],
+      interests: undefined,
       profession: 'Software Engineer',
       school: 'Facebook',
     },
@@ -66,7 +66,7 @@ export const MyProfileForm = () => {
                   </FormLabel>
                   <FormControl>
                     <Select {...field} onValueChange={field.onChange} defaultValue={field.value}>
-                      <SelectTrigger id="genderPreference" className="w-[180px]" aria-labelledby="genderPreference-label">
+                      <SelectTrigger id="genderPreference" className="w-[180px]" aria-labelledby="genderPreference-label" data-testid="gender-select-trigger">
                         <SelectValue placeholder="" />
                       </SelectTrigger>
 
