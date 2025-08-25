@@ -39,7 +39,7 @@ describe('updateFoodByDiscount', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  it('should update food', async () => {
+  it('should update food discount', async () => {
     const result = await updateFoodByDiscount?.(
       {},
       {
