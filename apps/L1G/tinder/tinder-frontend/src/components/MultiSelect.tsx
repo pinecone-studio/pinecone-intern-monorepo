@@ -43,8 +43,6 @@ interface MultiSelectProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
   modalPopover?: boolean;
   asChild?: boolean;
   className?: string;
-  value: string[];
-  onValueChange?: (value: string[]) => void;
 }
 
 export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(

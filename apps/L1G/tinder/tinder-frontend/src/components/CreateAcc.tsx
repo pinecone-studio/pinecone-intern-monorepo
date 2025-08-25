@@ -47,13 +47,11 @@ export const CreateAccount = ({ onSuccess, userData, updateUserData }: CreateAcc
       updateUserData({ email: values.email });
       setStep('otp');
     } catch (e) {
-      console.error('Failed to resend OTP:', e);
       setMessage('Failed to resend OTP, please try again.');
     }
   }
 
   const handleOtpSuccess = () => {
-    console.log('OTP verified successfully');
     onSuccess();
   };
 
