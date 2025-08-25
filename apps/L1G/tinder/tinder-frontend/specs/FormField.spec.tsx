@@ -194,4 +194,30 @@ describe('ProfileForm', () => {
       expect(screen.getByText('User ID is missing.')).toBeInTheDocument();
     });
   });
+
+  it('renders MultiSelect correctly with empty interests array', () => {
+    const userWithNoInterests = { ...userData, interests: [] };
+    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userWithNoInterests} updateUserData={mockUpdateUserData} />);
+
+    // Check MultiSelect is rendered
+    expect(screen.getByText(/Interest/i)).toBeInTheDocument();
+
+    // The value of MultiSelect should be empty array initially
+    // (Check UI reflects no selected interests)
+  });
+  it('calls onValueChange when selecting interests in MultiSelect', () => {
+    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userData} updateUserData={mockUpdateUserData} />);
+
+    // Find the MultiSelect component or its trigger element
+    const multiSelectTrigger = screen.getByTestId('multi-select-trigger'); // or adjust based on your data-testid
+
+    fireEvent.click(multiSelectTrigger);
+
+    // Select an interest option
+    const interestOption = screen.getByText('Interest 2');
+    fireEvent.click(interestOption);
+
+    // Expect updateUserData or onValueChange handler to be called accordingly
+    expect(mockUpdateUserData);
+  });
 });

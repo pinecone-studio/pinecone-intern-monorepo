@@ -13,16 +13,18 @@ import { BirthDateField } from './BirthDateField';
 import { Separator } from '@/components/ui/separator';
 import { ProfessionSchoolFields } from './ProfessionSchoolFields';
 import { useGetAllInterestsQuery } from '@/generated';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export const MyProfileForm = () => {
   const form = useForm<z.infer<typeof profileFormSchema>>({
+    resolver: zodResolver(profileFormSchema),
     defaultValues: {
       name: 'John Doe',
       email: 'johndoe@example.com',
       birthDate: new Date('2000-01-01'),
       genderPreference: 'Female',
       bio: 'my bio',
-      interests: ['art', 'music', 'sports'],
+      interests: [],
       profession: 'Software Engineer',
       school: 'Facebook',
     },
@@ -36,7 +38,7 @@ export const MyProfileForm = () => {
     })) || [];
 
   const onSubmit = async (_data: z.infer<typeof profileFormSchema>) => {
-    console.log('working');
+    console.log(_data);
   };
 
   return (
@@ -59,14 +61,15 @@ export const MyProfileForm = () => {
               name="genderPreference"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="flex" htmlFor="genderPreference">
+                  <FormLabel id="genderPreference-label" className="flex" htmlFor="genderPreference">
                     Gender Preference
                   </FormLabel>
                   <FormControl>
                     <Select {...field} onValueChange={field.onChange} defaultValue={field.value}>
-                      <SelectTrigger id="genderPreference" className="w-[180px]">
+                      <SelectTrigger id="genderPreference" className="w-[180px]" aria-labelledby="genderPreference-label">
                         <SelectValue placeholder="" />
                       </SelectTrigger>
+
                       <SelectContent>
                         <SelectGroup>
                           <SelectItem data-testid="option-male" value="Male">
@@ -86,6 +89,7 @@ export const MyProfileForm = () => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="bio"
@@ -106,7 +110,7 @@ export const MyProfileForm = () => {
                 <FormItem>
                   <FormLabel className="flex">Interests</FormLabel>
                   <FormControl>
-                    <MultiSelect onValueChange={(val) => field.onChange(val)} options={interestOptions} value={field.value} maxCount={10} />
+                    <MultiSelect data-testid="multi-select-trigger" onValueChange={(val) => field.onChange(val)} options={interestOptions} value={field.value ?? []} maxCount={10} />
                   </FormControl>
                   <FormDescription>You can select up to a maximum of 10 interests.</FormDescription>
                   <FormMessage />

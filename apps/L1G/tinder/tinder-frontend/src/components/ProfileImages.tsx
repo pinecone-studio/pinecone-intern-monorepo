@@ -153,7 +153,7 @@ export const ProfileImages = ({ onSuccess, onBack, updateUserData }: ProfileImag
             Back
           </Button>
           <Button onClick={handleNext} disabled={loading} className="px-4 py-2 text-[14px] font-[400] bg-[#E11D48E5] bg-opacity-90 hover:bg-red-500 text-white rounded-full">
-            {loading ? <Loader2 className="animate-spin w-4 h-4" /> : 'Next'}
+            {loading ? <Loader2 className="animate-spin w-4 h-4" data-testid="next-loader" /> : 'Next'}
           </Button>
         </div>
       </div>
