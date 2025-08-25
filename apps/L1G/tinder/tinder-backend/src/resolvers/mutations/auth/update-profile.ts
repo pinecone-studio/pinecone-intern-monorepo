@@ -13,8 +13,8 @@ const buildUpdateData = (fields: {
   profession?: string | null;
   schoolWork?: string | null;
   images?: string[] | null;
-}): Record<string, any> => {
-  const updateData: Record<string, any> = {};
+}): Record<string, unknown> => {
+  const updateData: Record<string, unknown> = {};
   
   Object.entries(fields).forEach(([key, value]) => {
     if (value !== undefined && value !== null) {
@@ -23,6 +23,20 @@ const buildUpdateData = (fields: {
   });
   
   return updateData;
+};
+
+const validateUserId = (id: string) => {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error('Invalid user ID');
+  }
+  return new mongoose.Types.ObjectId(id);
+};
+
+const processInterests = (interests: string[] | { _id: string }[] | undefined) => {
+  if (interests === undefined) return undefined;
+  return interests.map((i: string | { _id: string }) => 
+    new mongoose.Types.ObjectId(typeof i === 'string' ? i : i._id)
+  );
 };
 
 export const updateProfile: MutationResolvers['updateProfile'] = async (
@@ -41,11 +55,8 @@ export const updateProfile: MutationResolvers['updateProfile'] = async (
     images
   }
 ) => {
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    throw new Error('Invalid user ID');
-  }
-
-  const userId = new mongoose.Types.ObjectId(id);
+  const userId = validateUserId(id);
+  
   const user = await Usermodel.findById(userId);
   if (!user) throw new Error('User not found');
 
@@ -56,11 +67,15 @@ export const updateProfile: MutationResolvers['updateProfile'] = async (
     genderPreferences,
     gender,
     bio,
-    interests,
     profession,
     schoolWork,
     images
   });
+
+  const processedInterests = processInterests(interests);
+  if (processedInterests !== undefined) {
+    updateData.interests = processedInterests;
+  }
 
   const updatedUser = await Usermodel.findOneAndUpdate(
     { _id: userId },
