@@ -13,13 +13,17 @@ describe('createCategory', () => {
     (CategoryModel.create as jest.Mock).mockReturnValue({
       _id: '2',
       categoryName: 'Test',
+      createdAt: new Date(),
+      updatedAt: new Date(),
     });
 
     const result = await createCategory?.({}, { input: { categoryName: 'Test' } }, {}, {} as GraphQLResolveInfo);
-    expect(result).toEqual({
-      categoryId: '2',
-      categoryName: 'Test',
-    });
+    expect(result).toEqual(
+      expect.objectContaining({
+        categoryId: '2',
+        categoryName: 'Test',
+      })
+    );
   });
   it('should handle database errors', async () => {
     (CategoryModel.create as jest.Mock).mockRejectedValue(new Error('Failed to create category'));

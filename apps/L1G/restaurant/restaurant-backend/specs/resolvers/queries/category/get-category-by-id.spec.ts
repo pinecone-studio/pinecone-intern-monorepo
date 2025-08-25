@@ -9,17 +9,27 @@ jest.mock('src/models/category.model', () => ({
 }));
 
 describe('getCategoryById', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should return category', async () => {
     (CategoryModel.findById as jest.Mock).mockResolvedValue({
       _id: '2',
-      categoryName: 'Test',
+      categoryName: 'Test1',
+      createdAt: '',
+      updatedAt: '',
     });
-
     const result = await getCategoryById?.({}, { categoryId: '2' }, {}, {} as GraphQLResolveInfo);
-    expect(result).toEqual({
-      categoryId: '2',
-      categoryName: 'Test',
-    });
+    expect(result).toEqual(
+      expect.objectContaining({
+        categoryId: '2',
+        categoryName: 'Test1',
+        createdAt: '',
+        updatedAt: '',
+      })
+    );
+    expect(CategoryModel.findById).toHaveBeenCalledTimes(1);
   });
 
   it("should throw an error if the category doesn't exist", async () => {

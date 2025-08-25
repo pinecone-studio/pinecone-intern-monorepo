@@ -13,13 +13,19 @@ describe('deleteCategory', () => {
     (CategoryModel.findByIdAndDelete as jest.Mock).mockResolvedValue({
       _id: '1',
       categoryName: 'Test',
+      createdAt: '',
+      updatedAt: '',
     });
 
     const result = await deleteCategory?.({}, { categoryId: '1' }, {}, {} as GraphQLResolveInfo);
-    expect(result).toEqual({
-      categoryId: '1',
-      categoryName: 'Test',
-    });
+    expect(result).toEqual(
+      expect.objectContaining({
+        categoryId: '1',
+        categoryName: 'Test',
+        createdAt: '',
+        updatedAt: '',
+      })
+    );
   });
 
   it("should throw an error if the category doesn't exist", async () => {
