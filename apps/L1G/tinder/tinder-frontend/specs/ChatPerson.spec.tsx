@@ -1,15 +1,20 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ChatPerson from '../src/components/ChatPerson';
-
-jest.mock('clsx', () => {
-  return (...classes: (string | boolean | undefined | null)[]) => classes.filter(Boolean).join(' ');
-});
 
 const mockUsers = [
   { id: 1, name: 'John', age: 25, job: 'Engineer', avatar: ['/john.jpg'] },
   { id: 2, name: 'Alice', age: 30, job: 'Designer', avatar: ['/alice.jpg'] },
 ];
+
+jest.mock('@/components/ChatWindow', () => ({
+  __esModule: true,
+  default: () => <div data-testid="chat-window">ChatWindow Component</div>,
+}));
+
+jest.mock('lucide-react', () => ({
+  MessageSquareDashedIcon: () => <div data-testid="message-icon">MessageIcon</div>,
+  Send: () => <div data-testid="send-icon">SendIcon</div>,
+}));
 
 describe('ChatPerson', () => {
   const defaultProps = {

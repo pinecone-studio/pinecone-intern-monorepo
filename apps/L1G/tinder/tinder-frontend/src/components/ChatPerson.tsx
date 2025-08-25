@@ -1,14 +1,14 @@
 'use client';
 
-import Image from 'next/image';
 import React from 'react';
+import Avatar from './Avatar';
 
 interface User {
   id: number;
   name: string;
   age: number;
   job: string;
-  avatar: string;
+  avatar: string[];
 }
 
 interface AvatarProps {

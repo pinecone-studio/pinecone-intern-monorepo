@@ -1,18 +1,18 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import { MessageSquare, Send, Heart, MessageSquareDashedIcon } from 'lucide-react';
+import { MessageSquare, Send, MessageSquareDashedIcon } from 'lucide-react';
 import UnmatchButton from './UnmatchButton';
+import ViewProfile from './ViewProfile';
+import Avatar from './Avatar';
 
-interface User {
+type User = {
   id: number;
   name: string;
   age: number;
   job: string;
-  avatar: string;
-}
+  avatar: string[];
+};
 
 interface Message {
   id: number;

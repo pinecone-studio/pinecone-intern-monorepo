@@ -1,13 +1,37 @@
 import React from 'react';
-import Avatar from './Avatar';
 
-interface User {
-  id: number;
-  name: string;
-  age: number;
-  job: string;
-  avatar: string[];
-}
+const matches = [
+  {
+    name: 'Mark Zuckerberg',
+    age: 40,
+    job: 'Software Engineer',
+    avatar: '/profile.jpg',
+  },
+  {
+    name: 'Eleanor Pena',
+    age: 32,
+    job: 'Software Engineer',
+    avatar: '/profile.jpg',
+  },
+  {
+    name: 'Wade Warren',
+    age: 32,
+    job: 'Software Engineer',
+    avatar: '/profile.jpg',
+  },
+  {
+    name: 'Wade Warren',
+    age: 32,
+    job: 'Software Engineer',
+    avatar: '/profile.jpg',
+  },
+  {
+    name: 'Wade Warren ahahjad ajdjajka askjdh',
+    age: 32,
+    job: 'Software Engineer',
+    avatar: '/profile.jpg',
+  },
+];
 
 interface AvatarProps {
   user: User;
