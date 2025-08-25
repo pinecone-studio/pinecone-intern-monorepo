@@ -5,16 +5,15 @@ import { Header } from '@/components/Header';
 
 const HomePage = () => {
   return (
-    <div className='bg-[#09090B] min-h-screen'>
+    <div className="bg-[#09090B] min-h-screen">
       <Header />
 
       {/* Home */}
 
       {/* <CarouselConcert /> */}
-      <div className='py-12 px-[117px]'>
+      <div className="py-12 px-[117px]">
         <ConcertsHome />
       </div>
-
 
       {/* List */}
 
@@ -22,16 +21,6 @@ const HomePage = () => {
         <SearchConcert />
         <ConcertsList />
       </div> */}
-
-
-      {/* Detail */}
-
-      {/* <ConcertCoverPic />
-      <SeatsTickets />
-      <div className='py-12 px-[117px]'>
-        <ConcertsList />
-      </div> */}
-
 
       <hr />
 
