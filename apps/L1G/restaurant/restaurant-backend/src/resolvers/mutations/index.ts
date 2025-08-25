@@ -14,3 +14,4 @@ export * from './table/update-table';
 export * from './food/create-food';
 export * from './food/update-food';
 export * from './food/delete-food';
+export * from './order/create-order';
