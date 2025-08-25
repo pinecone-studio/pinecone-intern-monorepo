@@ -7,6 +7,8 @@ import { z } from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useRouter } from 'next/navigation';
+import { useMutation } from '@apollo/client';
+import { LoginDocument } from '@/generated';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email' }),
@@ -24,9 +26,25 @@ export const LoginForm = () => {
     },
   });
 
-  function onSubmit(_values: z.infer<typeof formSchema>) {
-    console.log('working');
-  }
+  const [loginMutation, { loading, error }] = useMutation(LoginDocument);
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const response = await loginMutation({
+        variables: {
+          email: values.email,
+          password: values.password,
+        },
+      });
+      const token = response.data.login;
+      if (token) {
+        localStorage.setItem('token', token);
+        router.push('/home');
+      }
+    } catch (err) {
+      console.error('Login error');
+    }
+  };
 
   return (
     <div className="w-full flex flex-col gap-4">
@@ -53,22 +71,23 @@ export const LoginForm = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="flex justify-between">
-                      Password{' '}
-                      <button className="text-[#2563EB] font-sans text-[14px] font-[500]" onClick={() => router.push('/login/forgot-password')}>
+                      Password
+                      <p className="text-[#2563EB] font-sans text-[14px] font-[500] underline" onClick={() => router.push('/forgot-password')}>
                         Forgot Password?
-                      </button>
+                      </p>
                     </FormLabel>
                     <FormControl>
-                      <Input className="rounded-md" placeholder="Please enter your password" {...field} />
+                      <Input className="rounded-md" type="password" {...field} placeholder="Please enter your password" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
-            <Button type="submit" className="rounded-full bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
-              Continue
+            <Button type="submit" className="rounded-full bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100" disabled={loading}>
+              {loading ? 'Signing in...' : 'Continue'}
             </Button>
+            {error && <p className="text-red-500 text-sm">{'Email or password invalid'}</p>}
           </form>
         </Form>
       </div>

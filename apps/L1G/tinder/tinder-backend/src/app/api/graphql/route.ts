@@ -1,5 +1,5 @@
 export const dynamic = 'force-dynamic';
 
-import { handler } from '../../../handler';
+import { handler } from '../../../server';
 
 export { handler as GET, handler as POST };

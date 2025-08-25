@@ -1,0 +1,6 @@
+mutation UploadImages($images: [String!]!) {
+  uploadImages(images: $images) {
+    images
+    name
+  }
+}

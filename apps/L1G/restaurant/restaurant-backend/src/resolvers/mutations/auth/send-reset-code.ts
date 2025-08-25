@@ -8,7 +8,7 @@ export const sendResetCode: MutationResolvers['sendResetCode'] = async (_, { inp
 
   const code = Math.floor(1000 + Math.random() * 9000).toString();
   user.resetCode = code;
-  user.resetCodeExpiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+  user.resetCodeExpiresAt = new Date(Date.now() + 5 * 60 * 1000);
   await user.save();
 
   await sendResetEmail(email, code);

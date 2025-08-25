@@ -101,7 +101,12 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": ["graphql-codegen --config ./apps/L1G/tinder/tinder-backend/codegen.ts"]
-      }
+      },
+      "dependsOn": [
+        {
+          "target": "get-secrets:testing"
+        }
+      ]
     },
     "export": {
       "executor": "@nx/next:export",

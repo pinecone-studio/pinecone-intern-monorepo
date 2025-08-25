@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 ["/","/food","/menu","/order","/table","/about-us","/reset-password","/reset-password/verify-password","/reset-password/verify-password/update-password","/sign-in","/sign-up"]
+=======
+["/","/food","/menu","/order","/table","/reset-password","/reset-password/verify-password","/reset-password/verify-password/update-password","/sign-in","/sign-up","/about-us"]
+>>>>>>> 36d9ce25dd1f560c953bc50b6acba3874c8b6b94

@@ -1,5 +1,5 @@
 import { ImageDownloader } from '@/utils/image-downloader';
-
+import '@testing-library/jest-dom';
 describe('ImageDownloader', () => {
   it('should create a link and trigger download', () => {
     const clickMock = jest.fn();

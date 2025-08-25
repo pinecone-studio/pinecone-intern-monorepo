@@ -1,20 +1,42 @@
-import { typeDefs } from './schemas';
-import { resolvers } from './resolvers';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
+import { resolvers } from './resolvers';
+import { typeDefs } from './schemas';
 import { connectToDb } from './utils/connect-to-db';
+import 'dotenv/config';
 
-connectToDb()
+connectToDb();
 
-const server = new ApolloServer<Context>({
+const server = new ApolloServer({
   resolvers,
   typeDefs,
   introspection: true,
+  csrfPrevention: false,
 });
 
-export const handler = startServerAndCreateNextHandler<NextRequest, Context>(server, {
-  context: async () => {
-    return {};
-  },
-});
+const apolloHandler = startServerAndCreateNextHandler(server);
+
+export async function handler(req: NextRequest) {
+
+  if (req.method === 'OPTIONS') {
+    return new NextResponse(null, {
+      status: 204,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
+    });
+  }
+
+  
+  const response = await apolloHandler(req);
+
+
+  response.headers.set('Access-Control-Allow-Origin', '*');
+  response.headers.set('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  return response;
+}

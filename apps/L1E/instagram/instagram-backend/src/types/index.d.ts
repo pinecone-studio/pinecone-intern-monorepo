@@ -1,2 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-types */
-type Context = {};
+type Context = {
+    // userId: string | null
+};

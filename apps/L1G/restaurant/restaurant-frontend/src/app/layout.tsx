@@ -1,9 +1,7 @@
 import './global.css';
 
-import { CssBaseline } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ApolloWrapper } from '../components/providers/ApolloWrapper';
-import { Navbar } from './components/Navbar';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -11,7 +9,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body>
         <AppRouterCacheProvider>
           <ApolloWrapper>{children}</ApolloWrapper>
+<<<<<<< HEAD
           <CssBaseline />
+=======
+>>>>>>> 36d9ce25dd1f560c953bc50b6acba3874c8b6b94
         </AppRouterCacheProvider>
       </body>
     </html>

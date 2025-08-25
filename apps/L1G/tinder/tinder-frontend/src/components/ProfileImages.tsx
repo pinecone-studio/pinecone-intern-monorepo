@@ -1,10 +1,10 @@
 'use client';
-
 import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { X, Plus, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import axios from 'axios';
+import { useUploadImagesMutation } from '@/generated';
 
 type ProfileImagesProps = {
   onSuccess: () => void;
@@ -13,7 +13,7 @@ type ProfileImagesProps = {
 export const ProfileImages = ({ onSuccess }: ProfileImagesProps) => {
   const [uploadedImages, setUploadedImages] = useState<string[]>(['', '', '', '', '', '']);
   const [isUploading, setIsUploading] = useState<boolean[]>([false, false, false, false, false, false]);
-
+  const [uploadImagesMutation, { loading }] = useUploadImagesMutation();
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -30,9 +30,7 @@ export const ProfileImages = ({ onSuccess }: ProfileImagesProps) => {
       return newUploading;
     });
   };
-
   const getFirstEmptyIndex = () => uploadedImages.findIndex((img) => !img);
-
   const updateUploadingState = (index: number, value: boolean) => {
     setIsUploading((prev) => {
       const newUploading = [...prev];
@@ -40,7 +38,6 @@ export const ProfileImages = ({ onSuccess }: ProfileImagesProps) => {
       return newUploading;
     });
   };
-
   const uploadToCloudinary = async (file: File): Promise<string | null> => {
     if (!cloudName) {
       console.error('Cloudinary cloud name is missing!');
@@ -59,7 +56,6 @@ export const ProfileImages = ({ onSuccess }: ProfileImagesProps) => {
       return null;
     }
   };
-
   const handleUploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -80,11 +76,25 @@ export const ProfileImages = ({ onSuccess }: ProfileImagesProps) => {
 
     updateUploadingState(index, false);
   };
+  const handleNext = async () => {
+    const nonEmptyImages = uploadedImages.filter((url) => url);
 
-  const handleNext = () => {
-    onSuccess();
+    if (nonEmptyImages.length === 0) {
+      alert('Please upload at least one image.');
+      return;
+    }
+    try {
+      await uploadImagesMutation({
+        variables: {
+          images: nonEmptyImages,
+        },
+      });
+      onSuccess();
+    } catch (err) {
+      console.error('Failed to upload images to backend:', err);
+      alert('Something went wrong while saving your images.');
+    }
   };
-
   return (
     <div className="w-[640px] bg-white flex flex-col items-center justify-center gap-6">
       <div className="w-full max-w-2xl gap-[16px] flex flex-col items-center justify-center">
@@ -133,8 +143,8 @@ export const ProfileImages = ({ onSuccess }: ProfileImagesProps) => {
           <Button variant="outline" className="px-4 py-2 text-[14px] font-[400] border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-full bg-transparent">
             Back
           </Button>
-          <Button onClick={handleNext} className="px-4 py-2 text-[14px] font-[400] bg-[#E11D48E5] bg-opacity-90 hover:bg-red-500 text-white rounded-full">
-            Next
+          <Button onClick={handleNext} disabled={loading} className="px-4 py-2 text-[14px] font-[400] bg-[#E11D48E5] bg-opacity-90 hover:bg-red-500 text-white rounded-full">
+            {loading ? <Loader2 className="animate-spin w-4 h-4" /> : 'Next'}
           </Button>
         </div>
       </div>

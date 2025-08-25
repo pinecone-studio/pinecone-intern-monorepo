@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 
 type GenderSelectProps = {
   onSuccess: () => void;
+  onBack?: () => void;
 };
 
 export const GenderSelect = ({ onSuccess }: GenderSelectProps) => {

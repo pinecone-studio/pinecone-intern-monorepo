@@ -2,6 +2,7 @@ import './global.css';
 import { PropsWithChildren } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import Apollo from './providers/Appollo';
+import { CurrentUserProvider } from './contexts/CurrentUserContext';
 
 export const metadata = {
   title: 'Welcome to tinder-frontend',
@@ -12,8 +13,10 @@ const RootLayout = ({ children }: PropsWithChildren) => {
   return (
     <html lang="en">
       <body>
-        <Apollo>{children}</Apollo>
-      </body>{' '}
+        <Apollo>
+          <CurrentUserProvider>{children}</CurrentUserProvider>
+        </Apollo>
+      </body>
     </html>
   );
 };

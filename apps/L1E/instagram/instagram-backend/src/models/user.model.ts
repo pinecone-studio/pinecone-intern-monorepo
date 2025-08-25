@@ -31,6 +31,7 @@ const UserSchema = new Schema<UserType>({
     userName: {
         type: String,
         required: true,
+        unique: true,
     },
     isPrivate: {
         type: Boolean,

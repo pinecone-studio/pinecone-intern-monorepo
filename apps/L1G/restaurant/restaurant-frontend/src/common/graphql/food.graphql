@@ -11,3 +11,59 @@ query getFoods {
     }
   }
 }
+
+query GetFoodById($foodId: ID!) {
+  getFoodById(foodId: $foodId) {
+    foodId
+    foodName
+    price
+    status
+    image
+    category {
+      categoryId
+      categoryName
+    }
+  }
+}
+
+mutation CreateFood($input: CreateFoodInput!) {
+  createFood(input: $input) {
+    foodId
+    foodName
+    price
+    status
+    image
+    category {
+      categoryId
+      categoryName
+    }
+  }
+}
+
+mutation UpdateFood($foodId: ID!, $input: UpdateFoodInput!) {
+  updateFood(foodId: $foodId, input: $input) {
+    foodId
+    foodName
+    price
+    status
+    image
+    category {
+      categoryId
+      categoryName
+    }
+  }
+}
+
+mutation DeleteFood($foodId: ID!) {
+  deleteFood(foodId: $foodId) {
+    foodId
+    foodName
+    price
+    status
+    image
+    category {
+      categoryId
+      categoryName
+    }
+  }
+}
