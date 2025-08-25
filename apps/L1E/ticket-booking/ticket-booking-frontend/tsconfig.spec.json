@@ -1,21 +1,30 @@
 {
-  "extends": "./tsconfig.json",
+  "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "../../../../dist/out-tsc",
-    "module": "commonjs",
-    "types": ["jest", "node"],
-    "jsx": "react"
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "esModuleInterop": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@pinecone-intern-monorepo/file-management": ["libs/file-management/src/index.ts"],
+      "@pinecone-intern-monorepo/generator": ["libs/generator/src/index.ts"],
+      "@pinecone-intern-monorepo/secrets": ["libs/secrets/src/index.ts"],
+      "@pinecone-intern-monorepo/shad": ["libs/shad/src/index.ts"],
+      "@pinecone-intern-monorepo/shad/server": ["libs/shad/src/server.ts"],
+      "@pinecone-intern-monorepo/shadcn": ["libs/shadcn/src/lib/ui/*"],
+      "@shadcn": ["libs/shadcn/src/index.ts"]
+    }
   },
-  "include": [
-    "jest.config.ts",
-    "src/**/*.test.ts",
-    "src/**/*.spec.ts",
-    "src/**/*.test.tsx",
-    "src/**/*.spec.tsx",
-    "src/**/*.test.js",
-    "src/**/*.spec.js",
-    "src/**/*.test.jsx",
-    "src/**/*.spec.jsx",
-    "src/**/*.d.ts"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }
+ 
