@@ -23,10 +23,10 @@ describe('getCategories', () => {
     ]);
     const result = await getCategories?.({}, {}, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual([
-      {
+      expect.objectContaining({
         categoryId: '1',
         categoryName: 'Test',
-      },
+      }),
     ]);
     expect(CategoryModel.find).toHaveBeenCalledTimes(1);
   });

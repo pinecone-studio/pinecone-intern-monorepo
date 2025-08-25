@@ -1,10 +1,10 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { FoodModel } from 'src/models/food.model';
-import { deleteFood } from 'src/resolvers/mutations';
+import { updateFoodByDiscount } from 'src/resolvers/mutations';
 
 jest.mock('src/models/food.model', () => ({
   FoodModel: {
-    findByIdAndDelete: jest.fn().mockReturnValue({
+    findByIdAndUpdate: jest.fn().mockReturnValue({
       populate: jest.fn(() => ({
         populate: jest.fn().mockResolvedValue({
           _id: '2',
@@ -35,12 +35,20 @@ jest.mock('src/models/food.model', () => ({
   },
 }));
 
-describe('deleteFood', () => {
+describe('updateFoodByDiscount', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  it('should delete food', async () => {
-    const result = await deleteFood?.({}, { foodId: '2' }, {}, {} as GraphQLResolveInfo);
+  it('should update food discount', async () => {
+    const result = await updateFoodByDiscount?.(
+      {},
+      {
+        foodId: '2',
+        discountId: '2',
+      },
+      {},
+      {} as GraphQLResolveInfo
+    );
     expect(result).toEqual(
       expect.objectContaining({
         foodId: '2',
@@ -50,12 +58,22 @@ describe('deleteFood', () => {
   });
 
   it("should throw an error if the food doesn't exist", async () => {
-    (FoodModel.findByIdAndDelete as jest.Mock).mockReturnValue({
+    (FoodModel.findByIdAndUpdate as jest.Mock).mockReturnValue({
       populate: jest.fn(() => ({
         populate: jest.fn().mockResolvedValue(null),
       })),
     });
-    await expect(deleteFood?.({}, { foodId: '3' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Food with ID 3 not found');
-    expect(FoodModel.findByIdAndDelete).toHaveBeenCalledWith('3');
+    await expect(
+      updateFoodByDiscount?.(
+        {},
+        {
+          foodId: '3',
+          discountId: '2',
+        },
+        {},
+        {} as GraphQLResolveInfo
+      )
+    ).rejects.toThrow('Food with ID 3 not found');
+    expect(FoodModel.findByIdAndUpdate).toHaveBeenCalledWith('3', { discount: '2' }, { new: true, runValidators: true });
   });
 });

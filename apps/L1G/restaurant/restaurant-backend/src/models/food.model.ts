@@ -1,5 +1,6 @@
 import { model, models, Schema, Types } from 'mongoose';
 import { CategoryType } from './category.model';
+import { DiscountType } from './discount.model';
 
 export type FoodType = {
   _id: Types.ObjectId;
@@ -8,6 +9,7 @@ export type FoodType = {
   image: string;
   status: string;
   category: Types.ObjectId;
+  discount: Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -37,14 +39,20 @@ export const FoodSchema = new Schema<FoodType>(
       ref: 'Category',
       required: true,
     },
+    discount: {
+      type: Schema.Types.ObjectId,
+      ref: 'discount',
+      required: true,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-export type FoodPopulatedType = Omit<FoodType, 'category'> & {
+export type FoodPopulatedType = Omit<FoodType, 'category' | 'discount'> & {
   category: CategoryType;
+  discount: DiscountType;
 };
 
 export const FoodModel = models.Food || model<FoodType>('food', FoodSchema);

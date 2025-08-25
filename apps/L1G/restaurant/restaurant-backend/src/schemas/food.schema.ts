@@ -8,6 +8,7 @@ export const foodTypeDefs = gql`
     image: String!
     status: String!
     category: Category!
+    discount: Discount
     createdAt: String
     updatedAt: String
   }
@@ -37,5 +38,6 @@ export const foodTypeDefs = gql`
     createFood(input: CreateFoodInput!): Food!
     updateFood(foodId: ID!, input: UpdateFoodInput!): Food!
     deleteFood(foodId: ID!): Food!
+    updateFoodByDiscount(foodId: ID!, discountId: ID!): Food!
   }
 `;
