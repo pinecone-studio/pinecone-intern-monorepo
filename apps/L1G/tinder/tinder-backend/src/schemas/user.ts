@@ -65,10 +65,13 @@ export const UsertypeDefs = gql`
     participant: ChatParticipant!
     messages: [ChatMessage!]!
   }
+<<<<<<< HEAD
   type LikeResponse {
     isMatch: Boolean!
     message: String!
   }
+=======
+>>>>>>> 411ec9bb8 (feat(get user by id): get user by id)
 
   type Query {
     getusers: [User]
