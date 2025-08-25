@@ -1,0 +1,27 @@
+query GetMe {
+  getMe {
+    id
+    email
+    genderPreferences
+    gender
+    name
+    profession
+    schoolWork
+    images
+    likedBy {
+      id
+      name
+    }
+    likedTo {
+      id
+      name
+    }
+    matchIds {
+      id
+      matchedAt
+      unmatched
+    }
+    bio
+    dateOfBirth
+  }
+}

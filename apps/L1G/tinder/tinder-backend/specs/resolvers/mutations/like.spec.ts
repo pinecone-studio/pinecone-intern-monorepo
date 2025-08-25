@@ -34,7 +34,11 @@ describe('like resolver', () => {
 
     const result = await like({}, { likedByUser, likeReceiver });
 
-    expect(result).toBe("It's a match! You can now chat!");
+    expect(result).toEqual({
+      isMatch: true,
+      message: "It's a match! You can now chat!",
+    });
+
     expect(Usermodel.findById).toHaveBeenCalledWith(new mongoose.Types.ObjectId(likeReceiver));
     expect(MatchModel.create).toHaveBeenCalledWith({
       users: [new mongoose.Types.ObjectId(likedByUser), new mongoose.Types.ObjectId(likeReceiver)],
@@ -54,7 +58,10 @@ describe('like resolver', () => {
 
     const result = await like({}, { likedByUser, likeReceiver });
 
-    expect(result).toBe('Like successful, waiting for a match.');
+    expect(result).toEqual({
+      isMatch: false,
+      message: 'Like successful, waiting for a match.',
+    });
   });
 
   it('returns "Like successful, waiting for a match." if receiver user is not found', async () => {
@@ -66,7 +73,10 @@ describe('like resolver', () => {
 
     const result = await like({}, { likedByUser, likeReceiver });
 
-    expect(result).toBe('Like successful, waiting for a match.');
+    expect(result).toEqual({
+      isMatch: false,
+      message: 'Like successful, waiting for a match.',
+    });
   });
 
   it('throws GraphQLError when DB failure occurs', async () => {

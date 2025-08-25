@@ -29,8 +29,6 @@ const inputs = [
     },
 ] as const;
 
-// const EmailAdresses = ["Nake@gmail.com", "Naka@gmail.com", "Naak@gmail.com", "Naraa@gmail.com", "Naagii@gmail.com"]
-
 const SignInPage = () => {
 
     const router = useRouter();
@@ -69,7 +67,7 @@ const SignInPage = () => {
             <div className="w-[364px] h-fit space-y-3 mx-auto pt-[105px] rounded-[10px]">
                 <div className="bg-white py-12 rounded-[10px]">
                     <div className="pb-3">
-                        <Image src="../Logo.svg" alt="instaLogo" className="w-full px-[89px]" width={364} height={292}/>
+                        <Image src="../fix/Logo.svg" alt="instaLogo" className="w-full px-[89px]" width={364} height={292}/>
                     </div>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 px-6 w-full">

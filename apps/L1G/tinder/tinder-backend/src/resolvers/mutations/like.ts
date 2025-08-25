@@ -4,7 +4,12 @@ import mongoose from 'mongoose';
 import { LikeArgs } from 'src/types';
 import { GraphQLError } from 'graphql';
 
-export const like = async (_: unknown, args: LikeArgs): Promise<string> => {
+interface LikeResponse {
+  isMatch: boolean;
+  message: string;
+}
+
+export const like = async (_: unknown, args: LikeArgs): Promise<LikeResponse> => {
   const { likedByUser, likeReceiver } = args;
 
   try {
@@ -26,10 +31,16 @@ export const like = async (_: unknown, args: LikeArgs): Promise<string> => {
       await Usermodel.findByIdAndUpdate(likedByUserId, { $addToSet: { matchIds: match._id } });
       await Usermodel.findByIdAndUpdate(likeReceiverId, { $addToSet: { matchIds: match._id } });
 
-      return "It's a match! You can now chat!";
+      return {
+        isMatch: true,
+        message: "It's a match! You can now chat!",
+      };
     }
 
-    return 'Like successful, waiting for a match.';
+    return {
+      isMatch: false,
+      message: 'Like successful, waiting for a match.',
+    };
   } catch (error) {
     console.error('Like failed:', (error as Error).message);
     throw new GraphQLError('Failed to like user', {

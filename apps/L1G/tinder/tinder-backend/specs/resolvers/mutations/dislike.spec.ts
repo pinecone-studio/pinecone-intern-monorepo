@@ -25,7 +25,10 @@ describe('dislike resolver', () => {
 
     const result = await dislike({}, { dislikedByUser, dislikeReceiver });
 
-    expect(result).toBe('Dislike processed and removed from like/match lists');
+    expect(result).toEqual({
+      isMatch: false,
+      message: 'Succesfully unmatched',
+    });
 
     expect(Usermodel.findByIdAndUpdate).toHaveBeenCalledTimes(2);
     expect(Usermodel.findByIdAndUpdate).toHaveBeenCalledWith(expect.any(mongoose.Types.ObjectId), { $pull: { likedTo: expect.any(mongoose.Types.ObjectId) } });
@@ -57,7 +60,10 @@ describe('dislike resolver', () => {
 
     const result = await dislike({}, { dislikedByUser, dislikeReceiver });
 
-    expect(result).toBe('Dislike processed and removed from like/match lists');
+    expect(result).toEqual({
+      isMatch: false,
+      message: 'Succesfully unmatched',
+    });
     expect(Usermodel.updateMany).not.toHaveBeenCalled();
   });
 
@@ -65,7 +71,7 @@ describe('dislike resolver', () => {
     (Usermodel.findByIdAndUpdate as jest.Mock).mockRejectedValue(new Error('DB failure'));
 
     const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {
-       //intenionally empty
+      // intentionally empty
     });
 
     await expect(dislike({}, { dislikedByUser, dislikeReceiver })).rejects.toThrow('Failed to dislike user');

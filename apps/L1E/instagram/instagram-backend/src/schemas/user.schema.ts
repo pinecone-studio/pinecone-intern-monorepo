@@ -52,6 +52,8 @@ type EditProfileResponse {
 type Query {
  getUsers: [User!]!
  getUser(_id: ID!): User
+ getProfiles(userName: String!): [User!]!
+ getSomeoneProfile(userName: String!): User!
 }
 
 # Mutations

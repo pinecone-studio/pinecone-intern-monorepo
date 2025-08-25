@@ -58,3 +58,25 @@ export type LeanChatMessage = {
   createdAt: Date;
   seen?: boolean;
 };
+type Match = {
+  _id: string;
+  matchedAt: string;
+  unmatched: boolean;
+  users: IUser[];
+};
+
+export interface PopulatedUser {
+  _id: string | mongoose.Types.ObjectId;
+  email: string;
+  name?: string;
+  bio?: string;
+  dateOfBirth?: string;
+  gender?: string;
+  genderPreferences?: string;
+  images?: string[];
+  profession?: string;
+  schoolWork?: string;
+  likedBy?: PopulatedUser[];
+  likedTo?: PopulatedUser[];
+  matchIds?: Match[];
+}

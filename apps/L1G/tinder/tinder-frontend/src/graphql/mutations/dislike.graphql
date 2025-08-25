@@ -1,3 +1,6 @@
 mutation Dislike($dislikedByUser: ID!, $dislikeReceiver: ID!) {
-  dislike(dislikedByUser: $dislikedByUser, dislikeReceiver: $dislikeReceiver)
+  dislike(dislikedByUser: $dislikedByUser, dislikeReceiver: $dislikeReceiver) {
+    isMatch
+    message
+  }
 }

@@ -3,13 +3,10 @@ query Getusers {
     id
     email
     genderPreferences
+    gender
     dateOfBirth
     name
     bio
-    interests {
-      _id
-      interestName
-    }
     profession
     schoolWork
     images

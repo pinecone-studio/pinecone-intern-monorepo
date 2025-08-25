@@ -5,6 +5,7 @@ export const UsertypeDefs = gql`
     id: ID!
     email: String!
     genderPreferences: String
+    gender: String
     dateOfBirth: String
     name: String
     bio: String
@@ -40,11 +41,11 @@ export const UsertypeDefs = gql`
     otpId: ID!
   }
 
-type SignupResponse {
-  id: ID!
-  email: String!
-  token: String!
-}
+  type SignupResponse {
+    id: ID!
+    email: String!
+    token: String!
+  }
 
   type ChatMessage {
     id: ID!
@@ -64,11 +65,17 @@ type SignupResponse {
     participant: ChatParticipant!
     messages: [ChatMessage!]!
   }
- 
+  type LikeResponse {
+    isMatch: Boolean!
+    message: String!
+  }
+
   type Query {
+    getMe: User!
     getusers: [User]
+    getUser(_id: ID!): User
     getUserAllChatMessages(userId: ID!): [MatchChatMessages!]!
-getChatWithUser(userId: ID!, participantId: ID!): MatchChatMessages!
+    getChatWithUser(userId: ID!, participantId: ID!): MatchChatMessages!
   }
   type Mutation {
     forgotPassword(newPassword: String!, otpId: String!): ForgotPasswordPayload!
@@ -81,6 +88,7 @@ getChatWithUser(userId: ID!, participantId: ID!): MatchChatMessages!
       email: String
       dateOfBirth: String
       genderPreferences: String
+      gender: String
       bio: String
       interests: [String]
       profession: String
@@ -89,8 +97,8 @@ getChatWithUser(userId: ID!, participantId: ID!): MatchChatMessages!
     ): User
 
     login(email: String!, password: String!): String
-    like(likedByUser: ID!, likeReceiver: ID!): String
-    dislike(dislikedByUser: ID!, dislikeReceiver: ID!): String
+    like(likedByUser: ID!, likeReceiver: ID!): LikeResponse!
+    dislike(dislikedByUser: ID!, dislikeReceiver: ID!): LikeResponse!
     uploadImages(images: [String!]!): User
 
     sendMessage(senderId: ID!, receiverId: ID!, matchId: ID!, content: String!): ChatMessage!
