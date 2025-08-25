@@ -27,17 +27,17 @@ export const Sidebar: React.FC = () => {
   const handleSearchClick = () => {
     setIsSearchOpen(!isSearchOpen);
   }
-  console.log('PostStep in Sidebar:', postStep);
-  console.log(handlePostClick, "clickinggg")
+  // console.log('PostStep in Sidebar:', postStep);
+  // console.log(handlePostClick, "clickinggg")
   return (
     <div className="fixed left-0 top-0 h-screen border-r bg-white">
       {!isSearchOpen &&
-        <div className="inline-flex flex-col h-[1000px] bg-slate-200  p-[36px_32px_16px_16px] justify-between items-start flex-shrink-0">
+        <div className="inline-flex flex-col h-[1000px] p-[36px_32px_16px_16px] justify-between items-start flex-shrink-0">
 
           <div className='flex flex-col space-y-6 gap-[48px] items-start self-stretch pt-[16px]'>
-            <Image src={'/logo.svg'} alt="Logo" width={103} height={29} />
+            <Image src={'../fix/logo.svg'} alt="Logo" width={103} height={29} />
 
-            <nav className="flex flex-col items-start bg-green-200 gap-2 self-stretch">
+            <nav className="flex flex-col items-start gap-2 self-stretch">
               <Link href="/" className="flex items-center w-full p-3 hover:text-primary gap-4 rounded-lg hover:bg-gray-100 transition-colors">
                 <Home className="h-[24px] w-[24px]" />
                 <span className='text-[16px] font-normal'>Home</span>
@@ -85,7 +85,7 @@ export const Sidebar: React.FC = () => {
             </nav>
           </div>
           <div>
-            <Link href="/more" className="flex items-center self-stretch p-[12px_120.984px_12px_12px]  hover:text-primary gap-4 bg-yellow-200">
+            <Link href="/more" className="flex items-center self-stretch p-[12px_120.984px_12px_12px] hover:text-primary gap-4">
               <AlignJustify className="h-[24px] w-[24px]" />
               <span className='text-[16px] font-normal'>More</span>
             </Link>
@@ -97,7 +97,7 @@ export const Sidebar: React.FC = () => {
           <div className="inline-flex flex-col h-[1130px] p-4 justify-between items-center flex-shrink-0">
 
             <div className='flex flex-col justify-between items-center space-y-6 gap-[48px] self-stretch  pt-[36px]'>
-              <div className='w-[29px] h-[29px]'><Instagram /></div>
+              <div className='w-[29px] h-[29px]'><Instagram className='cursor-pointer'/></div>
 
               <nav className="flex flex-col items-start gap-2 self-stretch">
                 <Link href="/" className="flex items-center w-full p-3 hover:text-primary rounded-lg hover:bg-gray-100 transition-colors">
