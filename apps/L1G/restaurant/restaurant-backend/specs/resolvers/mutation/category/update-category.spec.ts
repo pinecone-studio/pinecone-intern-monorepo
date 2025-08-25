@@ -13,6 +13,8 @@ describe('updateCategory', () => {
     (CategoryModel.findByIdAndUpdate as jest.Mock).mockResolvedValue({
       _id: '2',
       categoryName: 'Test',
+      createdAt: '',
+      updatedAt: '',
     });
 
     const result = await updateCategory?.(
@@ -29,8 +31,11 @@ describe('updateCategory', () => {
     expect(result).toEqual({
       categoryId: '2',
       categoryName: 'Test',
+      createdAt: '',
+      updatedAt: '',
     });
   });
+
   it("should throw an error if the category doesn't exist", async () => {
     (CategoryModel.findByIdAndUpdate as jest.Mock).mockResolvedValue(null);
 

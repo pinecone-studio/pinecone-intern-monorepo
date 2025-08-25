@@ -14,6 +14,8 @@ jest.mock('src/models/food.model', () => ({
         category: {
           _id: '1',
           categoryName: 'Test1',
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
         createdAt: new Date(),
         updatedAt: new Date(),
