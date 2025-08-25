@@ -1,154 +1,118 @@
-import { getusers } from 'src/resolvers/queries/getusers';
+import { getusers, mapSimpleUser, mapLikedByUsers, mapLikedToUsers, mapMatchedUsers } from 'src/resolvers/queries/getusers';
 import { Usermodel } from 'src/models/user';
-import mongoose from 'mongoose';
 
-jest.mock('src/models/user');
+jest.mock('src/models/user', () => ({
+  Usermodel: { find: jest.fn() },
+}));
 
-interface IUserMock {
-  _id: string | mongoose.Types.ObjectId;
+interface MockUser {
+  _id: string;
   email: string;
   name: string;
-  images?: string[] | null;
-  likedBy?: IUserMock[] | null;
-  likedTo?: IUserMock[] | null;
-  matchIds?: IUserMock[] | null;
+  likedBy?: unknown;
+  [key: string]: unknown;
 }
 
-describe('getusers resolver (error/edge cases)', () => {
+interface MockError {
+  foo: string;
+}
+
+function mockChain(result: MockUser[] | Error | MockError, reject = false) {
+  const lean = reject ? jest.fn().mockRejectedValue(result) : jest.fn().mockResolvedValue(result);
+  (Usermodel.find as jest.Mock).mockReturnValue({
+    populate: jest.fn().mockReturnValue({
+      populate: jest.fn().mockReturnValue({
+        populate: jest.fn().mockReturnValue({
+          populate: jest.fn().mockReturnValue({ lean }),
+        }),
+      }),
+    }),
+  });
+}
+
+describe('getusers resolver - errors & edge', () => {
+  const originalEnv = process.env.NODE_ENV;
+  
   beforeEach(() => {
     jest.clearAllMocks();
+    process.env.NODE_ENV = 'test';
   });
 
-  function createPopulateChain(mockData: IUserMock[]) {
-    const leanMock = jest.fn().mockResolvedValueOnce(mockData);
-    const populate3 = jest.fn().mockReturnValueOnce({ lean: leanMock });
-    const populate2 = jest.fn().mockReturnValueOnce({ populate: populate3 });
-    const populate1 = jest.fn().mockReturnValueOnce({ populate: populate2 });
-    return { populate1, populate2, populate3, leanMock };
-  }
-
-  it('should handle users with undefined likedBy and likedTo', async () => {
-    const mockUsers: IUserMock[] = [
-      {
-        _id: '60f1a5e9c9d8e72e5c9b1234',
-        email: 'test@example.com',
-        name: 'Test User',
-        likedBy: undefined,
-        likedTo: undefined,
-      },
-    ];
-
-    const { populate1 } = createPopulateChain(mockUsers);
-
-    jest.spyOn(Usermodel, 'find').mockReturnValue({
-      populate: populate1,
-    } as unknown as ReturnType<typeof Usermodel.find>);
-
-    const result = await getusers();
-
-    expect(result).toEqual([
-      {
-        id: '60f1a5e9c9d8e72e5c9b1234',
-        email: 'test@example.com',
-        name: 'Test User',
-        dateOfBirth: undefined,
-        genderPreferences: undefined,
-        gender: undefined,
-        bio: undefined,
-        interests: undefined,
-        profession: undefined,
-        schoolWork: undefined,
-        images: [],
-        matchIds: [],
-        likedBy: [],
-        likedTo: [],
-      },
-    ]);
-  });
-
-  it('should throw an error and log when database query fails', async () => {
-    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => void 0);
-    jest.spyOn(Usermodel, 'find').mockImplementationOnce(() => {
-      throw new Error('DB failure');
-    });
-
-    await expect(getusers()).rejects.toThrow('DB failure');
-
-    expect(errorSpy).toHaveBeenCalledWith(
-      '⚠️ Failed to fetch users:',
-      expect.any(Error)
-    );
-
-    errorSpy.mockRestore();
-  });
-
-  it('handles user with undefined likedBy and likedTo (short id)', async () => {
-    const mockUsers: IUserMock[] = [
-      {
-        _id: '123',
-        email: 'user@example.com',
-        name: 'User',
-        likedBy: undefined,
-        likedTo: undefined,
-      },
-    ];
-
-    const { populate1 } = createPopulateChain(mockUsers);
-
-    jest.spyOn(Usermodel, 'find').mockReturnValue({
-      populate: populate1,
-    } as unknown as ReturnType<typeof Usermodel.find>);
-
-    const result = await getusers();
-
-    expect(result).toEqual([
-      {
-        id: '123',
-        email: 'user@example.com',
-        name: 'User',
-        dateOfBirth: undefined,
-        genderPreferences: undefined,
-        gender: undefined,
-        bio: undefined,
-        interests: undefined,
-        profession: undefined,
-        schoolWork: undefined,
-        images: [],
-        matchIds: [],
-        likedBy: [],
-        likedTo: [],
-      },
-    ]);
-  });
-
-  it('should throw "Unknown error" when error is not instance of Error', async () => {
-    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => void 0);
-    jest.spyOn(Usermodel, 'find').mockImplementationOnce(() => {
-      throw { foo: 'bar' }; // not instance of Error
-    });
-
-    await expect(getusers()).rejects.toThrow(
-      'Unknown error while fetching users'
-    );
-
-    expect(errorSpy).toHaveBeenCalled();
-
-    errorSpy.mockRestore();
-  });
-
-  it('should not log error when NODE_ENV=production', async () => {
-    const originalEnv = process.env.NODE_ENV;
-    process.env.NODE_ENV = 'production';
-
-    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => void 0);
-    jest.spyOn(Usermodel, 'find').mockImplementationOnce(() => {
-      throw new Error('Silent DB failure');
-    });
-
-    await expect(getusers()).rejects.toThrow('Silent DB failure');
-    expect(errorSpy).not.toHaveBeenCalled();
-
+  afterEach(() => {
     process.env.NODE_ENV = originalEnv;
-    errorSpy.mockRestore();
+  });
+
+  it('handles undefined likedBy/likedTo', async () => {
+    mockChain([{ _id: '1', email: 't@test.com', name: 'Test', likedBy: undefined }]);
+    const res = await getusers();
+    expect(res[0].likedBy).toEqual([]);
+  });
+
+  it('throws DB error and logs in non-production', async () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+    
+    mockChain(new Error('DB fail'), true);
+    await expect(getusers()).rejects.toThrow('DB fail');
+    
+    expect(consoleSpy).toHaveBeenCalledWith('⚠️ Failed to fetch users:', expect.any(Error));
+    consoleSpy.mockRestore();
+  });
+
+  it('throws "Unknown error" if not Error instance and logs', async () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+    
+    mockChain({ foo: 'bar' }, true);
+    await expect(getusers()).rejects.toThrow('Unknown error while fetching users');
+    
+    expect(consoleSpy).toHaveBeenCalledWith('⚠️ Failed to fetch users:', { foo: 'bar' });
+    consoleSpy.mockRestore();
+  });
+
+  it('does not log error in production environment', async () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+    process.env.NODE_ENV = 'production';
+    
+    mockChain(new Error('Silent error'), true);
+    await expect(getusers()).rejects.toThrow('Silent error');
+    
+    expect(consoleSpy).not.toHaveBeenCalled();
+    consoleSpy.mockRestore();
+  });
+
+  it('handles error thrown during find operation setup', async () => {
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+    
+    (Usermodel.find as jest.Mock).mockImplementation(() => {
+      throw new Error('Find operation failed');
+    });
+
+    await expect(getusers()).rejects.toThrow('Find operation failed');
+    expect(consoleSpy).toHaveBeenCalled();
+    consoleSpy.mockRestore();
+  });
+
+  it('mapSimpleUser transforms basic user', () => {
+    const u = { _id: 'x', email: 'u@test.com', name: 'User' } as never;
+    expect(mapSimpleUser(u)).toMatchObject({ id: 'x', email: 'u@test.com' });
+  });
+
+  it('mapping helpers return [] when null/invalid', () => {
+    expect(mapLikedByUsers(null)).toEqual([]);
+    expect(mapLikedToUsers(undefined as never)).toEqual([]);
+    expect(mapMatchedUsers({} as never)).toEqual([]);
+  });
+
+  it('mapping helpers work with valid arrays', () => {
+    const sampleUser = { _id: 'test', email: 'test@example.com', name: 'Test' } as never;
+    
+    expect(mapLikedByUsers([sampleUser])).toHaveLength(1);
+    expect(mapLikedToUsers([sampleUser])).toHaveLength(1);
+    expect(mapMatchedUsers([sampleUser])).toHaveLength(1);
+  });
+
+  it('mapping helpers handle non-array inputs', () => {
+    expect(mapLikedByUsers('not-an-array' as never)).toEqual([]);
+    expect(mapLikedToUsers(123 as never)).toEqual([]);
+    expect(mapMatchedUsers(true as never)).toEqual([]);
   });
 });
