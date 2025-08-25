@@ -3,6 +3,8 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { CreatePassword } from '@/components/CreatePassword';
+
+import { useSignupUserMutation } from '@/generated';
 import { useSignupUserMutation } from '@/generated';
 
 const mockSignup = jest.fn();
@@ -10,6 +12,7 @@ const mockOnSuccess = jest.fn();
 const mockUpdateUserData = jest.fn();
 
 jest.mock('@/generated', () => ({
+  useSignupUserMutation: jest.fn(() => [mockSignup, { loading: false, error: null }]),
   useSignupUserMutation: jest.fn(),
 }));
 
@@ -120,6 +123,18 @@ describe('CreatePassword Component', () => {
     expect(button);
   });
 
+  it('shows server error when mutation returns no token but error exists', async () => {
+    mockSignup.mockResolvedValue({
+      data: {
+        signup: {
+          token: null,
+          id: null,
+        },
+      },
+    });
+
+    // Use jest.mocked() properly with imported useSignupMutation
+    jest.mocked(useSignupUserMutation).mockReturnValueOnce([mockSignup, { loading: false, error: { message: 'Server error message' } }]);
   it('shows error message when signup returns no token but has error', async () => {
     const mockError = { message: 'Invalid OTP provided' };
 
