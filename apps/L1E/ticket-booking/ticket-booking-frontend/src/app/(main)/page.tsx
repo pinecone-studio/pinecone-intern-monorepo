@@ -15,13 +15,6 @@ const HomePage = () => {
         <ConcertsHome />
       </div>
 
-      {/* List */}
-
-      {/* <div className='py-12 px-[117px]'>
-        <SearchConcert />
-        <ConcertsList />
-      </div> */}
-
       <hr />
 
       <Footer />
