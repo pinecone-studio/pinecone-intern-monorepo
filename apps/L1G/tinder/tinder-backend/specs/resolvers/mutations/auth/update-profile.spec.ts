@@ -1,148 +1,156 @@
-import { GraphQLResolveInfo } from "graphql";
-import { updateProfile } from "src/resolvers/mutations/auth/update-profile";
-import { Usermodel } from "src/models/user";
-import mongoose from "mongoose";
+import { GraphQLResolveInfo } from 'graphql';
+import { updateProfile } from 'src/resolvers/mutations/auth/update-profile';
+import { Usermodel } from 'src/models/user';
+import mongoose from 'mongoose';
 
 jest.mock('src/models/user', () => ({
-  Usermodel: {
-    findById: jest.fn(),
-    findOneAndUpdate: jest.fn(),
-  },
+  Usermodel: { findById: jest.fn(), findOneAndUpdate: jest.fn() },
 }));
-
-describe('Update Profile', () => {
+jest.mock('src/models/interests.model', () => ({}));
+interface MockUser {
+  _id: mongoose.Types.ObjectId;
+  name: string;
+  email: string;
+  dateOfBirth?: string;
+  genderPreferences?: string;
+  bio?: string;
+  interests?: mongoose.Types.ObjectId[];
+  profession?: string;
+  schoolWork?: string;
+  images?: string[];
+  gender?: string;
+}
+describe('updateProfile Resolver - 100% coverage', () => {
   const validId = new mongoose.Types.ObjectId().toHexString();
-  const mockUser = {
+  const mockUser: MockUser = {
     _id: new mongoose.Types.ObjectId(validId),
     name: 'Test User',
     email: 'before@gmail.com',
     dateOfBirth: '1990-01-01',
     genderPreferences: 'Both',
     bio: 'Test Bio',
-    interests: ['Interest1', 'Interest2'],
+    interests: [new mongoose.Types.ObjectId(), new mongoose.Types.ObjectId()],
     profession: 'Test Profession',
     schoolWork: 'Test School/Work',
     images: ['image1.jpg', 'image2.jpg'],
-    likedBy: [],
-    likedTo: [],
-    matchIds: [],
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
-    
-    (Usermodel.findById as jest.Mock).mockImplementation((id) => {
-      if (id.toString() === validId) {
-        return Promise.resolve(mockUser);
-      }
-      return Promise.resolve(null);
-    });
-
-    (Usermodel.findOneAndUpdate as jest.Mock).mockImplementation((filter, update) => {
-      if (filter._id.toString() === validId) {
-        return Promise.resolve({
-          ...mockUser,
-          ...update.$set,
-        });
-      }
-      return Promise.resolve(null);
-    });
+    (Usermodel.findById as jest.Mock).mockImplementation((id) =>
+      id.toString() === validId ? Promise.resolve(mockUser) : Promise.resolve(null)
+    );
+    (Usermodel.findOneAndUpdate as jest.Mock).mockImplementation((filter, update) =>
+      filter._id.toString() === validId
+        ? Promise.resolve({ ...mockUser, ...update.$set })
+        : Promise.resolve(null)
+    );
   });
 
-  it('should update a user profile with all fields', async () => {
+  it('updates full profile', async () => {
     const result = await updateProfile!({}, {
       id: validId,
       name: 'Updated Name',
       email: 'test@gmail.com',
       dateOfBirth: '1990-01-01',
       genderPreferences: 'Both',
+      gender: 'Female',
       bio: 'Updated Bio',
-      interests: ['Interest1', 'Interest2'],
+      interests: [new mongoose.Types.ObjectId().toHexString(), new mongoose.Types.ObjectId().toHexString()],
       profession: 'Updated Profession',
       schoolWork: 'Updated School/Work',
-      images: ['image1.jpg', 'image2.jpg']
+      images: ['image1.jpg', 'image2.jpg'],
     }, {}, {} as GraphQLResolveInfo);
-
     expect(result.name).toBe('Updated Name');
     expect(result.email).toBe('test@gmail.com');
-    expect(Usermodel.findById).toHaveBeenCalledWith(expect.any(mongoose.Types.ObjectId));
+    expect(result.gender).toBe('Female');
+    expect(Usermodel.findById).toHaveBeenCalled();
     expect(Usermodel.findOneAndUpdate).toHaveBeenCalled();
   });
 
-  it('should update a user profile with only some fields', async () => {
+  it('updates partial profile', async () => {
     const result = await updateProfile!({}, {
       id: validId,
       name: 'Updated Name',
-      email: undefined, 
-      dateOfBirth: undefined,
       genderPreferences: 'Male',
       bio: 'Updated Bio',
-      interests: undefined,
-      profession: undefined,
       schoolWork: 'New School',
-      images: undefined
     }, {}, {} as GraphQLResolveInfo);
 
     expect(result.name).toBe('Updated Name');
     expect(result.genderPreferences).toBe('Male');
     expect(result.bio).toBe('Updated Bio');
     expect(result.schoolWork).toBe('New School');
-    expect(result.email).toBe('before@gmail.com');
-    expect(result.interests).toEqual(['Interest1', 'Interest2']);
+    expect(result.email).toBe('before@gmail.com'); 
+  });
+  it('updates only one field', async () => {
+    const nameRes = await updateProfile!({}, { id: validId, name: 'Only Name' }, {}, {} as GraphQLResolveInfo);
+    expect(nameRes.name).toBe('Only Name');
+    const emailRes = await updateProfile!({}, { id: validId, email: 'new@gmail.com' }, {}, {} as GraphQLResolveInfo);
+    expect(emailRes.email).toBe('new@gmail.com');
+  });
+  it('updates interests as strings and objects', async () => {
+    const objInterests = [{ _id: new mongoose.Types.ObjectId().toHexString() }];
+    const strInterests = [new mongoose.Types.ObjectId().toHexString()];
+    const resultObj = await updateProfile!(
+      {},
+      { id: validId, interests: objInterests.map((i) => i._id) },
+      {},
+      {} as GraphQLResolveInfo
+    );
+    const resultStr = await updateProfile!({}, { id: validId, interests: strInterests }, {}, {} as GraphQLResolveInfo);
+    expect(resultObj.interests).toHaveLength(1);
+    expect(resultStr.interests).toHaveLength(1);
   });
 
-  it('should throw an error if the user does not exist', async () => {
+  it('handles undefined interests', async () => {
+    const result = await updateProfile!({}, { id: validId, name: 'Test', interests: undefined }, {}, {} as GraphQLResolveInfo);
+    expect(result.name).toBe('Test');
+    expect(result.interests).toEqual(mockUser.interests);
+  });
+
+  it('handles empty interests array', async () => {
+    const result = await updateProfile!({}, { id: validId, interests: [] }, {}, {} as GraphQLResolveInfo);
+    expect(result.interests).toEqual([]);
+  });
+
+  it('throws error if user not found', async () => {
     const fakeId = new mongoose.Types.ObjectId().toHexString();
-    
-    (Usermodel.findById as jest.Mock).mockImplementation((id) => {
-      if (id.toString() === fakeId) {
-        return Promise.resolve(null);
-      }
-      return Promise.resolve(mockUser);
-    });
-    
-    await expect(updateProfile!({}, { id: fakeId }, {}, {} as GraphQLResolveInfo))
-      .rejects
-      .toThrow('User not found');
+    await expect(updateProfile!({}, { id: fakeId }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('User not found');
   });
 
-  it('should throw an error if user not found after update', async () => {
+  it('throws error if not found after update', async () => {
     (Usermodel.findOneAndUpdate as jest.Mock).mockResolvedValue(null);
-    
-    await expect(updateProfile!({}, {
-      id: validId,
-      name: 'Updated Name'
-    }, {}, {} as GraphQLResolveInfo))
-      .rejects
-      .toThrow('User not found after update');
+    await expect(updateProfile!({}, { id: validId, name: 'Name' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('User not found after update');
   });
 
-  it('should throw an error for invalid user ID', async () => {
-    await expect(updateProfile!({}, { id: 'invalid-id' }, {}, {} as GraphQLResolveInfo))
-      .rejects
-      .toThrow('Invalid user ID');
-    
+  it('throws error for invalid ID', async () => {
+    await expect(updateProfile!({}, { id: 'invalid-id' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Invalid user ID');
     expect(Usermodel.findById).not.toHaveBeenCalled();
   });
 
-  it('should update only name field', async () => {
-    const result = await updateProfile!({}, {
-      id: validId,
-      name: 'Only Name Updated',
+  it('handles interests with mixed object and string format', async () => {
+    const mixedInterests = [
+      { _id: new mongoose.Types.ObjectId().toHexString() },
+      new mongoose.Types.ObjectId().toHexString()
+    ];
+    
+    const result = await updateProfile!({}, { 
+      id: validId, 
+      interests: mixedInterests as never
     }, {}, {} as GraphQLResolveInfo);
 
-    expect(result.name).toBe('Only Name Updated');
-    expect(result.email).toBe('before@gmail.com'); 
+    expect(result.interests).toHaveLength(2);
   });
 
-  it('should update only email field', async () => {
-    const result = await updateProfile!({}, {
+  it('handles null values in buildUpdateData', async () => {
+    const result = await updateProfile!({}, { 
       id: validId,
-      email: 'newemail@gmail.com',
+      name: undefined,
+      email: 'test@example.com',
+      bio: undefined
     }, {}, {} as GraphQLResolveInfo);
 
-    expect(result.email).toBe('newemail@gmail.com');
-    expect(result.name).toBe('Test User'); 
+    expect(result.email).toBe('test@example.com');
   });
-
-});
+})

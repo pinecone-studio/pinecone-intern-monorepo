@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
   dateOfBirth: { type: String, default: '' },
   name: { type: String, default: '' },
   bio: { type: String },
-  interests: { type: [String], default: [] },
+  interests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Interests' }],
   profession: { type: String, default: '' },
   schoolWork: { type: String, default: '' },
   images: { type: [String], default: [] },

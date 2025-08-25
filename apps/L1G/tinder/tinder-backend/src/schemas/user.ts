@@ -17,6 +17,9 @@ export const UsertypeDefs = gql`
     likedTo: [User]
     matchIds: [Match]
   }
+  type InterestIdOnly {
+    _id: ID!
+  }
   type Match {
     id: ID!
     users: [User!]!

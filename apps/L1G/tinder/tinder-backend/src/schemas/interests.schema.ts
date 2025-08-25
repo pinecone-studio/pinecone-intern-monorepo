@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-cloud-functions';
 export const InterestsTypeDefs = gql`
   type Interest {
     _id: ID!
-    interestName: String!
+    interestName: String
   }
   type Query {
     getInterest(_id: ID!): Interest!
