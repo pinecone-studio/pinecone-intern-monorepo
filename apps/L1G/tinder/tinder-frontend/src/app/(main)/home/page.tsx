@@ -5,6 +5,7 @@ import { Header } from '@/components/Header';
 
 import { useDislikeMutation, useGetusersQuery, useLikeUserMutation } from '@/generated';
 import { UserProfile } from '@/app/page';
+
 import MatchDialogClose from '@/components/MatchDialogClose';
 import ProfileSwiper from '@/components/ProfileSwiper';
 import { useCurrentUser } from '@/app/contexts/CurrentUserContext';
@@ -33,6 +34,7 @@ const HomePage = () => {
   const [like] = useLikeUserMutation();
   const [dislike] = useDislikeMutation();
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const [isMatched, setIsMatched] = useState(false);
 
   useEffect(() => {

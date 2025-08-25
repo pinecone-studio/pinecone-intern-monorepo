@@ -23,6 +23,7 @@ const Avatar = ({ user, size = 48 }: AvatarProps) => {
 
   return (
     <div className="relative">
+
       <Image src={src} alt={user.name || 'Avatar'} width={size} height={size} className="object-cover rounded-full" />
     </div>
   );

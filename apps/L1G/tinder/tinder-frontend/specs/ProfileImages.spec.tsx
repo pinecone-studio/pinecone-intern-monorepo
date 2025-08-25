@@ -1,379 +1,262 @@
-/* eslint-disable no-console, max-lines */
-/* eslint-disable camelcase */
-
+/* eslint-disable camelcase, max-lines */
 import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
-import { ProfileImages } from '@/components/ProfileImages';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { ProfileImages } from '@/components/ProfileImages';
 import axios from 'axios';
-import { UploadImagesDocument } from '@/generated';
-import { MockedProvider } from '@apollo/client/testing';
-
-const mockOnSuccess = jest.fn();
-
-jest.mock('next/image', () => {
-  const MockedImage = (props: any) => {
-    const { fill, ...rest } = props;
-    return <img {...rest} alt={props.alt || 'mocked image'} />;
-  };
-  MockedImage.displayName = 'NextImageMock';
-  return MockedImage;
-});
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
+let mockLoading = false;
 
-const apolloMocks = [
-  {
-    request: {
-      query: UploadImagesDocument,
-      variables: { images: expect.any(Array) },
-    },
-    result: {
-      data: {
-        uploadImages: {
-          id: 'user123',
-          images: [],
-          __typename: 'User',
-        },
-      },
-    },
-  },
-];
+const mockUploadImagesMutation = jest.fn();
+jest.mock('@/generated', () => ({
+  useUploadImagesMutation: () => [mockUploadImagesMutation, { loading: mockLoading }],
+}));
+
+jest.mock('next/image', () => {
+  const MockImage = (props: any) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img {...props} alt={props.alt || 'mocked image'} />
+  );
+  MockImage.displayName = 'MockImage';
+  return MockImage;
+});
+
+global.alert = jest.fn();
+global.console.error = jest.fn();
+
+const mockOnSuccess = jest.fn();
+const mockOnBack = jest.fn();
+const mockUpdateUserData = jest.fn();
+
+const renderComponent = () => render(<ProfileImages onSuccess={mockOnSuccess} onBack={mockOnBack} updateUserData={mockUpdateUserData} />);
 
 describe('ProfileImages Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = 'test-cloud';
+    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = 'demo-cloud';
   });
 
-  it('renders 6 image slots', () => {
-    render(
-      <MockedProvider mocks={apolloMocks} addTypename={false}>
-        <ProfileImages onSuccess={jest.fn()} />
-      </MockedProvider>
-    );
-
-    const imageSlots = screen.getAllByTestId(/image-slot-/);
-    expect(imageSlots).toHaveLength(6);
+  it('renders title and description', () => {
+    renderComponent();
+    expect(screen.getByText('Upload your image')).toBeInTheDocument();
+    expect(screen.getByText('Please choose an image that represents you.')).toBeInTheDocument();
   });
 
-  it('handles missing secure_url in upload response', async () => {
+  it('renders 6 empty slots initially', () => {
+    renderComponent();
+    for (let i = 0; i < 6; i++) {
+      expect(screen.getByTestId(`image-slot-${i}`)).toBeInTheDocument();
+    }
+  });
+
+  it('handles image upload successfully', async () => {
+    renderComponent();
+    const file = new File(['dummy'], 'test.png', { type: 'image/png' });
+
     mockedAxios.post.mockResolvedValueOnce({
-      data: { publicId: '123' },
+      data: { secure_url: 'http://test.com/test.png' },
     });
 
-    render(
-      <MockedProvider mocks={apolloMocks} addTypename={false}>
-        <ProfileImages onSuccess={mockOnSuccess} />
-      </MockedProvider>
-    );
+    const input = screen.getByTestId('upload-input') as HTMLInputElement;
+    fireEvent.change(input, { target: { files: [file] } });
 
-    const fileInput = screen.getByTestId('upload-input');
-    const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
-
-    await act(async () => {
-      fireEvent.change(fileInput, { target: { files: [file] } });
-    });
-
-    expect(screen.queryByTestId('uploaded-image-0')).not.toBeInTheDocument();
-  });
-
-  it('uploads image and updates slot', async () => {
-    const mockUrl = 'https://cloudinary.com/test-image.jpg';
-    mockedAxios.post.mockResolvedValueOnce({
-      data: { secure_url: mockUrl },
-    });
-
-    render(
-      <MockedProvider mocks={apolloMocks} addTypename={false}>
-        <ProfileImages onSuccess={mockOnSuccess} />
-      </MockedProvider>
-    );
-
-    const fileInput = screen.getByTestId('upload-input');
-    const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
-
-    await act(async () => {
-      fireEvent.change(fileInput, { target: { files: [file] } });
-    });
-
-    const uploadedImage = await screen.findByTestId('uploaded-image-0');
-    expect(uploadedImage).toBeInTheDocument();
-  });
-
-  it('handles error during image upload', async () => {
-    mockedAxios.post.mockRejectedValueOnce(new Error('Upload failed'));
-
-    render(
-      <MockedProvider mocks={apolloMocks} addTypename={false}>
-        <ProfileImages onSuccess={mockOnSuccess} />
-      </MockedProvider>
-    );
-
-    const fileInput = screen.getByTestId('upload-input');
-    const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
-
-    await act(async () => {
-      fireEvent.change(fileInput, { target: { files: [file] } });
-    });
-
-    expect(screen.queryByTestId('uploaded-image-0')).not.toBeInTheDocument();
+    await waitFor(() => expect(screen.getByTestId('uploaded-image-0')).toBeInTheDocument());
   });
 
   it('removes an uploaded image', async () => {
-    const mockUrl = 'https://cloudinary.com/test-image.jpg';
-    mockedAxios.post.mockResolvedValueOnce({ data: { secure_url: mockUrl } });
-
-    render(
-      <MockedProvider mocks={apolloMocks} addTypename={false}>
-        <ProfileImages onSuccess={mockOnSuccess} />
-      </MockedProvider>
-    );
-
-    const fileInput = screen.getByTestId('upload-input');
-    const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
-
-    await act(async () => {
-      fireEvent.change(fileInput, { target: { files: [file] } });
+    renderComponent();
+    const file = new File(['dummy'], 'test.png', { type: 'image/png' });
+    mockedAxios.post.mockResolvedValueOnce({
+      data: { secure_url: 'http://test.com/test.png' },
     });
 
-    const uploadedImage = await screen.findByTestId('uploaded-image-0');
-    expect(uploadedImage).toBeInTheDocument();
+    fireEvent.change(screen.getByTestId('upload-input'), {
+      target: { files: [file] },
+    });
 
-    const removeButton = screen.getByTestId('remove-button-0');
-    fireEvent.click(removeButton);
+    await waitFor(() => expect(screen.getByTestId('uploaded-image-0')).toBeInTheDocument());
 
+    fireEvent.click(screen.getByTestId('remove-button-0'));
+
+    await waitFor(() => expect(screen.queryByTestId('uploaded-image-0')).not.toBeInTheDocument());
+  });
+
+  it('alerts when trying to go next without images', async () => {
+    renderComponent();
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+    await waitFor(() => expect(global.alert).toHaveBeenCalledWith('Please upload at least one image.'));
+  });
+
+  it('calls updateUserData and onSuccess when Next is clicked with images', async () => {
+    renderComponent();
+    const file = new File(['dummy'], 'test.png', { type: 'image/png' });
+    mockedAxios.post.mockResolvedValueOnce({
+      data: { secure_url: 'http://test.com/test.png' },
+    });
+
+    fireEvent.change(screen.getByTestId('upload-input'), {
+      target: { files: [file] },
+    });
+
+    await waitFor(() => expect(screen.getByTestId('uploaded-image-0')).toBeInTheDocument());
+
+    mockUploadImagesMutation.mockResolvedValueOnce({});
+
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+
+    await waitFor(() => {
+      expect(mockUpdateUserData).toHaveBeenCalledWith({
+        images: ['http://test.com/test.png'],
+      });
+      expect(mockUploadImagesMutation).toHaveBeenCalledWith({
+        variables: { images: ['http://test.com/test.png'] },
+      });
+      expect(mockOnSuccess).toHaveBeenCalled();
+    });
+  });
+
+  it('shows alert when mutation fails', async () => {
+    renderComponent();
+    const file = new File(['dummy'], 'test.png', { type: 'image/png' });
+    mockedAxios.post.mockResolvedValueOnce({
+      data: { secure_url: 'http://test.com/test.png' },
+    });
+
+    fireEvent.change(screen.getByTestId('upload-input'), {
+      target: { files: [file] },
+    });
+
+    await waitFor(() => expect(screen.getByTestId('uploaded-image-0')).toBeInTheDocument());
+
+    mockUploadImagesMutation.mockRejectedValueOnce(new Error('fail'));
+
+    fireEvent.click(screen.getByRole('button', { name: /next/i }));
+
+    await waitFor(() => expect(global.alert).toHaveBeenCalledWith('Something went wrong while saving your images.'));
+  });
+
+  it('calls onBack when Back is clicked', () => {
+    renderComponent();
+    fireEvent.click(screen.getByRole('button', { name: /back/i }));
+    expect(mockOnBack).toHaveBeenCalled();
+  });
+
+  it('logs error when cloudName is missing', async () => {
+    delete process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+
+    renderComponent();
+    const file = new File(['dummy'], 'test.png', { type: 'image/png' });
+
+    const input = screen.getByTestId('upload-input') as HTMLInputElement;
+    fireEvent.change(input, { target: { files: [file] } });
+
+    await waitFor(() => expect(console.error).toHaveBeenCalledWith('Cloudinary cloud name is missing!'));
+  });
+
+  it('displays loading spinner during image upload', async () => {
+    renderComponent();
+    const file = new File(['dummy'], 'test.png', { type: 'image/png' });
+
+    mockedAxios.post.mockImplementation(
+      () =>
+        new Promise((resolve) =>
+          setTimeout(
+            () =>
+              resolve({
+                data: { secure_url: 'http://test.com/test.png' },
+              }),
+            1000
+          )
+        )
+    );
+
+    const input = screen.getByTestId('upload-input') as HTMLInputElement;
+    fireEvent.change(input, { target: { files: [file] } });
+
+    await waitFor(() => expect(screen.getByTestId('loader-0')).toBeInTheDocument());
+  });
+  it('logs upload error when image upload fails', async () => {
+    renderComponent();
+    const file = new File(['dummy'], 'test.png', { type: 'image/png' });
+
+    // Simulate axios post failure
+    mockedAxios.post.mockRejectedValueOnce(new Error('Upload failed'));
+
+    const input = screen.getByTestId('upload-input') as HTMLInputElement;
+    fireEvent.change(input, { target: { files: [file] } });
+
+    // Wait for upload attempt and error logging
+    await waitFor(() => {
+      expect(console.error).toHaveBeenCalledWith('Upload error:', expect.any(Error));
+    });
+  });
+  it('displays loading spinner during mutation loading', () => {
+    mockLoading = true;
+
+    renderComponent();
+
+    expect(screen.getByTestId('next-loader')).toBeInTheDocument();
+
+    mockLoading = false;
+  });
+  it('returns null if secure_url is missing in Cloudinary response', async () => {
+    renderComponent();
+
+    const file = new File(['dummy'], 'test.png', { type: 'image/png' });
+
+    // Cloudinary responds successfully, but without secure_url
+    mockedAxios.post.mockResolvedValueOnce({
+      data: {}, // no secure_url
+    });
+
+    const input = screen.getByTestId('upload-input') as HTMLInputElement;
+    fireEvent.change(input, { target: { files: [file] } });
+
+    // Wait for the upload attempt and check that no image was added
     await waitFor(() => {
       expect(screen.queryByTestId('uploaded-image-0')).not.toBeInTheDocument();
     });
   });
+  it('does nothing when no file is selected', async () => {
+    renderComponent();
 
-  it('does not upload if no file is selected', async () => {
-    render(
-      <MockedProvider mocks={apolloMocks} addTypename={false}>
-        <ProfileImages onSuccess={mockOnSuccess} />
-      </MockedProvider>
-    );
+    const input = screen.getByTestId('upload-input') as HTMLInputElement;
 
-    const fileInput = screen.getByTestId('upload-input');
+    // Fire event with empty file list
+    fireEvent.change(input, { target: { files: [] } });
 
-    await act(async () => {
-      fireEvent.change(fileInput, { target: { files: undefined } });
+    // Nothing should happen — no upload, no console, no UI change
+    await waitFor(() => {
+      expect(mockedAxios.post).not.toHaveBeenCalled();
+      expect(screen.queryByTestId('uploaded-image-0')).not.toBeInTheDocument();
     });
-
-    expect(mockedAxios.post).not.toHaveBeenCalled();
   });
+  it('does nothing when all image slots are full', async () => {
+    renderComponent();
 
-  it('does not upload if cloudName is falsy', async () => {
-    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = '';
+    const input = screen.getByTestId('upload-input') as HTMLInputElement;
+    const file = new File(['dummy'], 'test.png', { type: 'image/png' });
 
-    render(
-      <MockedProvider mocks={apolloMocks} addTypename={false}>
-        <ProfileImages onSuccess={mockOnSuccess} />
-      </MockedProvider>
-    );
-
-    const fileInput = screen.getByTestId('upload-input');
-    const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
-
-    await act(async () => {
-      fireEvent.change(fileInput, { target: { files: [file] } });
-    });
-
-    expect(mockedAxios.post).not.toHaveBeenCalled();
-  });
-
-  it('does not upload if no empty image slot found', async () => {
-    const mockUrl = 'https://cloudinary.com/test-image.jpg';
-    mockedAxios.post.mockResolvedValue({ data: { secure_url: mockUrl } });
-
-    render(
-      <MockedProvider mocks={apolloMocks} addTypename={false}>
-        <ProfileImages onSuccess={mockOnSuccess} />
-      </MockedProvider>
-    );
-
-    const fileInput = screen.getByTestId('upload-input');
-    const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
-
+    // Fill all 6 slots
     for (let i = 0; i < 6; i++) {
-      await act(async () => {
-        fireEvent.change(fileInput, { target: { files: [file] } });
+      mockedAxios.post.mockResolvedValueOnce({
+        data: { secure_url: `http://test.com/image${i}.png` },
       });
-      await screen.findByTestId(`uploaded-image-${i}`);
+
+      fireEvent.change(input, { target: { files: [file] } });
+
+      // Wait for each image to upload
+      // eslint-disable-next-line no-await-in-loop
+      await waitFor(() => expect(screen.getByTestId(`uploaded-image-${i}`)).toBeInTheDocument());
     }
 
-    await act(async () => {
-      fireEvent.change(fileInput, { target: { files: [file] } });
-    });
-
-    expect(mockedAxios.post).toHaveBeenCalledTimes(6);
-  });
-
-  it('should call onSuccess when an image is successfully uploaded and saved', async () => {
-    const mockUrl = 'https://cloudinary.com/test-image.jpg';
-    mockedAxios.post.mockResolvedValueOnce({
-      data: { secure_url: mockUrl },
-    });
-
-    const uploadImagesMock = {
-      request: {
-        query: UploadImagesDocument,
-        variables: {
-          images: [mockUrl],
-        },
-      },
-      result: {
-        data: {
-          uploadImages: {
-            id: 'user123',
-            images: [mockUrl],
-            __typename: 'User',
-          },
-        },
-      },
-    };
-
-    render(
-      <MockedProvider mocks={[uploadImagesMock]} addTypename={false}>
-        <ProfileImages onSuccess={mockOnSuccess} />
-      </MockedProvider>
-    );
-
-    const fileInput = screen.getByTestId('upload-input');
-    const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
-
-    await act(async () => {
-      fireEvent.change(fileInput, { target: { files: [file] } });
-    });
-
-    await screen.findByTestId('uploaded-image-0');
-
-    const nextButton = screen.getByRole('button', { name: /Next/i });
-
-    await act(async () => {
-      fireEvent.click(nextButton);
-    });
+    // Upload 7th image (should not be accepted)
+    fireEvent.change(input, { target: { files: [file] } });
 
     await waitFor(() => {
-      expect(mockOnSuccess).toHaveBeenCalled();
+      expect(mockedAxios.post).toHaveBeenCalledTimes(6); // still only 6 calls
     });
-  });
-
-  test('onSuccess is clicked manually', async () => {
-    const mockUrl = 'https://cloudinary.com/test-image.jpg';
-    mockedAxios.post.mockResolvedValueOnce({
-      data: { secure_url: mockUrl },
-    });
-
-    const apolloMock = {
-      request: {
-        query: UploadImagesDocument,
-        variables: {
-          images: [mockUrl],
-        },
-      },
-      result: {
-        data: {
-          uploadImages: {
-            id: 'user123',
-            images: [mockUrl],
-            __typename: 'User',
-          },
-        },
-      },
-    };
-
-    render(
-      <MockedProvider mocks={[apolloMock]} addTypename={false}>
-        <ProfileImages onSuccess={mockOnSuccess} />
-      </MockedProvider>
-    );
-
-    const fileInput = screen.getByTestId('upload-input') as HTMLInputElement;
-    const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
-
-    await act(async () => {
-      fireEvent.change(fileInput, { target: { files: [file] } });
-    });
-
-    await screen.findByTestId('uploaded-image-0');
-
-    await act(async () => {
-      fireEvent.click(screen.getByRole('button', { name: /Next/i }));
-    });
-
-    await waitFor(() => {
-      expect(mockOnSuccess).toHaveBeenCalled();
-    });
-  });
-  test('shows alert and logs error when saving images to backend fails', async () => {
-    jest.spyOn(console, 'error').mockImplementation(() => {
-      // intentionally empty
-    });
-    jest.spyOn(window, 'alert').mockImplementation(() => {
-      // intentionally empty
-    });
-
-    const mockUrl = 'https://cloudinary.com/test-image.jpg';
-    mockedAxios.post.mockResolvedValueOnce({
-      data: { secure_url: mockUrl },
-    });
-
-    const apolloErrorMock = {
-      request: {
-        query: UploadImagesDocument,
-        variables: {
-          images: [mockUrl],
-        },
-      },
-      error: new Error('Backend save failed'),
-    };
-
-    render(
-      <MockedProvider mocks={[apolloErrorMock]} addTypename={false}>
-        <ProfileImages onSuccess={mockOnSuccess} />
-      </MockedProvider>
-    );
-
-    const fileInput = screen.getByTestId('upload-input') as HTMLInputElement;
-    const file = new File(['dummy'], 'photo.jpg', { type: 'image/jpeg' });
-
-    await act(async () => {
-      fireEvent.change(fileInput, { target: { files: [file] } });
-    });
-
-    await screen.findByTestId('uploaded-image-0');
-
-    await act(async () => {
-      fireEvent.click(screen.getByRole('button', { name: /Next/i }));
-    });
-
-    await waitFor(() => {
-      expect(console.error).toHaveBeenCalledWith('Failed to upload images to backend:', expect.any(Error));
-      expect(window.alert).toHaveBeenCalledWith('Something went wrong while saving your images.');
-    });
-
-    (console.error as jest.Mock).mockRestore();
-    (window.alert as jest.Mock).mockRestore();
-  });
-  test('alerts if no images are uploaded when clicking Next', async () => {
-    jest.spyOn(window, 'alert').mockImplementation(() => {
-      // intentionally empty
-    });
-
-    render(
-      <MockedProvider mocks={[]} addTypename={false}>
-        <ProfileImages onSuccess={mockOnSuccess} />
-      </MockedProvider>
-    );
-
-    const nextButton = screen.getByRole('button', { name: /Next/i });
-    fireEvent.click(nextButton);
-
-    expect(window.alert).toHaveBeenCalledWith('Please upload at least one image.');
-
-    (window.alert as jest.Mock).mockRestore();
   });
 });

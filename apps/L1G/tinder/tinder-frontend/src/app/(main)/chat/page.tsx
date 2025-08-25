@@ -1,3 +1,5 @@
+
+
 import ChatPage from '@/components/ChatPage';
 import { Header } from '@/components/Header';
 
@@ -9,5 +11,4 @@ const Chat = () => {
    </div>
  );
 };
-
 export default Chat

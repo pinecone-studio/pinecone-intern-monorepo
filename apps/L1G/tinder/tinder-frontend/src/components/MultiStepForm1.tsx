@@ -1,21 +1,20 @@
 'use client';
-import { ConfirmEmail } from '@/components/ConfirmEmail';
 import { CreateAccount } from '@/components/CreateAcc';
-import { CreatePassword } from '@/components/CreatePassword';
+import { UserData } from '@/app/(auth)/signup/page';
 import { GenderSelect } from './GenderSelect';
 
 type Props = {
   step: string;
   setStep: (_step: any) => void;
+  userData: UserData;
+  updateUserData: (_: Partial<UserData>) => void;
 };
 
-export const MultiStepForm1 = ({ step, setStep }: Props) => {
+export const MultiStepForm1 = ({ step, setStep, userData, updateUserData }: Props) => {
   return (
     <>
-      {step === 'createAccount' && <CreateAccount onSuccess={() => setStep('confirmEmail')} />}
-      {step === 'confirmEmail' && <ConfirmEmail onSuccess={() => setStep('createPass')} />}
-      {step === 'createPass' && <CreatePassword onSuccess={() => setStep('genderSelect')} />}
-      {step === 'genderSelect' && <GenderSelect onSuccess={() => setStep('ageSelect')} />}
+      {step === 'createAccount' && <CreateAccount onSuccess={() => setStep('genderSelect')} updateUserData={updateUserData} userData={userData} />}
+      {step === 'genderSelect' && <GenderSelect onSuccess={() => setStep('ageSelect')} updateUserData={updateUserData} />}
     </>
   );
 };

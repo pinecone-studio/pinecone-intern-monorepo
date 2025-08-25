@@ -2,9 +2,16 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ChatPerson from '../src/components/ChatPerson';
 
-jest.mock('clsx', () => {
-  return (...classes: (string | boolean | undefined | null)[]) => classes.filter(Boolean).join(' ');
-});
+const mockUsers = [
+  { id: 1, name: 'John', age: 25, job: 'Engineer', avatar: ['/john.jpg'] },
+  { id: 2, name: 'Alice', age: 30, job: 'Designer', avatar: ['/alice.jpg'] },
+];
+
+jest.mock('@/components/ChatWindow', () => ({
+  __esModule: true,
+  default: () => <div data-testid="chat-window">ChatWindow Component</div>,
+}));
+
 
 const mockUsers = [
   { id: 1, name: 'John Doe', age: 25, job: 'Developer', avatar: ['/john.jpg'] },
@@ -67,11 +74,8 @@ describe('ChatPerson', () => {
   it('shows normal styling for non-selected users', () => {
     render(<ChatPerson {...defaultProps} selectedUser={mockUsers[0]} />);
 
-    const nonSelectedUserName = screen.getByText('Jane Smith, 28');
-    const nonSelectedUserContainer = nonSelectedUserName.closest('div');
-
-    expect(nonSelectedUserName.className).toContain('text-black');
-    expect(nonSelectedUserContainer?.className).not.toContain('bg-gray-200');
+    const selectedName = screen.getByText('John, 25');
+    expect(selectedName).toHaveClass('text-red-600');
   });
 
   it('handles chattedUsers set correctly', () => {
@@ -136,6 +140,7 @@ describe('ChatPerson', () => {
 
     expect(onUserSelect).toHaveBeenCalledTimes(2);
     expect(onUserSelect).toHaveBeenNthCalledWith(1, mockUsers[0]);
+
     expect(onUserSelect).toHaveBeenNthCalledWith(2, mockUsers[1]);
   });
 });

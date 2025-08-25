@@ -102,6 +102,8 @@ export const UsertypeDefs = gql`
     login(email: String!, password: String!): String
     like(likedByUser: ID!, likeReceiver: ID!): LikeResponse!
     dislike(dislikedByUser: ID!, dislikeReceiver: ID!): LikeResponse!
+    like(likedByUser: ID!, likeReceiver: ID!): LikeResponse!
+    dislike(dislikedByUser: ID!, dislikeReceiver: ID!): LikeResponse!
     uploadImages(images: [String!]!): User
 
     sendMessage(senderId: ID!, receiverId: ID!, matchId: ID!, content: String!): ChatMessage!

@@ -1,5 +1,6 @@
 'use client';
 
+
 import Avatar from './Avatar';
 import clsx from 'clsx';
 
@@ -26,6 +27,7 @@ const ChatPerson: React.FC<ChatPersonProps> = ({ selectedUser, onUserSelect, bot
       {bottomUsers.map((chatUser) => {
         const isSelected = selectedUser?.id === chatUser.id;
         const hasChatted = chattedSet.has(chatUser.id);
+
 
         return (
           <div

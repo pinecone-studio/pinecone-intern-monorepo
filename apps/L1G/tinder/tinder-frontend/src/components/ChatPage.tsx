@@ -1,5 +1,6 @@
 'use client';
 
+
 import { useState, useCallback, useMemo } from 'react';
 import ChatPerson from '@/components/ChatPerson';
 import ChatWindow from '@/components/ChatWindow';
@@ -20,6 +21,7 @@ type Message = {
   timestamp: string;
 };
 
+
 type ChatPageProps = {
   matches?: User[];
 };
@@ -34,6 +36,7 @@ const defaultMatches: User[] = [
   { id: 7, name: 'Brooklyn Simmons', age: 25, job: 'Software Engineer', avatar: ['/profile.jpg'] },
   { id: 8, name: 'Bessie Cooper', age: 32, job: 'Software Engineer', avatar: ['/profile.jpg'] },
   { id: 9, name: 'Esther Howard', age: 32, job: 'Software Engineer', avatar: ['/profile.jpg'] },
+
 ];
 
 const initialConversations: Record<number, Message[]> = {
@@ -121,6 +124,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ matches = defaultMatches }) => {
       <div className="flex justify-center">
         <ChatPerson selectedUser={selectedUser} onUserSelect={handleUserSelect} bottomUsers={bottomUsers} chattedUsers={chattedUsers} />
 
+
         <ChatWindow selectedUser={selectedUser} messages={messages} inputValue={inputValue} onInputChange={handleInputChange} onKeyDown={handleKeyDown} onSend={handleSend} />
       </div>
     </div>
@@ -128,3 +132,4 @@ const ChatPage: React.FC<ChatPageProps> = ({ matches = defaultMatches }) => {
 };
 
 export default ChatPage;
+

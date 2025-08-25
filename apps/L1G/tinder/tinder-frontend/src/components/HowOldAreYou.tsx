@@ -9,10 +9,11 @@ import { useForm } from 'react-hook-form';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
+import { UserData } from '@/app/(auth)/signup/page';
 
-type HowOldAreYouProps = { onSuccess: () => void; onBack: () => void };
+type HowOldAreYouProps = { onSuccess: () => void; onBack: () => void; updateUserData: (_: Partial<UserData>) => void };
 
-const HowOldAreYou = ({ onSuccess, onBack }: HowOldAreYouProps) => {
+const HowOldAreYou = ({ onSuccess, onBack, updateUserData }: HowOldAreYouProps) => {
   const formSchema = z.object({
     date: z
       .date({
@@ -28,8 +29,8 @@ const HowOldAreYou = ({ onSuccess, onBack }: HowOldAreYouProps) => {
     },
   });
 
-  function onSubmit(_values: z.infer<typeof formSchema>) {
-    console.log('working');
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    updateUserData({ dateOfBirth: values.date });
     onSuccess();
   }
 

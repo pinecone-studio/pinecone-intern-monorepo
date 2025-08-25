@@ -1,4 +1,5 @@
 import React from 'react';
+
 import clsx from 'clsx';
 import Avatar from './Avatar';
 
@@ -18,6 +19,7 @@ interface MatchesProps {
 
 const Matches: React.FC<MatchesProps> = ({ topRowUsers, selectedUser, onUserSelect }) => {
   return (
+
     <div className="flex items-center justify-center w-full">
       <div className="w-full max-w-[1280px] px-4 border-b border-gray-200">
         <p className="text-[20px] font-medium py-4">Matches</p>
@@ -49,4 +51,3 @@ const Matches: React.FC<MatchesProps> = ({ topRowUsers, selectedUser, onUserSele
 };
 
 export default Matches;
-

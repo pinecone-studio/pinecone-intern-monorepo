@@ -1,4 +1,5 @@
 import ViewProfile from '@/components/ViewProfile';
+
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
@@ -11,6 +12,7 @@ jest.mock('@/components/ui/button', () => ({
 }));
 
 jest.mock('@/components/ui/dialog', () => ({
+
   Dialog: ({ children }) => <div>{children}</div>,
   DialogContent: ({ children, className }) => <div className={className}>{children}</div>,
   DialogTrigger: ({ children }) => <div>{children}</div>,

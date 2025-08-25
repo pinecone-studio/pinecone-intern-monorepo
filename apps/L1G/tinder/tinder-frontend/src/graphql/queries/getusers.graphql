@@ -1,7 +1,8 @@
 query Getusers {
+query Getusers {
   getusers {
-    id
     email
+
     genderPreferences
     gender
     dateOfBirth
@@ -16,6 +17,8 @@ query Getusers {
     likedTo {
       id
     }
+    profession
+    schoolWork
     matchIds {
       id
     }
