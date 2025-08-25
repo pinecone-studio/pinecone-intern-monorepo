@@ -91,11 +91,7 @@ const ChatPage = () => {
       <Matches topRowUsers={topRowUsers} selectedUser={selectedUser} onUserSelect={handleUserSelect} />
 
       <div className="flex justify-center">
-<<<<<<< HEAD
-        <ChatPerson selectedUser={selectedUser} onUserSelect={handleUserSelect} bottomUsers={bottomUsers} />
-=======
         <ChatPerson selectedUser={selectedUser} onUserSelect={handleUserSelect} bottomUsers={bottomUsers} chattedUsers={chattedUsers} />
->>>>>>> c3a35ffae (chat garh heseg)
         <ChatWindow selectedUser={selectedUser} messages={messages} inputValue={inputValue} onInputChange={handleInputChange} onKeyDown={handleKeyDown} onSend={handleSend} />
       </div>
     </div>

@@ -14,13 +14,10 @@ const HomePage = () => {
   const [like] = useLikeUserMutation();
   const [dislike] = useDislikeMutation();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isMatched, setIsMatched] = useState(false);
+  const [matchedProfile, setMatchedProfile] = useState<UserProfile | null>(null);
 
-  useEffect(() => {
-    const listener = (e: KeyboardEvent) => handleKeyDown(e, isMatched, closeMatchDialog);
-    window.addEventListener('keydown', listener);
-    return () => window.removeEventListener('keydown', listener);
-  }, [isMatched]);
+  const currentUserId = '689453c9fb642555405b451c';
+  console.log(data, 'data');
 
   const handleLike = async (profileId: string) => {
     if (!currentUser) return;
