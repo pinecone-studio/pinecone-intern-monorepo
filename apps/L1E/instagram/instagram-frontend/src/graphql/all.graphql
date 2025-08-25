@@ -8,6 +8,52 @@ query GetUsers {
   }
 }
 
+query GetUser($id: ID!) {
+  getUser(_id: $id) {
+    _id
+    userName
+    fullName
+    isPrivate
+    profileImage
+    bio
+    posts {
+      _id
+      image
+      description
+      likes {
+        _id
+        createdAt
+        userId {
+          _id
+          userName
+          profileImage
+        }
+      }
+      comments {
+        _id
+        text
+        createdAt
+        userId {
+          _id
+          userName
+          profileImage
+        }
+      }
+      createdAt
+    }
+    followers {
+      _id
+      userName
+      profileImage
+    }
+    following {
+      _id
+      userName
+      profileImage
+    }
+  }
+}
+
 query GetSomeoneProfile($userName: String!) {
   getSomeoneProfile(userName: $userName) {
     userName

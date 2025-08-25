@@ -1,11 +1,13 @@
-"use client";
+'use client';
 
-import { useGetOthersProfileLazyQuery } from "@/generated";
-import { Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useGetOthersProfileLazyQuery } from '@/generated';
+import { Search } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import SearchNoResult from './SearchNoResult';
+import SearchResponse from './SearchResponse';
 
 const SearchResults = () => {
-  const [searchName, setSearchName] = useState("");
+  const [searchName, setSearchName] = useState('');
   const [getProfiles, { data, loading, error }] = useGetOthersProfileLazyQuery();
 
   useEffect(() => {
@@ -13,7 +15,6 @@ const SearchResults = () => {
       getProfiles({ variables: { userName: searchName } });
     }
   }, [searchName, getProfiles]);
-
 
   return (
     <div className="flex flex-col gap-5 w-[410px] px-4 mx-auto">
@@ -35,25 +36,23 @@ const SearchResults = () => {
             <h1 className="font-bold text-base">Recent</h1>
             <h6 className="font-medium text-sm text-[#2563EB]">Clear all</h6>
           </div>
-          {loading && <p>Loading...</p>}
-          {error && <p className="text-red-500">Error: {error.message}</p>}
-
+          <SearchResponse loading={loading} error={error} />
           {!loading && !error && data?.getProfiles?.length ? (
             <div>
               {data.getProfiles.map((user, index) => (
-                <a href={`/${user.userName}`}  key={user.userName + index}>
+                <a href={`/${user.userName}`} key={user.userName + index}>
                   <div className="flex gap-2 items-center">
                     <img src={`/${user.profileImage}`} className="w-[44px] h-[44px] rounded-full"></img>
-                   <div>
-                     <p className="font-medium text-sm">{user.userName}</p>
-                     <p className="font-medium text-xs">{user.bio}</p>
-                   </div>
+                    <div>
+                      <p className="font-medium text-sm">{user.userName}</p>
+                      <p className="font-medium text-xs">{user.bio}</p>
+                    </div>
                   </div>
                 </a>
               ))}
             </div>
           ) : (
-            !loading && !error && searchName && <p>No users found.</p>
+            <SearchNoResult loading={loading} error={error} searchName={searchName} />
           )}
         </div>
       </div>
