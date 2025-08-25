@@ -5,9 +5,9 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
-import { useSignupMutation } from '@/generated';
 import { useState } from 'react';
 import { UserData } from '@/app/(auth)/signup/page';
+import { useSignupUserMutation } from '@/generated';
 
 const formSchema = z
   .object({
@@ -39,7 +39,7 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
     },
   });
 
-  const [signup, { loading, error }] = useSignupMutation();
+  const [signup, { loading, error }] = useSignupUserMutation();
   const [serverError, setServerError] = useState<string | null>(null);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {

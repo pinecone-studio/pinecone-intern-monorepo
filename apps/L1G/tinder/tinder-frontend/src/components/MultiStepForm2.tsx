@@ -4,6 +4,7 @@ import { ProfileImages } from '@/components/ProfileImages';
 import { YouAreAllSet } from '@/components/YouAreAllSet';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { UserData } from '@/app/(auth)/signup/page';
+import { YourDetailsPage } from './YourDetailsPage';
 
 type Props = {
   step: string;

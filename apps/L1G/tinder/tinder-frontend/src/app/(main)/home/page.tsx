@@ -6,12 +6,12 @@ import { Header } from '@/components/Header';
 import { useDislikeMutation, useGetusersQuery, useLikeUserMutation } from '@/generated';
 import { UserProfile } from '@/app/page';
 import TinderCard from '@/components/TinderCard';
-import { useDislikeMutation, useGetusersQuery, useLikeMutation } from '@/generated';
+import { useDislikeMutation, useGetusersQuery, useLikeUserMutation } from '@/generated';
 import { useState } from 'react';
 
 const HomePage = () => {
   const { data, loading, error } = useGetusersQuery();
-  const [like] = useLikeMutation();
+  const [like] = useLikeUserMutation();
   const [dislike] = useDislikeMutation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMatched, setIsMatched] = useState(false);

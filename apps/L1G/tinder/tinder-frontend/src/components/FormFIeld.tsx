@@ -25,6 +25,15 @@ const formSchema = z.object({
   work: z.string().optional(),
 });
 
+const prepareProfileVariables = (values: z.infer<typeof formSchema>, userId: string) => ({
+  updateProfileId: userId,
+  name: values.name,
+  bio: values.bio ?? '',
+  interests: values.interest ?? [],
+  profession: values.profession ?? '',
+  schoolWork: values.work ?? '',
+});
+
 export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: ProfileFormProps) => {
   const [serverError, setServerError] = useState<string | null>(null);
   const [updateProfile] = useUpdateProfileMutation();
@@ -40,9 +49,25 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
   });
   const { data, loading, error } = useGetAllInterestsQuery();
 
+  const handleUpdateProfile = async (variables: ReturnType<typeof prepareProfileVariables>) => {
+    const response = await updateProfile({ variables });
+    return response.data?.updateProfile;
+  };
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    updateUserData({ name: values.name, bio: values.bio, interests: values.interest, profession: values.profession, schoolWork: values.work });
+    updateUserData({
+      name: values.name,
+      bio: values.bio,
+      interests: values.interest,
+      profession: values.profession,
+      schoolWork: values.work,
+    });
     setServerError(null);
+
+    if (!userData.id) {
+      setServerError('User ID is missing.');
+      return;
+    }
 
     try {
       if (userData.id) {

@@ -11,6 +11,10 @@ type ProfileImagesProps = {
   onBack: () => void;
   updateUserData: (_: Partial<UserData>) => void;
 };
+<<<<<<< HEAD
+=======
+
+>>>>>>> 88289f998 (test lint)
 export const ProfileImages = ({ onSuccess, onBack, updateUserData }: ProfileImagesProps) => {
   const [uploadedImages, setUploadedImages] = useState<string[]>(['', '', '', '', '', '']);
   const [isUploading, setIsUploading] = useState<boolean[]>([false, false, false, false, false, false]);
