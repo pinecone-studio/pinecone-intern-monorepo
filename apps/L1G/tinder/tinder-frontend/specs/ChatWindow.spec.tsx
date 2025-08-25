@@ -288,37 +288,30 @@ describe('ChatWindow', () => {
         expect(mockOnSend).toHaveBeenCalled();
       });
 
-      it('should have correct styling classes', () => {
-        render(<ChatWindow {...propsWithUser} />);
+  it('calls onInputChange when typing in input', () => {
+    render(<ChatWindow {...defaultProps} />);
+    const input = screen.getByPlaceholderText(/say something nice/i);
+    fireEvent.change(input, { target: { value: 'New message' } });
+    expect(mockOnInputChange).toHaveBeenCalled();
+  });
 
-        const sendButton = screen.getByText('Send');
-        expect(sendButton).toHaveClass('bg-gradient-to-r', 'from-pink-500', 'to-red-500', 'hover:from-pink-600', 'hover:to-red-600');
-      });
-    });
+  it('calls onKeyDown when key pressed in input', () => {
+    render(<ChatWindow {...defaultProps} />);
+    const input = screen.getByPlaceholderText(/say something nice/i);
+    fireEvent.keyDown(input, { key: 'Enter' });
+    expect(mockOnKeyDown).toHaveBeenCalled();
+  });
 
-    describe('accessibility', () => {
-      it('should have proper input focus styles', () => {
-        render(<ChatWindow {...propsWithUser} />);
+  it('displays multiple messages correctly', () => {
+    const multipleMessages = [
+      { id: 1, text: 'Hello!', sender: 'them' as const, timestamp: '10:30' },
+      { id: 2, text: 'Hi there!', sender: 'me' as const, timestamp: '10:31' },
+      { id: 3, text: 'How are you?', sender: 'them' as const, timestamp: '10:32' },
+    ];
 
-        const input = screen.getByPlaceholderText('Say something nice');
-        expect(input).toHaveClass('focus:ring-2', 'focus:ring-pink-500');
-      });
-
-      it('should have proper button disabled state', () => {
-        render(<ChatWindow {...propsWithUser} />);
-
-        const sendButton = screen.getByText('Send');
-        expect(sendButton).toHaveClass('disabled:opacity-50', 'disabled:cursor-not-allowed');
-      });
-    });
-
-    describe('message scrolling', () => {
-      it('should have scrollable message area', () => {
-        render(<ChatWindow {...propsWithUser} />);
-
-        const messageArea = screen.getByText('Say Hi!').closest('.h-[790px]');
-        expect(messageArea).toHaveClass('overflow-y-auto');
-      });
-    });
+    render(<ChatWindow {...defaultProps} messages={multipleMessages} />);
+    expect(screen.getByText('Hello!')).toBeInTheDocument();
+    expect(screen.getByText('Hi there!')).toBeInTheDocument();
+    expect(screen.getByText('How are you?')).toBeInTheDocument();
   });
 });

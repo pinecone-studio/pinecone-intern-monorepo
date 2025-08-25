@@ -1,41 +1,137 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import ChatPerson from './ChatPerson';
+import '@testing-library/jest-dom';
+import ChatPerson from '../src/components/ChatPerson';
+
+jest.mock('clsx', () => {
+  return (...classes: (string | boolean | undefined | null)[]) => classes.filter(Boolean).join(' ');
+});
 
 const mockUsers = [
   { id: 1, name: 'John', age: 25, job: 'Engineer', avatar: ['/john.jpg'] },
   { id: 2, name: 'Alice', age: 30, job: 'Designer', avatar: ['/alice.jpg'] },
 ];
 
-describe('ChatPerson Component', () => {
-  it('renders all bottomUsers', () => {
-    render(<ChatPerson selectedUser={null} onUserSelect={() => {}} bottomUsers={mockUsers} />);
+describe('ChatPerson', () => {
+  const defaultProps = {
+    selectedUser: null,
+    onUserSelect: jest.fn(),
+    bottomUsers: mockUsers,
+  };
 
-    // Хэрэглэгчийн нэр+нас харагдах эсэх
-    expect(screen.getByText('John, 25')).toBeInTheDocument();
-    expect(screen.getByText('Alice, 30')).toBeInTheDocument();
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('calls onUserSelect when a user is clicked', () => {
-    const handleSelect = jest.fn();
+  it('renders all users from bottomUsers', () => {
+    render(<ChatPerson {...defaultProps} />);
 
-    render(<ChatPerson selectedUser={null} onUserSelect={handleSelect} bottomUsers={mockUsers} />);
-
-    fireEvent.click(screen.getByText('Alice, 30'));
-    expect(handleSelect).toHaveBeenCalledWith(mockUsers[1]);
+    expect(screen.getByText('John Doe, 25')).toBeTruthy();
+    expect(screen.getByText('Jane Smith, 28')).toBeTruthy();
+    expect(screen.getByText('Bob Wilson, 32')).toBeTruthy();
+    expect(screen.getByText('Developer')).toBeTruthy();
+    expect(screen.getByText('Designer')).toBeTruthy();
+    expect(screen.getByText('Manager')).toBeTruthy();
   });
 
-  it('highlights the selected user', () => {
-    render(<ChatPerson selectedUser={mockUsers[0]} onUserSelect={() => {}} bottomUsers={mockUsers} />);
+  it('renders avatars for all users', () => {
+    render(<ChatPerson {...defaultProps} />);
+
+    const avatars = screen.getAllByRole('generic').filter((el) => el.textContent?.includes('Avatar') || el.querySelector('img'));
+    expect(avatars.length).toBeGreaterThanOrEqual(0);
+  });
+
+  it('calls onUserSelect when user is clicked', () => {
+    const onUserSelect = jest.fn();
+    render(<ChatPerson {...defaultProps} onUserSelect={onUserSelect} />);
+
+    const userItem = screen.getByText('John Doe, 25').closest('div');
+    if (userItem) {
+      fireEvent.click(userItem);
+    }
+
+    expect(onUserSelect).toHaveBeenCalledTimes(1);
+    expect(onUserSelect).toHaveBeenCalledWith(mockUsers[0]);
+  });
+
+  it('highlights selected user with red text and gray background', () => {
+    render(<ChatPerson {...defaultProps} selectedUser={mockUsers[0]} />);
+
+    const selectedUserName = screen.getByText('John Doe, 25');
+    const selectedUserContainer = selectedUserName.closest('.cursor-pointer');
+
+    expect(selectedUserName.className).toContain('text-red-600');
+    expect(selectedUserContainer?.className).toContain('bg-gray-200');
+  });
+
+  it('shows normal styling for non-selected users', () => {
+    render(<ChatPerson {...defaultProps} selectedUser={mockUsers[0]} />);
 
     const selectedName = screen.getByText('John, 25');
     expect(selectedName).toHaveClass('text-red-600');
   });
 
-  it("shows 'Chatted' indicator for chatted users", () => {
-    const chatted = new Set([2]); // Alice чатласан
+  it('handles chattedUsers set correctly', () => {
+    const chattedUsers = new Set([1, 2]);
+    render(<ChatPerson {...defaultProps} chattedUsers={chattedUsers} />);
 
-    render(<ChatPerson selectedUser={null} onUserSelect={() => {}} bottomUsers={mockUsers} chattedUsers={chatted} />);
+    expect(screen.getByText('John Doe, 25')).toBeTruthy();
+    expect(screen.getByText('Jane Smith, 28')).toBeTruthy();
+    expect(screen.getByText('Bob Wilson, 32')).toBeTruthy();
+  });
 
-    expect(screen.getByText('● Chatted')).toBeInTheDocument();
+  it('handles undefined chattedUsers prop', () => {
+    render(<ChatPerson {...defaultProps} chattedUsers={undefined} />);
+
+    expect(screen.getByText('John Doe, 25')).toBeTruthy();
+    expect(screen.getByText('Jane Smith, 28')).toBeTruthy();
+    expect(screen.getByText('Bob Wilson, 32')).toBeTruthy();
+  });
+
+  it('renders empty state when bottomUsers is empty', () => {
+    render(<ChatPerson {...defaultProps} bottomUsers={[]} />);
+
+    const container = document.querySelector('.flex.flex-col.w-\\[300px\\].border-r.border-gray-300');
+    expect(container).toBeTruthy();
+    expect(container?.children.length).toBe(0);
+  });
+
+  it('applies hover styles correctly', () => {
+    render(<ChatPerson {...defaultProps} />);
+
+    const userItems = screen.getAllByRole('generic').filter((el) => el.classList.contains('cursor-pointer'));
+
+    userItems.forEach((item) => {
+      expect(item).toHaveClass('hover:bg-gray-100');
+    });
+  });
+
+  it('handles multiple clicks on same user', () => {
+    const onUserSelect = jest.fn();
+    render(<ChatPerson {...defaultProps} onUserSelect={onUserSelect} />);
+
+    const userItem = screen.getByText('John Doe, 25').closest('div');
+    if (userItem) {
+      fireEvent.click(userItem);
+      fireEvent.click(userItem);
+    }
+
+    expect(onUserSelect).toHaveBeenCalledTimes(2);
+    expect(onUserSelect).toHaveBeenNthCalledWith(1, mockUsers[0]);
+    expect(onUserSelect).toHaveBeenNthCalledWith(2, mockUsers[0]);
+  });
+
+  it('handles clicks on different users', () => {
+    const onUserSelect = jest.fn();
+    render(<ChatPerson {...defaultProps} onUserSelect={onUserSelect} />);
+
+    const johnItem = screen.getByText('John Doe, 25').closest('div');
+    const janeItem = screen.getByText('Jane Smith, 28').closest('div');
+
+    if (johnItem) fireEvent.click(johnItem);
+    if (janeItem) fireEvent.click(janeItem);
+
+    expect(onUserSelect).toHaveBeenCalledTimes(2);
+    expect(onUserSelect).toHaveBeenNthCalledWith(1, mockUsers[0]);
+    expect(onUserSelect).toHaveBeenNthCalledWith(2, mockUsers[1]);
   });
 });

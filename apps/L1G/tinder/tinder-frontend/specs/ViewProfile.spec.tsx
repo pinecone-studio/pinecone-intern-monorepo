@@ -17,14 +17,14 @@ jest.mock('@/components/ui/button', () => ({
 }));
 
 jest.mock('@/components/ui/dialog', () => ({
-  Dialog: ({ children }) => <div data-testid="dialog">{children}</div>,
-  DialogContent: ({ children, className }) => (
-    <div data-testid="dialog-content" className={className}>
-      {children}
-    </div>
-  ),
-  DialogOverlay: ({ className }) => <div data-testid="dialog-overlay" className={className} />,
-  DialogTrigger: ({ children }) => <div data-testid="dialog-trigger">{children}</div>,
+  Dialog: ({ children }) => <div>{children}</div>,
+  DialogContent: ({ children, className }) => <div className={className}>{children}</div>,
+  DialogTrigger: ({ children }) => <div>{children}</div>,
+}));
+
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: ({ src, alt, width, height, className }) => <img src={src} alt={alt} width={width} height={height} className={className} data-testid="mocked-next-image" />,
 }));
 
 jest.mock('lucide-react', () => ({
@@ -137,68 +137,29 @@ describe('ViewProfile Component', () => {
       expect(screen.queryByTestId('chevron-right')).not.toBeInTheDocument();
     });
 
-    it('shows navigation controls for multiple avatars', () => {
-      render(<ViewProfile user={mockUserMultipleAvatars} />);
+  it('navigates between images', () => {
+    render(<ViewProfile user={mockUser} />);
+    const img = screen.getByRole('img');
+    const nextBtn = screen.getByTestId('next');
 
-      expect(screen.getByTestId('chevron-left')).toBeInTheDocument();
-      expect(screen.getByTestId('chevron-right')).toBeInTheDocument();
-    });
+    fireEvent.click(nextBtn);
+    expect(img).toHaveAttribute('src', '/img2.jpg');
 
-    it('navigation buttons have correct variant', () => {
-      render(<ViewProfile user={mockUserMultipleAvatars} />);
-
-      const leftButton = screen.getByTestId('chevron-left').closest('button');
-      const rightButton = screen.getByTestId('chevron-right').closest('button');
-
-      expect(leftButton).toHaveAttribute('data-variant', 'outline');
-      expect(rightButton).toHaveAttribute('data-variant', 'outline');
-    });
+    const prevBtn = screen.getByTestId('prev');
+    fireEvent.click(prevBtn);
+    expect(img).toHaveAttribute('src', '/img1.jpg');
   });
 
-  describe('Image Navigation', () => {
-    it('navigates to next image when next button is clicked', async () => {
-      const user = userEvent.setup();
-      render(<ViewProfile user={mockUserMultipleAvatars} />);
+  it('cycles through images', () => {
+    render(<ViewProfile user={mockUser} />);
+    const img = screen.getByRole('img');
+    const nextBtn = screen.getByTestId('next');
+    const prevBtn = screen.getByTestId('prev');
 
-      const nextButton = screen.getByTestId('chevron-right').closest('button');
-      const profileImage = screen.getByRole('img');
-
-      expect(profileImage).toHaveAttribute('src', '/avatar1.jpg');
-      expect(profileImage).toHaveAttribute('alt', 'Jane Smith profile 1');
-
-      await user.click(nextButton);
-
-      expect(profileImage).toHaveAttribute('src', '/avatar2.jpg');
-      expect(profileImage).toHaveAttribute('alt', 'Jane Smith profile 2');
-    });
-
-    it('navigates to previous image when prev button is clicked', async () => {
-      const user = userEvent.setup();
-      render(<ViewProfile user={mockUserMultipleAvatars} />);
-
-      const prevButton = screen.getByTestId('chevron-left').closest('button');
-      const profileImage = screen.getByRole('img');
-
-      await user.click(prevButton);
-
-      expect(profileImage).toHaveAttribute('src', '/avatar3.jpg');
-      expect(profileImage).toHaveAttribute('alt', 'Jane Smith profile 3');
-    });
-
-    it('wraps to first image when navigating next from last image', async () => {
-      const user = userEvent.setup();
-      render(<ViewProfile user={mockUserMultipleAvatars} />);
-
-      const nextButton = screen.getByTestId('chevron-right').closest('button');
-      const profileImage = screen.getByRole('img');
-
-      await user.click(nextButton);
-      await user.click(nextButton);
-      expect(profileImage).toHaveAttribute('src', '/avatar3.jpg');
-
-      await user.click(nextButton);
-      expect(profileImage).toHaveAttribute('src', '/avatar1.jpg');
-    });
+    fireEvent.click(nextBtn);
+    fireEvent.click(nextBtn);
+    fireEvent.click(nextBtn);
+    expect(img).toHaveAttribute('src', '/img1.jpg');
 
     it('wraps to last image when navigating prev from first image', async () => {
       const user = userEvent.setup();

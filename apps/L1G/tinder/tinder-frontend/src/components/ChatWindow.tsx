@@ -25,8 +25,8 @@ interface ChatWindowProps {
   selectedUser: User | null;
   messages: Message[];
   inputValue: string;
-  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onInputChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown: (_e: React.KeyboardEvent<HTMLInputElement>) => void;
   onSend: () => void;
 }
 

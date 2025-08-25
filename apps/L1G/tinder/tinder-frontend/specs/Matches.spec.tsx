@@ -2,15 +2,17 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-jest.mock('../components/Avatar', () => {
-  return ({ user, size }: any) => (
-    <div data-testid={`avatar-${user.id}`} data-size={size} data-user={user.name}>
-      Avatar for {user.name}
-    </div>
-  );
+jest.mock('../src/components/Avatar', () => {
+  const MockAvatar = ({ user }) => {
+    return <div data-testid={`avatar-${user.id}`}>{user.name} Avatar</div>;
+  };
+  return MockAvatar;
 });
 
-import Matches from '../components/Matches';
+const mockUsers = [
+  { id: 1, name: 'Leslie', age: 25, job: 'Designer', avatar: ['avatar1.jpg'] },
+  { id: 2, name: 'Eleanor', age: 30, job: 'Engineer', avatar: ['avatar2.jpg'] },
+];
 
 describe('Matches Component', () => {
   const mockUsers = [
