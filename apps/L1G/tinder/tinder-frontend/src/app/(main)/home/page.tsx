@@ -5,33 +5,13 @@ import { Header } from '@/components/Header';
 
 import { useDislikeMutation, useGetusersQuery, useLikeUserMutation } from '@/generated';
 import { UserProfile } from '@/app/page';
-import MatchDialogClose from '@/components/MatchDialogClose';
-import ProfileSwiper from '@/components/ProfileSwiper';
-import { useCurrentUser } from '@/app/contexts/CurrentUserContext';
-
-const handleKeyDown = (e: KeyboardEvent, isMatched: boolean, closeMatchDialog: () => void) => {
-  if (e.key === 'Escape' && isMatched) {
-    closeMatchDialog();
-  }
-};
-
-const getFilteredProfiles = (data: any, currentUserId: string) => {
-  return (data?.getusers ?? [])
-    .filter((u: any): u is NonNullable<typeof u> => u !== null)
-    .filter((u: any) => u.id !== currentUserId)
-    .map((u: any) => ({
-      id: u.id,
-      name: u.name,
-      images: u.images?.filter((img: any): img is string => img !== null) ?? [],
-    }));
-};
+import TinderCard from '@/components/TinderCard';
+import { useDislikeMutation, useGetusersQuery, useLikeMutation } from '@/generated';
+import { useState } from 'react';
 
 const HomePage = () => {
-  const { currentUser } = useCurrentUser();
-
   const { data, loading, error } = useGetusersQuery();
-  const [like] = useLikeUserMutation();
-  const [like] = useLikeUserMutation();
+  const [like] = useLikeMutation();
   const [dislike] = useDislikeMutation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMatched, setIsMatched] = useState(false);

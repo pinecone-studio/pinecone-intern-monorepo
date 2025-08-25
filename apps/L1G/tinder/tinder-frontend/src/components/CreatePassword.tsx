@@ -5,8 +5,9 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
+import { useSignupMutation } from '@/generated';
+import { useState } from 'react';
 import { UserData } from '@/app/(auth)/signup/page';
-import { useSignupUserMutation } from '@/generated';
 
 const formSchema = z
   .object({
@@ -18,16 +19,16 @@ const formSchema = z
     }),
   })
   .refine((data) => data.password === data.repeatPassword, {
-    path: ['repeatPassword'],
     message: "Passwords don't match",
   });
 
 type CreatePasswordProps = {
   onSuccess: () => void;
-  updateUserData: (_: Partial<UserData>) => void;
+  updateUserData: (newData: Partial<UserData>) => void;
   otpId: string;
 };
 
+export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePasswordProps) => {
 export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePasswordProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -37,9 +38,11 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
     },
   });
 
-  const [signup, { loading, error }] = useSignupUserMutation();
+  const [signup, { loading, error }] = useSignupMutation();
+  const [serverError, setServerError] = useState<string | null>(null);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setServerError(null);
     try {
       const response = await signup({
         variables: {
@@ -51,16 +54,15 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
       if (response.data?.signup?.token) {
         localStorage.setItem('token', response.data?.signup?.token);
 
-        updateUserData({ id: response.data?.signup?.id });
+        updateUserData({ password: values.password, id: response.data?.signup?.id });
 
         onSuccess();
       } else {
-        form.setError('root', {
-          message: error?.message || 'Something went wrong.',
-        });
+        setServerError(error?.message || 'Something went wrong.');
       }
-    } catch (e: any) {
+    } catch (e) {
       console.error('Signup failed:', e);
+      setServerError('Something went wrong.');
     }
   }
 
@@ -71,6 +73,7 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
           <div className="flex flex-col gap-1 justify-center items-center py-2">
             <p className="font-sans text-[24px] font-semibold text-[#09090B]">Create password</p>
             <p className="font-sans text-[14px] text-[#71717A] text-center">
+              Use a minimum of 8 characters, including uppercase <br /> letters, lowercase letters, and numbers
               Use a minimum of 8 characters, including uppercase <br /> letters, lowercase letters, and numbers
             </p>
           </div>
@@ -110,7 +113,10 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
 
             <Button type="submit" className="bg-[#E11D48] bg-opacity-90 w-[350px] rounded-full">
               {loading ? 'Please wait...' : 'Continue'}
+              {loading ? 'Please wait...' : 'Continue'}
             </Button>
+
+            {serverError && <p className="text-red-500 mt-2">{serverError}</p>}
           </div>
         </div>
       </form>

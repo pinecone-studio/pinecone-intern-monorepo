@@ -7,7 +7,7 @@ import { useVerifyOtpMutation, useRequestSignupMutation, OtpType } from '@/gener
 import { ResetPassword } from './ResetPassword';
 import { OtpForm } from './OtpForm';
 import { CreatePassword } from './CreatePassword';
-import type { UserData } from '@/app/(auth)/signup/page';
+import { UserData } from '@/app/(auth)/signup/page';
 
 export const FormSchema = z.object({
   otp: z.string().length(4, { message: 'Your one-time password must be 4 digits.' }).regex(/^\d+$/, { message: 'OTP must contain only digits.' }),
@@ -16,7 +16,7 @@ export const FormSchema = z.object({
 type ConfirmEmailProps = {
   onSuccess: () => void;
   email: string;
-  updateUserData: (_: Partial<UserData>) => void;
+  updateUserData: (newData: Partial<UserData>) => void;
   otpType: OtpType;
 };
 
@@ -39,11 +39,12 @@ async function handleOtpSubmit(
   values: z.infer<typeof FormSchema>,
   email: string | undefined,
   otpType: OtpType,
-  updateUserData: (_: Partial<UserData>) => void,
+  updateUserData: (newData: Partial<UserData>) => void,
   verifyOtp: ReturnType<typeof useVerifyOtpMutation>[0],
   setOtpId: React.Dispatch<React.SetStateAction<string | null>>
 ) {
-  if (!email) return;
+  if (!email) return console.log('email bhgui');
+  console.log('email in handleotpSubmit:', email);
 
   try {
     const response = await verifyOtp({
@@ -96,6 +97,8 @@ export const ConfirmEmail = ({ onSuccess, email, otpType, updateUserData }: Conf
   const { timeLeft, reset: resetTimer } = useCountdown(60);
 
   const [otpId, setOtpId] = useState<string | null>(null);
+
+  // console.log('email in main:', email, otpType);
 
   async function onSubmit(values: z.infer<typeof FormSchema>) {
     await handleOtpSubmit(values, email, otpType, updateUserData, verifyOtp, setOtpId);

@@ -11,7 +11,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { CalendarIcon } from 'lucide-react';
 import { UserData } from '@/app/(auth)/signup/page';
 
-type HowOldAreYouProps = { onSuccess: () => void; onBack: () => void; updateUserData: (_: Partial<UserData>) => void };
+type HowOldAreYouProps = { onSuccess: () => void; onBack: () => void; updateUserData: (newData: Partial<UserData>) => void };
 
 const HowOldAreYou = ({ onSuccess, onBack, updateUserData }: HowOldAreYouProps) => {
   const formSchema = z.object({

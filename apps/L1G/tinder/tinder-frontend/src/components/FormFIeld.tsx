@@ -8,13 +8,12 @@ import { MultiSelect } from './MultiSelect';
 import { useGetAllInterestsQuery, useUpdateProfileMutation } from '../generated';
 import { UserData } from '@/app/(auth)/signup/page';
 import { useState } from 'react';
-import { ProfileInputField } from './ProfileInputField';
 
 type ProfileFormProps = {
   onSuccess: () => void;
   onBack: () => void;
   userData: UserData;
-  updateUserData: (_: Partial<UserData>) => void;
+  updateUserData: (newData: Partial<UserData>) => void;
 };
 
 const formSchema = z.object({
@@ -23,15 +22,6 @@ const formSchema = z.object({
   interest: z.array(z.string()).default([]),
   profession: z.string().optional(),
   work: z.string().optional(),
-});
-
-const prepareProfileVariables = (values: z.infer<typeof formSchema>, userId: string) => ({
-  updateProfileId: userId,
-  name: values.name,
-  bio: values.bio,
-  interests: values.interest,
-  profession: values.profession,
-  schoolWork: values.work,
 });
 
 export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: ProfileFormProps) => {
@@ -49,32 +39,27 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
   });
   const { data, loading, error } = useGetAllInterestsQuery();
 
-  const handleUpdateProfile = async (variables: ReturnType<typeof prepareProfileVariables>) => {
-    const response = await updateProfile({ variables });
-    return response.data?.updateProfile;
-  };
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    updateUserData({
-      name: values.name,
-      bio: values.bio,
-      interests: values.interest,
-      profession: values.profession,
-      schoolWork: values.work,
-    });
+    updateUserData({ name: values.name, bio: values.bio, interests: values.interest, profession: values.profession, schoolWork: values.work });
     setServerError(null);
 
-    if (!userData.id) {
-      setServerError('User ID is missing.');
-      return;
-    }
-
     try {
-      const success = await handleUpdateProfile(prepareProfileVariables(values, userData.id));
-      if (success) {
-        onSuccess();
-      } else {
-        setServerError('Update failed');
+      if (userData.id) {
+        const response = await updateProfile({
+          variables: {
+            updateProfileId: userData.id,
+            name: values.name,
+            bio: values.bio,
+            interests: values.interest,
+            profession: values.profession,
+            schoolWork: values.work,
+          },
+        });
+        if (response.data?.updateProfile) {
+          onSuccess();
+        } else {
+          setServerError('Update failed');
+        }
       }
     } catch (e) {
       console.error('Update failed:', e);
