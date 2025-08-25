@@ -71,6 +71,7 @@ export const UsertypeDefs = gql`
   }
 
   type Query {
+    getMe: User!
     getusers: [User]
     getUser(_id: ID!): User
     getUserAllChatMessages(userId: ID!): [MatchChatMessages!]!
