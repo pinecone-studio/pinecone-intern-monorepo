@@ -8,12 +8,13 @@ import { MultiSelect } from './MultiSelect';
 import { useGetAllInterestsQuery, useUpdateProfileMutation } from '../generated';
 import { UserData } from '@/app/(auth)/signup/page';
 import { useState } from 'react';
+import { ProfileInputField } from './ProfileInputField';
 
 type ProfileFormProps = {
   onSuccess: () => void;
   onBack: () => void;
   userData: UserData;
-  updateUserData: (newData: Partial<UserData>) => void;
+  updateUserData: (_: Partial<UserData>) => void;
 };
 
 const formSchema = z.object({
@@ -48,11 +49,11 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
         const response = await updateProfile({
           variables: {
             updateProfileId: userData.id,
-            name: values.name,
-            bio: values.bio,
-            interests: values.interest,
-            profession: values.profession,
-            schoolWork: values.work,
+            name: userData.name,
+            bio: userData.bio,
+            interests: userData.interests,
+            profession: userData.profession,
+            schoolWork: userData.schoolWork,
           },
         });
         if (response.data?.updateProfile) {

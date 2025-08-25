@@ -24,7 +24,7 @@ const formSchema = z
 
 type CreatePasswordProps = {
   onSuccess: () => void;
-  updateUserData: (newData: Partial<UserData>) => void;
+  updateUserData: (_: Partial<UserData>) => void;
   otpId: string;
 };
 
@@ -54,7 +54,7 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
       if (response.data?.signup?.token) {
         localStorage.setItem('token', response.data?.signup?.token);
 
-        updateUserData({ password: values.password, id: response.data?.signup?.id });
+        updateUserData({ id: response.data?.signup?.id });
 
         onSuccess();
       } else {

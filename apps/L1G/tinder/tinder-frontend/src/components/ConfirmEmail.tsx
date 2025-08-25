@@ -16,7 +16,7 @@ export const FormSchema = z.object({
 type ConfirmEmailProps = {
   onSuccess: () => void;
   email: string;
-  updateUserData: (newData: Partial<UserData>) => void;
+  updateUserData: (_: Partial<UserData>) => void;
   otpType: OtpType;
 };
 
@@ -39,7 +39,7 @@ async function handleOtpSubmit(
   values: z.infer<typeof FormSchema>,
   email: string | undefined,
   otpType: OtpType,
-  updateUserData: (newData: Partial<UserData>) => void,
+  updateUserData: (_: Partial<UserData>) => void,
   verifyOtp: ReturnType<typeof useVerifyOtpMutation>[0],
   setOtpId: React.Dispatch<React.SetStateAction<string | null>>
 ) {
@@ -97,8 +97,6 @@ export const ConfirmEmail = ({ onSuccess, email, otpType, updateUserData }: Conf
   const { timeLeft, reset: resetTimer } = useCountdown(60);
 
   const [otpId, setOtpId] = useState<string | null>(null);
-
-  // console.log('email in main:', email, otpType);
 
   async function onSubmit(values: z.infer<typeof FormSchema>) {
     await handleOtpSubmit(values, email, otpType, updateUserData, verifyOtp, setOtpId);

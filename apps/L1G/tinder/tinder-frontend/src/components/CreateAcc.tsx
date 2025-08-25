@@ -20,15 +20,15 @@ const formSchema = z.object({
 type CreateAccountProps = {
   onSuccess: () => void;
   userData: UserData;
-  updateUserData: (newData: Partial<UserData>) => void;
+  updateUserData: (_: Partial<UserData>) => void;
 };
 
 export const CreateAccount = ({ onSuccess, userData, updateUserData }: CreateAccountProps) => {
   const router = useRouter();
   const [step, setStep] = useState<'email' | 'otp'>('email');
-
-  const [requestSignup, { loading, error }] = useRequestSignupMutation();
   const [message, setMessage] = useState<string | null>(null);
+
+  const [requestSignup, { error }] = useRequestSignupMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -88,6 +88,7 @@ export const CreateAccount = ({ onSuccess, userData, updateUserData }: CreateAcc
               Continue
             </Button>
             {error && <p className="text-[14px] text-red-500 mt-2">{error.message}</p>}
+            {message && <p className="text-[14px] text-red-500 mt-2">{message}</p>}
           </form>
         </Form>
         <div className="w-full flex justify-between items-center gap-[10px] py-4">

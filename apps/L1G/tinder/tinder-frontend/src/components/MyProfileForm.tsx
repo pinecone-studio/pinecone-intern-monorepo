@@ -17,7 +17,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 export const MyProfileForm = () => {
   const form = useForm<z.infer<typeof profileFormSchema>>({
-    resolver: zodResolver(profileFormSchema),
     defaultValues: {
       name: 'John Doe',
       email: 'johndoe@example.com',

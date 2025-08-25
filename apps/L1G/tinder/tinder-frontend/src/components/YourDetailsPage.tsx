@@ -6,7 +6,7 @@ type YourDetailsPageProps = {
   onSuccess: () => void;
   onBack: () => void;
   userData: UserData;
-  updateUserData: (newData: Partial<UserData>) => void;
+  updateUserData: (_: Partial<UserData>) => void;
 };
 
 const YourDetailsPage = ({ onSuccess, onBack, userData, updateUserData }: YourDetailsPageProps) => {

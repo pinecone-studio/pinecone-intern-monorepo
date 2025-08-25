@@ -10,11 +10,10 @@ type Props = {
   setStep: (_: any) => void;
   router: AppRouterInstance;
   userData: UserData;
-  updateUserData: (newData: Partial<UserData>) => void;
-  handleSignup: () => void;
+  updateUserData: (_: Partial<UserData>) => void;
 };
 
-const MultiStepForm2 = ({ step, setStep, router, userData, updateUserData, handleSignup }: Props) => {
+const MultiStepForm2 = ({ step, setStep, router, userData, updateUserData }: Props) => {
   return (
     <>
       {step === 'ageSelect' && <HowOldAreYou updateUserData={updateUserData} onSuccess={() => setStep('details')} onBack={() => setStep('genderSelect')} />}
