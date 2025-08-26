@@ -23,7 +23,7 @@ export type UserData = {
 const Signup = () => {
   const router = useRouter();
 
-  const [step, setStep] = useState<'createAccount' | 'confirmEmail' | 'createPass' | 'genderSelect' | 'ageSelect' | 'details' | 'uploadImages' | 'allSet'>('createAccount');
+  const [step, setStep] = useState<'createAccount' | 'confirmEmail' | 'createPass' | 'genderOfUser'| 'genderSelect' | 'ageSelect' | 'details' | 'uploadImages' | 'allSet'>('createAccount');
 
   const [userData, setUserData] = useState<UserData>({});
 
