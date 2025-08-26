@@ -42,7 +42,7 @@ export const FoodSchema = new Schema<FoodType>(
     discount: {
       type: Schema.Types.ObjectId,
       ref: 'discount',
-      required: true,
+      required: false,
     },
   },
   {
