@@ -4,7 +4,7 @@ export const discountTypeDefs = gql`
   type Discount {
     discountId: ID!
     discountName: String!
-    discountRate: Float!
+    discountRate: Int!
     startDate: String!
     endDate: String!
     createdAt: String
@@ -13,14 +13,14 @@ export const discountTypeDefs = gql`
 
   input CreateDiscountInput {
     discountName: String!
-    discountRate: Float!
+    discountRate: Int!
     startDate: String!
     endDate: String!
   }
 
   input UpdateDiscountInput {
     discountName: String!
-    discountRate: Float!
+    discountRate: Int!
     startDate: String!
     endDate: String!
   }
