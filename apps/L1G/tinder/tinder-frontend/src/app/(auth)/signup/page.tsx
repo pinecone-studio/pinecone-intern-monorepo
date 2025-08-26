@@ -8,7 +8,7 @@ import { useState } from 'react';
 const Signup = () => {
   const router = useRouter();
 
-  const [step, setStep] = useState<'createAccount' | 'confirmEmail' | 'createPass' | 'genderSelect' | 'ageSelect' | 'details' | 'uploadImages' | 'allSet'>('createAccount');
+  const [step, setStep] = useState<'createAccount' | 'confirmEmail' | 'createPass' | 'genderOfUser'| 'genderSelect' | 'ageSelect' | 'details' | 'uploadImages' | 'allSet'>('createAccount');
 
   return (
     <div className="w-screen h-screen flex justify-center items-center relative">
