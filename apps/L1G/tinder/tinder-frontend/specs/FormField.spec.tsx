@@ -4,7 +4,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useGetAllInterestsQuery, useUpdateProfileMutation } from '@/generated';
-import { ProfileForm } from '@/components/FormFIeld';
+import { ProfileForm } from '@/components/FormNew';
 
 const mockUpdateProfile = jest.fn();
 
