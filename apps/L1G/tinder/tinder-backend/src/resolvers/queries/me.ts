@@ -31,18 +31,26 @@ const mapUser = (u: any): User => {
     ...mapUserPersonalInfo(u),
     ...mapUserPreferences(u),
     ...mapUserProfileExtras(u),
-    matchIds: u.matchIds?.map(mapMatch) ?? [],
+    matchIds: [],
     likedBy: [],
     likedTo: [],
   };
 };
 
-const mapMatch = (m: any): Match => ({
-  id: m._id.toString(),
-  matchedAt: m.matchedAt?.toISOString(),
-  unmatched: m.unmatched ?? false,
-  users: m.users?.map(mapUser) ?? [],
-});
+const mapMatch = (m: any, currentUserId: string): Match => {
+  const matchedUserRaw = m.users.find((u: any) => u._id.toString() !== currentUserId);
+  if (!matchedUserRaw) {
+    throw new Error('Matched user not found');
+  }
+  const matchedUser = mapUser(matchedUserRaw);
+
+  return {
+    id: m._id.toString(),
+    matchedAt: m.matchedAt?.toISOString(),
+    unmatched: m.unmatched ?? false,
+    matchedUser,
+  };
+};
 
 async function fetchPopulatedUser(userId: string): Promise<PopulatedUser> {
   const user = await Usermodel.findById(userId)
@@ -65,9 +73,9 @@ async function fetchPopulatedUser(userId: string): Promise<PopulatedUser> {
   return user;
 }
 
-function mapMatchIds(matchIds: any[] | undefined) {
+function mapMatchIds(matchIds: any[] | undefined, currentUserId: string): Match[] {
   if (!matchIds) return [];
-  return matchIds.map(mapMatch);
+  return matchIds.map((m) => mapMatch(m, currentUserId));
 }
 
 function mapLikedBy(likedBy: any[] | undefined) {
@@ -80,7 +88,7 @@ function mapLikedTo(likedTo: any[] | undefined) {
   return likedTo.map(mapUser);
 }
 
-function mapBaseUserFields(user: PopulatedUser) {
+function mapBaseUserFields(user: PopulatedUser, userId: string) {
   if (!user.email) {
     throw new Error('User email is missing');
   }
@@ -89,7 +97,7 @@ function mapBaseUserFields(user: PopulatedUser) {
     id: user._id.toString(),
     email: user.email,
     images: user.images ?? [],
-    matchIds: mapMatchIds(user.matchIds),
+    matchIds: mapMatchIds(user.matchIds, userId),
     likedBy: mapLikedBy(user.likedBy),
     likedTo: mapLikedTo(user.likedTo),
   };
@@ -107,9 +115,9 @@ function mapOptionalUserFields(user: PopulatedUser) {
   };
 }
 
-function mapPopulatedUserToUser(user: PopulatedUser): User {
+function mapPopulatedUserToUser(user: PopulatedUser, userId: string): User {
   return {
-    ...mapBaseUserFields(user),
+    ...mapBaseUserFields(user, userId),
     ...mapOptionalUserFields(user),
   };
 }
@@ -121,5 +129,5 @@ export const getMe: QueryResolvers['getMe'] = async (_parent, _args, context, _i
 
   const user = await fetchPopulatedUser(userId);
 
-  return mapPopulatedUserToUser(user);
+  return mapPopulatedUserToUser(user, userId);
 };
