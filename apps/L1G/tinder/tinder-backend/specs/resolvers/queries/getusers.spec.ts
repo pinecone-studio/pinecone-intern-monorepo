@@ -1,19 +1,23 @@
 import { getusers } from 'src/resolvers/queries/getusers';
 import { Usermodel } from 'src/models/user';
+import { IUserLean } from 'src/resolvers/queries/getusers';
+import mongoose from 'mongoose';
 
 jest.mock('src/models/user');
 
 interface MockUser {
-  _id: string;
+  _id?: string | null;
   email: string;
   name: string;
-  interests?: Array<{ _id: string; interestName: string }> | null;
+  interests?: Array<{ _id?: string | null; interestName: string }> | null;
   images?: string[] | null;
   likedBy?: Array<{ _id: string; email: string; name: string }>;
+  likedTo?: Array<{ _id: string; email: string; name: string }>;
+  matchIds?: Array<{ _id: string; email: string; name: string }>;
   [key: string]: unknown;
 }
 
-function mockChain(result: MockUser[]) {
+function mockChain<T extends { _id?: string | mongoose.Types.ObjectId | null }>(result: T[]) {
   (Usermodel.find as jest.Mock).mockReturnValue({
     populate: jest.fn().mockReturnValue({
       populate: jest.fn().mockReturnValue({
@@ -27,15 +31,21 @@ function mockChain(result: MockUser[]) {
   });
 }
 
-describe('getusers resolver - main', () => {
+
+
+describe('getusers resolver', () => {
   beforeEach(() => jest.clearAllMocks());
 
   it('returns transformed user with likedBy', async () => {
     const users: MockUser[] = [{
-      _id: '1', email: 'a@test.com', name: 'Alice',
-      images: ['a.png'], likedBy: [{ _id: '2', email: 'b@test.com', name: 'Bob' }]
+      _id: '1',
+      email: 'a@test.com',
+      name: 'Alice',
+      images: ['a.png'],
+      likedBy: [{ _id: '2', email: 'b@test.com', name: 'Bob' }]
     }];
     mockChain(users);
+
     const res = await getusers();
     expect(res[0].likedBy[0].email).toBe('b@test.com');
   });
@@ -48,7 +58,9 @@ describe('getusers resolver - main', () => {
 
   it('handles users with interests', async () => {
     const users: MockUser[] = [{
-      _id: '1', email: 'a@test.com', name: 'Alice',
+      _id: '1',
+      email: 'a@test.com',
+      name: 'Alice',
       interests: [{ _id: 'i1', interestName: 'Reading' }]
     }];
     mockChain(users);
@@ -63,58 +75,43 @@ describe('getusers resolver - main', () => {
     expect(res[0].images).toEqual([]);
   });
 
-  it('handles users with multiple interests', async () => {
-    const users: MockUser[] = [{
-      _id: '1', 
-      email: 'a@test.com', 
-      name: 'Alice',
-      interests: [
-        { _id: 'i1', interestName: 'Reading' },
-        { _id: 'i2', interestName: 'Gaming' }
-      ]
-    }];
-    mockChain(users);
-    const res = await getusers();
-    expect(res[0].interests).toEqual([
-      { _id: 'i1', interestName: 'Reading' },
-      { _id: 'i2', interestName: 'Gaming' }
-    ]);
+  it('handles empty or null interests', async () => {
+    const cases: Array<MockUser> = [
+      { _id: '1', email: 'a@test.com', name: 'Alice', interests: [] },
+      { _id: '2', email: 'b@test.com', name: 'Bob', interests: null },
+      { _id: '3', email: 'c@test.com', name: 'Carol', interests: undefined }
+    ];
+
+    for (const user of cases) {
+      mockChain([user]);
+      const res = await getusers();
+      expect(res[0].interests).toBeUndefined();
+    }
   });
 
-  it('handles users with empty interests array', async () => {
-    const users: MockUser[] = [{
-      _id: '1', 
-      email: 'a@test.com', 
-      name: 'Alice',
-      interests: []
-    }];
+  it('returns empty string for user id when _id is missing', async () => {
+    const users: IUserLean[] = [
+      { _id: undefined as any, email: 'noid@test.com', name: 'NoID User' }
+    ];
     mockChain(users);
+
     const res = await getusers();
-    expect(res[0].interests).toBeUndefined();
+    expect(res[0].id).toBe(''); 
   });
 
-  it('handles users with null interests', async () => {
-    const users: MockUser[] = [{
-      _id: '1', 
-      email: 'a@test.com', 
-      name: 'Alice',
-      interests: null
-    }];
+  it('returns empty string for interest _id when _id is missing', async () => {
+    const users: IUserLean[] = [
+      { 
+        _id: '1', 
+        email: 'a@test.com', 
+        name: 'Alice',
+        interests: [{ _id: undefined as any, interestName: 'Broken Interest' }]
+      }
+    ];
     mockChain(users);
-    const res = await getusers();
-    expect(res[0].interests).toBeUndefined();
-  });
 
-  it('handles users with undefined interests', async () => {
-    const users: MockUser[] = [{
-      _id: '1', 
-      email: 'a@test.com', 
-      name: 'Alice',
-      interests: undefined
-    }];
-    mockChain(users);
     const res = await getusers();
-    expect(res[0].interests).toBeUndefined();
+    expect(res[0].interests![0]._id).toBe(''); 
   });
 
   it('transforms user with all populated fields', async () => {
@@ -155,4 +152,5 @@ describe('getusers resolver - main', () => {
     expect(res[0].likedTo).toHaveLength(1);
     expect(res[0].matchIds).toHaveLength(1);
   });
+
 });
