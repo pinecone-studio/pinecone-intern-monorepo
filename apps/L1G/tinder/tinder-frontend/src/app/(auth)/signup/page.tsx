@@ -11,6 +11,7 @@ export type UserData = {
   otpId?: string;
   password?: string;
   name?: string;
+  gender?: string;
   genderPreferences?: string;
   dateOfBirth?: Date | null;
   bio?: string;
@@ -23,7 +24,7 @@ export type UserData = {
 const Signup = () => {
   const router = useRouter();
 
-  const [step, setStep] = useState<'createAccount' | 'confirmEmail' | 'createPass' | 'genderOfUser'| 'genderSelect' | 'ageSelect' | 'details' | 'uploadImages' | 'allSet'>('createAccount');
+  const [step, setStep] = useState<'createAccount' | 'confirmEmail' | 'createPass' | 'genderOfUser' | 'genderSelect' | 'ageSelect' | 'details' | 'uploadImages' | 'allSet'>('createAccount');
 
   const [userData, setUserData] = useState<UserData>({});
 
