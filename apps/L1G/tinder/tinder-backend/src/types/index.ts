@@ -79,4 +79,8 @@ export interface PopulatedUser {
   likedBy?: PopulatedUser[];
   likedTo?: PopulatedUser[];
   matchIds?: Match[];
+  interests?: {
+    _id: string | mongoose.Types.ObjectId;
+    interestName: string;
+  }[];
 }
