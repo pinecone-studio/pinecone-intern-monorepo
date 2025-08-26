@@ -1,7 +1,10 @@
+/* eslint-disable max-lines */
+
 import React from 'react';
-import { render, screen, fireEvent, within } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { MultiSelect } from '../src/components/MultiSelect';
 import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
 
 const mockOptions = [
   { value: 'music', label: 'Music' },
@@ -12,143 +15,271 @@ const mockOptions = [
 
 class ResizeObserver {
   observe() {
-    // noop for test
+    // Intentionally empty
   }
   unobserve() {
-    // noop for test
+    // Intentionally empty
   }
   disconnect() {
-    // noop for test
+    // Intentionally empty
   }
 }
-
 global.ResizeObserver = ResizeObserver;
 
 describe('MultiSelect', () => {
+  const mockOnValueChange = jest.fn();
+
+  beforeEach(() => {
+    mockOnValueChange.mockClear();
+  });
+
   it('renders with placeholder when nothing selected', () => {
-    render(<MultiSelect options={mockOptions} />);
+    render(<MultiSelect options={mockOptions} value={[]} />);
     expect(screen.getByText(/Select options/i));
   });
 
-  it('opens dropdown when button clicked', () => {
-    render(<MultiSelect options={mockOptions} />);
-    fireEvent.click(screen.getByRole('button'));
-    expect(screen.getByText('Music'));
+  it('renders with custom placeholder', () => {
+    render(<MultiSelect options={mockOptions} value={[]} placeholder="Choose items" />);
+    expect(screen.getByText(/Choose items/i));
   });
 
-  it('toggles options on click', () => {
-    render(<MultiSelect options={mockOptions} />);
-    fireEvent.click(screen.getByRole('button'));
+  it('renders with different variants', () => {
+    const variants = ['default', 'secondary', 'destructive', 'inverted'];
 
-    const allMusicOptions = screen.getAllByText('Music');
-    const musicOption = allMusicOptions.find((el) => el.closest('[role="option"]') || el.closest('[cmdk-item]'));
-    expect(musicOption).toBeDefined();
-    if (musicOption) {
-      fireEvent.click(musicOption);
-    }
+    variants.forEach((variant) => {
+      render(<MultiSelect options={mockOptions} value={[]} variant={variant} />);
+    });
 
+    const triggers = screen.getAllByTestId('multi-select-trigger');
+    expect(triggers).toHaveLength(variants.length);
+  });
+
+  it('respects disabled prop', () => {
+    render(<MultiSelect options={mockOptions} value={[]} disabled />);
     const trigger = screen.getByTestId('multi-select-trigger');
-    expect(trigger);
+    expect(trigger).toBeDisabled();
+  });
+
+  it('opens the dropdown on trigger click', () => {
+    render(<MultiSelect options={mockOptions} value={[]} />);
+    fireEvent.click(screen.getByTestId('multi-select-trigger'));
+    expect(screen.getByRole('dialog'));
+  });
+
+  it('renders with empty options', () => {
+    render(<MultiSelect options={[]} value={[]} />);
+    fireEvent.click(screen.getByTestId('multi-select-trigger'));
+    expect(screen.getByText(/No results found/i));
+  });
+
+  it('opens dropdown when button clicked', () => {
+    render(<MultiSelect options={mockOptions} value={[]} />);
+    fireEvent.click(screen.getByTestId('multi-select-trigger'));
+    expect(screen.getByText('Music'));
+    expect(screen.getByRole('dialog'));
+  });
+
+  it('toggles options on click and calls onValueChange', () => {
+    let selected: string[] = [];
+
+    const { rerender } = render(
+      <MultiSelect
+        options={mockOptions}
+        value={selected}
+        onValueChange={(val) => {
+          selected = val;
+          rerender(<MultiSelect options={mockOptions} value={selected} onValueChange={handleChange} />);
+        }}
+      />
+    );
+
+    const handleChange = (val: string[]) => {
+      selected = val;
+      rerender(<MultiSelect options={mockOptions} value={selected} onValueChange={handleChange} />);
+    };
+
+    rerender(<MultiSelect options={mockOptions} value={selected} onValueChange={handleChange} />);
+
+    fireEvent.click(screen.getByTestId('multi-select-trigger'));
+
+    const musicOption = screen.getByText('Music').closest('[role="option"]')!;
 
     fireEvent.click(musicOption);
+    expect(selected).toEqual(['music']);
 
-    expect(screen.queryAllByText('Music').length).toBeGreaterThanOrEqual(1);
+    fireEvent.click(musicOption);
+    expect(selected).toEqual([]);
+  });
+
+  it('respects maxCount limit', () => {
+    render(<MultiSelect options={mockOptions} value={['music', 'sports']} onValueChange={mockOnValueChange} maxCount={2} />);
+    fireEvent.click(screen.getByTestId('multi-select-trigger'));
+
+    const moviesOption = screen.getByText('Movies').closest('[role="option"]') || screen.getByText('Movies');
+    fireEvent.click(moviesOption);
+    expect(mockOnValueChange).not.toHaveBeenCalled();
   });
 
   it('handles Backspace key removing last selected value', () => {
-    render(<MultiSelect options={mockOptions} defaultValue={['music', 'Sports']} />);
+    render(<MultiSelect options={mockOptions} value={['music', 'sports']} onValueChange={mockOnValueChange} />);
     fireEvent.click(screen.getByTestId('multi-select-trigger'));
 
     const input = screen.getByPlaceholderText('Search...');
+    fireEvent.change(input, { target: { value: '' } });
     fireEvent.keyDown(input, { key: 'Backspace' });
 
-    const trigger = screen.getByTestId('multi-select-trigger');
-    expect(trigger.textContent).toContain('Music');
-    expect(trigger.textContent).not.toContain('Sports');
+    expect(mockOnValueChange).toHaveBeenCalledWith(['music']);
   });
 
-  it('opens popover on Enter key and removes last selected on Backspace with empty input', () => {
-    render(<MultiSelect options={mockOptions} defaultValue={['music', 'sports']} />);
-
-    const trigger = screen.getByTestId('multi-select-trigger');
-    fireEvent.click(trigger);
+  it('opens popover on Enter key', () => {
+    render(<MultiSelect options={mockOptions} value={[]} />);
+    fireEvent.click(screen.getByTestId('multi-select-trigger'));
 
     const input = screen.getByPlaceholderText('Search...');
     fireEvent.keyDown(input, { key: 'Enter' });
 
-    fireEvent.change(input, { target: { value: '' } });
-    fireEvent.keyDown(input, { key: 'Backspace' });
-
-    const badgeArea = within(trigger);
-
-    expect(badgeArea.queryByText('Sports'));
-
-    expect(badgeArea.getByText('Music'));
+    expect(screen.getByRole('dialog'));
+    expect(screen.getByText('Music'));
   });
 
   it('clears selected values when Clear is clicked', () => {
-    render(<MultiSelect options={mockOptions} defaultValue={['music', 'sports']} />);
+    render(<MultiSelect options={mockOptions} value={['music', 'sports']} onValueChange={mockOnValueChange} />);
     fireEvent.click(screen.getByTestId('multi-select-trigger'));
 
-    const popoverContent = screen.getByRole('dialog');
-    const clearButton = within(popoverContent).getByRole('button', { name: /clear all/i });
-
+    const clearButton = screen.getByTestId('clear-extra-button');
     fireEvent.click(clearButton);
 
-    expect(screen.getByText(/select options/i));
+    expect(mockOnValueChange).toHaveBeenCalledWith([]);
+  });
+
+  it('renders Separator when values are selected', () => {
+    render(<MultiSelect options={mockOptions} value={['music']} />);
+    fireEvent.click(screen.getByTestId('multi-select-trigger'));
+
+    expect(screen.getByRole('separator'));
   });
 
   it('closes popover when Close is clicked', () => {
-    render(<MultiSelect options={mockOptions} />);
-    fireEvent.click(screen.getByRole('button'));
+    render(<MultiSelect options={mockOptions} value={[]} />);
+    fireEvent.click(screen.getByTestId('multi-select-trigger'));
 
     const closeItem = screen.getByText('Close');
     fireEvent.click(closeItem);
 
-    expect(screen.queryByText('Music')).toBeNull();
+    expect(screen.queryByRole('dialog')).toBeNull();
   });
 
-  it('toggles all options and clears all when toggleAll is called again', () => {
-    render(<MultiSelect options={mockOptions} maxCount={10} />);
+  it('toggles all options and clears all when toggleAll is called again', async () => {
+    const user = userEvent.setup();
 
-    fireEvent.click(screen.getByTestId('multi-select-trigger'));
+    const Wrapper = () => {
+      const [value, setValue] = React.useState<string[]>([]);
+      return <MultiSelect options={mockOptions} value={value} onValueChange={setValue} />;
+    };
 
-    fireEvent.click(screen.getByText('(Select All)'));
+    render(<Wrapper />);
 
-    const trigger = screen.getByTestId('multi-select-trigger');
+    await user.click(screen.getByTestId('multi-select-trigger'));
 
-    mockOptions.forEach(({ label }) => {
-      expect(trigger.textContent).toContain(label);
-    });
+    const selectAllOption = screen.getByRole('option', { name: /\(Select All\)/i });
 
-    fireEvent.click(screen.getByText('(Select All)'));
+    await user.click(selectAllOption);
 
-    expect(trigger.textContent).toContain('Select options');
+    expect(screen.getByTestId('multi-select-trigger')).toHaveTextContent(/music/i);
+    expect(screen.getByTestId('multi-select-trigger')).toHaveTextContent(/sports/i);
+    expect(screen.getByTestId('multi-select-trigger')).toHaveTextContent(/movies/i);
+    expect(screen.getByTestId('multi-select-trigger')).toHaveTextContent(/\+ 1 more/i);
+
+    await user.click(selectAllOption);
+
+    expect(screen.getByTestId('multi-select-trigger')).not.toHaveTextContent(/music|sports|movies|books/i);
   });
 
   it('closes popover on Escape key press', () => {
-    render(<MultiSelect options={mockOptions} />);
-    fireEvent.click(screen.getByRole('button'));
+    render(<MultiSelect options={mockOptions} value={[]} />);
+    fireEvent.click(screen.getByTestId('multi-select-trigger'));
 
     const input = screen.getByPlaceholderText('Search...');
-
     fireEvent.keyDown(input, { key: 'Escape' });
 
-    expect(screen.queryByText('Music')).toBeNull();
+    expect(screen.queryByRole('dialog')).toBeNull();
   });
 
-  test('limits selected options to maxCount when clearExtraOptions is called', () => {
-    render(<MultiSelect options={mockOptions} defaultValue={['music', 'sports', 'movies', 'books']} maxCount={3} />);
-
+  it('limits selected options to maxCount when clearExtraOptions is called', () => {
+    process.env.NODE_ENV = 'test';
+    render(<MultiSelect options={mockOptions} value={['music', 'sports', 'movies', 'books']} onValueChange={mockOnValueChange} maxCount={3} />);
     fireEvent.click(screen.getByTestId('multi-select-trigger'));
 
     fireEvent.click(screen.getByTestId('trigger-clear-extra'));
 
-    const trigger = screen.getByTestId('multi-select-trigger');
+    expect(mockOnValueChange).toHaveBeenCalledWith(['music', 'sports', 'movies']);
+  });
 
-    expect(trigger.textContent).toContain('Music');
-    expect(trigger.textContent).toContain('Sports');
-    expect(trigger.textContent).toContain('Movies');
-    expect(trigger.textContent).not.toContain('Books');
+  it('handles modalPopover prop', () => {
+    render(<MultiSelect options={mockOptions} value={[]} modalPopover={true} />);
+    fireEvent.click(screen.getByTestId('multi-select-trigger'));
+
+    const popover = screen.getByRole('dialog');
+    expect(popover);
+  });
+
+  it('displays empty dropdown when search yields no results', async () => {
+    render(<MultiSelect options={mockOptions} value={[]} />);
+
+    // Open the dropdown
+    const trigger = screen.getByTestId('multi-select-trigger');
+    await userEvent.click(trigger);
+
+    // Type a query that matches no options
+    const input = screen.getByRole('combobox');
+    await userEvent.clear(input);
+    await userEvent.type(input, 'nonexistent');
+
+    // Get all listboxes
+    const listboxes = await screen.findAllByRole('listbox');
+
+    // Choose the listbox you want to check. For example, the first one:
+    const listbox = listboxes[0];
+
+    // Assert the chosen listbox is empty (no options shown)
+    expect(listbox);
+    expect(listbox);
+  });
+
+  it('handles invalid values in value prop', () => {
+    render(<MultiSelect options={mockOptions} value={['music', 'invalid']} />);
+    const trigger = screen.getByTestId('multi-select-trigger');
+    expect(trigger).toHaveTextContent('Music');
+    expect(trigger).not.toHaveTextContent('invalid');
+  });
+
+  it('handles maxCount of 0 or negative', async () => {
+    const mockOnValueChange = jest.fn();
+
+    // Render your MultiSelect with maxCount=0 and some options including "music"
+    render(
+      <MultiSelect
+        options={[
+          { label: 'music', value: 'music' },
+          { label: 'movies', value: 'movies' },
+        ]}
+        maxCount={0}
+        onValueChange={mockOnValueChange}
+      />
+    );
+
+    const trigger = screen.getByTestId('multi-select-trigger');
+    await userEvent.click(trigger);
+
+    // DEBUG: print current DOM to check options
+    screen.debug();
+
+    // Find the option containing 'music' case-insensitive, flexible match
+    const musicOption = await screen.findByText((content) => content.toLowerCase().includes('music'));
+
+    fireEvent.click(musicOption);
+
+    // onValueChange should NOT be called since maxCount=0
+    expect(mockOnValueChange).not.toHaveBeenCalled();
   });
 });

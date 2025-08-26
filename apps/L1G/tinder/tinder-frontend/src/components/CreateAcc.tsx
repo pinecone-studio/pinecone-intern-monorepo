@@ -1,14 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import z from 'zod';
+import { useRequestSignupMutation, OtpType } from '@/generated';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Separator } from '@/components/ui/separator';
 import { useRouter } from 'next/navigation';
+import { UserData } from '@/app/(auth)/signup/page';
+import { ConfirmEmail } from './ConfirmEmail';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email' }),
@@ -16,10 +19,16 @@ const formSchema = z.object({
 
 type CreateAccountProps = {
   onSuccess: () => void;
+  userData: UserData;
+  updateUserData: (_: Partial<UserData>) => void;
 };
 
-export const CreateAccount = ({ onSuccess }: CreateAccountProps) => {
+export const CreateAccount = ({ onSuccess, userData, updateUserData }: CreateAccountProps) => {
   const router = useRouter();
+  const [step, setStep] = useState<'email' | 'otp'>('email');
+  const [message, setMessage] = useState<string | null>(null);
+
+  const [requestSignup, { error }] = useRequestSignupMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -28,10 +37,25 @@ export const CreateAccount = ({ onSuccess }: CreateAccountProps) => {
     },
   });
 
-  function onSubmit(_values: z.infer<typeof formSchema>) {
-    console.log('working');
-    onSuccess();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      setMessage(null);
+      await requestSignup({
+        variables: { email: values.email, otpType: OtpType.Create },
+      });
+      setMessage('OTP resent successfully.');
+      updateUserData({ email: values.email });
+      setStep('otp');
+    } catch (e) {
+      setMessage('Failed to resend OTP, please try again.');
+    }
   }
+
+  const handleOtpSuccess = () => {
+    onSuccess();
+  };
+
+  if (step === 'otp' && userData.email) return <ConfirmEmail email={userData.email} onSuccess={handleOtpSuccess} updateUserData={updateUserData} otpType={OtpType.Create} />;
 
   return (
     <div className="w-full flex flex-col gap-4 justify-center items-center">
@@ -61,6 +85,8 @@ export const CreateAccount = ({ onSuccess }: CreateAccountProps) => {
             <Button type="submit" className="rounded-full bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
               Continue
             </Button>
+            {error && <p className="text-[14px] text-red-500 mt-2">{error.message}</p>}
+            {message && <p className="text-[14px] text-red-500 mt-2">{message}</p>}
           </form>
         </Form>
         <div className="w-full flex justify-between items-center gap-[10px] py-4">

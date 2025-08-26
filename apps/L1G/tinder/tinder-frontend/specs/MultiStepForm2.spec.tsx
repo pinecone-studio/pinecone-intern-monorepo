@@ -19,7 +19,7 @@ jest.mock('@/components/HowOldAreYou', () => ({
 
 jest.mock('@/components/YourDetailsPage', () => ({
   __esModule: true,
-  default: ({ onSuccess, onBack }) => (
+  YourDetailsPage: ({ onSuccess, onBack }) => (
     <div>
       Your details
       <button data-testid="next" onClick={onSuccess}>
@@ -33,15 +33,19 @@ jest.mock('@/components/YourDetailsPage', () => ({
 }));
 
 jest.mock('@/components/ProfileImages', () => ({
-  ProfileImages: ({ onSuccess }) => (
+  ProfileImages: ({ onBack, onSuccess }) => (
     <div>
       Upload your image
       <button data-testid="next" onClick={onSuccess}>
         Next
       </button>
+      <button data-testid="back" onClick={onBack}>
+        Back
+      </button>
     </div>
   ),
 }));
+
 jest.mock('@/components/YouAreAllSet', () => ({
   YouAreAllSet: ({ onSuccess }) => (
     <div>
@@ -113,5 +117,12 @@ describe('MultiStepForm2', () => {
     expect(screen.queryByText(/your details/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/upload your image/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/you're all set/i)).not.toBeInTheDocument();
+  });
+  it('uploadImages step triggers onBack', () => {
+    render(<MultiStepForm2 step="uploadImages" setStep={mockSetStep} router={mockRouter} />);
+    expect(screen.getByText(/upload your image/i)).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId('back'));
+    expect(mockSetStep).toHaveBeenCalledWith('details');
   });
 });
