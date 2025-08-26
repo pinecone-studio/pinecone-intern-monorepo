@@ -66,13 +66,13 @@ async function fetchPopulatedUser(userId: string): Promise<PopulatedUser> {
       path: 'matchIds',
       populate: { path: 'users' },
     })
+    .populate('interests')
     .lean<PopulatedUser>();
 
   if (!user) throw new Error('User not found');
 
   return user;
 }
-
 function mapMatchIds(matchIds: any[] | undefined, currentUserId: string): Match[] {
   if (!matchIds) return [];
   return matchIds.map((m) => mapMatch(m, currentUserId));
@@ -87,7 +87,15 @@ function mapLikedTo(likedTo: any[] | undefined) {
   if (!likedTo) return [];
   return likedTo.map(mapUser);
 }
-
+function mapInterests(interests: any[] | undefined) {
+  if (!interests) return [];
+  return interests
+    .filter((i) => i && i._id)
+    .map((i) => ({
+      _id: i._id.toString(),
+      interestName: i.interestName,
+    }));
+}
 function mapBaseUserFields(user: PopulatedUser, userId: string) {
   if (!user.email) {
     throw new Error('User email is missing');
@@ -119,6 +127,7 @@ function mapPopulatedUserToUser(user: PopulatedUser, userId: string): User {
   return {
     ...mapBaseUserFields(user, userId),
     ...mapOptionalUserFields(user),
+    interests: mapInterests(user.interests),
   };
 }
 
