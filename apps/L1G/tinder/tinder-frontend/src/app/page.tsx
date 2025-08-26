@@ -1,6 +1,8 @@
 'use client';
 import { HomeFooter, HomeHeader, HomeMain, HomePageBackground } from '@/components/HomePage';
 import { useGetusersQuery } from '@/generated';
+import { useEffect } from 'react';
+import socket from 'utils/socket';
 
 export interface UserProfile {
   id: string;
@@ -11,7 +13,20 @@ export interface UserProfile {
 
 const Home: React.FC = () => {
   const { loading } = useGetusersQuery();
+  useEffect(() => {
+    socket.on('connect', () => {
+      console.log('✅ Connected to socket server');
+    });
 
+    socket.on('connect_error', (err) => {
+      console.error('❌ Connection error:', err);
+    });
+
+    return () => {
+      socket.off('connect');
+      socket.off('connect_error');
+    };
+  }, []);
   if (loading)
     return (
       <div className="flex justify-center items-center h-screen">

@@ -11,6 +11,9 @@ const io = new Server(server, {
     methods: ['GET', 'POST'],
   },
 });
+app.get('/', (req, res) => {
+  res.send('Socket server is running!');
+});
 
 io.on('connection', (socket) => {
   console.log('Client connected:', socket.id);
@@ -27,5 +30,5 @@ io.on('connection', (socket) => {
 
 const PORT = process.env.PORT || 10000;
 server.listen(PORT, () => {
-  console.log(`Socket.IO server running on port ${PORT}`);
+  console.log(`Socket.IO server running on port http://localhost:${PORT}`);
 });
