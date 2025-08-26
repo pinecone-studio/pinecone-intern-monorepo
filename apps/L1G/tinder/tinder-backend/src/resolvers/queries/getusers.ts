@@ -5,7 +5,7 @@ interface IInterestLean {
   _id: string | mongoose.Types.ObjectId;
   interestName: string;
 }
-interface IUserLean {
+export interface IUserLean {
   _id: string | mongoose.Types.ObjectId;
   email: string;
   name: string;
@@ -23,7 +23,7 @@ interface IUserLean {
 }
 
 export const mapSimpleUser = (user: IUserLean) => ({
-  id: user._id.toString(),
+  id: user._id!.toString(),
   email: user.email,
   name: user.name,
   dateOfBirth: user.dateOfBirth,
@@ -31,10 +31,12 @@ export const mapSimpleUser = (user: IUserLean) => ({
   gender: user.gender,
   bio: user.bio,
   interests: user.interests && user.interests.length > 0 
-    ? user.interests.map((interest) => ({
-        _id: interest._id.toString(),
-        interestName: interest.interestName,
-      }))
+    ? user.interests
+        .filter((interest): interest is IInterestLean => !!interest && !!interest._id)
+        .map((interest) => ({
+          _id: interest._id!.toString(),
+          interestName: interest.interestName,
+        }))
     : undefined,
   profession: user.profession,
   schoolWork: user.schoolWork,
@@ -49,9 +51,9 @@ export const mapMatchedUsers = (matched: IUserLean[] | null = []) => (Array.isAr
 export const mapLikedByUsers = (likedBy: IUserLean[] | null = []) => (Array.isArray(likedBy) ? likedBy.map(mapSimpleUser) : []);
 
 export const mapLikedToUsers = (likedTo: IUserLean[] | null = []) => (Array.isArray(likedTo) ? likedTo.map(mapSimpleUser) : []);
-
+/* eslint-disable-next-line complexity */
 const transformUser = (user: IUserLean) => ({
-  id: user._id.toString(),
+  id: user._id ? user._id.toString() : '',
   email: user.email,
   name: user.name,
   dateOfBirth: user.dateOfBirth,
@@ -60,7 +62,7 @@ const transformUser = (user: IUserLean) => ({
   bio: user.bio,
   interests: user.interests && user.interests.length > 0
     ? user.interests.map((interest) => ({
-        _id: interest._id.toString(),
+        _id: interest._id ? interest._id.toString() : '',
         interestName: interest.interestName,
       }))
     : undefined,
@@ -71,6 +73,7 @@ const transformUser = (user: IUserLean) => ({
   likedBy: mapLikedByUsers(user.likedBy),
   likedTo: mapLikedToUsers(user.likedTo),
 });
+
 
 export const getusers = async () => {
   try {
