@@ -6,6 +6,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useVerifyOtpMutation, useRequestSignupMutation, OtpType } from '@/generated';
 import { ResetPassword } from './ResetPassword';
 import { OtpForm } from './OtpForm';
+import { CreatePassword } from './CreatePassword';
+import type { UserData } from '@/app/(auth)/signup/page';
 
 export const FormSchema = z.object({
   otp: z.string().length(4, { message: 'Your one-time password must be 4 digits.' }).regex(/^\d+$/, { message: 'OTP must contain only digits.' }),
@@ -13,7 +15,9 @@ export const FormSchema = z.object({
 
 type ConfirmEmailProps = {
   onSuccess: () => void;
-  email?: string;
+  email: string;
+  updateUserData: (_: Partial<UserData>) => void;
+  otpType: OtpType;
 };
 
 function useCountdown(initialSeconds: number) {
@@ -34,18 +38,22 @@ function useCountdown(initialSeconds: number) {
 async function handleOtpSubmit(
   values: z.infer<typeof FormSchema>,
   email: string | undefined,
+  otpType: OtpType,
+  updateUserData: (_: Partial<UserData>) => void,
   verifyOtp: ReturnType<typeof useVerifyOtpMutation>[0],
   setOtpId: React.Dispatch<React.SetStateAction<string | null>>
 ) {
   if (!email) return;
+
   try {
     const response = await verifyOtp({
-      variables: { email, otp: values.otp, otpType: OtpType.Forgot },
+      variables: { email, otp: values.otp, otpType },
     });
 
     const otpIdFromResponse = response.data?.verifyOtp?.otpId;
     if (otpIdFromResponse) {
       setOtpId(otpIdFromResponse);
+      updateUserData({ otpId: otpIdFromResponse });
     } else {
       console.error('OTP verification failed or otpId missing');
     }
@@ -56,6 +64,7 @@ async function handleOtpSubmit(
 
 async function handleResendOtp(
   email: string | undefined,
+  otpType: OtpType,
   requestSignup: ReturnType<typeof useRequestSignupMutation>[0],
   setMessage: React.Dispatch<React.SetStateAction<string | null>>,
   resetTimer: () => void
@@ -64,7 +73,7 @@ async function handleResendOtp(
   try {
     setMessage(null);
     await requestSignup({
-      variables: { email, otpType: OtpType.Forgot },
+      variables: { email, otpType },
     });
     resetTimer();
     setMessage('OTP resent successfully.');
@@ -74,7 +83,7 @@ async function handleResendOtp(
   }
 }
 
-export const ConfirmEmail = ({ onSuccess, email }: ConfirmEmailProps) => {
+export const ConfirmEmail = ({ onSuccess, email, otpType, updateUserData }: ConfirmEmailProps) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: { otp: '' },
@@ -89,15 +98,15 @@ export const ConfirmEmail = ({ onSuccess, email }: ConfirmEmailProps) => {
   const [otpId, setOtpId] = useState<string | null>(null);
 
   async function onSubmit(values: z.infer<typeof FormSchema>) {
-    await handleOtpSubmit(values, email, verifyOtp, setOtpId);
+    await handleOtpSubmit(values, email, otpType, updateUserData, verifyOtp, setOtpId);
   }
 
   async function handleResend() {
-    await handleResendOtp(email, requestSignup, setMessage, resetTimer);
+    await handleResendOtp(email, otpType, requestSignup, setMessage, resetTimer);
   }
 
   if (otpId) {
-    return <ResetPassword otpId={otpId} onSuccess={onSuccess} />;
+    return otpType === OtpType.Create ? <CreatePassword otpId={otpId} onSuccess={onSuccess} updateUserData={updateUserData} /> : <ResetPassword otpId={otpId} onSuccess={onSuccess} />;
   }
 
   return (
