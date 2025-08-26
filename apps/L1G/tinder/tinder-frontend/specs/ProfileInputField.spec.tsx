@@ -1,3 +1,4 @@
+/*eslint-disable max-lines*/
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -7,8 +8,19 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form } from '@/components/ui/form';
 import { ProfileInputField } from '@/components/ProfileInputField';
 
-// Test wrapper component to provide proper form context
-const TestFormWrapper = ({ children, defaultValues = {}, schema, onSubmit = () => {} }: { children: React.ReactNode; defaultValues?: any; schema?: z.ZodSchema; onSubmit?: (data: any) => void }) => {
+const TestFormWrapper = ({
+  children,
+  defaultValues = {},
+  schema,
+  onSubmit = () => {
+    //initially empty
+  },
+}: {
+  children: React.ReactNode;
+  defaultValues?: any;
+  schema?: z.ZodSchema;
+  onSubmit?: (_data: any) => void;
+}) => {
   const form = useForm({
     resolver: schema ? zodResolver(schema) : undefined,
     defaultValues,
