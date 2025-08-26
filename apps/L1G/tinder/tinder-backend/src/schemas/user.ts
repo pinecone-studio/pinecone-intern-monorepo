@@ -22,8 +22,8 @@ export const UsertypeDefs = gql`
   }
   type Match {
     id: ID!
-    users: [User!]!
-    matchedAt: String!
+    matchedUser: User!
+    matchedAt: String
     unmatched: Boolean!
   }
   enum OtpType {
