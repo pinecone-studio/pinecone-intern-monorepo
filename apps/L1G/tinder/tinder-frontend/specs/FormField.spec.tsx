@@ -6,7 +6,6 @@ import '@testing-library/jest-dom';
 import { useGetAllInterestsQuery, useUpdateProfileMutation } from '@/generated';
 import { ProfileForm } from '@/components/FormField';
 
-// Mock GraphQL hooks
 const mockUpdateProfile = jest.fn();
 
 jest.mock('@/generated', () => ({
@@ -58,6 +57,33 @@ describe('ProfileForm', () => {
     expect(screen.getByRole('button', { name: /Next/i }));
   });
 
+  it('renders all interest options from getAllInterests', () => {
+    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userData} updateUserData={mockUpdateUserData} />);
+
+    const dropdownTrigger = screen.getByTestId('multi-select-trigger');
+    fireEvent.click(dropdownTrigger);
+
+    expect(screen.getByText('Interest 1')).toBeInTheDocument();
+    expect(screen.getByText('Interest 2')).toBeInTheDocument();
+  });
+
+  it('handles case when data is undefined and interestOptions falls back to empty array', () => {
+    (useGetAllInterestsQuery as jest.Mock).mockReturnValue({
+      data: undefined,
+      loading: false,
+      error: null,
+    });
+
+    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userData} updateUserData={mockUpdateUserData} />);
+    const dropdownTrigger = screen.getByTestId('multi-select-trigger');
+    expect(dropdownTrigger).toBeInTheDocument();
+
+    fireEvent.click(dropdownTrigger);
+
+    expect(screen.queryByText('Interest 1')).not.toBeInTheDocument();
+    expect(screen.queryByText('Interest 2')).not.toBeInTheDocument();
+  });
+
   it('shows loading state when interests are loading', () => {
     (useGetAllInterestsQuery as jest.Mock).mockReturnValue({
       data: null,
@@ -99,7 +125,6 @@ describe('ProfileForm', () => {
     fireEvent.click(screen.getByRole('button', { name: /Next/i }));
 
     await waitFor(() => {
-      // updateUserData should be called with form values
       expect(mockUpdateUserData).toHaveBeenCalledWith({
         name: 'New Name',
         bio: 'New bio',
@@ -119,7 +144,6 @@ describe('ProfileForm', () => {
         },
       });
 
-      // onSuccess called after mutation returns success
       expect(mockOnSuccess).toHaveBeenCalled();
     });
   });
@@ -193,5 +217,90 @@ describe('ProfileForm', () => {
     await waitFor(() => {
       expect(screen.getByText('User ID is missing.')).toBeInTheDocument();
     });
+  });
+
+  it('renders MultiSelect correctly with empty interests array', () => {
+    const userWithNoInterests = { ...userData, interests: [] };
+    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userWithNoInterests} updateUserData={mockUpdateUserData} />);
+
+    expect(screen.getByText(/Interest/i)).toBeInTheDocument();
+  });
+
+  it('calls onValueChange when selecting interests in MultiSelect', () => {
+    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userData} updateUserData={mockUpdateUserData} />);
+
+    const multiSelectTrigger = screen.getByTestId('multi-select-trigger');
+
+    fireEvent.click(multiSelectTrigger);
+
+    const interestOption = screen.getByText('Interest 2');
+    fireEvent.click(interestOption);
+
+    expect(mockUpdateUserData);
+  });
+
+  it('does not attempt update when userData.id is missing after setting error', async () => {
+    const userDataWithoutId = {
+      name: 'Test Name',
+      bio: 'Test bio',
+      interests: [],
+      profession: 'Test profession',
+      schoolWork: 'Test work',
+    };
+
+    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userDataWithoutId} updateUserData={mockUpdateUserData} />);
+
+    fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'New Name' } });
+    fireEvent.click(screen.getByRole('button', { name: /Next/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText('User ID is missing.')).toBeInTheDocument();
+    });
+
+    expect(mockUpdateProfile).not.toHaveBeenCalled();
+    expect(mockOnSuccess).not.toHaveBeenCalled();
+  });
+
+  it('handles missing userData.id correctly and does not call updateProfile', async () => {
+    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={{ name: 'Test' }} updateUserData={mockUpdateUserData} />);
+
+    fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'New Name' } });
+    fireEvent.click(screen.getByRole('button', { name: /Next/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText('User ID is missing.')).toBeInTheDocument();
+    });
+
+    expect(mockUpdateProfile).not.toHaveBeenCalled();
+  });
+
+  it('executes updateProfile when userData.id is present', async () => {
+    mockUpdateProfile.mockResolvedValue({
+      data: {
+        updateProfile: true,
+      },
+    });
+
+    const userDataWithId = { ...userData, id: 'valid-user-id' };
+
+    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userDataWithId} updateUserData={mockUpdateUserData} />);
+
+    fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'New Name' } });
+    fireEvent.click(screen.getByRole('button', { name: /Next/i }));
+
+    await waitFor(() => {
+      expect(mockUpdateProfile).toHaveBeenCalledWith({
+        variables: {
+          updateProfileId: 'valid-user-id',
+          name: 'New Name',
+          bio: '',
+          interests: [],
+          profession: '',
+          schoolWork: '',
+        },
+      });
+    });
+
+    expect(mockOnSuccess).toHaveBeenCalled();
   });
 });

@@ -7,10 +7,11 @@ import axios from 'axios';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
+let mockLoading = false;
 
 const mockUploadImagesMutation = jest.fn();
 jest.mock('@/generated', () => ({
-  useUploadImagesMutation: () => [mockUploadImagesMutation, { loading: false }],
+  useUploadImagesMutation: () => [mockUploadImagesMutation, { loading: mockLoading }],
 }));
 
 jest.mock('next/image', () => {
@@ -175,5 +176,87 @@ describe('ProfileImages Component', () => {
     fireEvent.change(input, { target: { files: [file] } });
 
     await waitFor(() => expect(screen.getByTestId('loader-0')).toBeInTheDocument());
+  });
+  it('logs upload error when image upload fails', async () => {
+    renderComponent();
+    const file = new File(['dummy'], 'test.png', { type: 'image/png' });
+
+    // Simulate axios post failure
+    mockedAxios.post.mockRejectedValueOnce(new Error('Upload failed'));
+
+    const input = screen.getByTestId('upload-input') as HTMLInputElement;
+    fireEvent.change(input, { target: { files: [file] } });
+
+    // Wait for upload attempt and error logging
+    await waitFor(() => {
+      expect(console.error).toHaveBeenCalledWith('Upload error:', expect.any(Error));
+    });
+  });
+  it('displays loading spinner during mutation loading', () => {
+    mockLoading = true;
+
+    renderComponent();
+
+    expect(screen.getByTestId('next-loader')).toBeInTheDocument();
+
+    mockLoading = false;
+  });
+  it('returns null if secure_url is missing in Cloudinary response', async () => {
+    renderComponent();
+
+    const file = new File(['dummy'], 'test.png', { type: 'image/png' });
+
+    // Cloudinary responds successfully, but without secure_url
+    mockedAxios.post.mockResolvedValueOnce({
+      data: {}, // no secure_url
+    });
+
+    const input = screen.getByTestId('upload-input') as HTMLInputElement;
+    fireEvent.change(input, { target: { files: [file] } });
+
+    // Wait for the upload attempt and check that no image was added
+    await waitFor(() => {
+      expect(screen.queryByTestId('uploaded-image-0')).not.toBeInTheDocument();
+    });
+  });
+  it('does nothing when no file is selected', async () => {
+    renderComponent();
+
+    const input = screen.getByTestId('upload-input') as HTMLInputElement;
+
+    // Fire event with empty file list
+    fireEvent.change(input, { target: { files: [] } });
+
+    // Nothing should happen — no upload, no console, no UI change
+    await waitFor(() => {
+      expect(mockedAxios.post).not.toHaveBeenCalled();
+      expect(screen.queryByTestId('uploaded-image-0')).not.toBeInTheDocument();
+    });
+  });
+  it('does nothing when all image slots are full', async () => {
+    renderComponent();
+
+    const input = screen.getByTestId('upload-input') as HTMLInputElement;
+    const file = new File(['dummy'], 'test.png', { type: 'image/png' });
+
+    // Fill all 6 slots
+    for (let i = 0; i < 6; i++) {
+      mockedAxios.post.mockResolvedValueOnce({
+        data: { secure_url: `http://test.com/image${i}.png` },
+      });
+
+      fireEvent.change(input, { target: { files: [file] } });
+
+      // Wait for each image to upload
+      // eslint-disable-next-line no-await-in-loop
+      await waitFor(() => expect(screen.getByTestId(`uploaded-image-${i}`)).toBeInTheDocument());
+    }
+
+    // Upload 7th image (should not be accepted)
+    fireEvent.change(input, { target: { files: [file] } });
+
+    await waitFor(() => {
+      expect(mockedAxios.post).toHaveBeenCalledTimes(6); // still only 6 calls
+    });
   });
 });

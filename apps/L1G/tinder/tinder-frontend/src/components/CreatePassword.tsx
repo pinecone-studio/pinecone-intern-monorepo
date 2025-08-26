@@ -108,8 +108,6 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
               />
             </div>
 
-            {form.formState.errors.root?.message && <p className="text-red-500 mt-2">{form.formState.errors.root.message}</p>}
-
             <Button type="submit" className="bg-[#E11D48] bg-opacity-90 w-[350px] rounded-full">
               {loading ? 'Please wait...' : 'Continue'}
             </Button>
