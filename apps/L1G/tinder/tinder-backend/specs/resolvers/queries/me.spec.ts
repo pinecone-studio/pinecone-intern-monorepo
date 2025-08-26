@@ -92,6 +92,7 @@ describe('getMe resolver', () => {
       likedBy: [],
       likedTo: [],
       matchIds: [],
+      interests: [],
     });
   });
 
@@ -657,5 +658,52 @@ describe('getMe resolver', () => {
         { userId: 'someUserId' } as any
       )
     ).rejects.toThrow('Email is missing');
+  });
+  it('maps user interests correctly', async () => {
+    const userWithInterests = {
+      ...mockUser,
+      interests: [
+        { _id: '1', interestName: 'Hiking' },
+        { _id: '2', interestName: 'Cooking' },
+      ],
+    };
+
+    jest.spyOn(Usermodel, 'findById').mockReturnValue(buildMockQuery(userWithInterests) as any);
+    const result = await getMe(
+      {
+        //intenionally empty
+      },
+      {
+        //intenionally empty
+      },
+      { userId: 'someUserId' } as any
+    );
+
+    expect(result.interests).toEqual([
+      { _id: '1', interestName: 'Hiking' },
+      { _id: '2', interestName: 'Cooking' },
+    ]);
+  });
+  it('filters out invalid interests with null _id', async () => {
+    const userWithInvalidInterests = {
+      ...mockUser,
+      interests: [
+        { _id: '1', interestName: 'Hiking' },
+        { _id: null, interestName: 'Cooking' },
+      ],
+    };
+
+    jest.spyOn(Usermodel, 'findById').mockReturnValue(buildMockQuery(userWithInvalidInterests) as any);
+    const result = await getMe(
+      {
+        //intenionally empty
+      },
+      {
+        //intenionally empty
+      },
+      { userId: 'someUserId' } as any
+    );
+
+    expect(result.interests).toEqual([{ _id: '1', interestName: 'Hiking' }]);
   });
 });
