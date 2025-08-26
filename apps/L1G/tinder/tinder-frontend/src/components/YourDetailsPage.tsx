@@ -1,6 +1,6 @@
 import { UserData } from '@/app/(auth)/signup/page';
 import TitleContainer from './TitleContainer';
-import { ProfileForm } from './FormField';
+import { ProfileForm } from './FormFIeld';
 
 type YourDetailsPageProps = {
   onSuccess: () => void;
