@@ -1,33 +1,59 @@
+import { Usermodel } from 'src/models/user';
 import { getUser } from 'src/resolvers/queries';
-import { GraphQLResolveInfo } from 'graphql';
 
-jest.mock('src/models/user.ts', () => ({
-  Usermodel: {
-    findById: jest
-      .fn()
-      .mockResolvedValueOnce({
-        id: '1',
-        name: 'test user',
-        email: 'test@example.com',
-      })
-      .mockReturnValueOnce(null),
-  },
-}));
+jest.mock('src/models/user');
 
-describe('get user by id', () => {
-  it('shoul return user by id', async () => {
-    const result = await getUser!({}, { _id: '1' }, {}, {} as GraphQLResolveInfo);
+describe('getUser resolver', () => {
+  const mockPopulate = jest.fn();
 
-    expect(result.id).toBe('1');
-    expect(result.name).toBe('test user');
-    expect(result.email).toBe('test@example.com');
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('shoul throw error when user not found', async () => {
-    try {
-      await getUser!({}, { _id: '2' }, {}, {} as GraphQLResolveInfo);
-    } catch (error) {
-      expect(error).toEqual(new Error('User not found'));
-    }
+  it('should return user when found', async () => {
+    const fakeUser = { 
+      _id: '123', 
+      name: 'Alice', 
+      interests: [], 
+      likedBy: [], 
+      likedTo: [], 
+      matchIds: [] 
+    };
+
+    // Chain populate mocks
+    mockPopulate.mockReturnThis();
+    (Usermodel.findById as jest.Mock).mockReturnValue({
+      populate: mockPopulate,
+    });
+
+    // Last populate call returns the user
+    mockPopulate.mockReturnValueOnce({ populate: mockPopulate })
+      .mockReturnValueOnce({ populate: mockPopulate })
+      .mockReturnValueOnce({ populate: mockPopulate })
+      .mockReturnValueOnce(fakeUser);
+
+    const result = await getUser({}, { _id: '123' });
+
+    expect(Usermodel.findById).toHaveBeenCalledWith('123');
+    expect(mockPopulate).toHaveBeenCalledWith('interests');
+    expect(mockPopulate).toHaveBeenCalledWith('likedBy');
+    expect(mockPopulate).toHaveBeenCalledWith('likedTo');
+    expect(mockPopulate).toHaveBeenCalledWith('matchIds');
+    expect(result).toEqual(fakeUser);
+  });
+
+  it('should throw error when user not found', async () => {
+    mockPopulate.mockReturnThis();
+    (Usermodel.findById as jest.Mock).mockReturnValue({
+      populate: mockPopulate,
+    });
+
+    mockPopulate.mockReturnValueOnce({ populate: mockPopulate })
+      .mockReturnValueOnce({ populate: mockPopulate })
+      .mockReturnValueOnce({ populate: mockPopulate })
+      .mockReturnValueOnce(null);
+
+    await expect(getUser({}, { _id: 'notfound' }))
+      .rejects.toThrow('User not found');
   });
 });
