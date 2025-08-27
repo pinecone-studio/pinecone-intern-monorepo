@@ -5,6 +5,7 @@ import {
   MutationDeleteUserArgs,
   ResolversParentTypes 
 } from "../../../generated";
+import mongoose from 'mongoose';
 
 const buildUpdateFields = (updates: {
   fullName?: string;
@@ -53,6 +54,11 @@ export const userMutations = {
     { _id, fullName, email, role, phone }: MutationUpdateUserArgs
   ) => {
     try {
+      // Check if _id is a valid ObjectId
+      if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
+        throw new Error('Invalid ObjectId format');
+      }
+      
       const updateFields = buildUpdateFields({ fullName, email, role, phone });
       
       const updatedUser = await User.findByIdAndUpdate(_id, updateFields, { new: true });
@@ -71,6 +77,11 @@ export const userMutations = {
     { _id }: MutationDeleteUserArgs
   ) => {
     try {
+      // Check if _id is a valid ObjectId
+      if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
+        throw new Error('Invalid ObjectId format');
+      }
+      
       const deletedUser = await User.findByIdAndDelete(_id);
       if (!deletedUser) {
         throw new Error('User not found');

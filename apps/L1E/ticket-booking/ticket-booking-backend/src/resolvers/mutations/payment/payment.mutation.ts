@@ -5,6 +5,7 @@ import {
   MutationDeletePaymentArgs,
   ResolversParentTypes 
 } from "../../../generated";
+import mongoose from 'mongoose';
 
 export const paymentMutations = {
   createPayment: async (
@@ -31,6 +32,11 @@ export const paymentMutations = {
     { _id, status }: MutationUpdatePaymentArgs
   ) => {
     try {
+      // Check if _id is a valid ObjectId
+      if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
+        throw new Error('Invalid ObjectId format');
+      }
+      
       const updatedPayment = await Payment.findByIdAndUpdate(_id, { status }, { new: true });
       if (!updatedPayment) {
         throw new Error('Payment not found');
@@ -47,6 +53,11 @@ export const paymentMutations = {
     { _id }: MutationDeletePaymentArgs
   ) => {
     try {
+      // Check if _id is a valid ObjectId
+      if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
+        throw new Error('Invalid ObjectId format');
+      }
+      
       const deletedPayment = await Payment.findByIdAndDelete(_id);
       if (!deletedPayment) {
         throw new Error('Payment not found');

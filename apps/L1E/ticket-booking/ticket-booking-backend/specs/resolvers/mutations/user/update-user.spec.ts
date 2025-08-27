@@ -1,10 +1,13 @@
 import { userMutations } from '../../../../src/resolvers/mutations/user/user.mutation';
 import { User } from '../../../../src/models/user.model';
 import { ResolversParentTypes } from '../../../../src/generated';
+import type { UserType } from '../../../../src/models/user.model';
 
 describe('Update User Mutation', () => {
+  let testUser: UserType;
 
-  test('Should update user successfully', async () => {
+  beforeEach(async () => {
+    // Create a test user for each test
     const userData = {
       email: `test${Date.now()}${Math.random()}@example.com`,
       fullName: 'Test User',
@@ -12,77 +15,147 @@ describe('Update User Mutation', () => {
       role: 'USER',
       phone: '1234567890'
     };
+    testUser = await userMutations.createUser({} as ResolversParentTypes['Mutation'], userData);
+  });
 
-    const createdUser = await userMutations.createUser({} as ResolversParentTypes['Mutation'], userData);
-    
+  afterEach(async () => {
+    // Clean up test user
+    if (testUser?._id) {
+      await User.deleteOne({ _id: testUser._id });
+    }
+  });
+
+  test('Should update user fullName successfully', async () => {
     const updateData = {
-      _id: createdUser._id.toString(),
-      fullName: 'Updated User',
-      email: `updated${Date.now()}${Math.random()}@example.com`
+      _id: testUser._id.toString(),
+      fullName: 'Updated Test User'
     };
 
     const updatedUser = await userMutations.updateUser({} as ResolversParentTypes['Mutation'], updateData);
     
     expect(updatedUser).toBeDefined();
-    expect(updatedUser.fullName).toBe(updateData.fullName);
-    expect(updatedUser.email).toBe(updateData.email);
-    expect(updatedUser.role).toBe(userData.role);
-
-    await User.deleteOne({ _id: createdUser._id });
+    expect(updatedUser.fullName).toBe('Updated Test User');
+    expect(updatedUser.email).toBe(testUser.email);
+    expect(updatedUser.role).toBe(testUser.role);
+    expect(updatedUser.phone).toBe(testUser.phone);
+    expect(updatedUser._id.toString()).toBe(testUser._id.toString());
   });
 
-  test('Should update only provided fields', async () => {
-    const userData = {
-      email: `test${Date.now()}${Math.random()}@example.com`,
-      fullName: 'Test User',
-      password: 'password123',
-      role: 'USER',
-      phone: '1234567890'
-    };
-
-    const createdUser = await userMutations.createUser({} as ResolversParentTypes['Mutation'], userData);
-    
+  test('Should update user email successfully', async () => {
+    const newEmail = `updated${Date.now()}${Math.random()}@example.com`;
     const updateData = {
-      _id: createdUser._id.toString(),
-      fullName: 'Updated User'
+      _id: testUser._id.toString(),
+      email: newEmail
     };
 
     const updatedUser = await userMutations.updateUser({} as ResolversParentTypes['Mutation'], updateData);
     
-    expect(updatedUser.fullName).toBe(updateData.fullName);
-    expect(updatedUser.email).toBe(userData.email);
-    expect(updatedUser.role).toBe(userData.role);
+    expect(updatedUser.email).toBe(newEmail);
+    expect(updatedUser.fullName).toBe(testUser.fullName);
+  });
 
-    await User.deleteOne({ _id: createdUser._id });
+  test('Should update user role successfully', async () => {
+    const updateData = {
+      _id: testUser._id.toString(),
+      role: 'ADMIN'
+    };
+
+    const updatedUser = await userMutations.updateUser({} as ResolversParentTypes['Mutation'], updateData);
+    
+    expect(updatedUser.role).toBe('ADMIN');
+  });
+
+  test('Should update user phone successfully', async () => {
+    const updateData = {
+      _id: testUser._id.toString(),
+      phone: '9876543210'
+    };
+
+    const updatedUser = await userMutations.updateUser({} as ResolversParentTypes['Mutation'], updateData);
+    
+    expect(updatedUser.phone).toBe('9876543210');
+  });
+
+  test('Should update multiple fields at once', async () => {
+    const updateData = {
+      _id: testUser._id.toString(),
+      fullName: 'Multi Updated User',
+      email: `multi${Date.now()}${Math.random()}@example.com`,
+      role: 'ADMIN',
+      phone: '5555555555'
+    };
+
+    const updatedUser = await userMutations.updateUser({} as ResolversParentTypes['Mutation'], updateData);
+    
+    expect(updatedUser.fullName).toBe('Multi Updated User');
+    expect(updatedUser.email).toBe(updateData.email);
+    expect(updatedUser.role).toBe('ADMIN');
+    expect(updatedUser.phone).toBe('5555555555');
   });
 
   test('Should throw error for non-existent user', async () => {
-    const nonExistentId = '507f1f77bcf86cd799439011';
     const updateData = {
-      _id: nonExistentId,
-      fullName: 'Updated User'
+      _id: '507f1f77bcf86cd799439011',
+      fullName: 'Updated Name'
     };
 
-    await expect(userMutations.updateUser({} as ResolversParentTypes['Mutation'], updateData)).rejects.toThrow('User not found');
+    await expect(userMutations.updateUser({} as ResolversParentTypes['Mutation'], updateData))
+      .rejects.toThrow('User not found');
   });
 
-  test('Should handle invalid role update', async () => {
-    const userData = {
-      email: `test${Date.now()}${Math.random()}@example.com`,
-      fullName: 'Test User',
-      password: 'password123',
-      role: 'USER'
+  test('Should handle partial updates with undefined values', async () => {
+    const updateData = {
+      _id: testUser._id.toString(),
+      fullName: 'Partial Update',
+      email: undefined,
+      role: undefined,
+      phone: undefined
     };
 
-    const createdUser = await userMutations.createUser({} as ResolversParentTypes['Mutation'], userData);
+    const updatedUser = await userMutations.updateUser({} as ResolversParentTypes['Mutation'], updateData);
+    
+    expect(updatedUser.fullName).toBe('Partial Update');
+    expect(updatedUser.email).toBe(testUser.email);
+    expect(updatedUser.role).toBe(testUser.role);
+    expect(updatedUser.phone).toBe(testUser.phone);
+  });
+
+  test('Should handle empty update object', async () => {
+    const updateData = {
+      _id: testUser._id.toString()
+    };
+
+    const updatedUser = await userMutations.updateUser({} as ResolversParentTypes['Mutation'], updateData);
+    
+    expect(updatedUser).toBeDefined();
+    expect(updatedUser._id.toString()).toBe(testUser._id.toString());
+  });
+
+  test('Should handle database error during update', async () => {
+    const mockFindByIdAndUpdate = jest.spyOn(User, 'findByIdAndUpdate').mockRejectedValueOnce(new Error('Database error'));
     
     const updateData = {
-      _id: createdUser._id.toString(),
-      role: 'INVALID_ROLE'
+      _id: testUser._id.toString(),
+      fullName: 'Updated User Name'
     };
 
-    await expect(userMutations.updateUser({} as ResolversParentTypes['Mutation'], updateData)).rejects.toThrow();
+    await expect(userMutations.updateUser({} as ResolversParentTypes['Mutation'], updateData))
+      .rejects.toThrow('Database error');
+    
+    mockFindByIdAndUpdate.mockRestore();
+  });
 
-    await User.deleteOne({ _id: createdUser._id });
+  test('Should handle different types of database errors', async () => {
+    const mockFindByIdAndUpdate = jest.spyOn(User, 'findByIdAndUpdate').mockRejectedValueOnce(new Error('Connection timeout'));
+    
+    const updateData = {
+      _id: testUser._id.toString(),
+      fullName: 'Updated User Name'
+    };
+
+    await expect(userMutations.updateUser({} as ResolversParentTypes['Mutation'], updateData))
+      .rejects.toThrow('Connection timeout');
+    
+    mockFindByIdAndUpdate.mockRestore();
   });
 });

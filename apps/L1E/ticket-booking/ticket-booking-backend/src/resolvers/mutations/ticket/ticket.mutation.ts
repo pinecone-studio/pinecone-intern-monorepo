@@ -5,6 +5,7 @@ import {
   MutationDeleteTicketArgs,
   ResolversParentTypes 
 } from "../../../generated";
+import mongoose from 'mongoose';
 
 export const ticketMutations = {
   createTicket: async (
@@ -32,6 +33,11 @@ export const ticketMutations = {
     { _id, status }: MutationUpdateTicketArgs
   ) => {
     try {
+      // Check if _id is a valid ObjectId
+      if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
+        throw new Error('Invalid ObjectId format');
+      }
+      
       const updatedTicket = await Ticket.findByIdAndUpdate(_id, { status }, { new: true });
       if (!updatedTicket) {
         throw new Error('Ticket not found');
@@ -48,6 +54,11 @@ export const ticketMutations = {
     { _id }: MutationDeleteTicketArgs
   ) => {
     try {
+      // Check if _id is a valid ObjectId
+      if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
+        throw new Error('Invalid ObjectId format');
+      }
+      
       const deletedTicket = await Ticket.findByIdAndDelete(_id);
       if (!deletedTicket) {
         throw new Error('Ticket not found');
