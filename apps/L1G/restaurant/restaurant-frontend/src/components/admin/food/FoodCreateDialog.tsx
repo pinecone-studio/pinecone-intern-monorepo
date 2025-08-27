@@ -19,7 +19,7 @@ import { formSchemaFood, initialValuesFood } from '@/helpers/form-schemas';
 export const FoodCreateDialog = ({ refetch }: { refetch: () => Promise<ApolloQueryResult<GetFoodsQuery>> }) => {
   const [foodImage, setFoodImage] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [createFood] = useCreateFoodMutation();
+  const [createFood, { loading }] = useCreateFoodMutation();
   const form = useForm<z.infer<typeof formSchemaFood>>({
     resolver: zodResolver(formSchemaFood),
     defaultValues: initialValuesFood,
@@ -132,8 +132,8 @@ export const FoodCreateDialog = ({ refetch }: { refetch: () => Promise<ApolloQue
             />
             <SelectCategoryInput control={form.control} />
             <TextInput data-cy="create-food-price-input" data-testid="create-food-price-input" control={form.control} fieldName="price" placeholder="Үнэ" />
-            <Button data-cy="create-food-submit-button" data-testid="create-food-submit-button" className="flex w-full h-[36px] rounded-md py-2 px-4 bg-[#1D1F24] " type="submit">
-              Үүсгэх
+            <Button data-cy="create-food-submit-button" data-testid="create-food-submit-button" className="flex w-full h-[36px] rounded-md py-2 px-4 bg-[#1D1F24] " type="submit" disabled={loading}>
+              {loading ? 'Үүсгэж байна...' : 'Үүсгэх'}
             </Button>
           </form>
         </Form>
