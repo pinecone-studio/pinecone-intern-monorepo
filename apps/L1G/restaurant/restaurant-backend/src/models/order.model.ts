@@ -2,14 +2,14 @@ import { model, models, Schema, Types } from 'mongoose';
 
 export type FoodOrderItem = {
   food: Types.ObjectId;
-  quantity: Number;
+  quantity: number;
 };
 
 export type FoodOrder = {
   _id: Types.ObjectId;
   status: 'READY' | 'PREPARING' | 'DONE' | 'PENDING';
-  totalPrice: Number;
-  orderNumber: Number;
+  totalPrice: number;
+  orderNumber: number;
   user: Types.ObjectId;
   table: Types.ObjectId;
   foodOrder: FoodOrderItem[];
