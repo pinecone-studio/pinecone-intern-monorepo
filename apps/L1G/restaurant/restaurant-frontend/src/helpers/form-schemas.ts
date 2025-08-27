@@ -53,6 +53,7 @@ const initialValuesFood = {
   image: undefined,
 };
 
+// test
 const formSchemaDiscount = z.object({
   discountName: z.string().min(2, {
     message: 'Хямдралын нэр оруулна уу!',
