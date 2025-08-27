@@ -12,7 +12,7 @@ interface ChatHeaderProps {
 
 const ChatHeader = ({ user }: ChatHeaderProps) => {
   return (
-    <div className="flex items-center justify-between p-4 border-b border-r border-gray-200">
+    <div data-testid="chat-header" className="flex items-center justify-between p-4 border-b border-r border-gray-200">
       <div className="flex items-center gap-3">
         <Avatar user={user} size={48} />
         <div>

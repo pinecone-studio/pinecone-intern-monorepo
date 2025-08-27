@@ -31,11 +31,11 @@ describe('ViewProfile', () => {
     id: 1,
     name: 'John Doe',
     age: 25,
-    job: 'Engineer',
-    avatar: ['/img1.jpg', '/img2.jpg', '/img3.jpg'],
+    profession: 'Engineer',
+    images: ['/img1.jpg', '/img2.jpg', '/img3.jpg'],
   };
-  const singleUser = { ...mockUser, avatar: ['/single.jpg'] };
-  const emptyUser = { ...mockUser, avatar: [] };
+  const singleUser = { ...mockUser, images: ['/single.jpg'] };
+  const emptyUser = { ...mockUser, images: [] };
 
   it('renders button and user info', () => {
     render(<ViewProfile user={mockUser} />);
@@ -91,13 +91,14 @@ describe('ViewProfile', () => {
     expect(img).toHaveAttribute('src', '/img3.jpg');
   });
 
-  it('returns null for empty avatar', () => {
+  it('returns null for empty images array', () => {
     const { container } = render(<ViewProfile user={emptyUser} />);
     expect(container.firstChild).toBeNull();
   });
 
-  it('handles missing user name', () => {
+  it('handles missing user name with fallback alt text', () => {
     render(<ViewProfile user={{ ...mockUser, name: '' }} />);
-    expect(screen.getByRole('img')).toHaveAttribute('alt', 'User - profile image 1');
+    const img = screen.getByRole('img');
+    expect(img).toHaveAttribute('alt', 'User - profile image 1');
   });
 });
