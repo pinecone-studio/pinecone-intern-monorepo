@@ -86,10 +86,12 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
   }
 
   const interestOptions =
-    data?.getAllInterests.map((i) => ({
-      value: i._id,
-      label: i.interestName,
-    })) || [];
+    data?.getAllInterests
+      .filter((i) => !!i.interestName)
+      .map((i) => ({
+        value: i._id,
+        label: i.interestName as string,
+      })) || [];
 
   return (
     <Form {...form}>

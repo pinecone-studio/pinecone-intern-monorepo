@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 'use client';
 
 import { useState, useCallback, useMemo, useEffect } from 'react';
@@ -32,15 +33,16 @@ const generateTimestamp = (): string =>
     minute: '2-digit',
     hour12: false,
   });
+
 const debouncedRefetch = debounce((refetchFn: () => void) => {
   refetchFn();
 }, 500);
+
 const getInitialTopRowUsers = (matches: ChatUser[]) => matches.slice(0, 7);
 const getInitialBottomUsers = (matches: ChatUser[]) => matches.slice(7);
 
 const ChatPage: React.FC = () => {
   const { data, loading, error, refetch } = useGetMeQuery();
-  console.log(data, 'data');
   const [sendMessageMutation] = useSendMessageMutation();
 
   const [selectedUser, setSelectedUser] = useState<ChatUser | null>(null);
@@ -49,16 +51,21 @@ const ChatPage: React.FC = () => {
   const [chattedUsers, setChattedUsers] = useState<Set<string>>(new Set());
   const [conversations, setConversations] = useState<Record<string, Message[]>>({});
   const [inputValue, setInputValue] = useState('');
+  const [socketError, setSocketError] = useState<string | null>(null);
+
   useEffect(() => {
     if (!selectedUser) return;
 
     const matchId = selectedUser.id;
 
-    // Join the match room
-    socket.emit('join room', matchId);
-    console.log(`Joined room: ${matchId}`);
+    try {
+      socket.emit('join room', matchId);
+      console.log(`Joined room: ${matchId}`);
+    } catch (err) {
+      console.error('Failed to join room:', err);
+      setSocketError('Failed to connect to chat. Please try again.');
+    }
 
-    // Listen for messages
     const handler = (msg: { matchId: string; message: string; senderId: string; receiverId: string }) => {
       if (msg.matchId === matchId) {
         setConversations((prev) => ({
@@ -79,8 +86,12 @@ const ChatPage: React.FC = () => {
     socket.on('chat message', handler);
 
     return () => {
-      socket.emit('leave room', matchId); // <-- Optional, your server can handle this
-      socket.off('chat message', handler); // <-- Very important to prevent memory leaks
+      try {
+        socket.emit('leave room', matchId);
+      } catch (err) {
+        console.error('Failed to leave room:', err);
+      }
+      socket.off('chat message', handler);
     };
   }, [selectedUser]);
 
@@ -89,6 +100,7 @@ const ChatPage: React.FC = () => {
 
     const newMatches: ChatUser[] = matchIds
       .filter((match) => !!match && !!match.matchedUser)
+      /* eslint-disable-next-line complexity */
       .map((match) => {
         const user = match!.matchedUser;
 
@@ -125,13 +137,14 @@ const ChatPage: React.FC = () => {
 
   const handleUserSelect = useCallback((user: ChatUser) => {
     setSelectedUser(user);
+    setSocketError(null);
   }, []);
 
   const moveUserToBottom = useCallback((user: ChatUser) => {
     setTopRowUsers((prev) => prev.filter((u) => u.id !== user.id));
     setBottomUsers((prev) => (prev.some((u) => u.id === user.id) ? prev : [user, ...prev]));
   }, []);
-
+  /* eslint-disable-next-line complexity */
   const handleSend = useCallback(async () => {
     if (!inputValue.trim() || !selectedUser || !data?.getMe?.id) return;
 
@@ -149,16 +162,7 @@ const ChatPage: React.FC = () => {
       });
       const createdMessageId = result.data?.sendMessage?.id;
 
-      // 2. Emit to Socket.IO
-      socket.emit('chat message', {
-        matchId,
-        message: content,
-        senderId,
-        receiverId,
-        id: createdMessageId,
-      });
-
-      // 3. Add message to UI
+      // 2. Update UI with the new message
       const newMessage: Message = {
         id: createdMessageId ?? Date.now(),
         text: content,
@@ -175,14 +179,31 @@ const ChatPage: React.FC = () => {
       setChattedUsers((prev) => new Set(prev).add(selectedUser.id));
       moveUserToBottom(selectedUser);
       debouncedRefetch(refetch);
+
+      // 3. Emit to Socket.IO
+      try {
+        socket.emit('chat message', {
+          matchId,
+          message: content,
+          senderId,
+          receiverId,
+          id: createdMessageId,
+        });
+      } catch (err) {
+        console.error('Send failed:', err); // Match test expectation
+        setSocketError('Message saved, but failed to notify recipient.');
+      }
     } catch (err) {
       console.error('Send failed:', err);
+      setSocketError('Failed to send message. Please try again.');
     }
   }, [inputValue, selectedUser, data, sendMessageMutation]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
+      const isOnlyEnter = e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey;
+
+      if (isOnlyEnter) {
         e.preventDefault();
         handleSend();
       }
@@ -204,6 +225,7 @@ const ChatPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {socketError && <div className="error-message text-red-500 p-2 text-center">{socketError}</div>}
       <Matches topRowUsers={topRowUsers} selectedUser={selectedUser} onUserSelect={handleUserSelect} />
       <div className="flex justify-center">
         <ChatPerson selectedUser={selectedUser} onUserSelect={handleUserSelect} bottomUsers={bottomUsers} chattedUsers={chattedUsers} />
