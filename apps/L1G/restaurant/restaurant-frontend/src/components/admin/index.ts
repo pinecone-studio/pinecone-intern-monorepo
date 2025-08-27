@@ -6,3 +6,6 @@ export * from './food/AllFoodsCard';
 export * from './food/FoodUpdateDialog';
 export * from './food/FoodUpdateForm';
 export * from './food/FormRadioInput';
+export * from './menu/CategoryCreateDialog';
+export * from './menu/DiscountCreateDialog';
+export * from './menu/FormFieldInput';
