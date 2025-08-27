@@ -6,7 +6,7 @@ export const foodTypeDefs = gql`
     foodName: String!
     price: String!
     image: String!
-    status: String!
+    foodStatus: String!
     category: Category!
     discount: Discount
     createdAt: String
@@ -17,7 +17,7 @@ export const foodTypeDefs = gql`
     foodName: String!
     price: String!
     image: String!
-    status: String!
+    foodStatus: String!
     categoryId: ID!
   }
 
@@ -25,7 +25,7 @@ export const foodTypeDefs = gql`
     foodName: String
     price: String
     image: String
-    status: String
+    foodStatus: String!
     categoryId: ID
   }
 

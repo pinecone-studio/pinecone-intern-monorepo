@@ -34,4 +34,4 @@ export const DiscountSchema = new Schema<DiscountType>(
   }
 );
 
-export const DiscountModel = models.Discount || model<DiscountType>('discount', DiscountSchema);
+export const DiscountModel = models.Discount || model<DiscountType>('Discount', DiscountSchema);

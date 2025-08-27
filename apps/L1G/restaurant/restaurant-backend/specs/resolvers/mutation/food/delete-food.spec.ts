@@ -6,28 +6,11 @@ jest.mock('src/models/food.model', () => ({
   FoodModel: {
     findByIdAndDelete: jest.fn().mockReturnValue({
       populate: jest.fn().mockResolvedValue({
-        _id: '2',
+        foodId: '2',
         foodName: 'Test',
         price: '10',
         image: 'image.jpg',
-        status: 'Идэвхитэй',
-        category: {
-          _id: '1',
-          categoryName: 'Test1',
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        discount: {
-          _id: '1',
-          discountName: 'Test1',
-          discountRate: 0.15,
-          startDate: Date.now(),
-          endDate: Date.now(),
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        foodStatus: 'Идэвхитэй',
       }),
     }),
   },

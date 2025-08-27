@@ -7,5 +7,4 @@ import { foodTypeDefs } from './food.schema';
 import { discountTypeDefs } from './discount.schema';
 import { orderTypeDefs } from './order.schema';
 
-export const typeDefs = mergeTypeDefs([userTypeDefs, authTypeDefs, tableTypeDefs, categoryTypeDefs, foodTypeDefs, discountTypeDefs]);
-export const typeDefs = mergeTypeDefs([userTypeDefs, authTypeDefs, tableTypeDefs, categoryTypeDefs, foodTypeDefs, orderTypeDefs]);
+export const typeDefs = mergeTypeDefs([userTypeDefs, authTypeDefs, tableTypeDefs, categoryTypeDefs, foodTypeDefs, discountTypeDefs, orderTypeDefs]);

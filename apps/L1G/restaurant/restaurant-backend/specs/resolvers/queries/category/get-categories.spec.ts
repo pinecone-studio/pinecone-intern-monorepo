@@ -15,10 +15,8 @@ describe('getCategories', () => {
   it('should return categories', async () => {
     (CategoryModel.find as jest.Mock).mockResolvedValue([
       {
-        _id: '1',
+        categoryId: '1',
         categoryName: 'Test',
-        createdAt: new Date(),
-        updatedAt: new Date(),
       },
     ]);
     const result = await getCategories?.({}, {}, {}, {} as GraphQLResolveInfo);
