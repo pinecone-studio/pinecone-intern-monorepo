@@ -1,5 +1,5 @@
 /* eslint max-lines: "off" */
-import { DeleteFoodDocument, GetFoodsDocument, UpdateFoodDocument } from '@/generated';
+import { CreateCategoryDocument, CreateDiscountDocument, DeleteFoodDocument, GetFoodsDocument, UpdateFoodDocument } from '@/generated';
 import { MockedResponse } from '@apollo/client/testing';
 
 const getFoodsMock: MockedResponse = {
@@ -204,6 +204,77 @@ const updateFoodErrorMock: MockedResponse = {
   error: new Error('Network error'),
 };
 
+const createCategoryMock: MockedResponse = {
+  request: {
+    query: CreateCategoryDocument,
+    variables: {
+      input: {
+        categoryName: 'Dessert',
+      },
+    },
+  },
+  result: {
+    data: {
+      createCategory: {
+        categoryId: '4',
+        categoryName: 'Dessert',
+      },
+    },
+  },
+};
+
+const createCategoryErrorMock: MockedResponse = {
+  request: {
+    query: CreateCategoryDocument,
+    variables: {
+      input: {
+        categoryName: 'Dessert',
+      },
+    },
+  },
+  error: new Error('Network error'),
+};
+
+const createDiscountMock: MockedResponse = {
+  request: {
+    query: CreateDiscountDocument,
+    variables: {
+      input: {
+        discountName: 'Test',
+        discountRate: 20,
+        startDate: new Date('9/27/2025').toLocaleString(),
+        endDate: new Date('9/27/2025').toLocaleString(),
+      },
+    },
+  },
+  result: {
+    data: {
+      createDiscount: {
+        discountId: '2',
+        discountName: 'Test',
+        discountRate: 20,
+        startDate: new Date('').toLocaleString(),
+        endDate: new Date('').toLocaleString(),
+      },
+    },
+  },
+};
+
+const createDiscountErrorMock: MockedResponse = {
+  request: {
+    query: CreateCategoryDocument,
+    variables: {
+      input: {
+        discountName: 'Test',
+        discountRate: 20,
+        startDate: new Date('9/27/2025'),
+        endDate: new Date('9/27/2025'),
+      },
+    },
+  },
+  error: new Error('Network error'),
+};
+
 export {
   getFoodsMock,
   deleteFoodByIdMock,
@@ -215,4 +286,8 @@ export {
   updateFoodMock,
   updateFoodErrorMock,
   getFoodsEmptyArrayMock,
+  createCategoryMock,
+  createCategoryErrorMock,
+  createDiscountMock,
+  createDiscountErrorMock,
 };
