@@ -1,11 +1,11 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import MenuCard from './MenuCard';
 import { useGetCategoriesQuery, useGetFoodsQuery } from '@/generated';
 import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import OrderList from './OrderList';
-import OrderType from './OrderType';
 
 export type AddPayload = {
   id: string;
@@ -20,12 +20,6 @@ export type CartItem = {
   price: string;
   selectCount: number;
 };
-export function removeItemReducer(prev: CartItem[], id: string): CartItem[] {
-  const norm = (v: string) => String(v).trim();
-  const target = norm(id);
-  const next = prev.filter((x) => norm(x.id) !== target);
-  return next;
-}
 export function addToCartReducer(prev: CartItem[], p: AddPayload): CartItem[] {
   const idx = prev.findIndex((x) => x.id === p.id);
   if (idx >= 0) {
@@ -51,7 +45,6 @@ const HomePageContainer = () => {
   const { data: categoriesData } = useGetCategoriesQuery();
   const [activeCategory, setActiveCategory] = useState('Үндсэн хоол');
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [isClicked, setIsClicked] = useState(false);
 
   const filteredItems = (foodsData?.getFoods ?? []).filter((item): item is NonNullable<typeof item> => item?.category?.categoryName === activeCategory);
 
@@ -61,9 +54,6 @@ const HomePageContainer = () => {
 
   const removeOne = (id: string) => {
     setCart((prev) => removeOneReducer(prev, id));
-  };
-  const removeItem = (id: string) => {
-    setCart((prev) => removeItemReducer(prev, id));
   };
   useEffect(() => {
     const raw = localStorage.getItem('foodData');
@@ -104,7 +94,7 @@ const HomePageContainer = () => {
         <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
           {filteredItems.map((value) => {
             const count = cart.find((c) => c.id === value.foodId)?.selectCount ?? 0;
-            return <MenuCard key={value?.foodId} image={value.image} foodName={value.foodName} price={value.price} id={value?.foodId} onAdd={addToCart} count={count} onRemove={removeItem} />;
+            return <MenuCard key={value?.foodId} image={value.image} foodName={value.foodName} price={value.price} id={value?.foodId} onAdd={addToCart} count={count} />;
           })}
         </div>
       </div>
@@ -119,30 +109,11 @@ const HomePageContainer = () => {
               <div className="py-10 text-center text-sm text-zinc-500">Хоосон байна.</div>
             ) : (
               cart.map((item: CartItem, index: number) => (
-                <OrderList
-                  key={index}
-                  onAdd={addToCart}
-                  id={item.id}
-                  image={item.image}
-                  foodName={item.foodName}
-                  price={item.price}
-                  count={item.selectCount}
-                  onRemove={removeOne}
-                  removeItem={removeItem}
-                />
+                <OrderList key={index} onAdd={addToCart} id={item.id} image={item.image} foodName={item.foodName} price={item.price} count={item.selectCount} onRemove={removeOne} />
               ))
             )}
             <DrawerFooter>
-              <Button
-                onClick={() => {
-                  setIsClicked(true);
-                  console.log(isClicked, 'clicked');
-                }}
-                className="w-full bg-amber-800 hover:bg-amber-900 text-white py-4 text-lg font-medium rounded-lg"
-              >
-                Захиалах
-              </Button>
-              <OrderType isClicked={isClicked} />
+              <Button className="w-full bg-amber-800 hover:bg-amber-900 text-white py-4 text-lg font-medium rounded-lg">Захиалах</Button>
             </DrawerFooter>
           </DrawerContent>
         </Drawer>
