@@ -15,41 +15,52 @@ export type SignUpArgs = {
   name: string;
 };
 
-export type UserType = {
-  id: string;
-  email: string;
-  name: string;
-  matched?: string[];
-  likedBy?: UserType[];
-  likedTo?: UserType[];
-};
+export interface IInterestLean {
+  _id: string | mongoose.Types.ObjectId;
+  interestName: string;
+}
 
-export interface IUser {
-  _id: mongoose.Types.ObjectId | string;
+export interface IUserLean {
+  _id: string | mongoose.Types.ObjectId;
   email: string;
   name: string;
-  likedBy?: IUser[];
-  likedTo?: IUser[];
+  gender?: string | null;
+  genderPreferences?: string | null;
+  dateOfBirth?: string | null;
+  bio?: string | null;
+  interests?: IInterestLean[] | null;
+  profession?: string | null;
+  schoolWork?: string | null;
+  images?: string[] | null;
+  likedBy?: IUserLean[] | null;
+  likedTo?: IUserLean[] | null;
+  matchIds?: IMatchLean[] | null;
+}
+
+export interface IMatchLean {
+  _id: string | mongoose.Types.ObjectId;
+  matchedAt: Date;
+  unmatched: boolean;
+  startedConversation?: boolean;
+  users: IUserLean[];
 }
 
 export type LikeArgs = {
   likedByUser: string;
   likeReceiver: string;
 };
-export type disLikeArgs = {
+
+export type DislikeArgs = {
   dislikedByUser: string;
   dislikeReceiver: string;
 };
+
 export interface LeanUser {
   _id: mongoose.Types.ObjectId;
   name: string;
   images?: string[];
 }
-export interface LeanMatch {
-  _id: mongoose.Types.ObjectId;
-  users: mongoose.Types.ObjectId[];
-  unmatched?: boolean;
-}
+
 export type LeanChatMessage = {
   _id: mongoose.Types.ObjectId;
   senderId: mongoose.Types.ObjectId;
@@ -58,29 +69,3 @@ export type LeanChatMessage = {
   createdAt: Date;
   seen?: boolean;
 };
-type Match = {
-  _id: string;
-  matchedAt: string;
-  unmatched: boolean;
-  users: IUser[];
-};
-
-export interface PopulatedUser {
-  _id: string | mongoose.Types.ObjectId;
-  email: string;
-  name?: string;
-  bio?: string;
-  dateOfBirth?: string;
-  gender?: string;
-  genderPreferences?: string;
-  images?: string[];
-  profession?: string;
-  schoolWork?: string;
-  likedBy?: PopulatedUser[];
-  likedTo?: PopulatedUser[];
-  matchIds?: Match[];
-  interests?: {
-    _id: string | mongoose.Types.ObjectId;
-    interestName: string;
-  }[];
-}

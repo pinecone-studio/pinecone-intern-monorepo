@@ -25,6 +25,7 @@ export const UsertypeDefs = gql`
     matchedUser: User!
     matchedAt: String
     unmatched: Boolean!
+    startedConversation: Boolean!
   }
   enum OtpType {
     create
