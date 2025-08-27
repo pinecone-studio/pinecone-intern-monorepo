@@ -3,7 +3,7 @@ import { MatchModel } from 'src/models/match';
 import { ChatMessageModel } from 'src/models/chat-message';
 import { Usermodel } from 'src/models/user';
 import { QueryResolvers } from 'src/generated';
-import { LeanChatMessage, LeanMatch, LeanUser } from 'src/types';
+import { IMatchLean, LeanChatMessage, LeanUser } from 'src/types';
 
 export const getChatWithUser: QueryResolvers['getChatWithUser'] = async (_, { userId, participantId }) => {
   const userObjectId = new mongoose.Types.ObjectId(userId);
@@ -12,7 +12,7 @@ export const getChatWithUser: QueryResolvers['getChatWithUser'] = async (_, { us
   const match = await MatchModel.findOne({
     users: { $all: [userObjectId, participantObjectId] },
     unmatched: false,
-  }).lean<LeanMatch>();
+  }).lean<IMatchLean>();
 
   if (!match) {
     throw new Error('No match found');

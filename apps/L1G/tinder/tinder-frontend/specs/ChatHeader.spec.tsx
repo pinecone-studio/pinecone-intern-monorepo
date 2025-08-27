@@ -1,63 +1,73 @@
+/* eslint-disable max-lines */
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import { ChatUser } from '@/components/ChatPage';
+import ChatHeader from '@/components/ChatHeader';
 
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(() => ({
-    push: jest.fn(),
-    replace: jest.fn(),
-  })),
-  usePathname: jest.fn(() => '/'),
-}));
+jest.mock('@/components/UnmatchButton', () => {
+  return {
+    __esModule: true,
+    default: () => <button data-testid="unmatch-button">Unmatch</button>,
+  };
+});
 
-const MockAvatar = ({ user, size }) => (
-  <div data-testid="avatar" data-user-id={user.id} data-size={size}>
-    Avatar
-  </div>
-);
+jest.mock('@/components/ViewProfile', () => {
+  return {
+    __esModule: true,
+    default: (_props: { user: ChatUser }) => <button data-testid="view-profile-button">View Profile</button>,
+  };
+});
 
-const MockViewProfile = ({ user }) => (
-  <button data-testid="view-profile" data-user-id={user.id}>
-    View Profile
-  </button>
-);
-
-const MockUnmatchButton = () => <button data-testid="unmatch-button">Unmatch</button>;
-
-jest.doMock('@/components/Avatar', () => ({ __esModule: true, default: MockAvatar }));
-jest.doMock('@/components/ViewProfile', () => ({ __esModule: true, default: MockViewProfile }));
-jest.doMock('@/components/UnmatchButton', () => ({ __esModule: true, default: MockUnmatchButton }));
-
-const ChatHeader = ({ user }) => (
-  <div className="flex items-center justify-between p-4 border-b">
-    <div className="flex items-center gap-3">
-      <MockAvatar user={user} size={48} />
-      <div>
-        <h2 className="text-sm font-medium">
-          {user.name}, {user.age}
-        </h2>
-        <p className="text-sm text-gray-500">{user.job}</p>
+jest.mock('@/components/Avatar', () => {
+  return {
+    __esModule: true,
+    default: ({ user, size }: { user: ChatUser; size: number }) => (
+      <div data-testid="avatar" data-user-name={user.name} data-size={size}>
+        Avatar
       </div>
-    </div>
-    <div className="flex gap-2">
-      <MockViewProfile user={user} />
-      <MockUnmatchButton />
-    </div>
-  </div>
-);
+    ),
+  };
+});
 
 describe('ChatHeader', () => {
-  const mockUser = {
-    id: 1,
+  const mockUser: ChatUser = {
+    id: '1',
     name: 'John',
-    age: 25,
-    job: 'Engineer',
+    age: 28,
+    profession: 'Software Engineer',
+    images: ['photo1.jpg'],
+    dateOfBirth: '1995-06-15',
+    startedConversation: true,
   };
 
-  it('renders user information correctly', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders the chat header with user information', () => {
     render(<ChatHeader user={mockUser} />);
 
-    expect(screen.getByText('John, 25')).toBeInTheDocument();
-    expect(screen.getByText('Engineer')).toBeInTheDocument();
+    // Check if the main container is rendered
+    const header = screen.getByTestId('chat-header');
+
+    expect(header).toBeInTheDocument();
+  });
+
+  it('displays user name and age correctly', () => {
+    render(<ChatHeader user={mockUser} />);
+
+    const nameAndAge = screen.getByText('John, 28');
+    expect(nameAndAge).toBeInTheDocument();
+    expect(nameAndAge).toHaveClass('text-[14px]', 'font-medium', 'text-gray-900');
+  });
+
+  it('displays user profession correctly', () => {
+    render(<ChatHeader user={mockUser} />);
+
+    const profession = screen.getByText('Software Engineer');
+    expect(profession).toBeInTheDocument();
+    expect(profession).toHaveClass('text-[14px]', 'text-gray-500');
   });
 
   it('renders Avatar component with correct props', () => {
@@ -65,17 +75,15 @@ describe('ChatHeader', () => {
 
     const avatar = screen.getByTestId('avatar');
     expect(avatar).toBeInTheDocument();
-    expect(avatar).toHaveAttribute('data-user-id', '1');
+    expect(avatar).toHaveAttribute('data-user-name', 'John');
     expect(avatar).toHaveAttribute('data-size', '48');
   });
 
   it('renders ViewProfile component with user prop', () => {
     render(<ChatHeader user={mockUser} />);
 
-    const viewProfileButton = screen.getByTestId('view-profile');
+    const viewProfileButton = screen.getByTestId('view-profile-button');
     expect(viewProfileButton).toBeInTheDocument();
-    expect(viewProfileButton).toHaveAttribute('data-user-id', '1');
-    expect(viewProfileButton).toHaveTextContent('View Profile');
   });
 
   it('renders UnmatchButton component', () => {
@@ -83,33 +91,121 @@ describe('ChatHeader', () => {
 
     const unmatchButton = screen.getByTestId('unmatch-button');
     expect(unmatchButton).toBeInTheDocument();
-    expect(unmatchButton).toHaveTextContent('Unmatch');
   });
 
-  it('has correct layout structure', () => {
+  it('applies correct CSS classes to the main container', () => {
     render(<ChatHeader user={mockUser} />);
 
-    const container = screen.getByText('John, 25').closest('.flex.items-center.justify-between');
-    expect(container).toHaveClass('p-4', 'border-b');
+    const container = document.querySelector('.flex.items-center.justify-between.p-4.border-b.border-r.border-gray-200');
+    expect(container).toBeInTheDocument();
   });
 
-  it('handles user with different data', () => {
-    const differentUser = {
-      id: 2,
+  it('applies correct CSS classes to user info section', () => {
+    render(<ChatHeader user={mockUser} />);
+
+    const userInfoSection = document.querySelector('.flex.items-center.gap-3');
+    expect(userInfoSection).toBeInTheDocument();
+  });
+
+  it('applies correct CSS classes to buttons section', () => {
+    render(<ChatHeader user={mockUser} />);
+
+    const buttonsSection = document.querySelector('.flex.gap-2');
+    expect(buttonsSection).toBeInTheDocument();
+  });
+
+  it('handles user with different data correctly', () => {
+    const differentUser: ChatUser = {
+      id: '2',
       name: 'Sarah',
-      age: 28,
-      job: 'Designer',
+      age: 25,
+      profession: 'Designer',
+      images: ['photo2.jpg'],
+      dateOfBirth: '1998-03-20',
+      startedConversation: false,
     };
 
     render(<ChatHeader user={differentUser} />);
 
-    expect(screen.getByText('Sarah, 28')).toBeInTheDocument();
+    expect(screen.getByText('Sarah, 25')).toBeInTheDocument();
     expect(screen.getByText('Designer')).toBeInTheDocument();
 
     const avatar = screen.getByTestId('avatar');
-    expect(avatar).toHaveAttribute('data-user-id', '2');
+    expect(avatar).toHaveAttribute('data-user-name', 'Sarah');
+  });
 
-    const viewProfileButton = screen.getByTestId('view-profile');
-    expect(viewProfileButton).toHaveAttribute('data-user-id', '2');
+  it('handles user with long profession name', () => {
+    const userWithLongProfession: ChatUser = {
+      id: '3',
+      name: 'Michael',
+      age: 30,
+      profession: 'Senior Full Stack Developer and Product Manager',
+      images: ['photo3.jpg'],
+      dateOfBirth: '1993-11-10',
+      startedConversation: true,
+    };
+
+    render(<ChatHeader user={userWithLongProfession} />);
+
+    expect(screen.getByText('Senior Full Stack Developer and Product Manager')).toBeInTheDocument();
+  });
+
+  it('handles user with edge case ages', () => {
+    const youngUser: ChatUser = {
+      id: '4',
+      name: 'Alex',
+      age: 18,
+      profession: 'Student',
+      images: ['photo4.jpg'],
+      dateOfBirth: '2005-08-25',
+      startedConversation: false,
+    };
+
+    render(<ChatHeader user={youngUser} />);
+
+    expect(screen.getByText('Alex, 18')).toBeInTheDocument();
+  });
+
+  describe('accessibility', () => {
+    it('has proper heading hierarchy', () => {
+      render(<ChatHeader user={mockUser} />);
+
+      const heading = screen.getByRole('heading', { level: 2 });
+      expect(heading).toBeInTheDocument();
+      expect(heading).toHaveTextContent('John, 28');
+    });
+
+    it('maintains proper semantic structure', () => {
+      render(<ChatHeader user={mockUser} />);
+
+      // Check that buttons are properly rendered
+      const buttons = screen.getAllByRole('button');
+      expect(buttons).toHaveLength(2); // ViewProfile and Unmatch buttons
+    });
+  });
+
+  describe('component integration', () => {
+    it('passes correct user data to child components', () => {
+      const customUser: ChatUser = {
+        id: '5',
+        name: 'Emma',
+        age: 26,
+        profession: 'Marketing Manager',
+        images: ['emma.jpg'],
+        dateOfBirth: '1997-12-05',
+        startedConversation: true,
+      };
+
+      render(<ChatHeader user={customUser} />);
+
+      // Avatar should receive the user and size
+      const avatar = screen.getByTestId('avatar');
+      expect(avatar).toHaveAttribute('data-user-name', 'Emma');
+      expect(avatar).toHaveAttribute('data-size', '48');
+
+      // ViewProfile and UnmatchButton should be rendered
+      expect(screen.getByTestId('view-profile-button')).toBeInTheDocument();
+      expect(screen.getByTestId('unmatch-button')).toBeInTheDocument();
+    });
   });
 });

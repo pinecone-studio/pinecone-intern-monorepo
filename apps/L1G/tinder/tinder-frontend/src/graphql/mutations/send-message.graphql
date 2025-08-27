@@ -1,0 +1,10 @@
+mutation SendMessage($senderId: ID!, $receiverId: ID!, $matchId: ID!, $content: String!) {
+  sendMessage(senderId: $senderId, receiverId: $receiverId, matchId: $matchId, content: $content) {
+    id
+    senderId
+    receiverId
+    content
+    createdAt
+    seen
+  }
+}

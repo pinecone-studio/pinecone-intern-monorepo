@@ -1,19 +1,12 @@
 import React from 'react';
 import clsx from 'clsx';
 import Avatar from './Avatar';
-
-interface User {
-  id: number;
-  name: string;
-  age: number;
-  job: string;
-  avatar: string[];
-}
+import { ChatUser } from './ChatPage';
 
 interface MatchesProps {
-  topRowUsers: User[];
-  selectedUser: User | null;
-  onUserSelect: (_user: User) => void;
+  topRowUsers: ChatUser[];
+  selectedUser: ChatUser | null;
+  onUserSelect: (_user: ChatUser) => void;
 }
 
 const Matches: React.FC<MatchesProps> = ({ topRowUsers, selectedUser, onUserSelect }) => {
@@ -38,7 +31,7 @@ const Matches: React.FC<MatchesProps> = ({ topRowUsers, selectedUser, onUserSele
                   {person.name}, {person.age}
                 </p>
 
-                <p className="text-[13px] text-gray-500 text-center">{person.job}</p>
+                <p className="text-[13px] text-gray-500 text-center">{person.profession}</p>
               </div>
             );
           })}
@@ -49,4 +42,3 @@ const Matches: React.FC<MatchesProps> = ({ topRowUsers, selectedUser, onUserSele
 };
 
 export default Matches;
-

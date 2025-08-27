@@ -2,7 +2,7 @@ import { Flame } from 'lucide-react';
 
 const Loading = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-white">
+    <div data-testid="loading" className="flex flex-col items-center justify-center h-screen bg-white">
       <div className="flex flex-col items-center justify-center flex-1">
         <div className="flex items-center mb-8">
           <Flame fill="#FD267D" color="#FD267D" size={32} className="mr-2" />

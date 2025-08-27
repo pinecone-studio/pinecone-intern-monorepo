@@ -1,6 +1,8 @@
+/* eslint-disable react/function-component-definition */
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ChatWindow from '@/components/ChatWindow';
+import { ChatUser } from '@/components/ChatPage';
 
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: jest.fn() }),
@@ -12,13 +14,21 @@ jest.mock('lucide-react', () => ({
   MessageSquareDashedIcon: () => <div data-testid="message-dashed-icon" />,
 }));
 
+jest.mock('@/components/ChatHeader', () => {
+  return function MockChatHeader() {
+    return <div data-testid="chat-header">ChatHeader</div>;
+  };
+});
+
 describe('ChatWindow', () => {
-  const user = {
-    id: 1,
+  const user: ChatUser = {
+    id: '1',
     name: 'John',
     age: 25,
-    job: 'Engineer',
-    avatar: ['/avatar.jpg'],
+    profession: 'Engineer',
+    images: ['/avatar.jpg'],
+    dateOfBirth: '2000-01-01',
+    startedConversation: true,
   };
 
   const messages = [{ id: 1, text: 'Hello!', sender: 'them' as const, timestamp: '10:30' }];
@@ -45,10 +55,9 @@ describe('ChatWindow', () => {
     expect(screen.getByText('Select a match to start chatting')).toBeInTheDocument();
   });
 
-  it('renders user info and messages when user selected', () => {
+  it('renders messages when user is selected', () => {
     render(<ChatWindow {...defaultProps} />);
-    expect(screen.getByText('John, 25')).toBeInTheDocument();
-    expect(screen.getByText('Engineer')).toBeInTheDocument();
+    expect(screen.getByTestId('chat-header')).toBeInTheDocument();
     expect(screen.getByText('Hello!')).toBeInTheDocument();
     expect(screen.getByText('10:30')).toBeInTheDocument();
   });
@@ -63,11 +72,6 @@ describe('ChatWindow', () => {
     render(<ChatWindow {...defaultProps} inputValue="Hi there!" />);
     const sendButton = screen.getByRole('button', { name: /send/i });
     expect(sendButton).toBeEnabled();
-  });
-
-  it('shows empty messages state when no messages', () => {
-    render(<ChatWindow {...defaultProps} messages={[]} />);
-    expect(screen.getByText('Say Hi!')).toBeInTheDocument();
   });
 
   it('calls onSend when send button clicked', () => {
@@ -91,6 +95,11 @@ describe('ChatWindow', () => {
     expect(mockOnKeyDown).toHaveBeenCalled();
   });
 
+  it('shows empty messages UI when no messages', () => {
+    render(<ChatWindow {...defaultProps} messages={[]} />);
+    expect(screen.getByText('Say Hi!')).toBeInTheDocument();
+  });
+
   it('displays multiple messages correctly', () => {
     const multipleMessages = [
       { id: 1, text: 'Hello!', sender: 'them' as const, timestamp: '10:30' },
@@ -99,6 +108,7 @@ describe('ChatWindow', () => {
     ];
 
     render(<ChatWindow {...defaultProps} messages={multipleMessages} />);
+
     expect(screen.getByText('Hello!')).toBeInTheDocument();
     expect(screen.getByText('Hi there!')).toBeInTheDocument();
     expect(screen.getByText('How are you?')).toBeInTheDocument();

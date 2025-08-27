@@ -1,28 +1,28 @@
 import { QueryResolvers } from 'src/generated';
 import { Usermodel } from 'src/models/user';
 import type { User, Match } from 'src/generated';
-import { PopulatedUser } from 'src/types';
+import type { IUserLean, IMatchLean, IInterestLean } from 'src/types';
 
 const defaultToUndefined = <T>(value: T | undefined | null): T | undefined => (value === null ? undefined : value);
 
-const mapUserPersonalInfo = (u: any) => ({
-  name: u.name ?? null,
-  bio: u.bio ?? null,
-  dateOfBirth: u.dateOfBirth ?? null,
+const mapUserPersonalInfo = (u: IUserLean) => ({
+  name: defaultToUndefined(u.name),
+  bio: defaultToUndefined(u.bio),
+  dateOfBirth: defaultToUndefined(u.dateOfBirth),
 });
 
-const mapUserPreferences = (u: any) => ({
-  gender: u.gender ?? null,
-  genderPreferences: u.genderPreferences ?? null,
+const mapUserPreferences = (u: IUserLean) => ({
+  gender: defaultToUndefined(u.gender),
+  genderPreferences: defaultToUndefined(u.genderPreferences),
 });
 
-const mapUserProfileExtras = (u: any) => ({
+const mapUserProfileExtras = (u: IUserLean) => ({
   images: u.images ?? [],
-  profession: u.profession ?? null,
-  schoolWork: u.schoolWork ?? null,
+  profession: defaultToUndefined(u.profession),
+  schoolWork: defaultToUndefined(u.schoolWork),
 });
 
-const mapUser = (u: any): User => {
+const mapUser = (u: IUserLean): User => {
   if (!u.email) throw new Error('Email is missing');
 
   return {
@@ -46,13 +46,14 @@ const mapMatch = (m: any, currentUserId: string): Match => {
 
   return {
     id: m._id.toString(),
-    matchedAt: m.matchedAt?.toISOString(),
+    matchedAt: m.matchedAt,
     unmatched: m.unmatched ?? false,
+    startedConversation: m.startedConversation ?? false,
     matchedUser,
   };
 };
 
-async function fetchPopulatedUser(userId: string): Promise<PopulatedUser> {
+async function fetchPopulatedUser(userId: string): Promise<IUserLean> {
   const user = await Usermodel.findById(userId)
     .populate({
       path: 'likedBy',
@@ -67,27 +68,29 @@ async function fetchPopulatedUser(userId: string): Promise<PopulatedUser> {
       populate: { path: 'users' },
     })
     .populate('interests')
-    .lean<PopulatedUser>();
+    .lean<IUserLean>();
 
   if (!user) throw new Error('User not found');
 
   return user;
 }
-function mapMatchIds(matchIds: any[] | undefined, currentUserId: string): Match[] {
+
+function mapMatchIds(matchIds: IMatchLean[] | null | undefined, currentUserId: string): Match[] {
   if (!matchIds) return [];
   return matchIds.map((m) => mapMatch(m, currentUserId));
 }
 
-function mapLikedBy(likedBy: any[] | undefined) {
+function mapLikedBy(likedBy: IUserLean[] | null | undefined) {
   if (!likedBy) return [];
   return likedBy.map(mapUser);
 }
 
-function mapLikedTo(likedTo: any[] | undefined) {
+function mapLikedTo(likedTo: IUserLean[] | null | undefined) {
   if (!likedTo) return [];
   return likedTo.map(mapUser);
 }
-function mapInterests(interests: any[] | undefined) {
+
+function mapInterests(interests: IInterestLean[] | null | undefined) {
   if (!interests) return [];
   return interests
     .filter((i) => i && i._id)
@@ -96,7 +99,8 @@ function mapInterests(interests: any[] | undefined) {
       interestName: i.interestName,
     }));
 }
-function mapBaseUserFields(user: PopulatedUser, userId: string) {
+
+function mapBaseUserFields(user: IUserLean, userId: string) {
   if (!user.email) {
     throw new Error('User email is missing');
   }
@@ -111,7 +115,7 @@ function mapBaseUserFields(user: PopulatedUser, userId: string) {
   };
 }
 
-function mapOptionalUserFields(user: PopulatedUser) {
+function mapOptionalUserFields(user: IUserLean) {
   return {
     name: defaultToUndefined(user.name),
     bio: defaultToUndefined(user.bio),
@@ -123,7 +127,7 @@ function mapOptionalUserFields(user: PopulatedUser) {
   };
 }
 
-function mapPopulatedUserToUser(user: PopulatedUser, userId: string): User {
+function mapPopulatedUserToUser(user: IUserLean, userId: string): User {
   return {
     ...mapBaseUserFields(user, userId),
     ...mapOptionalUserFields(user),

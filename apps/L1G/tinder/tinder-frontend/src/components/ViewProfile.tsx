@@ -5,30 +5,23 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-
-type User = {
-  id: number;
-  name: string;
-  age: number;
-  job: string;
-  avatar: string[];
-};
+import { ChatUser } from './ChatPage';
 
 interface ViewProfileProps {
-  user: User;
+  user: ChatUser;
 }
 
 const ViewProfile = ({ user }: ViewProfileProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  if (!user || user.avatar.length === 0) return null;
+  if (!user || user.images.length === 0) return null;
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % user.avatar.length);
+    setCurrentIndex((prev) => (prev + 1) % user.images.length);
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + user.avatar.length) % user.avatar.length);
+    setCurrentIndex((prev) => (prev - 1 + user.images.length) % user.images.length);
   };
 
   return (
@@ -43,7 +36,7 @@ const ViewProfile = ({ user }: ViewProfileProps) => {
         <DialogContent className="p-0 bg-transparent border-none shadow-none max-w-[440px]">
           <div className="relative flex flex-col items-start">
             <Image
-              src={user.avatar[currentIndex]}
+              src={user.images[currentIndex]}
               alt={`${user.name || 'User'} - profile image ${currentIndex + 1}`}
               width={440}
               height={660}
@@ -54,10 +47,10 @@ const ViewProfile = ({ user }: ViewProfileProps) => {
               <p className="text-base font-medium text-black">
                 {user.name}, {user.age}
               </p>
-              <p className="text-sm text-gray-600">{user.job}</p>
+              <p className="text-sm text-gray-600">{user.profession}</p>
             </div>
 
-            {user.avatar.length > 1 && (
+            {user.images.length > 1 && (
               <div className="absolute inset-0 flex items-center justify-between px-2">
                 <Button onClick={handlePrev} variant="outline" size="icon">
                   <ChevronLeft />
