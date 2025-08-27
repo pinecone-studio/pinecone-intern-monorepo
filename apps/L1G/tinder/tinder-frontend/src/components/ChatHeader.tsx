@@ -4,17 +4,10 @@ import React from 'react';
 import UnmatchButton from './UnmatchButton';
 import ViewProfile from './ViewProfile';
 import Avatar from './Avatar';
-
-type User = {
-  id: number;
-  name: string;
-  age: number;
-  job: string;
-  avatar: string[];
-};
+import { ChatUser } from './ChatPage';
 
 interface ChatHeaderProps {
-  user: User;
+  user: ChatUser;
 }
 
 const ChatHeader = ({ user }: ChatHeaderProps) => {
@@ -26,7 +19,7 @@ const ChatHeader = ({ user }: ChatHeaderProps) => {
           <h2 className="text-[14px] font-medium text-gray-900">
             {user.name}, {user.age}
           </h2>
-          <p className="text-[14px] text-gray-500">{user.job}</p>
+          <p className="text-[14px] text-gray-500">{user.profession}</p>
         </div>
       </div>
       <div className="flex gap-2">

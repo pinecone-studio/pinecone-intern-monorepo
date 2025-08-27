@@ -8,6 +8,7 @@ import { UserProfile } from '@/app/page';
 import MatchDialogClose from '@/components/MatchDialogClose';
 import ProfileSwiper from '@/components/ProfileSwiper';
 import { useCurrentUser } from '@/app/contexts/CurrentUserContext';
+import Loading from '@/components/Loading';
 
 const handleKeyDown = (e: KeyboardEvent, isMatched: boolean, closeMatchDialog: () => void) => {
   if (e.key === 'Escape' && isMatched) {
@@ -30,6 +31,8 @@ const HomePage = () => {
   const { currentUser } = useCurrentUser();
 
   const { data, loading, error } = useGetusersQuery();
+  console.log(data, 'daat');
+
   const [like] = useLikeUserMutation();
   const [dislike] = useDislikeMutation();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -90,7 +93,7 @@ const HomePage = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <div className="text-pink-500 text-2xl font-bold animate-pulse">Loading...</div>
+        <Loading />
       </div>
     );
   }

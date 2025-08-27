@@ -3,14 +3,7 @@
 import React from 'react';
 import { MessageSquare, Send, MessageSquareDashedIcon } from 'lucide-react';
 import ChatHeader from './ChatHeader';
-
-type User = {
-  id: number;
-  name: string;
-  age: number;
-  job: string;
-  avatar: string[];
-};
+import { ChatUser } from './ChatPage';
 
 interface Message {
   id: number;
@@ -20,7 +13,7 @@ interface Message {
 }
 
 interface ChatWindowProps {
-  selectedUser: User | null;
+  selectedUser: ChatUser | null;
   messages: Message[];
   inputValue: string;
   onInputChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -93,4 +86,3 @@ const ChatWindow = ({ selectedUser, messages, inputValue, onInputChange, onKeyDo
 };
 
 export default ChatWindow;
-
