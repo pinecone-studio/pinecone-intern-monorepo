@@ -2,7 +2,7 @@ import mongoose, { ObjectId, Schema, model, models } from 'mongoose';
 
 export type PaymentType = {
   _id: ObjectId | string;
-  ticketId: ObjectId; // Reference to Ticket
+  ticketId: ObjectId; 
   amount: number;
   status: 'SUCCESS' | 'FAILED' | 'PENDING';
   createdAt?: Date;

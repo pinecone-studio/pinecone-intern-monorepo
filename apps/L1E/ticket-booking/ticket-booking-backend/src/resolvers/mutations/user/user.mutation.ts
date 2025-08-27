@@ -6,7 +6,6 @@ import {
   ResolversParentTypes 
 } from "../../../generated";
 
-// Helper function to build update fields
 const buildUpdateFields = (updates: {
   fullName?: string;
   email?: string;
@@ -28,13 +27,11 @@ export const userMutations = {
     { email, fullName, password, role, phone }: MutationCreateUserArgs
   ) => {
     try {
-      // Check if user already exists
       const existingUser = await User.findOne({ email });
       if (existingUser) {
         throw new Error('User with this email already exists');
       }
 
-      // Create new user
       const user = new User({ 
         email, 
         fullName,

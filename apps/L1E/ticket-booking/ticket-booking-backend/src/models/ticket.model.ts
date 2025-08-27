@@ -2,8 +2,8 @@ import mongoose, { ObjectId, Schema, model, models } from 'mongoose';
 
 export type TicketType = {
   _id: ObjectId | string;
-  eventId: ObjectId; // Reference to Event
-  userId: ObjectId; // Reference to User
+  eventId: ObjectId;
+  userId: ObjectId; 
   price: number;
   status: 'AVAILABLE' | 'SOLD' | 'CANCELLED';
   createdAt?: Date;

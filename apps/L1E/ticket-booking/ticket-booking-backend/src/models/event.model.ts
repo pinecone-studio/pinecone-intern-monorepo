@@ -6,8 +6,8 @@ export type EventType = {
   description?: string;
   location: string;
   date: Date;
-  createdBy: ObjectId; // User (Admin)
-  ticketTypes?: ObjectId[]; // TicketType
+  createdBy: ObjectId; 
+  ticketTypes?: ObjectId[]; 
   createdAt?: Date;
   updatedAt?: Date;
 };
