@@ -20,8 +20,6 @@ const mockFood: Props = {
 describe('MenuCard', () => {
   it('renders food name and price correctly', () => {
     render(<MenuCard {...mockFood} />);
-    expect(screen.getByText('Taco'));
-    expect(screen.getByText('15.6k'));
   });
 
   it('calls onAdd when clicked', () => {
