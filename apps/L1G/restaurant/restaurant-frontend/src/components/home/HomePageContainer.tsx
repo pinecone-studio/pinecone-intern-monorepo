@@ -1,14 +1,68 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MenuCard from './MenuCard';
 import { useGetCategoriesQuery, useGetFoodsQuery } from '@/generated';
+import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
+import OrderList from './OrderList';
+
+export type AddPayload = {
+  id: string;
+  image: string;
+  foodName: string;
+  price: string;
+};
+export type CartItem = {
+  id: string;
+  image: string;
+  foodName: string;
+  price: string;
+  selectCount: number;
+};
+export function addToCartReducer(prev: CartItem[], p: AddPayload): CartItem[] {
+  const idx = prev.findIndex((x) => x.id === p.id);
+  if (idx >= 0) {
+    const next = prev.slice();
+    next[idx] = { ...next[idx], selectCount: next[idx].selectCount + 1 };
+    return next;
+  }
+  return [...prev, { ...p, selectCount: 1 }];
+}
+
+export function removeOneReducer(prev: CartItem[], id: string): CartItem[] {
+  const idx = prev.findIndex((x) => x.id === id);
+  if (idx < 0) return prev;
+  const next = prev.slice();
+  const n = next[idx].selectCount - 1;
+  if (n <= 0) next.splice(idx, 1);
+  else next[idx] = { ...next[idx], selectCount: n };
+  return next;
+}
 
 const HomePageContainer = () => {
   const { data: foodsData } = useGetFoodsQuery();
   const { data: categoriesData } = useGetCategoriesQuery();
   const [activeCategory, setActiveCategory] = useState('Үндсэн хоол');
+  const [cart, setCart] = useState<CartItem[]>([]);
+
   const filteredItems = (foodsData?.getFoods ?? []).filter((item): item is NonNullable<typeof item> => item?.category?.categoryName === activeCategory);
+
+  const addToCart = (id: string, image: string, foodName: string, price: string) => {
+    setCart((prev) => addToCartReducer(prev, { id, image, foodName, price }));
+  };
+
+  const removeOne = (id: string) => {
+    setCart((prev) => removeOneReducer(prev, id));
+  };
+  useEffect(() => {
+    const raw = localStorage.getItem('foodData');
+    if (raw) {
+      setCart(JSON.parse(raw));
+    }
+  }, []);
+  useEffect(() => {
+    localStorage.setItem('foodData', JSON.stringify(cart));
+  }, [cart]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -37,14 +91,33 @@ const HomePageContainer = () => {
       </div>
       <div className="p-4">
         <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
-          {filteredItems.map((value) => (
-            <MenuCard key={value?.foodId} image={value.image} foodName={value.foodName} price={value.price} />
-          ))}
+          {filteredItems.map((value) => {
+            const count = cart.find((c) => c.id === value.foodId)?.selectCount ?? 0;
+            return <MenuCard key={value?.foodId} image={value.image} foodName={value.foodName} price={value.price} id={value?.foodId} onAdd={addToCart} count={count} />;
+          })}
         </div>
       </div>
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t">
-        <Button className="w-full bg-amber-800 hover:bg-amber-900 text-white py-4 text-lg font-medium rounded-lg">Захиалах</Button>
+        <Drawer>
+          <DrawerTrigger className="w-full bg-amber-800 hover:bg-amber-900 text-white py-4 text-lg font-medium rounded-lg"> Захиалах</DrawerTrigger>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>Таны захиалга</DrawerTitle>
+            </DrawerHeader>
+            {cart.length === 0 ? (
+              <div className="py-10 text-center text-sm text-zinc-500">Хоосон байна.</div>
+            ) : (
+              cart.map((item: CartItem, index: number) => (
+                <OrderList key={index} onAdd={addToCart} id={item.id} image={item.image} foodName={item.foodName} price={item.price} count={item.selectCount} onRemove={removeOne} />
+              ))
+            )}
+            <DrawerFooter>
+              <Button className="w-full bg-amber-800 hover:bg-amber-900 text-white py-4 text-lg font-medium rounded-lg">Захиалах</Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
       </div>
+
       <div className="h-20"></div>
     </div>
   );
