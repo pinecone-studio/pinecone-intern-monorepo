@@ -6,6 +6,7 @@ import MenuCard from './MenuCard';
 import { useGetCategoriesQuery } from '@/generated';
 import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import OrderList from './OrderList';
+import OrderType from './OrderType';
 
 export type AddPayload = {
   id: string;
@@ -51,6 +52,7 @@ const HomePageContainer = () => {
 
   const [activeCategory, setActiveCategory] = useState<string | undefined>(undefined);
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [isClicked, setIsClicked] = useState(false);
 
   const filteredItems = (foodsData?.getFoods ?? []).filter((item): item is NonNullable<typeof item> => item?.category?.categoryName === activeCategory);
 
@@ -134,7 +136,16 @@ const HomePageContainer = () => {
               ))
             )}
             <DrawerFooter>
-              <Button className="w-full bg-amber-800 hover:bg-amber-900 text-white py-4 text-lg font-medium rounded-lg">Захиалах</Button>
+              <Button
+                onClick={() => {
+                  setIsClicked(true);
+                  console.log(isClicked, 'clicked');
+                }}
+                className="w-full bg-amber-800 hover:bg-amber-900 text-white py-4 text-lg font-medium rounded-lg"
+              >
+                Захиалах
+              </Button>
+              <OrderType isClicked={isClicked} />
             </DrawerFooter>
           </DrawerContent>
         </Drawer>
