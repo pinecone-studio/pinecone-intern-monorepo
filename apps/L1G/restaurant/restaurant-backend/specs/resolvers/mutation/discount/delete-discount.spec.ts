@@ -11,13 +11,9 @@ jest.mock('src/models/discount.model', () => ({
 describe('deleteDiscount', () => {
   it('should delete discount', async () => {
     (DiscountModel.findByIdAndDelete as jest.Mock).mockResolvedValue({
-      _id: '1',
+      discountId: '1',
       discountName: 'Test',
       discountRate: 0.15,
-      startDate: new Date(),
-      endDate: new Date(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
     });
 
     const result = await deleteDiscount?.({}, { discountId: '1' }, {}, {} as GraphQLResolveInfo);

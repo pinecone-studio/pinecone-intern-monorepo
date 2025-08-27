@@ -45,8 +45,13 @@ export const orderTypeDefs = gql`
     orderId: ID!
   }
 
+  input getFoodOrdersByUserInput {
+    userId: ID!
+  }
+
   type Query {
     getFoodOrders: [FoodOrder!]!
+    getFoodOrdersByUser(input: getFoodOrdersByUserInput!): [FoodOrder]!
   }
 
   type Mutation {
