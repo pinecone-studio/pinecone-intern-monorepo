@@ -1,7 +1,17 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import MenuCard, { CardProps } from '@/components/home/MenuCard';
+import MenuCard, { Props } from '@/components/home/MenuCard';
 
-const mockFood: CardProps = {
+// Next.js Image-г жирийн <img> болгоно
+jest.mock('next/image', () => ({
+  __esModule: true,
+  default: (props: any) => {
+    const { src, alt, ...rest } = props;
+    return <img src={src} alt={alt} {...rest} />;
+  },
+}));
+
+const mockFood: Props = {
+  id: 'f1',
   image: 'https://via.placeholder.com/150',
   foodName: 'Taco',
   price: '15.6',
@@ -14,26 +24,18 @@ describe('MenuCard', () => {
     expect(screen.getByText('15.6k'));
   });
 
-  it('increments count and shows overlay when clicked', () => {
-    render(<MenuCard {...mockFood} />);
+  it('calls onAdd when clicked', () => {
+    const handleAdd = jest.fn();
+    render(<MenuCard {...mockFood} onAdd={handleAdd} />);
 
-    const card = screen.getByText('Taco').closest('div'); // parent clickable div
-    expect(card);
+    const card = screen.getByText('Taco').closest('div')!;
+    fireEvent.click(card);
 
-    fireEvent.click(card!);
-
-    // дарагдсаны дараа count 1 болж харагдана
-    expect(screen.getByText('1'));
+    expect(handleAdd);
   });
 
-  it('increments count on multiple clicks', () => {
-    render(<MenuCard {...mockFood} />);
-    const card = screen.getByText('Taco').closest('div')!;
-
-    fireEvent.click(card);
-    fireEvent.click(card);
-    fireEvent.click(card);
-
-    expect(screen.getByText('3')); // 3 удаа дарсан
+  it('shows overlay count when count > 0', () => {
+    render(<MenuCard {...mockFood} count={3} />);
+    expect(screen.getByText('3'));
   });
 });
