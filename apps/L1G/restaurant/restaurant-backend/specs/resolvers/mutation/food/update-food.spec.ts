@@ -6,19 +6,15 @@ jest.mock('src/models/food.model', () => ({
   FoodModel: {
     findByIdAndUpdate: jest.fn().mockReturnValue({
       populate: jest.fn().mockResolvedValue({
-        _id: '2',
+        foodId: '2',
         foodName: 'Test',
         price: '10',
         image: 'image.jpg',
-        status: 'Идэвхитэй',
+        foodStatus: 'Идэвхитэй',
         category: {
           _id: '1',
           categoryName: 'Test1',
-          createdAt: new Date(),
-          updatedAt: new Date(),
         },
-        createdAt: new Date(),
-        updatedAt: new Date(),
       }),
     }),
   },
@@ -37,7 +33,7 @@ describe('updateFood', () => {
           foodName: 'Test',
           price: '20',
           image: 'image.jpg',
-          status: 'Идэвхитэй',
+          foodStatus: 'Идэвхитэй',
           categoryId: '1',
         },
       },
@@ -65,7 +61,7 @@ describe('updateFood', () => {
             foodName: 'Test',
             price: '20',
             image: 'image.jpg',
-            status: 'Идэвхитэй',
+            foodStatus: 'Идэвхитэй',
             categoryId: '1',
           },
         },
@@ -75,7 +71,7 @@ describe('updateFood', () => {
     ).rejects.toThrow('Food with ID 3 not found');
     expect(FoodModel.findByIdAndUpdate).toHaveBeenCalledWith(
       '3',
-      { $set: { foodName: 'Test', price: '20', image: 'image.jpg', status: 'Идэвхитэй', categoryId: '1' } },
+      { $set: { foodName: 'Test', price: '20', image: 'image.jpg', foodStatus: 'Идэвхитэй', categoryId: '1' } },
       { new: true, runValidators: true }
     );
   });

@@ -13,13 +13,9 @@ jest.mock('src/models/discount.model', () => ({
 describe('updateDiscount', () => {
   it('should update discount', async () => {
     (DiscountModel.findByIdAndUpdate as jest.Mock).mockResolvedValue({
-      _id: '2',
+      discountId: '2',
       discountName: 'Test',
       discountRate: 0.15,
-      startDate: Date.now(),
-      endDate: Date.now(),
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
     });
 
     const result = await updateDiscount?.(

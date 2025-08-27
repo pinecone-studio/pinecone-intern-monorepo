@@ -1,6 +1,5 @@
 import { MutationResolvers } from 'src/generated';
 import { CategoryModel } from 'src/models/category.model';
-import { mapCategory } from '../../../utils/types/category-type';
 
 export const deleteCategory: MutationResolvers['deleteCategory'] = async (_, { categoryId }) => {
   const deletedCategory = await CategoryModel.findByIdAndDelete(categoryId);
@@ -9,5 +8,5 @@ export const deleteCategory: MutationResolvers['deleteCategory'] = async (_, { c
     throw new Error(`Category with ID ${categoryId} not found`);
   }
 
-  return mapCategory(deletedCategory);
+  return deletedCategory;
 };

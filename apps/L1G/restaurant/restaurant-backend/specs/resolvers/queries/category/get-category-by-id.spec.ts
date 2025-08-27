@@ -15,18 +15,14 @@ describe('getCategoryById', () => {
 
   it('should return category', async () => {
     (CategoryModel.findById as jest.Mock).mockResolvedValue({
-      _id: '2',
+      categoryId: '2',
       categoryName: 'Test1',
-      createdAt: '',
-      updatedAt: '',
     });
     const result = await getCategoryById?.({}, { categoryId: '2' }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual(
       expect.objectContaining({
         categoryId: '2',
         categoryName: 'Test1',
-        createdAt: '',
-        updatedAt: '',
       })
     );
     expect(CategoryModel.findById).toHaveBeenCalledTimes(1);

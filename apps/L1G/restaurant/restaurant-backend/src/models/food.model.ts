@@ -1,13 +1,11 @@
 import { model, models, Schema, Types } from 'mongoose';
-import { CategoryType } from './category.model';
-import { DiscountType } from './discount.model';
 
 export type FoodType = {
   _id: Types.ObjectId;
   foodName: string;
   price: string;
   image: string;
-  status: string;
+  foodStatus: string;
   category: Types.ObjectId;
   discount: Types.ObjectId;
   createdAt: Date;
@@ -28,7 +26,7 @@ export const FoodSchema = new Schema<FoodType>(
       type: String,
       required: true,
     },
-    status: {
+    foodStatus: {
       type: String,
       required: true,
       enum: ['Идэвхитэй', 'Идэвхигүй'],
@@ -41,7 +39,7 @@ export const FoodSchema = new Schema<FoodType>(
     },
     discount: {
       type: Schema.Types.ObjectId,
-      ref: 'discount',
+      ref: 'Discount',
       required: false,
     },
   },
@@ -50,9 +48,4 @@ export const FoodSchema = new Schema<FoodType>(
   }
 );
 
-export type FoodPopulatedType = Omit<FoodType, 'category' | 'discount'> & {
-  category: CategoryType;
-  discount: DiscountType;
-};
-
-export const FoodModel = models.Food || model<FoodType>('food', FoodSchema);
+export const FoodModel = models.Food || model<FoodType>('Food', FoodSchema);

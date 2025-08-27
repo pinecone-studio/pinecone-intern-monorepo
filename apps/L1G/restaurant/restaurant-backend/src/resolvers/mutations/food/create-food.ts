@@ -1,12 +1,11 @@
 import { MutationResolvers } from 'src/generated';
-import { FoodModel, FoodPopulatedType } from 'src/models/food.model';
-import { mapFood } from 'src/utils/types/food-type';
+import { FoodModel } from 'src/models/food.model';
 
-export const createFood: MutationResolvers['createFood'] = async (_, { input: { foodName, price, image, status, categoryId } }) => {
+export const createFood: MutationResolvers['createFood'] = async (_, { input: { foodName, price, image, foodStatus, categoryId } }) => {
   try {
-    const newFood = await FoodModel.create({ foodName, price, image, status, category: categoryId });
-    const populatedFood = (await newFood.populate('category')) as FoodPopulatedType;
-    return mapFood(populatedFood);
+    const newFood = await FoodModel.create({ foodName, price, image, foodStatus, category: categoryId });
+    const populatedFood = await newFood.populate('category');
+    return populatedFood;
   } catch (error) {
     throw new Error(`Failed to create food`);
   }
