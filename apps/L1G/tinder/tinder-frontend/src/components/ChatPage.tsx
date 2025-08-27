@@ -184,7 +184,7 @@ const ChatPage: React.FC = () => {
       try {
         socket.emit('chat message', {
           matchId,
-          message: content,
+          content,
           senderId,
           receiverId,
           id: createdMessageId,

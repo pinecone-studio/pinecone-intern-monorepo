@@ -8,7 +8,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: '*', // Replace with frontend domain for production
+    origin: 'http://localhost:4201',
     methods: ['GET', 'POST'],
   },
 });
@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
     // Emit only to room (i.e. sender + receiver)
     io.to(matchId).emit('chat message', msg);
   });
-  //Leave room
+  //Leave
   socket.on('leave room', (matchId: string) => {
     socket.leave(matchId);
     console.log(`📤 Socket ${socket.id} left room ${matchId}`);

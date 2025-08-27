@@ -252,7 +252,7 @@ describe('ChatPage - core behaviors', () => {
 
     expect(socket.emit).toHaveBeenCalledWith('chat message', {
       matchId: '1',
-      message: 'Hello',
+      content: 'Hello',
       senderId: 'me123',
       receiverId: 'user1',
       id: 'msg123',
@@ -1192,7 +1192,7 @@ describe('ChatPage - additional coverage tests', () => {
     // Verify socket emit was called with the server-generated ID
     expect(socket.emit).toHaveBeenCalledWith('chat message', {
       matchId: '1',
-      message: 'Message with server ID',
+      content: 'Message with server ID',
       senderId: 'me123',
       receiverId: 'user1',
       id: 'server-generated-id-123',
@@ -1235,7 +1235,7 @@ describe('ChatPage - additional coverage tests', () => {
     // Verify socket emit was called with undefined ID (as per current implementation)
     expect(socket.emit).toHaveBeenCalledWith('chat message', {
       matchId: '1',
-      message: 'Message with fallback ID',
+      content: 'Message with fallback ID',
       senderId: 'me123',
       receiverId: 'user1',
       id: undefined, // Current implementation uses createdMessageId directly
