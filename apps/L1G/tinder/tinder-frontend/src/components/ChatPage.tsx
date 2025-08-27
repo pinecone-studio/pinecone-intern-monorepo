@@ -52,16 +52,6 @@ const ChatPage: React.FC = () => {
   const [conversations, setConversations] = useState<Record<string, Message[]>>({});
   const [inputValue, setInputValue] = useState('');
   const [socketError, setSocketError] = useState<string | null>(null);
-  useEffect(() => {
-    socket.connect();
-  }, []);
-  socket.on('connect', () => {
-    console.log('✅ Socket connected with id:', socket.id);
-  });
-
-  socket.on('connect_error', (err) => {
-    console.error('❌ Socket connection error:', err);
-  });
 
   useEffect(() => {
     if (!selectedUser) return;
