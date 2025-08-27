@@ -66,6 +66,7 @@ describe('<OrderList />', () => {
   test('Устгах (Trash) товч render-лагдсан байна', () => {
     render(<OrderList {...baseProps} count={1} />);
     const delBtn = screen.getByRole('button', { name: 'Устгах' });
+    fireEvent.click(delBtn);
     expect(delBtn);
   });
 });
