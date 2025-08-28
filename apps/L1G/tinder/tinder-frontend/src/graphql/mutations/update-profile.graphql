@@ -3,6 +3,7 @@ mutation UpdateProfile(
   $name: String
   $email: String
   $dateOfBirth: String
+  $gender: String
   $genderPreferences: String
   $bio: String
   $interests: [String]
@@ -15,6 +16,7 @@ mutation UpdateProfile(
     name: $name
     email: $email
     dateOfBirth: $dateOfBirth
+    gender: $gender
     genderPreferences: $genderPreferences
     bio: $bio
     interests: $interests
