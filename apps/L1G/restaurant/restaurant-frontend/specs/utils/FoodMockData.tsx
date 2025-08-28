@@ -13,7 +13,7 @@ const getFoodsMock: MockedResponse = {
           foodId: '1',
           foodName: 'Test',
           price: '20000',
-          status: 'Идэвхитэй',
+          foodStatus: 'Идэвхитэй',
           image: 'https://example.com/foodimage.jpg',
           category: {
             categoryId: '1',
@@ -24,7 +24,7 @@ const getFoodsMock: MockedResponse = {
           foodId: '2',
           foodName: 'Test1',
           price: '15000',
-          status: 'Идэвхитэй',
+          foodStatus: 'Идэвхитэй',
           image: 'https://example.com/foodimage.jpg',
           category: {
             categoryId: '2',
@@ -60,7 +60,7 @@ const deleteFoodByIdMock: MockedResponse = {
         foodId: '1',
         foodName: 'Test',
         price: '20000',
-        status: 'Идэвхитэй',
+        foodStatus: 'Идэвхитэй',
         image: 'https://example.com/foodimage.jpg',
         category: {
           categoryId: '1',
@@ -82,7 +82,7 @@ const getFoodsAfterDeleteMock: MockedResponse = {
           foodId: '2',
           foodName: 'Test1',
           price: '15000',
-          status: 'Идэвхитэй',
+          foodStatus: 'Идэвхитэй',
           image: 'https://example.com/foodimage.jpg',
           category: {
             categoryId: '2',
@@ -126,7 +126,7 @@ const getFoodsLoadingMock: MockedResponse = {
           foodId: '1',
           foodName: 'Test',
           price: '20000',
-          status: 'Идэвхитэй',
+          foodStatus: 'Идэвхитэй',
           image: 'https://example.com/foodimage.jpg',
           category: {
             categoryId: '1',
@@ -164,7 +164,7 @@ const updateFoodMock: MockedResponse = {
       input: {
         foodName: 'Test1',
         price: '20000',
-        status: 'Идэвхитэй',
+        foodStatus: 'Идэвхитэй',
         image: 'https://example.com/foodimage.jpg',
         categoryId: '2',
       },
@@ -176,7 +176,7 @@ const updateFoodMock: MockedResponse = {
         foodId: '2',
         foodName: 'Test1',
         price: '20000',
-        status: 'Идэвхитэй',
+        foodStatus: 'Идэвхитэй',
         image: 'https://example.com/foodimage.jpg',
         category: {
           categoryId: '2',
@@ -195,7 +195,7 @@ const updateFoodErrorMock: MockedResponse = {
       input: {
         foodName: 'Test3',
         price: '20000',
-        status: 'Идэвхитэй',
+        foodStatus: 'Идэвхитэй',
         image: 'https://example.com/foodimage.jpg',
         categoryId: '2',
       },

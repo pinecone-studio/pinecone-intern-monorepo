@@ -34,7 +34,7 @@ export const FoodCreateDialog = ({ refetch }: { refetch: () => Promise<ApolloQue
           input: {
             foodName: values.foodName,
             price: values.price,
-            status: values.status,
+            foodStatus: values.status,
             image: imageUrl,
             categoryId: values.category,
           },

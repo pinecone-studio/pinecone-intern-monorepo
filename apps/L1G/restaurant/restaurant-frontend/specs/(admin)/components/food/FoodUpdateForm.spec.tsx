@@ -14,7 +14,7 @@ beforeAll(() => {
 const mockDataProps = {
   foodName: 'Test1',
   price: '20000',
-  status: 'Идэвхитэй',
+  foodStatus: 'Идэвхитэй',
   image: 'https://example.com/foodimage.jpg',
   category: {
     categoryId: '2',
@@ -27,7 +27,7 @@ const mockDataProps = {
 const mockDataPropsWithEmptyValues = {
   foodName: '',
   price: '',
-  status: 'Идэвхитэй',
+  foodStatus: 'Идэвхитэй',
   image: '',
   category: {
     categoryId: '',
@@ -72,7 +72,7 @@ describe('FoodUpdateForm', () => {
       <FoodUpdateForm
         foodName={mockDataProps.foodName}
         price={mockDataProps.price}
-        status={mockDataProps.status}
+        foodStatus={mockDataProps.foodStatus}
         category={mockDataProps.category}
         image=""
         onSubmit={mockDataProps.onSubmit}
@@ -135,7 +135,7 @@ describe('FoodUpdateForm', () => {
       <FoodUpdateForm
         foodName={mockDataProps.foodName}
         price={mockDataProps.price}
-        status={mockDataProps.status}
+        foodStatus={mockDataProps.foodStatus}
         image={mockDataProps.image}
         category={mockDataProps.category}
         onSubmit={mockDataProps.onSubmit}
