@@ -35,7 +35,7 @@ const ChatWindow = ({ lastSeenMessageId, selectedUser, messages, inputValue, onI
 
   if (!selectedUser) {
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className="flex items-center justify-center h-screen">
         <div className="text-center">
           <MessageSquare size={64} className="mx-auto mb-4 text-gray-400" />
           <h3 className="mb-2 text-lg font-medium text-gray-900">Select a match to start chatting</h3>
@@ -58,22 +58,38 @@ const ChatWindow = ({ lastSeenMessageId, selectedUser, messages, inputValue, onI
           </div>
         ) : (
           <>
-            {messages.map((msg) => (
-              <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'} relative`}>
-                <div
-                  className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${
-                    msg.sender === 'me' ? 'bg-gradient-to-r from-pink-500 to-red-500 text-white' : 'bg-white text-gray-900 shadow-sm border border-gray-200'
-                  }`}
-                >
-                  <p className="text-sm">{msg.text}</p>
-                  <p className={`text-xs mt-1 ${msg.sender === 'me' ? 'text-pink-100' : 'text-gray-500'}`}>{msg.timestamp}</p>
-                </div>
+            {messages.map((msg) => {
+              const isLastSeen = msg.id === lastSeenMessageId && msg.sender === 'me';
+              let seenTimeAgo = '';
+              if (isLastSeen) {
+                const seenDate = new Date(msg.timestamp);
+                const now = new Date();
+                const diffMs = now.getTime() - seenDate.getTime();
+                const diffMins = Math.floor(diffMs / (1000 * 60));
+                if (diffMins < 1) seenTimeAgo = 'Seen just now';
+                else if (diffMins < 60) seenTimeAgo = `Seen ${diffMins} min ago`;
+                else {
+                  const diffHours = Math.floor(diffMins / 60);
+                  seenTimeAgo = `Seen ${diffHours}h ago`;
+                }
+              }
 
-                {msg.id === lastSeenMessageId && (
-                  <img src={selectedUser?.images?.[0] || '/default-avatar.jpg'} alt="Seen" className="w-5 h-5 rounded-full border-2 border-white absolute -bottom-1 -right-6" title="Seen" />
-                )}
-              </div>
-            ))}
+              return (
+                <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'} relative`}>
+                  <div
+                    className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${
+                      msg.sender === 'me' ? 'bg-gradient-to-r from-pink-500 to-red-500 text-white' : 'bg-white text-gray-900 shadow-sm border border-gray-200'
+                    }`}
+                  >
+                    <p className="text-sm">{msg.text}</p>
+                    <p className={`text-xs mt-1 ${msg.sender === 'me' ? 'text-pink-100' : 'text-gray-500'}`}>{msg.timestamp}</p>
+                  </div>
+                  {isLastSeen && (
+                    <img src={selectedUser?.images?.[0] || '/default-avatar.jpg'} alt="Seen" className="w-5 h-5 rounded-full border-2 border-white absolute -bottom-5 -right-0" title="Seen" />
+                  )}
+                </div>
+              );
+            })}
 
             <div ref={bottomRef} />
           </>

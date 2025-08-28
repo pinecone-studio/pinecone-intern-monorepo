@@ -170,7 +170,7 @@ const ChatPage: React.FC = () => {
       socket.off('messages seen update', seenUpdateHandler);
       clearTimeout(timeout);
     };
-  }, [selectedUser, conversations, data]);
+  }, [selectedUser, conversations, data, fetchChat, markMessagesAsSeen]);
 
   useEffect(() => {
     const matchIds = data?.getMe?.matchIds ?? [];
@@ -206,7 +206,7 @@ const ChatPage: React.FC = () => {
   const messages = useMemo(() => {
     if (!selectedUser) return [];
     return conversations[selectedUser.id] || [];
-  }, [selectedUser, conversations, data, fetchChat, markMessagesAsSeen]);
+  }, [selectedUser, conversations]);
 
   const handleUserSelect = useCallback((user: ChatUser) => {
     setSelectedUser(user);
