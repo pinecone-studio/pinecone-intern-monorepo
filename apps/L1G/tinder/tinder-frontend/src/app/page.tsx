@@ -3,14 +3,20 @@ import { HomeFooter, HomeHeader, HomeMain, HomePageBackground } from '@/componen
 import Loading from '@/components/Loading';
 import { useGetusersQuery } from '@/generated';
 
+type interest = {
+  _id: string;
+  interestName: string;
+};
+
 export interface UserProfile {
   id: string;
   name: string | null | undefined;
   age?: number;
+  interests: interest[];
   images: string[] | null;
 }
 
-const Home: React.FC = () => {
+const Home = () => {
   const { loading } = useGetusersQuery();
 
   if (loading)
@@ -27,7 +33,7 @@ const Home: React.FC = () => {
       </div>
 
       <div className="flex justify-center items-center rotate-[30deg] gap-4 relative z-0 opacity-30">
-        {Array.from({ length: 7 }).map((_, idx) => {
+        {Array.from({ length: 8 }).map((_, idx) => {
           return <HomePageBackground key={idx} />;
         })}
       </div>

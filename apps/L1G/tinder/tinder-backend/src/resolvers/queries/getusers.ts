@@ -81,7 +81,11 @@ const transformUser = (user: IUserLean & { matchIds?: IMatchLean[] | null }) => 
   interests:
     user.interests && user.interests.length > 0
       ? user.interests.map((interest) => ({
+<<<<<<< HEAD
           _id: interest._id ? interest._id.toString() : '',
+=======
+          _id: interest._id.toString(),
+>>>>>>> ee7edcefd (feat(tinder card): user interest in home page)
           interestName: interest.interestName,
         }))
       : undefined,

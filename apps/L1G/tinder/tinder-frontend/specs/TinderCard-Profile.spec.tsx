@@ -1,5 +1,6 @@
 import TinderCard from '@/components/TinderCard';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 const mockProfile = {
   id: '1',
