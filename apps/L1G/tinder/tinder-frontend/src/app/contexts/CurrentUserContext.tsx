@@ -14,6 +14,7 @@ type CurrentUser = {
   schoolWork?: string | null;
   images?: (string | null)[] | null;
   dateOfBirth?: string | null;
+  interests?: { _id: string; interestName: string }[] | null;
   likedBy?: { id: string; email: string }[] | null;
   likedTo?: { id: string; email: string }[] | null;
   matchIds?:
@@ -21,6 +22,7 @@ type CurrentUser = {
         id: string;
         matchedAt: string;
         unmatched?: boolean;
+        startedConversation?: boolean;
       }[]
     | null;
 };
@@ -29,19 +31,28 @@ type CurrentUserContextType = {
   currentUser: CurrentUser | null;
   loading: boolean;
   error: Error | null;
+  refetchUser: () => void;
 };
 
 const CurrentUserContext = createContext<CurrentUserContextType>({
   currentUser: null,
   loading: true,
   error: null,
+  refetchUser: () => {},
 });
 
 export const useCurrentUser = () => useContext(CurrentUserContext);
 
 export const CurrentUserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [getMe, { data, loading, error }] = useGetMeLazyQuery();
+  const [getMe, { data, loading, error }] = useGetMeLazyQuery({
+    fetchPolicy: 'cache-and-network', // Always fetch fresh data
+    errorPolicy: 'all'
+  });
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+
+  const refetchUser = () => {
+    getMe();
+  };
 
   useEffect(() => {
     getMe();
@@ -52,7 +63,8 @@ export const CurrentUserProvider = ({ children }: { children: React.ReactNode })
     return matches.filter(Boolean).map((m) => ({
       id: m.id,
       matchedAt: m.matchedAt,
-      unmatched: m.unmatched,
+      unmatched: m.unmatched || false,
+      startedConversation: m.startedConversation || false,
     }));
   };
 
@@ -61,6 +73,14 @@ export const CurrentUserProvider = ({ children }: { children: React.ReactNode })
     return users.filter(Boolean).map((u) => ({
       id: u.id,
       email: u.email,
+    }));
+  };
+
+  const cleanInterests = (interests: any[] | undefined) => {
+    if (!interests) return null;
+    return interests.filter(Boolean).map((i) => ({
+      _id: i._id,
+      interestName: i.interestName || '',
     }));
   };
 
@@ -79,6 +99,7 @@ export const CurrentUserProvider = ({ children }: { children: React.ReactNode })
     profession: u.profession ?? null,
     schoolWork: u.schoolWork ?? null,
     images: u.images ?? null,
+    interests: cleanInterests(u.interests),
   });
 
   const cleanProfileInfo = (u: any) => ({
@@ -106,5 +127,16 @@ export const CurrentUserProvider = ({ children }: { children: React.ReactNode })
     }
   }, [data]);
 
-  return <CurrentUserContext.Provider value={{ currentUser, loading, error: error as Error | null }}>{children}</CurrentUserContext.Provider>;
+  return (
+    <CurrentUserContext.Provider 
+      value={{ 
+        currentUser, 
+        loading, 
+        error: error as Error | null, 
+        refetchUser 
+      }}
+    >
+      {children}
+    </CurrentUserContext.Provider>
+  );
 };

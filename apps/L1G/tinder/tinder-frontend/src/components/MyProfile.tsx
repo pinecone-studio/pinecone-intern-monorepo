@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { MyProfileForm } from './MyProfileForm';
 import { MyImages } from './MyImages';
 import clsx from 'clsx';
+import { useCurrentUser } from '@/app/contexts/CurrentUserContext';
 
 type MenuType = 'profile' | 'images' | 'appearance' | 'notifications';
 
@@ -13,20 +14,40 @@ export const MyProfile = () => {
   const [menu, setMenu] = useState<MenuType>('profile');
   const [isOpen, setIsOpen] = useState(false);
 
+  const { currentUser, loading, error } = useCurrentUser();
+
+  if (loading) return <div>Loading profile...</div>;
+  if (error) return <div>Error loading profile: {error.message}</div>;
+  if (!currentUser) return <div>No user data available</div>;
+
   return (
-    <div data-testid="my-profile" className="w-full min-h-screen flex flex-col gap-6 ">
-      <MyProfileHeader isOpen={isOpen} setIsOpen={setIsOpen} />
+    <div data-testid="my-profile" className="w-full min-h-screen flex flex-col gap-6">
+      <MyProfileHeader 
+        isOpen={isOpen} 
+        setIsOpen={setIsOpen} 
+        user={currentUser} 
+      />
       <div className="flex flex-col md:flex-row justify-start items-start gap-6 lg:gap-12 px-4 sm:px-6 md:px-10 pb-6">
         <SidebarMenu menu={menu} setMenu={setMenu} isOpen={isOpen} setIsOpen={setIsOpen} />
         <div data-testid="menu-content" className="w-full">
-          <MenuContent menu={menu} />
+          <MenuContent menu={menu} user={currentUser} />
         </div>
       </div>
     </div>
   );
 };
 
-export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuType; setMenu: (_m: MenuType) => void; isOpen: boolean; setIsOpen: (_open: boolean) => void }) => {
+export const SidebarMenu = ({ 
+  menu, 
+  setMenu, 
+  isOpen, 
+  setIsOpen 
+}: { 
+  menu: MenuType; 
+  setMenu: (_m: MenuType) => void; 
+  isOpen: boolean; 
+  setIsOpen: (_open: boolean) => void;
+}) => {
   const items: { label: string; value: MenuType }[] = [
     { label: 'Profile', value: 'profile' },
     { label: 'Images', value: 'images' },
@@ -61,16 +82,31 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
       {/* Mobile Drawer */}
       <div className="fixed inset-0 z-50 md:hidden" aria-hidden={!isOpen}>
         {/* Backdrop */}
-        {isOpen && <div data-testid="drawer-backdrop" className="fixed inset-0 bg-black bg-opacity-40 transition-opacity duration-300" onClick={() => setIsOpen(false)} />}
+        {isOpen && (
+          <div 
+            data-testid="drawer-backdrop" 
+            className="fixed inset-0 bg-black bg-opacity-40 transition-opacity duration-300" 
+            onClick={() => setIsOpen(false)} 
+          />
+        )}
 
         {/* Drawer */}
         <div
           data-testid="mobile-drawer"
-          className={clsx('fixed top-0 left-0 w-[280px] h-full bg-white shadow-xl z-50 flex flex-col p-6 transform transition-transform duration-300', isOpen ? 'translate-x-0' : '-translate-x-full')}
+          className={clsx(
+            'fixed top-0 left-0 w-[280px] h-full bg-white shadow-xl z-50 flex flex-col p-6 transform transition-transform duration-300',
+            isOpen ? 'translate-x-0' : '-translate-x-full'
+          )}
         >
           <div className="flex justify-between items-center mb-6">
             <p className="font-semibold text-lg text-[#09090B]">Menu</p>
-            <Button data-testid="close-mobile-drawer" aria-label="close" variant="ghost" onClick={() => setIsOpen(false)} className="p-2">
+            <Button 
+              data-testid="close-mobile-drawer" 
+              aria-label="close" 
+              variant="ghost" 
+              onClick={() => setIsOpen(false)} 
+              className="p-2"
+            >
               <X size={24} />
             </Button>
           </div>
@@ -95,10 +131,10 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
   );
 };
 
-export const MenuContent = ({ menu }: { menu: MenuType }) => {
+export const MenuContent = ({ menu, user }: { menu: MenuType; user?: any }) => {
   switch (menu) {
     case 'profile':
-      return <MyProfileForm />;
+      return <MyProfileForm user={user} />;
     case 'images':
       return <MyImages />;
     case 'appearance':
@@ -110,18 +146,36 @@ export const MenuContent = ({ menu }: { menu: MenuType }) => {
   }
 };
 
-export const MyProfileHeader = ({ setIsOpen }: { isOpen: boolean; setIsOpen: (_open: boolean) => void }) => {
+export const MyProfileHeader = ({ 
+  isOpen, 
+  setIsOpen, 
+  user 
+}: { 
+  isOpen: boolean; 
+  setIsOpen: (_open: boolean) => void; 
+  user?: any;
+}) => {
   return (
     <div className="w-full sticky top-0 z-40 bg-white shadow-sm">
       <div className="flex items-center justify-start gap-3 px-4 sm:px-6 py-4">
         <div className="md:hidden">
-          <Button variant="ghost" data-testid="open-mobile-menu" onClick={() => setIsOpen(true)} className="p-2" aria-label="Open mobile menu">
+          <Button 
+            variant="ghost" 
+            data-testid="open-mobile-menu" 
+            onClick={() => setIsOpen(true)} 
+            className="p-2" 
+            aria-label="Open mobile menu"
+          >
             <Menu size={24} />
           </Button>
         </div>
         <div className="flex flex-col gap-1">
-          <p className="text-2xl font-sans font-semibold text-[#09090B]">Hi, user</p>
-          <p className="text-sm font-sans font-normal text-[#71717A]">n.shagai@pinecone.mn</p>
+          <p className="text-2xl font-sans font-semibold text-[#09090B]">
+            Hi, {user?.name || 'Name'}
+          </p>
+          <p className="text-sm font-sans font-normal text-[#71717A]">
+            {user?.email || 'email@example.com'}
+          </p>
         </div>
         <div className="md:hidden w-10" />
       </div>
