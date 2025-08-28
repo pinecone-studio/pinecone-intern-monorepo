@@ -11,9 +11,10 @@ type FormInputProps = {
   fieldName: 'discountName' | 'discountRate';
   'data-testid'?: string;
   'data-cy'?: string;
+  disabled: boolean;
 };
 
-export const FormFieldInput = ({ control, placeholder, fieldName, type, 'data-testid': dataTestId, 'data-cy': dataCy }: FormInputProps) => {
+export const FormFieldInput = ({ control, placeholder, fieldName, type, 'data-testid': dataTestId, 'data-cy': dataCy, disabled }: FormInputProps) => {
   return (
     <FormField
       control={control}
@@ -21,7 +22,7 @@ export const FormFieldInput = ({ control, placeholder, fieldName, type, 'data-te
       render={({ field }) => (
         <FormItem>
           <FormControl>
-            <Input data-cy={dataCy} data-testid={dataTestId} placeholder={placeholder} type={type} {...field} />
+            <Input data-cy={dataCy} data-testid={dataTestId} placeholder={placeholder} type={type} {...field} disabled={disabled} />
           </FormControl>
           <FormMessage data-cy={`category-${fieldName}-error-message`} />
         </FormItem>
