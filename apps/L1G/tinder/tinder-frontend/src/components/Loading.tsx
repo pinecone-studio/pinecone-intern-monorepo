@@ -1,12 +1,11 @@
-import { Flame } from 'lucide-react';
+import { TinderLogo } from './TinderLogo';
 
 const Loading = () => {
   return (
     <div data-testid="loading" className="flex flex-col items-center justify-center h-screen bg-white">
       <div className="flex flex-col items-center justify-center flex-1">
         <div className="flex items-center mb-8">
-          <Flame fill="#FD267D" color="#FD267D" size={32} className="mr-2" />
-          <div className="text-3xl font-bold tracking-tight text-[#424242]">tinder</div>
+          <TinderLogo />
         </div>
 
         <div className="relative mb-4">
