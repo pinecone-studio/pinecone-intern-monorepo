@@ -28,8 +28,7 @@
     });
 
     await newPost.save();
-    await newPost.populate("user", "userName profileImage fullName");
-
+   
 
     return newPost;
   };
