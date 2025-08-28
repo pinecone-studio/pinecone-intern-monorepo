@@ -39,5 +39,6 @@ export const foodTypeDefs = gql`
     updateFood(foodId: ID!, input: UpdateFoodInput!): Food!
     deleteFood(foodId: ID!): Food!
     updateFoodByDiscount(foodId: ID!, discountId: ID!): Food!
+    updateFoodByStatus(foodId: ID!, foodStatus: String!): Food!
   }
 `;

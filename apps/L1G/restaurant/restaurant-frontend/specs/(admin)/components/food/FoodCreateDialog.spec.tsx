@@ -55,7 +55,7 @@ const createFoodMock: MockedResponse = {
       input: {
         foodName: 'test',
         price: '200',
-        status: 'Идэвхитэй',
+        foodStatus: 'Идэвхитэй',
         image: 'https://example.com/foodimage.jpg',
         categoryId: '1',
       },
@@ -67,7 +67,7 @@ const createFoodMock: MockedResponse = {
         foodId: '1',
         foodName: 'test',
         price: '200',
-        status: 'Идэвхитэй',
+        foodStatus: 'Идэвхитэй',
         image: 'https://example.com/foodimage.jpg',
         category: {
           categoryId: '1',
@@ -85,7 +85,7 @@ const createFoodErrorMock: MockedResponse = {
       input: {
         foodName: 'test',
         price: '200',
-        status: 'Идэвхитэй',
+        foodStatus: 'Идэвхитэй',
         image: 'https://example.com/foodimage.jpg',
         categoryId: '1',
       },
@@ -168,7 +168,6 @@ describe('FoodCreateDialog', () => {
 
     const foodImage = getByTestId('create-food-food-image');
     expect(foodImage).toBeInTheDocument();
-    // expect(foodImage).toHaveAttribute('src', mockUrl);
   });
 
   it('should handle empty file input', async () => {
