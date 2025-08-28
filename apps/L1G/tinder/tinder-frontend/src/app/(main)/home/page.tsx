@@ -30,6 +30,7 @@ const getFilteredProfiles = (data: any, currentUserId: string) => {
             interestName: i.interestName ?? '',
           })) ?? [],
       images: u.images?.filter((img: any) => img != null) ?? [],
+      bio: u.bio,
     }));
 };
 
@@ -37,7 +38,6 @@ const HomePage = () => {
   const { currentUser } = useCurrentUser();
 
   const { data, loading, error } = useGetusersQuery();
-  console.log(data, 'daat');
 
   const [like] = useLikeUserMutation();
   const [dislike] = useDislikeMutation();
@@ -112,8 +112,6 @@ const HomePage = () => {
   if (!currentUser) return <div>User not found.</div>;
 
   const profiles: UserProfile[] = getFilteredProfiles(data, currentUser.id);
-
-  console.log(profiles, ' profiles');
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">

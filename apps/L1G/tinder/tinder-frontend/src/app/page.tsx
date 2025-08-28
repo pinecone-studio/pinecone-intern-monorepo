@@ -12,6 +12,7 @@ export interface UserProfile {
   id: string;
   name: string | null | undefined;
   age?: number;
+  bio: string;
   interests: interest[];
   images: string[] | null;
 }
