@@ -302,6 +302,7 @@ describe('ProfileForm', () => {
 
     expect(mockOnSuccess).toHaveBeenCalled();
   });
+
   it('handles Date object for dateOfBirth correctly', async () => {
     const dateOfBirth = new Date('1990-01-01');
     const userDataWithDate = { ...userData, dateOfBirth };
