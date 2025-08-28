@@ -22,7 +22,7 @@ export const passwordSchema = z
 // Full form schema for the main form
 export const formSchema = z
   .object({
-    phone: z.string().min(1, { message: 'Утасны дугаар шаардлагтай' }),
+    phone: z.string().min(8, { message: 'Утасны дугаар шаардлагтай' }),
     email: z.string().email({ message: 'Имэйл хаяг буруу байна.' }).min(1),
     oldPassword: z.string().min(1, { message: 'Одоогийн нууц үгээ оруулна уу' }),
     newPassword: z.string().min(6, { message: 'Шинэ нууц үг 6+ тэмдэгттэй байх ёстой.' }),

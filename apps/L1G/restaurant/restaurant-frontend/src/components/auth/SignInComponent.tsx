@@ -9,10 +9,12 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useSignInMutation } from '@/generated';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/app/context/AuthContext';
 
 export const SignInComponent = () => {
   const router = useRouter();
   const [signIn] = useSignInMutation();
+  const { setUser } = useAuth();
 
   const formSchema = z.object({
     email: z
@@ -46,7 +48,18 @@ export const SignInComponent = () => {
           },
         },
       });
+      const userData = data?.signIn.user;
       localStorage.setItem('token', data?.signIn.token || '');
+
+      if (userData) {
+        setUser({
+          userId: userData.userId,
+          email: userData.email,
+          phoneNumber: userData.phoneNumber ?? undefined,
+          profile: userData.profile ?? undefined,
+          password: userData.password ?? undefined,
+        });
+      }
       router.push('/');
     } catch (error) {
       form.setError('password', {

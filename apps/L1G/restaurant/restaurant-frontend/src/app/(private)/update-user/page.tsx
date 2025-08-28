@@ -1,5 +1,7 @@
-import { UpdateUserProfile } from '@/components/auth/update-user-profile/UpdateUserProfile';
+'use client';
+
 import { Navbar } from '@/components/Navbar';
+import { UpdateUserProfile } from '@/features/update-user-profile/UpdateUserProfile';
 
 const UpdateUser = () => {
   return (

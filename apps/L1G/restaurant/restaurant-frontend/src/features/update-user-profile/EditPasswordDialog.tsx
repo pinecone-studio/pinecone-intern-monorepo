@@ -11,7 +11,7 @@ import { passwordSchema, type PasswordFormValues } from '@/utils/UpdateUserUtils
 import { zodResolver } from '@hookform/resolvers/zod';
 
 interface EditPasswordDialogProps {
-  onUpdate: (currentPassword: string, newPassword: string) => Promise<void>;
+  onUpdate: (currentPasasword: string, newPassword: string) => Promise<void>;
   isLoading?: boolean;
 }
 
