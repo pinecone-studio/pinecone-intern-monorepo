@@ -43,6 +43,7 @@ const HomePage = () => {
   const [dislike] = useDislikeMutation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMatched, setIsMatched] = useState(false);
+  const [matchedusersid, setMatchedusersid] = useState<string[]>([]);
 
   useEffect(() => {
     const listener = (e: KeyboardEvent) => handleKeyDown(e, isMatched, closeMatchDialog);
@@ -64,6 +65,7 @@ const HomePage = () => {
 
       if (didMatch) {
         setIsMatched(true);
+        setMatchedusersid((prev) => [...prev, currentUser.id, profileId]);
       } else {
         goToNextProfile();
       }
@@ -123,7 +125,7 @@ const HomePage = () => {
 
       <ProfileSwiper profiles={profiles} currentIndex={currentIndex} onLike={handleLike} onDislike={handleDislike} />
 
-      {isMatched && <MatchDialogClose onClose={closeMatchDialog} />}
+      {isMatched && <MatchDialogClose matchedusersid={matchedusersid} onClose={closeMatchDialog} />}
     </div>
   );
 };
