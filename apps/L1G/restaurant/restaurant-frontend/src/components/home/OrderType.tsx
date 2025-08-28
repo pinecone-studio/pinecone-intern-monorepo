@@ -16,7 +16,7 @@ const OrderType = ({ currentCart }: Props) => {
   const router = useRouter();
 
   const handlePick = (value: string) => {
-    const v = value as FoodServeType;
+    const v = value as OrderTypeValue;
     saveOrderData(currentCart, v);
     setTimeout(() => {
       router.push(`/orderPayment`);
