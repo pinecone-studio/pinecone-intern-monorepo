@@ -1,0 +1,3 @@
+mutation MarkMessagesAsSeen($matchId: ID!, $userId: ID!) {
+  markMessagesAsSeen(matchId: $matchId, userId: $userId)
+}

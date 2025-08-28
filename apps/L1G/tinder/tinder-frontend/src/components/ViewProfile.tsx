@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { ChatUser } from './ChatPage';
+import { ChatUser } from 'types/chat';
 
 interface ViewProfileProps {
   user: ChatUser;

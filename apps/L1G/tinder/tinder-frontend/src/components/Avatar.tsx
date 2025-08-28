@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import { ChatUser } from './ChatPage';
+import { ChatUser } from 'types/chat';
 
 interface AvatarProps {
   user: ChatUser;
