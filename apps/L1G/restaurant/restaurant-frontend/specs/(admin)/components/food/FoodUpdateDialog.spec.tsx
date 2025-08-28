@@ -33,7 +33,7 @@ const mockDataProps = {
   foodId: '2',
   foodName: 'Test1',
   price: '20000',
-  status: 'Идэвхитэй',
+  foodStatus: 'Идэвхитэй',
   image: 'https://example.com/foodimage.jpg',
   category: {
     categoryId: '2',

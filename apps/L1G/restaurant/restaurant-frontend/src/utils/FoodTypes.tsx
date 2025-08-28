@@ -9,7 +9,7 @@ type FoodUpdateDialogProps = {
   foodName: Food['foodName'];
   image: Food['image'];
   price: Food['price'];
-  status: Food['status'];
+  foodStatus: Food['foodStatus'];
   category: Food['category'];
 };
 type FoodUpdateFormProps = {
@@ -20,7 +20,7 @@ type FoodUpdateFormProps = {
     categoryId: string;
     categoryName: string;
   };
-  status: string | string;
+  foodStatus: string | string;
   onSubmit: (_values: z.infer<typeof formSchemaFood>) => void;
   isSubmitting: boolean;
 };
