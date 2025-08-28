@@ -1,11 +1,24 @@
 import { X, Send } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { useGetUserQuery } from '@/generated';
 
 interface MatchProps {
   onClose?: () => void;
+  matchedusersid: string[];
 }
 
-const Match = ({ onClose }: MatchProps) => {
+const Match = ({ onClose, matchedusersid }: MatchProps) => {
+  const id1 = matchedusersid[0];
+  const id2 = matchedusersid[1];
+
+  const { data: user1Data, loading: loading1, error: error1 } = useGetUserQuery({ variables: { id: id1 }, skip: !id1 });
+  const { data: user2Data, loading: loading2, error: error2 } = useGetUserQuery({ variables: { id: id2 }, skip: !id2 });
+
+  if (loading1 || loading2) return <div>Loading...</div>;
+  if (error1 || error2) return <div>Error loading match</div>;
+
+  const user1 = user1Data?.getUser;
+  const user2 = user2Data?.getUser;
   return (
     <div className="bg-white rounded-3xl max-w-sm w-full mx-auto shadow-2xl border border-[#E4E4E7]">
       <div className="flex justify-between items-center p-6">
@@ -20,17 +33,17 @@ const Match = ({ onClose }: MatchProps) => {
           <div className="flex justify-center items-center">
             <div className="relative">
               <div className="w-[152px] h-[152px] relative left-[20px] rounded-full overflow-hidden border-4 border-white shadow-lg">
-                <img src="/profile.jpg" alt="Your profile" className="w-full h-full object-cover" aria-label="zurag1" role="img" />
+                <img src={user1?.images![0]} alt="Your profile" className="w-full h-full object-cover" aria-label="zurag1" role="img" />
               </div>
             </div>
             <div className="relative">
               <div className="w-[152px] h-[152px] relative right-[20px] rounded-full overflow-hidden border-4 border-white shadow-lg">
-                <img src="/profile.jpg" alt="Baatarvan's profile" className="w-full h-full object-cover" aria-label="zurag2" role="img" />
+                <img src={user2?.images![0]} alt="Baatarvan's profile" className="w-full h-full object-cover" aria-label="zurag2" role="img" />
               </div>
             </div>
           </div>
 
-          <p className="text-[#09090B] text-[14px] font-normal font-sans">You matched with Baatarvan</p>
+          <p className="text-[#09090B] text-[14px] font-normal font-sans">You matched with {user2?.name}</p>
 
           <div className="w-full flex flex-col gap-4">
             <div className="flex justify-center items-center">
