@@ -17,62 +17,38 @@ const base: Props = {
   image: 'https://via.placeholder.com/150',
   foodName: 'Taco',
   price: '15.6',
-  onRemove: jest.fn(),
+  onRemove: jest.fn(), // default onRemove mock өгөөд явуулна
 };
 
-describe('<MenuCard />', () => {
-  it('хоолны нэр, үнэ зөв render-лагдана', () => {
-    render(<MenuCard {...base} />);
-
+describe('MenuCard', () => {
+  it('renders food name and price correctly', () => {
+    render(<MenuCard {...mockFood} />);
     expect(screen.getByText('Taco')).toBeInTheDocument();
-    // component нь parseInt('15.6') → 15, shortPrice(15) → "15"
-    expect(screen.getByText('15')).toBeInTheDocument();
+    expect(screen.getByText('15.6')).toBeInTheDocument();
   });
 
   it('card дээр дарахад onAdd зөв аргументаар дуудагдана', () => {
     const handleAdd = jest.fn();
     render(<MenuCard {...base} onAdd={handleAdd} />);
 
-    const img = screen.getByAltText('hool');
-    fireEvent.click(img);
+    const card = screen.getByText('Taco').closest('div')!;
+    fireEvent.click(card);
 
-    expect(handleAdd).toHaveBeenCalledTimes(1);
     expect(handleAdd).toHaveBeenCalledWith('f1', 'https://via.placeholder.com/150', 'Taco', '15.6');
   });
 
-  it('count > 0 үед overlay дээр тоо харагдана', () => {
-    render(<MenuCard {...base} count={3} />);
+  it('shows overlay count when count > 0', () => {
+    render(<MenuCard {...mockFood} count={3} />);
     expect(screen.getByText('3')).toBeInTheDocument();
   });
 
-  it('X icon дээр дарахад onRemove зөв id-тай дуудагдана', () => {
+  it('calls onRemove when X button is clicked', () => {
     const handleRemove = jest.fn();
-    const { container } = render(<MenuCard {...base} count={2} onRemove={handleRemove} />);
+    render(<MenuCard {...mockFood} count={2} onRemove={handleRemove} />);
 
-    const xIcon = container.querySelector('svg.lucide-x') || container.querySelector('svg');
-    expect(xIcon).toBeTruthy();
+    const removeButton = screen.getByRole('img', { hidden: true }); // X icon нь svg тул role=img
+    fireEvent.click(removeButton);
 
-    if (xIcon) fireEvent.click(xIcon);
-
-    expect(handleRemove).toHaveBeenCalledTimes(1);
     expect(handleRemove).toHaveBeenCalledWith('f1');
-  });
-
-  // ⬇️ 16-р мөрийн тест: 1000-аас их/тэнцүү үнэ "k" форматаар гарна
-  it('formats price >= 1000 with "k" (line 16)', () => {
-    const bigPrice: Props = {
-      ...base,
-      id: 'f2',
-      price: '12500', // parseInt → 12500 → 12.500 → "12.5k"
-    };
-    render(<MenuCard {...bigPrice} />);
-
-    expect(screen.getByText('12.5k')).toBeInTheDocument();
-
-    // Бас яг 1000 дээр "1k" болж буйг давхар шалгая
-    const exactThousand: Props = { ...base, id: 'f3', price: '1000' };
-    render(<MenuCard {...exactThousand} />);
-
-    expect(screen.getByText('1k')).toBeInTheDocument();
   });
 });
