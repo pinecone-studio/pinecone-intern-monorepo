@@ -1,5 +1,4 @@
 /* eslint-disable max-lines */
-
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -302,5 +301,75 @@ describe('ProfileForm', () => {
     });
 
     expect(mockOnSuccess).toHaveBeenCalled();
+  });
+  it('handles Date object for dateOfBirth correctly', async () => {
+    const dateOfBirth = new Date('1990-01-01');
+    const userDataWithDate = { ...userData, dateOfBirth };
+
+    mockUpdateProfile.mockResolvedValue({
+      data: {
+        updateProfile: true,
+      },
+    });
+
+    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userDataWithDate} updateUserData={mockUpdateUserData} />);
+
+    fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'New Name' } });
+    fireEvent.click(screen.getByRole('button', { name: /Next/i }));
+
+    await waitFor(() => {
+      expect(mockUpdateProfile).toHaveBeenCalledWith({
+        variables: expect.objectContaining({
+          dateOfBirth: dateOfBirth.toISOString(),
+        }),
+      });
+    });
+  });
+
+  it('handles string dateOfBirth correctly', async () => {
+    const dateOfBirth = '1990-01-01T00:00:00.000Z';
+    const userDataWithStringDate = { ...userData, dateOfBirth };
+
+    mockUpdateProfile.mockResolvedValue({
+      data: {
+        updateProfile: true,
+      },
+    });
+
+    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userDataWithStringDate} updateUserData={mockUpdateUserData} />);
+
+    fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'New Name' } });
+    fireEvent.click(screen.getByRole('button', { name: /Next/i }));
+
+    await waitFor(() => {
+      expect(mockUpdateProfile).toHaveBeenCalledWith({
+        variables: expect.objectContaining({
+          dateOfBirth: dateOfBirth,
+        }),
+      });
+    });
+  });
+
+  it('handles undefined dateOfBirth correctly', async () => {
+    const userDataWithoutDate = { ...userData, dateOfBirth: undefined };
+
+    mockUpdateProfile.mockResolvedValue({
+      data: {
+        updateProfile: true,
+      },
+    });
+
+    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userDataWithoutDate} updateUserData={mockUpdateUserData} />);
+
+    fireEvent.change(screen.getByLabelText(/Name/i), { target: { value: 'New Name' } });
+    fireEvent.click(screen.getByRole('button', { name: /Next/i }));
+
+    await waitFor(() => {
+      expect(mockUpdateProfile).toHaveBeenCalledWith({
+        variables: expect.objectContaining({
+          dateOfBirth: undefined,
+        }),
+      });
+    });
   });
 });
