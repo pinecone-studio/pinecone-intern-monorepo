@@ -3,8 +3,17 @@ import { TinderLogo } from './TinderLogo';
 import { MessageSquare } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { useGetMeQuery } from '@/generated';
 
 export const Header = () => {
+  const { data, loading } = useGetMeQuery();
+
+  let firstImage = '/profile.jpg';
+
+  if (!loading && data?.getMe?.images?.length) {
+    firstImage = data.getMe.images[0];
+  }
+
   return (
     <div className="w-full h-[64px] py-4 flex justify-center items-center border border-b-[#E4E4E7] px-4">
       <div className="w-[1280px] max-w-[1280px] flex justify-between items-center">
@@ -19,8 +28,8 @@ export const Header = () => {
             <MessageSquare size={16} strokeWidth={2} aria-hidden="true" color="#09090B" />
           </Button>
 
-          <div className="w-[40px] h-[40px] flex justify-center items-center rounded-full">
-            <Image src="/profile.jpg" alt="Profile Picture" width={40} height={40} className="rounded-full" />
+          <div className="relative w-[40px] h-[40px] rounded-full overflow-hidden">
+            <Image src={firstImage} alt="Profile Picture" fill className="object-cover" />
           </div>
         </div>
       </div>
