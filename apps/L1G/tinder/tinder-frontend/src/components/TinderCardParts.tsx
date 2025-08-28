@@ -54,22 +54,25 @@ const ProfileImageDisplay = ({ imageError, imageSrc, alt, handleImageError }: { 
 const ProfileInfo = ({ profile, images, currentImageIndex }: { profile: UserProfile; images: string[]; currentImageIndex: number }) => {
   const hasOneImage = images.length === 1;
   const isFirstImage = currentImageIndex === 0;
+  const showBio = !hasOneImage && isFirstImage;
+  const showInterests = hasOneImage || (!hasOneImage && !isFirstImage);
 
   return (
-    <>
-      {(hasOneImage || isFirstImage) && (
-        <p className="text-[18px] font-semibold text-white">
-          {profile.name || 'Unknown'}, {profile.age || ''}
-        </p>
-      )}
-      {(hasOneImage || !isFirstImage) && (
+    <div>
+      <p className="text-[18px] font-semibold text-white">
+        {profile.name || 'Unknown'}, {profile.age || ''}
+      </p>
+
+      {showBio && <p className="text-[14px] font-regular text-white">{profile.bio}</p>}
+
+      {showInterests && (
         <div className="flex flex-wrap gap-1">
           {(profile.interests ?? []).map((interest, id) => (
             <Interest key={id} interestName={interest.interestName} />
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 };
 
