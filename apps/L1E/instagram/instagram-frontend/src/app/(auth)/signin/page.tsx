@@ -63,7 +63,7 @@ const SignInPage = () => {
         }
     };
     return (
-        <div className="bg-gray-50 w-full h-screen" data-cy="Sign-In-Page">
+        <div className="bg-[#F4F4F5] w-full h-screen" data-cy="Sign-In-Page">
             <div className="w-[364px] h-fit space-y-3 mx-auto pt-[105px] rounded-[10px]">
                 <div className="bg-white py-12 rounded-[10px]">
                     <div className="pb-3">

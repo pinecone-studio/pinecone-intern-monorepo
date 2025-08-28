@@ -19,14 +19,15 @@ const server = new ApolloServer({
 
 
 const apolloHandler = startServerAndCreateNextHandler(server, {
-  context: async ({ req }:any) => {
+  context: async ({ req }: any) => {
     try {
-      const authHeader = req.headers.get("authorization") ;
-      const token = authHeader.replace("Bearer ", "");
+      const header = req.headers.get('authorization') || req.headers.get('Authorization') || '';
+      const token = header.startsWith('Bearer ') ? header.slice(7) : '';
+      if (!token) return { userId: null };
       const decoded = jwt.verify(token, getJwtSecret()) as { userId?: string };
-      return { userId: decoded?.userId  };
+      return { userId: decoded?.userId ?? null };
     } catch (err) {
-      console.error("Context token error:", err);
+      console.error('Context token error:', err);
       return { userId: null };
     }
   },
