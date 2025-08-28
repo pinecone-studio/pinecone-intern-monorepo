@@ -1,9 +1,10 @@
+/* eslint-disable complexity */
 'use client';
 
 import React, { useEffect, useRef } from 'react';
 import { MessageSquare, Send, MessageSquareDashedIcon } from 'lucide-react';
 import ChatHeader from './ChatHeader';
-import { ChatUser } from './ChatPage';
+import { ChatUser } from 'types/chat';
 
 interface Message {
   id: string;
@@ -60,19 +61,6 @@ const ChatWindow = ({ lastSeenMessageId, selectedUser, messages, inputValue, onI
           <>
             {messages.map((msg) => {
               const isLastSeen = msg.id === lastSeenMessageId && msg.sender === 'me';
-              let seenTimeAgo = '';
-              if (isLastSeen) {
-                const seenDate = new Date(msg.timestamp);
-                const now = new Date();
-                const diffMs = now.getTime() - seenDate.getTime();
-                const diffMins = Math.floor(diffMs / (1000 * 60));
-                if (diffMins < 1) seenTimeAgo = 'Seen just now';
-                else if (diffMins < 60) seenTimeAgo = `Seen ${diffMins} min ago`;
-                else {
-                  const diffHours = Math.floor(diffMins / 60);
-                  seenTimeAgo = `Seen ${diffHours}h ago`;
-                }
-              }
 
               return (
                 <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'} relative`}>
@@ -84,9 +72,7 @@ const ChatWindow = ({ lastSeenMessageId, selectedUser, messages, inputValue, onI
                     <p className="text-sm">{msg.text}</p>
                     <p className={`text-xs mt-1 ${msg.sender === 'me' ? 'text-pink-100' : 'text-gray-500'}`}>{msg.timestamp}</p>
                   </div>
-                  {isLastSeen && (
-                    <img src={selectedUser?.images?.[0] || '/default-avatar.jpg'} alt="Seen" className="w-5 h-5 rounded-full border-2 border-white absolute -bottom-5 -right-0" title="Seen" />
-                  )}
+                  {isLastSeen && <img src={selectedUser?.images?.[0]} alt="Seen" className="w-5 h-5 rounded-full border-2 border-white absolute -bottom-5 -right-0" title="Seen" />}
                 </div>
               );
             })}

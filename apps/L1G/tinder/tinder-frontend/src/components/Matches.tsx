@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import Avatar from './Avatar';
-import { ChatUser } from './ChatPage';
+import { ChatUser } from 'types/chat';
 
 interface MatchesProps {
   topRowUsers: ChatUser[];
