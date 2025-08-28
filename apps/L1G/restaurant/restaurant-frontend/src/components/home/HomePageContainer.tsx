@@ -1,4 +1,5 @@
 'use client';
+
 import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import MenuCard from './MenuCard';
@@ -7,19 +8,10 @@ import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerT
 import OrderList from './OrderList';
 import OrderType from './OrderType';
 
-export type AddPayload = {
-  id: string;
-  image: string;
-  foodName: string;
-  price: string;
-};
-export type CartItem = {
-  id: string;
-  image: string;
-  foodName: string;
-  price: string;
-  selectCount: number;
-};
+import { usePathname } from 'next/navigation';
+import { AddPayload, CartItem } from '@/types/cart';
+import { loadCart, saveCart } from '@/utils/storage';
+
 export function removeItemReducer(prev: CartItem[], id: string): CartItem[] {
   const norm = (v: string) => String(v).trim();
   const target = norm(id);
@@ -35,7 +27,6 @@ export function addToCartReducer(prev: CartItem[], p: AddPayload): CartItem[] {
   }
   return [...prev, { ...p, selectCount: 1 }];
 }
-
 export function removeOneReducer(prev: CartItem[], id: string): CartItem[] {
   const idx = prev.findIndex((x) => x.id === id);
   if (idx < 0) return prev;
@@ -49,37 +40,41 @@ export function removeOneReducer(prev: CartItem[], id: string): CartItem[] {
 const HomePageContainer = () => {
   const { data: foodsData } = useGetFoodsQuery();
   const { data: categoriesData } = useGetCategoriesQuery();
+  console.log(foodsData, categoriesData);
+
   const [activeCategory, setActiveCategory] = useState('Үндсэн хоол');
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [isClicked, setIsClicked] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [orderDialogOpen, setOrderDialogOpen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setDrawerOpen(false);
+    setOrderDialogOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    setCart(loadCart());
+  }, []);
+
+  useEffect(() => {
+    saveCart(cart);
+  }, [cart]);
 
   const filteredItems = (foodsData?.getFoods ?? []).filter((item): item is NonNullable<typeof item> => item?.category?.categoryName === activeCategory);
 
   const addToCart = (id: string, image: string, foodName: string, price: string) => {
     setCart((prev) => addToCartReducer(prev, { id, image, foodName, price }));
   };
-
-  const removeOne = (id: string) => {
-    setCart((prev) => removeOneReducer(prev, id));
-  };
-  const removeItem = (id: string) => {
-    setCart((prev) => removeItemReducer(prev, id));
-  };
-  useEffect(() => {
-    const raw = localStorage.getItem('foodData');
-    if (raw) {
-      setCart(JSON.parse(raw));
-    }
-  }, []);
-  useEffect(() => {
-    localStorage.setItem('foodData', JSON.stringify(cart));
-  }, [cart]);
+  const removeOne = (id: string) => setCart((prev) => removeOneReducer(prev, id));
+  const removeItem = (id: string) => setCart((prev) => removeItemReducer(prev, id));
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-white px-4 py-6 text-center border-b">
         <h1 className="text-2xl font-bold text-gray-800">Хоолны цэс</h1>
       </div>
+
       <div className="bg-white px-4 py-4 border-b">
         <div className="flex space-x-6 overflow-x-auto">
           {categoriesData?.getCategories.map((category) => (
@@ -87,9 +82,7 @@ const HomePageContainer = () => {
               data-testid="homepage-container-filter-button"
               key={category?.categoryId}
               onClick={() => {
-                if (category?.categoryName) {
-                  setActiveCategory(category.categoryName);
-                }
+                if (category?.categoryName) setActiveCategory(category.categoryName);
               }}
               className={`whitespace-nowrap text-sm font-medium pb-2 border-b-2 transition-colors ${
                 activeCategory === category?.categoryName ? 'text-orange-600 border-orange-600' : 'text-gray-500 border-transparent hover:text-gray-700'
@@ -100,6 +93,7 @@ const HomePageContainer = () => {
           ))}
         </div>
       </div>
+
       <div className="p-4">
         <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
           {filteredItems.map((value) => {
@@ -108,13 +102,18 @@ const HomePageContainer = () => {
           })}
         </div>
       </div>
+
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t">
-        <Drawer>
-          <DrawerTrigger className="w-full bg-amber-800 hover:bg-amber-900 text-white py-4 text-lg font-medium rounded-lg"> Захиалах</DrawerTrigger>
+        <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+          <DrawerTrigger className="w-full bg-amber-800 hover:bg-amber-900 text-white py-4 text-lg font-medium rounded-lg" onClick={() => setDrawerOpen(true)}>
+            Захиалах
+          </DrawerTrigger>
+
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>Таны захиалга</DrawerTitle>
             </DrawerHeader>
+
             {cart.length === 0 ? (
               <div className="py-10 text-center text-sm text-zinc-500">Хоосон байна.</div>
             ) : (
@@ -132,25 +131,14 @@ const HomePageContainer = () => {
                 />
               ))
             )}
-            <DrawerFooter>
-              <Button
-                onClick={() => {
-                  setIsClicked(true);
-                  console.log(isClicked, 'clicked');
-                }}
-                className="w-full bg-amber-800 hover:bg-amber-900 text-white py-4 text-lg font-medium rounded-lg"
-              >
-                Захиалах
-              </Button>
-              <OrderType isClicked={isClicked} />
-            </DrawerFooter>
+
+            <DrawerFooter>{cart.length !== 0 && <OrderType currentCart={cart} />}</DrawerFooter>
           </DrawerContent>
         </Drawer>
       </div>
 
-      <div className="h-20"></div>
+      {}
     </div>
   );
 };
-
 export default HomePageContainer;
