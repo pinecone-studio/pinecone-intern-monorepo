@@ -59,6 +59,9 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
       const response = await updateProfile({
         variables: {
           updateProfileId: userData.id,
+          genderPreferences: userData.genderPreferences,
+          gender: userData.gender,
+          dateOfBirth: userData.dateOfBirth instanceof Date ? userData.dateOfBirth.toISOString() : userData.dateOfBirth || undefined,
           name: values.name,
           bio: values.bio,
           interests: values.interest,
@@ -130,3 +133,4 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
     </Form>
   );
 };
+
