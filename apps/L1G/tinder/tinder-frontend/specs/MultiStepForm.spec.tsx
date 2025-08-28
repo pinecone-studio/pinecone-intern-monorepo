@@ -55,9 +55,15 @@ describe('MultiStepForm1', () => {
     expect(screen.getByText(/Create an account/i)).toBeInTheDocument();
     fireEvent.click(screen.getByText('Next'));
 
-    expect(mockSetStep).toHaveBeenCalledWith('genderSelect');
+    expect(mockSetStep).toHaveBeenCalledWith('genderOfUser');
   });
   it('renders genderSelect step and triggers onSuccess', () => {
+    render(<MultiStepForm1 step="genderOfUser" setStep={mockSetStep} />);
+    expect(screen.getByText('What’s your gender?')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Next'));
+    expect(mockSetStep).toHaveBeenCalledWith('genderSelect');
+  });
+    it('renders genderSelect step and triggers onSuccess', () => {
     render(<MultiStepForm1 step="genderSelect" setStep={mockSetStep} />);
     expect(screen.getByText('Who are you interested in?')).toBeInTheDocument();
     fireEvent.click(screen.getByText('Next'));
