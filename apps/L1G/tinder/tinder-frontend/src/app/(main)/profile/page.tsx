@@ -1,3 +1,4 @@
+'use client';
 import { Header } from '@/components/Header';
 import { MyProfile } from '@/components/MyProfile';
 import { WhiteTinderLogo } from '@/components/TinderLogo';
