@@ -1,7 +1,7 @@
+// socket-server.ts
 import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
-import { GraphQLClient, gql } from 'graphql-request';
 
 const app = express();
 const server = http.createServer(app);
@@ -13,14 +13,6 @@ const io = new Server(server, {
   },
 });
 
-const graphqlClient = new GraphQLClient('https://tinder-backend-testing-gamma.vercel.app/api/graphql', {
-  headers: {},
-});
-const MARK_MESSAGES_SEEN_MUTATION = gql`
-  mutation MarkMessagesAsSeen($matchId: String!, $userId: String!) {
-    markMessagesAsSeen(matchId: $matchId, userId: $userId)
-  }
-`;
 io.on('connection', (socket) => {
   console.log('🔌 Client connected:', socket.id);
 
@@ -39,19 +31,6 @@ io.on('connection', (socket) => {
     // Emit only to room (i.e. sender + receiver)
     io.to(matchId).emit('chat message', msg);
   });
-
-  socket.on('seen messages', async ({ matchId, userId }) => {
-    try {
-      const variables = { matchId, userId };
-      const response = await graphqlClient.request(MARK_MESSAGES_SEEN_MUTATION, variables);
-      console.log(`Messages marked as seen for matchId ${matchId} by user ${userId}`, response);
-
-      io.to(matchId).emit('messages seen update', { matchId, userId });
-    } catch (error) {
-      console.error('Error marking messages as seen:', error);
-    }
-  });
-
   //Leave
   socket.on('leave room', (matchId: string) => {
     socket.leave(matchId);
