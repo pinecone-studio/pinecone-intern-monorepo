@@ -20,7 +20,7 @@ const OrderType = ({ currentCart }: Props) => {
     const v = value as OrderTypeValue;
     saveOrderData(currentCart, v);
     setTimeout(() => {
-      router.push(`/orderPayment?type=${v}`);
+      router.push(`/orderPayment`);
     }, 0);
   };
 

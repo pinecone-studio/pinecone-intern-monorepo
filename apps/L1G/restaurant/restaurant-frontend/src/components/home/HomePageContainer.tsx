@@ -40,7 +40,6 @@ export function removeOneReducer(prev: CartItem[], id: string): CartItem[] {
 const HomePageContainer = () => {
   const { data: foodsData } = useGetFoodsQuery();
   const { data: categoriesData } = useGetCategoriesQuery();
-  console.log(foodsData, categoriesData);
 
   const [activeCategory, setActiveCategory] = useState('Үндсэн хоол');
   const [cart, setCart] = useState<CartItem[]>([]);
