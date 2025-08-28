@@ -1,12 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { MessageSquare, Send, MessageSquareDashedIcon } from 'lucide-react';
 import ChatHeader from './ChatHeader';
 import { ChatUser } from './ChatPage';
 
 interface Message {
-  id: number;
+  id: string;
   text: string;
   sender: 'me' | 'them';
   timestamp: string;
@@ -19,9 +19,20 @@ interface ChatWindowProps {
   onInputChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown: (_e: React.KeyboardEvent<HTMLInputElement>) => void;
   onSend: () => void;
+  sending: boolean;
+  lastSeenMessageId: string;
 }
 
-const ChatWindow = ({ selectedUser, messages, inputValue, onInputChange, onKeyDown, onSend }: ChatWindowProps) => {
+const ChatWindow = ({ lastSeenMessageId, selectedUser, messages, inputValue, onInputChange, onKeyDown, onSend, sending }: ChatWindowProps) => {
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({
+        behavior: messages.length <= 1 ? 'auto' : 'smooth',
+      });
+    }
+  }, [messages]);
+
   if (!selectedUser) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -46,18 +57,26 @@ const ChatWindow = ({ selectedUser, messages, inputValue, onInputChange, onKeyDo
             <p className="text-gray-500 text-[16px]">You have got a match! Send a message to start chatting.</p>
           </div>
         ) : (
-          messages.map((msg) => (
-            <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}>
-              <div
-                className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${
-                  msg.sender === 'me' ? 'bg-gradient-to-r from-pink-500 to-red-500 text-white' : 'bg-white text-gray-900 shadow-sm border border-gray-200'
-                }`}
-              >
-                <p className="text-sm">{msg.text}</p>
-                <p className={`text-xs mt-1 ${msg.sender === 'me' ? 'text-pink-100' : 'text-gray-500'}`}>{msg.timestamp}</p>
+          <>
+            {messages.map((msg) => (
+              <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'} relative`}>
+                <div
+                  className={`max-w-xs lg:max-w-md px-4 py-2 rounded-2xl ${
+                    msg.sender === 'me' ? 'bg-gradient-to-r from-pink-500 to-red-500 text-white' : 'bg-white text-gray-900 shadow-sm border border-gray-200'
+                  }`}
+                >
+                  <p className="text-sm">{msg.text}</p>
+                  <p className={`text-xs mt-1 ${msg.sender === 'me' ? 'text-pink-100' : 'text-gray-500'}`}>{msg.timestamp}</p>
+                </div>
+
+                {msg.id === lastSeenMessageId && (
+                  <img src={selectedUser?.images?.[0] || '/default-avatar.jpg'} alt="Seen" className="w-5 h-5 rounded-full border-2 border-white absolute -bottom-1 -right-6" title="Seen" />
+                )}
               </div>
-            </div>
-          ))
+            ))}
+
+            <div ref={bottomRef} />
+          </>
         )}
       </div>
 
@@ -71,10 +90,11 @@ const ChatWindow = ({ selectedUser, messages, inputValue, onInputChange, onKeyDo
             onKeyDown={onKeyDown}
             className="flex-1 px-4 py-2 text-sm bg-gray-100 border-0 outline-none rounded-xl focus:ring-2 focus:ring-pink-500 focus:bg-white"
           />
+
           <button
-            onClick={onSend}
-            disabled={!inputValue.trim()}
             className="flex items-center gap-1 px-4 py-2 text-sm text-white transition-all rounded-lg bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={onSend}
+            disabled={!inputValue.trim() || sending}
           >
             <Send size={18} />
             <span>Send</span>

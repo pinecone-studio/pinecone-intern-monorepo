@@ -5,7 +5,7 @@ import { useState, useCallback, useMemo, useEffect } from 'react';
 import ChatPerson from '@/components/ChatPerson';
 import ChatWindow from '@/components/ChatWindow';
 import Matches from '@/components/Matches';
-import { useGetMeQuery, useSendMessageMutation } from '@/generated';
+import { useGetChatWithUserLazyQuery, useGetMeQuery, useSendMessageMutation } from '@/generated';
 import Loading from './Loading';
 import { socket } from 'utils/socket';
 import { debounce } from 'lodash';
@@ -15,6 +15,7 @@ type Message = {
   text: string;
   sender: 'me' | 'them';
   timestamp: string;
+  seen?: boolean;
 };
 
 export type ChatUser = {
@@ -44,6 +45,7 @@ const getInitialBottomUsers = (matches: ChatUser[]) => matches.slice(7);
 const ChatPage: React.FC = () => {
   const { data, loading, error, refetch } = useGetMeQuery();
   const [sendMessageMutation] = useSendMessageMutation();
+  const [fetchChat, { data: chatData }] = useGetChatWithUserLazyQuery();
 
   const [selectedUser, setSelectedUser] = useState<ChatUser | null>(null);
   const [topRowUsers, setTopRowUsers] = useState<ChatUser[]>([]);
@@ -52,11 +54,37 @@ const ChatPage: React.FC = () => {
   const [conversations, setConversations] = useState<Record<string, Message[]>>({});
   const [inputValue, setInputValue] = useState('');
   const [socketError, setSocketError] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
 
   useEffect(() => {
-    if (!selectedUser) return;
+    if (!chatData?.getChatWithUser || !selectedUser || !data?.getMe?.id) return;
+
+    const messages: Message[] = chatData.getChatWithUser.messages.map((msg) => ({
+      id: msg.id,
+      text: msg.content,
+      sender: msg.senderId === data.getMe.id ? 'me' : 'them',
+      timestamp: new Date(msg.createdAt).toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      }),
+      seen: msg.seen,
+    }));
+
+    setConversations((prev) => ({
+      ...prev,
+      [selectedUser.id]: messages,
+    }));
+  }, [chatData, selectedUser, data]);
+
+  useEffect(() => {
+    if (!selectedUser || !data?.getMe?.id) return;
 
     const matchId = selectedUser.id;
+    const userId = data.getMe.id;
+    const participantId = data.getMe.matchIds?.find((m) => m?.id === matchId)?.matchedUser?.id;
+    if (!participantId) return;
+    fetchChat({ variables: { userId, participantId } });
 
     try {
       socket.emit('join room', matchId);
@@ -65,16 +93,32 @@ const ChatPage: React.FC = () => {
       console.error('Failed to join room:', err);
       setSocketError('Failed to connect to chat. Please try again.');
     }
+    setTimeout(() => {
+      const messagesForUser = conversations[matchId] || [];
+      if (messagesForUser.length === 0) return;
 
-    const handler = (msg: { matchId: string; message: string; senderId: string; receiverId: string }) => {
-      if (msg.matchId === matchId) {
+      const lastMessage = messagesForUser[messagesForUser.length - 1];
+
+      try {
+        socket.emit('seen messages', {
+          matchId,
+          lastSeenMessageId: lastMessage.id,
+          userId,
+        });
+        console.log(`Marked messages as seen for match ${matchId}`);
+      } catch (err) {
+        console.error('Failed to emit seen messages:', err);
+      }
+    }, 500);
+    const handler = (msg: { matchId: string; content: string; senderId: string; receiverId: string }) => {
+      if (msg.matchId === matchId && msg.senderId !== data?.getMe?.id) {
         setConversations((prev) => ({
           ...prev,
           [matchId]: [
             ...(prev[matchId] || []),
             {
               id: Date.now(),
-              text: msg.message,
+              text: msg.content,
               sender: 'them',
               timestamp: generateTimestamp(),
             },
@@ -93,11 +137,10 @@ const ChatPage: React.FC = () => {
       }
       socket.off('chat message', handler);
     };
-  }, [selectedUser]);
+  }, [selectedUser, conversations, data]);
 
   useEffect(() => {
     const matchIds = data?.getMe?.matchIds ?? [];
-
     const newMatches: ChatUser[] = matchIds
       .filter((match) => !!match && !!match.matchedUser)
       /* eslint-disable-next-line complexity */
@@ -117,15 +160,12 @@ const ChatPage: React.FC = () => {
           startedConversation: match!.startedConversation,
         };
       });
-
     setSelectedUser((prevSelected) => {
       if (prevSelected && newMatches.find((u) => u.id === prevSelected.id)) return prevSelected;
       return newMatches[0] || null;
     });
-
     setTopRowUsers(getInitialTopRowUsers(newMatches));
     setBottomUsers(getInitialBottomUsers(newMatches));
-
     const chattedUserIds = new Set(newMatches.filter((user) => user.startedConversation).map((user) => user.id));
     setChattedUsers(chattedUserIds);
   }, [data]);
@@ -146,58 +186,75 @@ const ChatPage: React.FC = () => {
   }, []);
   /* eslint-disable-next-line complexity */
   const handleSend = useCallback(async () => {
-    if (!inputValue.trim() || !selectedUser || !data?.getMe?.id) return;
+    if (sending || !inputValue.trim() || !selectedUser || !data?.getMe?.id) return;
+    setSending(true);
 
     const content = inputValue.trim();
     const matchId = selectedUser.id;
     const senderId = data.getMe.id;
     const receiverId = data.getMe.matchIds?.find((m) => m?.id === matchId)?.matchedUser?.id;
 
-    if (!receiverId) return;
+    if (!receiverId) {
+      setSending(false);
+      return;
+    }
+    const tempId = Date.now();
+    const optimisticMessage: Message = {
+      id: tempId,
+      text: content,
+      sender: 'me',
+      timestamp: generateTimestamp(),
+    };
+
+    setConversations((prev) => ({
+      ...prev,
+      [selectedUser.id]: [...(prev[selectedUser.id] || []), optimisticMessage],
+    }));
+
+    setInputValue('');
+    setChattedUsers((prev) => new Set(prev).add(selectedUser.id));
+    moveUserToBottom(selectedUser);
+    debouncedRefetch(refetch);
 
     try {
-      // 1. Save message in DB
       const result = await sendMessageMutation({
         variables: { senderId, receiverId, matchId, content },
       });
+
       const createdMessageId = result.data?.sendMessage?.id;
 
-      // 2. Update UI with the new message
-      const newMessage: Message = {
-        id: createdMessageId ?? Date.now(),
-        text: content,
-        sender: 'me',
-        timestamp: generateTimestamp(),
-      };
-
-      setConversations((prev) => ({
-        ...prev,
-        [selectedUser.id]: [...(prev[selectedUser.id] || []), newMessage],
-      }));
-
-      setInputValue('');
-      setChattedUsers((prev) => new Set(prev).add(selectedUser.id));
-      moveUserToBottom(selectedUser);
-      debouncedRefetch(refetch);
-
-      // 3. Emit to Socket.IO
-      try {
-        socket.emit('chat message', {
-          matchId,
-          content,
-          senderId,
-          receiverId,
-          id: createdMessageId,
-        });
-      } catch (err) {
-        console.error('Send failed:', err); // Match test expectation
-        setSocketError('Message saved, but failed to notify recipient.');
+      if (createdMessageId) {
+        setConversations((prev) => ({
+          ...prev,
+          [selectedUser.id]: prev[selectedUser.id].map((msg) => (msg.id === tempId ? { ...msg, id: createdMessageId } : msg)),
+        }));
       }
     } catch (err) {
       console.error('Send failed:', err);
+
+      setConversations((prev) => ({
+        ...prev,
+        [selectedUser.id]: prev[selectedUser.id].filter((msg) => msg.id !== tempId),
+      }));
+
       setSocketError('Failed to send message. Please try again.');
+    } finally {
+      setSending(false);
     }
-  }, [inputValue, selectedUser, data, sendMessageMutation]);
+
+    try {
+      socket.emit('chat message', {
+        matchId,
+        content,
+        senderId,
+        receiverId,
+        id: undefined,
+      });
+    } catch (err) {
+      console.error('Socket emit failed:', err);
+      setSocketError('Message saved, but failed to notify recipient.');
+    }
+  }, [inputValue, selectedUser, data, sendMessageMutation, sending, moveUserToBottom, setChattedUsers, debouncedRefetch, refetch]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -205,15 +262,23 @@ const ChatPage: React.FC = () => {
 
       if (isOnlyEnter) {
         e.preventDefault();
-        handleSend();
+        if (!sending) {
+          handleSend();
+        }
       }
     },
-    [handleSend]
+    [handleSend, sending]
   );
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   }, []);
+  const lastSeenMessageId = useMemo(() => {
+    // find last message sent by 'me' that has seen === true
+    const seenMessages = messages.filter((m) => m.sender === 'me' && m.seen);
+    if (seenMessages.length === 0) return null;
+    return seenMessages[seenMessages.length - 1].id;
+  }, [messages]);
 
   if (loading)
     return (
@@ -229,7 +294,16 @@ const ChatPage: React.FC = () => {
       <Matches topRowUsers={topRowUsers} selectedUser={selectedUser} onUserSelect={handleUserSelect} />
       <div className="flex justify-center">
         <ChatPerson selectedUser={selectedUser} onUserSelect={handleUserSelect} bottomUsers={bottomUsers} chattedUsers={chattedUsers} />
-        <ChatWindow selectedUser={selectedUser} messages={messages} inputValue={inputValue} onInputChange={handleInputChange} onKeyDown={handleKeyDown} onSend={handleSend} />
+        <ChatWindow
+          lastSeenMessageId={lastSeenMessageId}
+          sending={sending}
+          selectedUser={selectedUser}
+          messages={messages}
+          inputValue={inputValue}
+          onInputChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          onSend={handleSend}
+        />
       </div>
     </div>
   );

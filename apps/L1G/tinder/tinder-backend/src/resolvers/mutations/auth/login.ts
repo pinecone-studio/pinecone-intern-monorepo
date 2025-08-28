@@ -18,7 +18,7 @@ const validateUser = async (email: string, password: string) => {
 };
 
 const generateToken = (userId: string, email: string, secret: string) => {
-  return jwt.sign({ userId, email }, secret, { expiresIn: '1h' });
+  return jwt.sign({ userId, email }, secret, { expiresIn: '7d' });
 };
 
 export const login = async (_: unknown, args: LoginArgs): Promise<string> => {
