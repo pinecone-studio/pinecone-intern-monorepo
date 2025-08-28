@@ -6,7 +6,18 @@ import { Button } from '@/components/ui/button';
 type Props = {
   isClicked: boolean;
 };
-const OrderType = ({ isClicked }: Props) => {
+
+const OrderType = ({ currentCart }: Props) => {
+  const router = useRouter();
+
+  const handlePick = (value: string) => {
+    const v = value as OrderTypeValue;
+    saveOrderData(currentCart, v);
+    setTimeout(() => {
+      router.push(`/orderPayment`);
+    }, 0);
+  };
+
   return (
     isClicked && (
       <Dialog>

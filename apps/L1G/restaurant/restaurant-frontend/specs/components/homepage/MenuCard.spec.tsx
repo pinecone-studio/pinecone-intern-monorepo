@@ -15,11 +15,14 @@ const mockFood: Props = {
   image: 'https://via.placeholder.com/150',
   foodName: 'Taco',
   price: '15.6',
+  onRemove: jest.fn(), // default onRemove mock өгөөд явуулна
 };
 
 describe('MenuCard', () => {
   it('renders food name and price correctly', () => {
     render(<MenuCard {...mockFood} />);
+    expect(screen.getByText('Taco')).toBeInTheDocument();
+    expect(screen.getByText('15.6')).toBeInTheDocument();
   });
 
   it('calls onAdd when clicked', () => {
@@ -29,11 +32,21 @@ describe('MenuCard', () => {
     const card = screen.getByText('Taco').closest('div')!;
     fireEvent.click(card);
 
-    expect(handleAdd);
+    expect(handleAdd).toHaveBeenCalledWith('f1', 'https://via.placeholder.com/150', 'Taco', '15.6');
   });
 
   it('shows overlay count when count > 0', () => {
     render(<MenuCard {...mockFood} count={3} />);
-    expect(screen.getByText('3'));
+    expect(screen.getByText('3')).toBeInTheDocument();
+  });
+
+  it('calls onRemove when X button is clicked', () => {
+    const handleRemove = jest.fn();
+    render(<MenuCard {...mockFood} count={2} onRemove={handleRemove} />);
+
+    const removeButton = screen.getByRole('img', { hidden: true }); // X icon нь svg тул role=img
+    fireEvent.click(removeButton);
+
+    expect(handleRemove).toHaveBeenCalledWith('f1');
   });
 });
