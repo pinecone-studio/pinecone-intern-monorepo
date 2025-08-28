@@ -31,6 +31,14 @@ io.on('connection', (socket) => {
     // Emit only to room (i.e. sender + receiver)
     io.to(matchId).emit('chat message', msg);
   });
+  //Seen logic
+  socket.on('seen messages', ({ matchId, userId }) => {
+    console.log(`👁️ Messages seen in room ${matchId} by user ${userId}`);
+
+    // Notify everyone else in the room (except sender) that messages were seen
+    socket.to(matchId).emit('messages seen update', { matchId, userId });
+  });
+
   //Leave
   socket.on('leave room', (matchId: string) => {
     socket.leave(matchId);
