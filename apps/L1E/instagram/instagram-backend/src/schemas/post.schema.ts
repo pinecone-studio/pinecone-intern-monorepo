@@ -5,6 +5,7 @@ type Post {
 _id: ID!
 image: [String!]!
 description: String
+user: User! 
 likes: [Like!]!
 comments: [Comment!]!
 createdAt: Date!

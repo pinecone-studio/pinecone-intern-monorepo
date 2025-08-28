@@ -1,16 +1,41 @@
+// apollowrapper.tsx
 "use client";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client"
-import { PropsWithChildren } from "react"
+import React, { PropsWithChildren } from "react";
+import {
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+  ApolloProvider,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 
 const uri =
   process.env.NEXT_PUBLIC_BACKEND_URL ??
   process.env.BACKEND_URL ??
   "http://localhost:4200/api/graphql";
 
-export const ApolloWrapper = ({ children }: PropsWithChildren) => {
-    const client = new ApolloClient({
-        uri,
-        cache: new InMemoryCache(),
-    });
-    return <ApolloProvider client={client}>{children}</ApolloProvider>
-}
+const httpLink = createHttpLink({ uri });
+
+// authLink reads token (safe to call in browser only)
+const authLink = setContext((_, { headers }) => {
+  if (typeof window === "undefined") {
+    // server-side: return headers unmodified
+    return { headers };
+  }
+  const token = window.localStorage.getItem("token");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
+export const ApolloWrapper: React.FC<PropsWithChildren> = ({ children }) => {
+  const client = new ApolloClient({
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache(),
+  });
+
+  return <ApolloProvider client={client}>{children}</ApolloProvider>;
+};

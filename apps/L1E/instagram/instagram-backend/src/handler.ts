@@ -3,6 +3,8 @@ import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { resolvers } from './resolvers';
 import { typeDefs } from './schemas';
+import { getJwtSecret } from './utils/check-jwt';
+import jwt from "jsonwebtoken";
 import { connectToDb } from './utils/connect-to-db';
 import 'dotenv/config';
 
@@ -15,7 +17,21 @@ const server = new ApolloServer({
   csrfPrevention: false,
 });
 
-const apolloHandler = startServerAndCreateNextHandler(server);
+
+const apolloHandler = startServerAndCreateNextHandler(server, {
+  context: async ({ req }:any) => {
+    try {
+      const authHeader = req.headers.get("authorization") ;
+      const token = authHeader.replace("Bearer ", "");
+      const decoded = jwt.verify(token, getJwtSecret()) as { userId?: string };
+      return { userId: decoded?.userId  };
+    } catch (err) {
+      console.error("Context token error:", err);
+      return { userId: null };
+    }
+  },
+});
+
 
 export async function handler(req: NextRequest) {
 

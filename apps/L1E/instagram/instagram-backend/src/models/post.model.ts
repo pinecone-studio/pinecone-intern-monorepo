@@ -5,6 +5,7 @@ export type PostType = {
     image: string[],
     description?: string,
     likes: ObjectId[],
+    user: ObjectId[], 
     comments: ObjectId[],
     createdAt: Date
 };
@@ -22,6 +23,11 @@ const PostSchema = new Schema<PostType>({
         type: [mongoose.SchemaTypes.ObjectId],
         default: [],
         ref: "Like"
+    },
+    user:{
+        type: [mongoose.SchemaTypes.ObjectId],
+        ref: "User",
+        required: true
     },
     comments: {
         type: [mongoose.SchemaTypes.ObjectId],
