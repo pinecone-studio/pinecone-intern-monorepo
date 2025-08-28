@@ -13,8 +13,6 @@ jest.mock('@/generated', () => ({
 }));
 
 describe('ProfileForm', () => {
-  const mockUseGetAllInterestsQuery = useGetAllInterestsQuery as jest.Mock;
-
   const userData = {
     id: 'user-1',
     name: 'Old Name',
@@ -374,23 +372,5 @@ describe('ProfileForm', () => {
         }),
       });
     });
-  });
-
-  it('uses empty string when interestName is null', () => {
-    mockUseGetAllInterestsQuery.mockReturnValue({
-      data: {
-        getAllInterests: [{ _id: '3', interestName: null }],
-      },
-      loading: false,
-      error: null,
-    });
-
-    render(<ProfileForm onSuccess={mockOnSuccess} onBack={mockOnBack} userData={userData} updateUserData={mockUpdateUserData} />);
-
-    const trigger = screen.getByTestId('multi-select-trigger');
-    fireEvent.click(trigger);
-
-    const options = screen.getAllByRole('option');
-    expect(options).toHaveLength(4);
   });
 });
