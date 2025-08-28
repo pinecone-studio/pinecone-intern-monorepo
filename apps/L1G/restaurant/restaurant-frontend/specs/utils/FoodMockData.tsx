@@ -242,8 +242,8 @@ const createDiscountMock: MockedResponse = {
       input: {
         discountName: 'Test',
         discountRate: 20,
-        startDate: new Date('9/27/2025').toLocaleString(),
-        endDate: new Date('9/27/2025').toLocaleString(),
+        startDate: new Date('9/28/2025').toLocaleString(),
+        endDate: new Date('9/28/2025').toLocaleString(),
       },
     },
   },
@@ -267,8 +267,8 @@ const createDiscountErrorMock: MockedResponse = {
       input: {
         discountName: 'Test',
         discountRate: 20,
-        startDate: new Date('9/27/2025'),
-        endDate: new Date('9/27/2025'),
+        startDate: new Date('9/28/2025'),
+        endDate: new Date('9/28/2025'),
       },
     },
   },
