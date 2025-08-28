@@ -5,7 +5,7 @@ import { useState, useCallback, useMemo, useEffect } from 'react';
 import ChatPerson from '@/components/ChatPerson';
 import ChatWindow from '@/components/ChatWindow';
 import Matches from '@/components/Matches';
-import { useGetChatWithUserLazyQuery, useGetMeQuery, useSendMessageMutation } from '@/generated';
+import { useGetChatWithUserLazyQuery, useGetMeQuery, useMarkMessagesAsSeenMutation, useSendMessageMutation } from '@/generated';
 import Loading from './Loading';
 import { socket } from 'utils/socket';
 import { debounce } from 'lodash';
@@ -46,6 +46,7 @@ const ChatPage: React.FC = () => {
   const { data, loading, error, refetch } = useGetMeQuery();
   const [sendMessageMutation] = useSendMessageMutation();
   const [fetchChat, { data: chatData }] = useGetChatWithUserLazyQuery();
+  const [markMessagesAsSeenMutation] = useMarkMessagesAsSeenMutation();
 
   const [selectedUser, setSelectedUser] = useState<ChatUser | null>(null);
   const [topRowUsers, setTopRowUsers] = useState<ChatUser[]>([]);
@@ -76,6 +77,35 @@ const ChatPage: React.FC = () => {
       [selectedUser.id]: messages,
     }));
   }, [chatData, selectedUser, data]);
+  const markMessagesAsSeen = useCallback(async () => {
+    if (!selectedUser || !data?.getMe?.id) return;
+
+    const matchId = selectedUser.id;
+    const userId = data.getMe.id;
+
+    try {
+      await markMessagesAsSeenMutation({
+        variables: {
+          matchId,
+          userId,
+        },
+      });
+      socket.emit('seen messages', { matchId, userId });
+      console.log(`Marked messages as seen for match ${matchId}`);
+      setConversations((prev) => {
+        const messagesForMatch = prev[matchId] || [];
+        const updatedMessages = messagesForMatch.map((msg) => {
+          if (msg.sender === 'them' && !msg.seen) {
+            return { ...msg, seen: true };
+          }
+          return msg;
+        });
+        return { ...prev, [matchId]: updatedMessages };
+      });
+    } catch (error) {
+      console.error('Failed to mark messages as seen:', error);
+    }
+  }, [selectedUser, data, markMessagesAsSeenMutation]);
 
   useEffect(() => {
     if (!selectedUser || !data?.getMe?.id) return;
@@ -93,22 +123,8 @@ const ChatPage: React.FC = () => {
       console.error('Failed to join room:', err);
       setSocketError('Failed to connect to chat. Please try again.');
     }
-    setTimeout(() => {
-      const messagesForUser = conversations[matchId] || [];
-      if (messagesForUser.length === 0) return;
-
-      const lastMessage = messagesForUser[messagesForUser.length - 1];
-
-      try {
-        socket.emit('seen messages', {
-          matchId,
-          lastSeenMessageId: lastMessage.id,
-          userId,
-        });
-        console.log(`Marked messages as seen for match ${matchId}`);
-      } catch (err) {
-        console.error('Failed to emit seen messages:', err);
-      }
+    const timeout = setTimeout(() => {
+      markMessagesAsSeen();
     }, 500);
     const handler = (msg: { matchId: string; content: string; senderId: string; receiverId: string }) => {
       if (msg.matchId === matchId && msg.senderId !== data?.getMe?.id) {
@@ -128,6 +144,21 @@ const ChatPage: React.FC = () => {
     };
 
     socket.on('chat message', handler);
+    const seenUpdateHandler = ({ matchId: updatedMatchId, userId: seenUserId }: { matchId: string; userId: string }) => {
+      if (updatedMatchId === matchId && seenUserId !== userId) {
+        setConversations((prev) => {
+          const messagesForMatch = prev[matchId] || [];
+          const updatedMessages = messagesForMatch.map((msg) => {
+            if (msg.sender === 'me' && !msg.seen) {
+              return { ...msg, seen: true };
+            }
+            return msg;
+          });
+          return { ...prev, [matchId]: updatedMessages };
+        });
+      }
+    };
+    socket.on('messages seen update', seenUpdateHandler);
 
     return () => {
       try {
@@ -136,6 +167,8 @@ const ChatPage: React.FC = () => {
         console.error('Failed to leave room:', err);
       }
       socket.off('chat message', handler);
+      socket.off('messages seen update', seenUpdateHandler);
+      clearTimeout(timeout);
     };
   }, [selectedUser, conversations, data]);
 
@@ -173,7 +206,7 @@ const ChatPage: React.FC = () => {
   const messages = useMemo(() => {
     if (!selectedUser) return [];
     return conversations[selectedUser.id] || [];
-  }, [selectedUser, conversations]);
+  }, [selectedUser, conversations, data, fetchChat, markMessagesAsSeen]);
 
   const handleUserSelect = useCallback((user: ChatUser) => {
     setSelectedUser(user);
