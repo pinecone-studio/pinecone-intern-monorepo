@@ -39,9 +39,6 @@ const debouncedRefetch = debounce((refetchFn: () => void) => {
   refetchFn();
 }, 500);
 
-const getInitialTopRowUsers = (matches: ChatUser[]) => matches.slice(0, 7);
-const getInitialBottomUsers = (matches: ChatUser[]) => matches.slice(7);
-
 const ChatPage: React.FC = () => {
   const { data, loading, error, refetch } = useGetMeQuery();
   const [sendMessageMutation] = useSendMessageMutation();
@@ -91,7 +88,6 @@ const ChatPage: React.FC = () => {
         },
       });
       socket.emit('seen messages', { matchId, userId });
-      console.log(`Marked messages as seen for match ${matchId}`);
       setConversations((prev) => {
         const messagesForMatch = prev[matchId] || [];
         const updatedMessages = messagesForMatch.map((msg) => {
@@ -118,7 +114,6 @@ const ChatPage: React.FC = () => {
 
     try {
       socket.emit('join room', matchId);
-      console.log(`Joined room: ${matchId}`);
     } catch (err) {
       console.error('Failed to join room:', err);
       setSocketError('Failed to connect to chat. Please try again.');
@@ -174,9 +169,8 @@ const ChatPage: React.FC = () => {
 
   useEffect(() => {
     const matchIds = data?.getMe?.matchIds ?? [];
-    const newMatches: ChatUser[] = matchIds
+    const allMatches: ChatUser[] = matchIds
       .filter((match) => !!match && !!match.matchedUser)
-      /* eslint-disable-next-line complexity */
       .map((match) => {
         const user = match!.matchedUser;
 
@@ -193,13 +187,19 @@ const ChatPage: React.FC = () => {
           startedConversation: match!.startedConversation,
         };
       });
+
+    const usersNotStartedConversation = allMatches.filter((user) => !user.startedConversation);
+    const usersStartedConversation = allMatches.filter((user) => user.startedConversation);
+
+    setTopRowUsers(usersNotStartedConversation.slice(0, 7));
+    setBottomUsers(usersStartedConversation);
+
     setSelectedUser((prevSelected) => {
-      if (prevSelected && newMatches.find((u) => u.id === prevSelected.id)) return prevSelected;
-      return newMatches[0] || null;
+      if (prevSelected && allMatches.find((u) => u.id === prevSelected.id)) return prevSelected;
+      return usersStartedConversation[0] || usersNotStartedConversation[0] || null;
     });
-    setTopRowUsers(getInitialTopRowUsers(newMatches));
-    setBottomUsers(getInitialBottomUsers(newMatches));
-    const chattedUserIds = new Set(newMatches.filter((user) => user.startedConversation).map((user) => user.id));
+
+    const chattedUserIds = new Set(usersStartedConversation.map((user) => user.id));
     setChattedUsers(chattedUserIds);
   }, [data]);
 
