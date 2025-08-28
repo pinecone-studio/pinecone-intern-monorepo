@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { Header } from '@/components/Header';
-
 import { useDislikeMutation, useGetusersQuery, useLikeUserMutation } from '@/generated';
 import { UserProfile } from '@/app/page';
 import MatchDialogClose from '@/components/MatchDialogClose';
@@ -18,12 +17,20 @@ const handleKeyDown = (e: KeyboardEvent, isMatched: boolean, closeMatchDialog: (
 
 const getFilteredProfiles = (data: any, currentUserId: string) => {
   return (data?.getusers ?? [])
-    .filter((u: any): u is NonNullable<typeof u> => u !== null)
-    .filter((u: any) => u.id !== currentUserId)
+    .filter((u: any): u is NonNullable<typeof u> => u && (typeof u.id === 'string' || typeof u.id === 'number'))
+    .filter((u: any) => u.id.toString() !== currentUserId)
     .map((u: any) => ({
-      id: u.id,
-      name: u.name,
-      images: u.images?.filter((img: any): img is string => img !== null) ?? [],
+      id: u.id.toString(),
+      name: u.name ?? 'Unknown',
+      interests:
+        u.interests
+          ?.filter((i: any) => i && (typeof i._id === 'string' || typeof i._id === 'number') && i.interestName)
+          .map((i: any) => ({
+            _id: i._id.toString(),
+            interestName: i.interestName ?? '',
+          })) ?? [],
+      images: u.images?.filter((img: any) => img != null) ?? [],
+      bio: u.bio,
     }));
 };
 
@@ -31,12 +38,12 @@ const HomePage = () => {
   const { currentUser } = useCurrentUser();
 
   const { data, loading, error } = useGetusersQuery();
-  console.log(data, 'daat');
 
   const [like] = useLikeUserMutation();
   const [dislike] = useDislikeMutation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMatched, setIsMatched] = useState(false);
+  const [matchedusersid, setMatchedusersid] = useState<string[]>([]);
 
   useEffect(() => {
     const listener = (e: KeyboardEvent) => handleKeyDown(e, isMatched, closeMatchDialog);
@@ -58,6 +65,7 @@ const HomePage = () => {
 
       if (didMatch) {
         setIsMatched(true);
+        setMatchedusersid((prev) => [...prev, currentUser.id, profileId]);
       } else {
         goToNextProfile();
       }
@@ -98,7 +106,10 @@ const HomePage = () => {
     );
   }
 
-  if (error) return <div>Error loading profiles.</div>;
+  if (error) {
+    console.error(error);
+    return <div>Error loading profiles.</div>;
+  }
 
   if (!currentUser) return <div>User not found.</div>;
 
@@ -112,7 +123,7 @@ const HomePage = () => {
 
       <ProfileSwiper profiles={profiles} currentIndex={currentIndex} onLike={handleLike} onDislike={handleDislike} />
 
-      {isMatched && <MatchDialogClose onClose={closeMatchDialog} />}
+      {isMatched && <MatchDialogClose matchedusersid={matchedusersid} onClose={closeMatchDialog} />}
     </div>
   );
 };

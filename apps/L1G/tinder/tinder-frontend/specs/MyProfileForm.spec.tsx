@@ -24,6 +24,7 @@ describe('MyProfileForm', () => {
           { _id: 'music', interestName: 'Music' },
           { _id: 'sports', interestName: 'Sports' },
           { _id: 'travel', interestName: 'Travel' },
+          { _id: 'bowling', interestName: null },
         ],
       },
     });
@@ -153,5 +154,20 @@ describe('MyProfileForm', () => {
     render(<MyProfileForm />);
 
     expect(screen.getByTestId('multi-select-trigger')).toBeInTheDocument();
+  });
+
+  it('falls back to empty array when data is undefined', () => {
+    mockUseGetAllInterestsQuery.mockReturnValue({
+      data: undefined,
+    });
+
+    render(<MyProfileForm />);
+
+    const trigger = screen.getByTestId('multi-select-trigger');
+    expect(trigger).toBeInTheDocument();
+
+    fireEvent.click(trigger);
+
+    expect(screen.queryByRole('option')).not.toBeInTheDocument();
   });
 });

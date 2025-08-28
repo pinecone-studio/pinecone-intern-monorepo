@@ -19,5 +19,9 @@ query Getusers {
     matchIds {
       id
     }
+    interests {
+      _id
+      interestName
+    }
   }
 }

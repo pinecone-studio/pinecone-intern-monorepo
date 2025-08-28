@@ -1,11 +1,13 @@
 import TinderCard from '@/components/TinderCard';
 import { render, fireEvent, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 const mockProfile = {
   id: '1',
   name: 'Test User',
   age: 25,
   images: ['https://via.placeholder.com/400'],
+  interests: ['reading'],
 };
 
 describe('TinderCard image navigation and fallback behavior', () => {
