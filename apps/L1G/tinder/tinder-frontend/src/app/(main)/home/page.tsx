@@ -33,18 +33,18 @@ const getFilteredProfiles = (data: any, currentUserId: string) => {
       bio: u.bio,
     }));
 };
-
+/* eslint-disable-next-line complexity */
 const HomePage = () => {
-  const { currentUser } = useCurrentUser();
+  const { currentUser, loading: userLoading, error: userError } = useCurrentUser();
 
-  const { data, loading, error } = useGetusersQuery();
+  const { data, loading: profilesLoading, error: profilesError } = useGetusersQuery();
+  console.log(currentUser, 'l');
 
   const [like] = useLikeUserMutation();
   const [dislike] = useDislikeMutation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMatched, setIsMatched] = useState(false);
   const [matchedusersid, setMatchedusersid] = useState<string[]>([]);
-
   useEffect(() => {
     const listener = (e: KeyboardEvent) => handleKeyDown(e, isMatched, closeMatchDialog);
     window.addEventListener('keydown', listener);
@@ -98,7 +98,7 @@ const HomePage = () => {
     goToNextProfile();
   };
 
-  if (loading) {
+  if (profilesLoading || userLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <Loading />
@@ -106,12 +106,19 @@ const HomePage = () => {
     );
   }
 
-  if (error) {
-    console.error(error);
+  if (userError) {
+    console.error(userError);
+    return <div>Error loading user info.</div>;
+  }
+
+  if (profilesError) {
+    console.error(profilesError);
     return <div>Error loading profiles.</div>;
   }
 
-  if (!currentUser) return <div>User not found.</div>;
+  if (!currentUser) {
+    return <div>User not found.</div>;
+  }
 
   const profiles: UserProfile[] = getFilteredProfiles(data, currentUser.id);
 
