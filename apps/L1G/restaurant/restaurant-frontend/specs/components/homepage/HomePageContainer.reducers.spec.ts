@@ -1,5 +1,5 @@
 import { addToCartReducer, removeOneReducer, removeItemReducer } from '@/components/home/HomePageContainer';
-import { CartItem } from '@/types/cart';
+import type { CartItem } from '@/types/cart';
 
 describe('addToCartReducer', () => {
   const base = { id: 'f1', image: '/img.jpg', foodName: 'Бууз', price: '4500' };
