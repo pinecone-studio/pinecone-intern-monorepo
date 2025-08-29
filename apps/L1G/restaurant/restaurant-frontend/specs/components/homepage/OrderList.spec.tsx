@@ -3,7 +3,6 @@ import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import OrderList from '@/components/home/OrderList';
 
-// Next.js Image-г жирийн <img> болгоно
 jest.mock('next/image', () => ({
   __esModule: true,
   default: (props: any) => {
@@ -28,16 +27,12 @@ describe('<OrderList />', () => {
   test('нэр, нэгж үнэ, тоо, зураг зөв render-лагдана', () => {
     render(<OrderList {...baseProps} count={3} />);
 
-    // нэр
     expect(screen.getByText('Бууз')).toBeInTheDocument();
 
-    // нэгж үнэ
     expect(screen.getByText(/Нэгж:\s*4500₮/)).toBeInTheDocument();
 
-    // тоо
     expect(screen.getByText('3')).toBeInTheDocument();
 
-    // зураг (alt нь хоолны нэртэй тэнцүү)
     const img = screen.getByAltText('Бууз') as HTMLImageElement;
     expect(img).toBeInTheDocument();
     expect(img.src).toContain('/img/buuz.jpg');
@@ -82,7 +77,6 @@ describe('<OrderList />', () => {
     const handleDelete = jest.fn();
     const { container } = render(<OrderList {...baseProps} count={1} removeItem={handleDelete} />);
 
-    // Trash нь <button aria-label="Устгах"> доторх svg тул svg-ийг шууд дарж өгнө
     const trashIcon = container.querySelector('svg.lucide-trash') || container.querySelector('svg');
     expect(trashIcon).toBeTruthy();
 
