@@ -1,10 +1,9 @@
-import mongoose, { models, Types } from 'mongoose';
+import mongoose, { models, Schema, Types } from 'mongoose';
 
 export type CategoryType = {
   _id: Types.ObjectId;
   categoryName: string;
-  createdAt: Date;
-  updatedAt: Date;
+  food?: Types.ObjectId[];
 };
 
 const CategorySchema = new mongoose.Schema<CategoryType>(
@@ -13,6 +12,13 @@ const CategorySchema = new mongoose.Schema<CategoryType>(
       type: String,
       required: true,
     },
+    food: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Food',
+        required: false,
+      },
+    ],
   },
   {
     timestamps: true,

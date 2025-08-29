@@ -8,8 +8,6 @@ export type FoodType = {
   foodStatus: string;
   category: Types.ObjectId;
   discount: Types.ObjectId;
-  createdAt: Date;
-  updatedAt: Date;
 };
 
 export const FoodSchema = new Schema<FoodType>(
@@ -35,7 +33,7 @@ export const FoodSchema = new Schema<FoodType>(
     category: {
       type: Schema.Types.ObjectId,
       ref: 'Category',
-      required: true,
+      required: false,
     },
     discount: {
       type: Schema.Types.ObjectId,

@@ -13,12 +13,15 @@ describe('getCategories', () => {
     jest.clearAllMocks();
   });
   it('should return categories', async () => {
-    (CategoryModel.find as jest.Mock).mockResolvedValue([
-      {
-        categoryId: '1',
-        categoryName: 'Test',
-      },
-    ]);
+    (CategoryModel.find as jest.Mock).mockReturnValue({
+      populate: jest.fn().mockResolvedValue([
+        {
+          categoryId: '1',
+          categoryName: 'Test',
+        },
+      ]),
+    });
+
     const result = await getCategories?.({}, {}, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual([
       expect.objectContaining({
@@ -30,8 +33,9 @@ describe('getCategories', () => {
   });
 
   it('should handle database errors', async () => {
-    (CategoryModel.find as jest.Mock).mockRejectedValue(new Error('Failed to fetch categories'));
-
+    (CategoryModel.find as jest.Mock).mockReturnValue({
+      populate: jest.fn().mockRejectedValue(new Error('Failed to fetch categories')),
+    });
     await expect(getCategories?.({}, {}, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Failed to fetch categories');
   });
 });

@@ -4,6 +4,7 @@ export const categoryTypeDefs = gql`
   type Category {
     categoryId: ID!
     categoryName: String!
+    food: [Food]
     createdAt: String
     updatedAt: String
   }

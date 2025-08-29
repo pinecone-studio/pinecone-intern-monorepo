@@ -7,7 +7,7 @@ export const foodTypeDefs = gql`
     price: String!
     image: String!
     foodStatus: String!
-    category: Category!
+    category: Category
     discount: Discount
     createdAt: String
     updatedAt: String
@@ -18,7 +18,6 @@ export const foodTypeDefs = gql`
     price: String!
     image: String!
     foodStatus: String!
-    categoryId: ID!
   }
 
   input UpdateFoodInput {
@@ -26,19 +25,21 @@ export const foodTypeDefs = gql`
     price: String
     image: String
     foodStatus: String!
-    categoryId: ID
   }
 
   type Query {
-    getFoodById(foodId: ID!): Food!
     getFoods: [Food]!
+    getFoodById(foodId: ID!): Food!
+    getFoodsByStatus(foodStatus: String!): [Food]!
   }
 
   type Mutation {
     createFood(input: CreateFoodInput!): Food!
     updateFood(foodId: ID!, input: UpdateFoodInput!): Food!
     deleteFood(foodId: ID!): Food!
-    updateFoodByDiscount(foodId: ID!, discountId: ID!): Food!
-    updateFoodByStatus(foodId: ID!, foodStatus: String!): Food!
+    addFoodToCategory(categoryId: ID!, foodId: ID!): [Food!]
+    addFoodToDiscount(discountId: ID!, foodId: ID!): [Food!]
+    deleteFoodFromCategory(categoryId: ID!, foodId: ID!): Food!
+    deleteFoodFromDiscount(discountId: ID!, foodId: ID!): Food!
   }
 `;

@@ -8,3 +8,4 @@ export * from './food/get-food-by-id';
 export * from './discount/get-discounts';
 export * from './order/get-orders';
 export * from './order/get-orders-by-user-id';
+export * from './food/get-foods-by-status';
