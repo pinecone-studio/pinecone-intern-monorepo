@@ -6,6 +6,8 @@ import React, { useState } from 'react';
 import { MyProfileForm } from './MyProfileForm';
 import { MyImages } from './MyImages';
 import clsx from 'clsx';
+import { useGetMeQuery } from '@/generated';
+import Loading from './Loading';
 
 type MenuType = 'profile' | 'images' | 'appearance' | 'notifications';
 
@@ -13,13 +15,18 @@ export const MyProfile = () => {
   const [menu, setMenu] = useState<MenuType>('profile');
   const [isOpen, setIsOpen] = useState(false);
 
+  const { data, loading, error } = useGetMeQuery();
+  if (loading) return <div><Loading/></div>;
+  if (error) return <div>Error loading profile. {error.message};
+  </div>;
+  const user = data?.getMe;
   return (
     <div data-testid="my-profile" className="w-full min-h-screen flex flex-col gap-6 ">
-      <MyProfileHeader isOpen={isOpen} setIsOpen={setIsOpen} />
+      <MyProfileHeader isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
       <div className="flex flex-col md:flex-row justify-start items-start gap-6 lg:gap-12 px-4 sm:px-6 md:px-10 pb-6">
         <SidebarMenu menu={menu} setMenu={setMenu} isOpen={isOpen} setIsOpen={setIsOpen} />
         <div data-testid="menu-content" className="w-full">
-          <MenuContent menu={menu} />
+          <MenuContent menu={menu} user={user} />
         </div>
       </div>
     </div>
@@ -95,10 +102,10 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
   );
 };
 
-export const MenuContent = ({ menu }: { menu: MenuType }) => {
+export const MenuContent = ({ menu, user }: { menu: MenuType; user?: any }) => {
   switch (menu) {
     case 'profile':
-      return <MyProfileForm />;
+      return <MyProfileForm user={user} />;
     case 'images':
       return <MyImages />;
     case 'appearance':
@@ -110,7 +117,7 @@ export const MenuContent = ({ menu }: { menu: MenuType }) => {
   }
 };
 
-export const MyProfileHeader = ({ setIsOpen }: { isOpen: boolean; setIsOpen: (_open: boolean) => void }) => {
+export const MyProfileHeader = ({ setIsOpen, user }: { isOpen: boolean; setIsOpen: (_open: boolean) => void; user?: any }) => {
   return (
     <div className="w-full sticky top-0 z-40 bg-white shadow-sm">
       <div className="flex items-center justify-start gap-3 px-4 sm:px-6 py-4">
@@ -120,8 +127,8 @@ export const MyProfileHeader = ({ setIsOpen }: { isOpen: boolean; setIsOpen: (_o
           </Button>
         </div>
         <div className="flex flex-col gap-1">
-          <p className="text-2xl font-sans font-semibold text-[#09090B]">Hi, user</p>
-          <p className="text-sm font-sans font-normal text-[#71717A]">n.shagai@pinecone.mn</p>
+          <p className="text-2xl font-sans font-semibold text-[#09090B]">Hi, {user?.name || 'Name'}</p>
+          <p className="text-sm font-sans font-normal text-[#71717A]">{user?.email || 'email@example.com'}</p>{' '}
         </div>
         <div className="md:hidden w-10" />
       </div>

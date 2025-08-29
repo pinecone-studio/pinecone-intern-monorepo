@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -13,17 +13,30 @@ import { ProfessionSchoolFields } from './ProfessionSchoolFields';
 import { useGetAllInterestsQuery } from '@/generated';
 import { NameGenderPreferenceFields } from './NameGenderPreferenceFields';
 
-export const MyProfileForm = () => {
+interface MyProfileFormProps {
+  user?: {
+    name?: string;
+    email?: string;
+    birthDate?: string; 
+    genderPreferences?: string;
+    bio?: string;
+    interests?: string[];
+    profession?: string;
+    schoolWork?: string;
+  };
+}
+
+export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user }) => {
   const form = useForm<z.infer<typeof profileFormSchema>>({
     defaultValues: {
-      name: 'John Doe',
-      email: 'johndoe@example.com',
-      birthDate: new Date('2000-01-01'),
-      genderPreference: 'Female',
-      bio: 'my bio',
-      interests: undefined,
-      profession: 'Software Engineer',
-      school: 'Facebook',
+      name: user?.name ?? '',
+      email: user?.email ?? '',
+      birthDate: user?.birthDate ? new Date(user.birthDate) : new Date('2000-01-01'),
+      genderPreference: user?.genderPreferences ?? 'Female',
+      bio: user?.bio ?? '',
+      interests: user?.interests ?? [],
+      profession: user?.profession ?? '',
+      school: user?.schoolWork ?? '',
     },
   });
 
@@ -36,8 +49,8 @@ export const MyProfileForm = () => {
         label: i.interestName as string,
       })) || [];
 
-  const onSubmit = async (_data: z.infer<typeof profileFormSchema>) => {
-    console.log(_data);
+  const onSubmit = async (data: z.infer<typeof profileFormSchema>) => {
+    console.log('Updated profile data:', data);
   };
 
   return (
