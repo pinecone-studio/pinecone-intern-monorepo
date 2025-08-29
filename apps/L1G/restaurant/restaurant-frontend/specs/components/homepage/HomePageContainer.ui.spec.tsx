@@ -2,7 +2,12 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
+/* eslint max-lines: "off" */
+import React from 'react';
+import '@testing-library/jest-dom';
+import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
+import { InMemoryCache } from '@apollo/client';
 import { InMemoryCache } from '@apollo/client';
 import HomePageContainer from '@/components/home/HomePageContainer';
 import { GetCategoriesDocument, GetFoodsDocument } from '@/generated';
@@ -42,41 +47,6 @@ jest.mock('next/navigation', () => ({
   usePathname: () => '/',
 }));
 
-<<<<<<< HEAD
-Object.defineProperty(window, 'matchMedia', {
-  writable: true,
-  value: jest.fn().mockImplementation((query: string) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(),
-    removeListener: jest.fn(),
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
-});
-
-window.scrollTo = window.scrollTo || jest.fn();
-
-jest.mock('next/image', () => ({
-  __esModule: true,
-  default: (props: any) => {
-    const { alt = '', ...rest } = props || {};
-    return <div aria-label={alt} data-testid="next-image-mock" {...rest} />;
-  },
-}));
-
-jest.mock('next/navigation', () => ({
-  useRouter: () => ({
-    push: jest.fn(),
-    replace: jest.fn(),
-    refresh: jest.fn(),
-    prefetch: jest.fn(),
-  }),
-  usePathname: () => '/',
-}));
-
 jest.mock('@/utils/storage', () => ({
   loadCart: () => [],
   saveCart: jest.fn(),
@@ -149,84 +119,12 @@ const apolloMocks = [
   },
 ];
 
-=======
-jest.mock('@/utils/storage', () => ({
-  loadCart: () => [],
-  saveCart: jest.fn(),
-  saveOrderData: jest.fn(),
-}));
-
-const apolloMocks = [
-  {
-    request: { query: GetCategoriesDocument },
-    result: {
-      data: {
-        getCategories: [
-          { __typename: 'Category', categoryId: 'c1', categoryName: 'Үндсэн хоол' },
-          { __typename: 'Category', categoryId: 'c2', categoryName: 'Кофе' },
-          { __typename: 'Category', categoryId: 'c3', categoryName: 'Амттан' },
-        ],
-      },
-    },
-  },
-  {
-    request: { query: GetFoodsDocument },
-    result: {
-      data: {
-        getFoods: [
-          {
-            __typename: 'Food',
-            foodId: 'f1',
-            foodName: 'Taco',
-            image: '/taco.png',
-            price: '10000',
-            foodStatus: 'AVAILABLE',
-            discount: null,
-            category: {
-              __typename: 'Category',
-              categoryId: 'c1',
-              categoryName: 'Үндсэн хоол',
-            },
-          },
-          {
-            __typename: 'Food',
-            foodId: 'f2',
-            foodName: 'Latte',
-            image: '/latte.png',
-            price: '8000',
-            foodStatus: 'AVAILABLE',
-            discount: null,
-            category: {
-              __typename: 'Category',
-              categoryId: 'c2',
-              categoryName: 'Кофе',
-            },
-          },
-          {
-            __typename: 'Food',
-            foodId: 'f3',
-            foodName: 'Ice Cream',
-            image: '/ice-cream.png',
-            price: '5000',
-            foodStatus: 'AVAILABLE',
-            discount: null,
-            category: {
-              __typename: 'Category',
-              categoryId: 'c3',
-              categoryName: 'Амттан',
-            },
-          },
-        ],
-      },
-    },
-  },
-];
-
->>>>>>> 75c277a42 (orderlist)
 const cache = new InMemoryCache();
 
 describe('HomePageContainer Enhanced Tests', () => {
+describe('HomePageContainer Enhanced Tests', () => {
   beforeEach(() => {
+    jest.clearAllMocks();
     jest.clearAllMocks();
   });
 
@@ -237,7 +135,16 @@ describe('HomePageContainer Enhanced Tests', () => {
           <HomePageContainer />
         </MockedProvider>
       );
+  describe('Line 84 - Category Filter Button onClick', () => {
+    it('should change active category when valid categoryName is clicked', async () => {
+      render(
+        <MockedProvider mocks={apolloMocks} cache={cache} addTypename>
+          <HomePageContainer />
+        </MockedProvider>
+      );
 
+      expect(await screen.findByText('Taco')).toBeInTheDocument();
+      expect(screen.queryByText('Latte')).not.toBeInTheDocument();
       expect(await screen.findByText('Taco')).toBeInTheDocument();
       expect(screen.queryByText('Latte')).not.toBeInTheDocument();
 
@@ -250,62 +157,6 @@ describe('HomePageContainer Enhanced Tests', () => {
       });
     });
 
-<<<<<<< HEAD
-  it('hydrates cart from localStorage', async () => {
-    const pre: CartItem[] = [{ id: '1', image: '', foodName: 'Taco', price: '15.6к', selectCount: 3 }];
-    localStorage.setItem('foodData', JSON.stringify(pre));
-
-    render(
-      <MockedProvider mocks={Mocks} addTypename={false}>
-        <HomePageContainer />
-      </MockedProvider>
-    );
-
-    const taco = await screen.findByText('Taco');
-    fireEvent.click(taco);
-    await waitFor(() => {
-      const saved = JSON.parse(localStorage.getItem('foodData') || '[]');
-      expect(saved[0].selectCount).toBe(4);
-    });
-  });
-
-  it('drawer: remove one updates storage', async () => {
-    localStorage.setItem('foodData', JSON.stringify([{ id: '1', image: '', foodName: 'Taco', price: '15.6к', selectCount: 2 }]));
-
-    render(
-      <MockedProvider mocks={Mocks} addTypename={false}>
-        <HomePageContainer />
-      </MockedProvider>
-    );
-
-    const tacoElements = await screen.findAllByText('Taco');
-    fireEvent.click(tacoElements[0]);
-
-    fireEvent.click(await screen.findByText('Кофе'));
-    fireEvent.click(await screen.findByText('Үндсэн хоол'));
-    fireEvent.click(await screen.findByText('Амттан'));
-    fireEvent.click(await screen.findByText('Үндсэн хоол'));
-
-    fireEvent.click(screen.getByText('Захиалах'));
-
-    const minusBtn = await screen.findByRole('button', { name: /Хасах/i });
-    fireEvent.click(minusBtn);
-
-    await waitFor(() => {
-      const saved = JSON.parse(localStorage.getItem('foodData') || '[]');
-      expect(saved[0].selectCount).toBe(1);
-    });
-  });
-
-  it('category guard: undefined name does not crash', async () => {
-    const broken = [
-      {
-        request: { query: GetCategoriesDocument },
-        result: {
-          data: {
-            __typename: 'Query',
-            getCategories: [{ __typename: 'Category', categoryId: 'unknown', categoryName: undefined }],
-=======
     it('should ignore click when categoryName is an empty string after trim', async () => {
       const mocksWithEmptyName = [
         {
@@ -318,7 +169,6 @@ describe('HomePageContainer Enhanced Tests', () => {
                 { __typename: 'Category', categoryId: 'c3', categoryName: 'Кофе' },
               ],
             },
->>>>>>> 75c277a42 (orderlist)
           },
         },
         apolloMocks[1],
@@ -553,6 +403,28 @@ describe('HomePageContainer Enhanced Tests', () => {
         </MockedProvider>
       );
 
+      fireEvent.click(screen.getByText('Захиалах'));
+
+      await screen.findByText('Хоосон байна.');
+
+      const escapeEvent = new KeyboardEvent('keydown', { key: 'Escape' });
+      document.dispatchEvent(escapeEvent);
+
+      await waitFor(() => {
+        expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+      });
+
+      const tacoElements = await screen.findAllByText('Taco');
+      fireEvent.click(tacoElements[0]);
+
+      const drawerTriggers = screen.getAllByText('Захиалах');
+      fireEvent.click(drawerTriggers[0]);
+
+      const deleteButton = await screen.findByLabelText('Устгах');
+      fireEvent.click(deleteButton);
+
+      await screen.findByText('Хоосон байна.');
+    });
       fireEvent.click(screen.getByText('Захиалах'));
 
       await screen.findByText('Хоосон байна.');
