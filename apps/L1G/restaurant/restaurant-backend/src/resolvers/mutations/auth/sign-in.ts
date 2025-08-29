@@ -17,7 +17,7 @@ export const signIn: MutationResolvers['signIn'] = async (_, { input: { email, p
     throw new Error('Invalid password');
   }
 
-  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || 'secret', {
+  const token = jwt.sign({ user: user }, process.env.JWT_SECRET || 'secret', {
     expiresIn: '1d',
   });
 
