@@ -68,8 +68,8 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-[360px] flex flex-col">
-        <div className="flex flex-col gap-4 justify-center items-center">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-[340px] md:w-[360px] flex flex-col">
+        <div className="w-full flex flex-col gap-4 justify-center items-center">
           <div className="flex flex-col gap-1 justify-center items-center py-2">
             <p className="font-sans text-[24px] font-semibold text-[#09090B]">Create password</p>
             <p className="font-sans text-[14px] text-[#71717A] text-center">
@@ -77,8 +77,8 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
             </p>
           </div>
 
-          <div className="flex flex-col gap-2 justify-center items-center">
-            <div className="flex flex-col gap-4 justify-center items-center">
+          <div className="w-full flex flex-col gap-2 justify-center items-center">
+            <div className="w-full flex flex-col gap-4 justify-center items-center">
               <FormField
                 control={form.control}
                 name="password"
@@ -86,7 +86,7 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
                   <FormItem>
                     <FormLabel className="font-sans text-[14px] text-[#09090B] ">Password</FormLabel>
                     <FormControl>
-                      <Input type="password" className="p-2 rounded-md w-[360px]" placeholder="Password" {...field} />
+                      <Input type="password" className="p-2 rounded-md w-[340px] md:w-[360px]" placeholder="Password" {...field} />
                     </FormControl>
                     <FormMessage className="text-s text-red-500" />
                   </FormItem>
@@ -100,7 +100,7 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
                   <FormItem>
                     <FormLabel className="font-sans text-[14px] text-[#09090B] ">Confirm password</FormLabel>
                     <FormControl>
-                      <Input type="password" className="p-2 rounded-md w-[360px]" placeholder="Confirm password" {...field} />
+                      <Input type="password" className="p-2 rounded-md w-[340px] md:w-[360px]" placeholder="Confirm password" {...field} />
                     </FormControl>
                     <FormMessage className="text-s text-red-500" />
                   </FormItem>
@@ -108,7 +108,7 @@ export const CreatePassword = ({ onSuccess, otpId, updateUserData }: CreatePassw
               />
             </div>
 
-            <Button type="submit" className="bg-[#E11D48] bg-opacity-90 w-[350px] rounded-full">
+            <Button type="submit" className="bg-[#E11D48] bg-opacity-90 w-[340px] md:w-[360px] rounded-full">
               {loading ? 'Please wait...' : 'Continue'}
             </Button>
 

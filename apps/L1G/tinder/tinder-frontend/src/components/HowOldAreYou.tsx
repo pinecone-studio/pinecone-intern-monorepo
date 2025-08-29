@@ -39,7 +39,7 @@ const HowOldAreYou = ({ onSuccess, onBack, updateUserData }: HowOldAreYouProps) 
   };
 
   return (
-    <div className="w-[400px] flex flex-col items-center px-4 gap-6">
+    <div className="w-[340px] md:w-[360px] flex flex-col items-center px-4 gap-6">
       <div className="w-full max-w-[400px] flex flex-col items-center gap-6">
         <div className="flex justify-center items-center flex-col">
           <h1 className="font-sans font-semibold text-2xl ">How old are you</h1>

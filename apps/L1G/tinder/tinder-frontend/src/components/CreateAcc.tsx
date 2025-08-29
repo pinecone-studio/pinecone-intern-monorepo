@@ -28,7 +28,7 @@ export const CreateAccount = ({ onSuccess, userData, updateUserData }: CreateAcc
   const [step, setStep] = useState<'email' | 'otp'>('email');
   const [message, setMessage] = useState<string | null>(null);
 
-  const [requestSignup, { error }] = useRequestSignupMutation();
+  const [requestSignup, { loading, error }] = useRequestSignupMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -58,13 +58,13 @@ export const CreateAccount = ({ onSuccess, userData, updateUserData }: CreateAcc
   if (step === 'otp' && userData.email) return <ConfirmEmail email={userData.email} onSuccess={handleOtpSuccess} updateUserData={updateUserData} otpType={OtpType.Create} />;
 
   return (
-    <div className="w-full flex flex-col gap-4 justify-center items-center">
+    <div className="w-[340px] md:w-full flex flex-col gap-4 justify-center items-center">
       <div className="items-center flex flex-col text-center">
         <h1 className="font-semibold text-[24px] font-sans">Create an account</h1>
         <p className="text-[#71717A] text-[14px] font-[400]">Enter your email below to create your account</p>
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="w-full md:w-fit flex flex-col gap-4">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2">
             <div className="flex flex-col gap-6">
@@ -83,7 +83,7 @@ export const CreateAccount = ({ onSuccess, userData, updateUserData }: CreateAcc
               />
             </div>
             <Button type="submit" className="rounded-full bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
-              Continue
+              {loading ? 'Wait...' : 'Continue'}
             </Button>
             {error && <p className="text-[14px] text-red-500 mt-2">{error.message}</p>}
             {message && <p className="text-[14px] text-red-500 mt-2">{message}</p>}

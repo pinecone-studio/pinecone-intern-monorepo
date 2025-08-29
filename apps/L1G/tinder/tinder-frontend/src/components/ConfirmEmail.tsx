@@ -110,7 +110,7 @@ export const ConfirmEmail = ({ onSuccess, email, otpType, updateUserData }: Conf
   }
 
   return (
-    <div className="w-[350px] flex flex-col gap-4">
+    <div className="w-[340px] flex flex-col gap-4">
       <div className="flex flex-col gap-1 py-2 justify-center items-center">
         <p className="font-sans text-[24px] font-semibold text-[#09090B]">Confirm email</p>
         <p className="font-sans text-[14px] font-normal text-[#71717A] text-center">To continue, enter the secure code we sent to {email}. Check junk mail if it’s not in your inbox.</p>

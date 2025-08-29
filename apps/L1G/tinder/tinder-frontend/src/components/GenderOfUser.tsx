@@ -11,7 +11,7 @@ type GenderOfUserProps = {
   updateUserData: (_: Partial<UserData>) => void;
 };
 
-export const GenderOfUser = ({ onSuccess, updateUserData  }: GenderOfUserProps) => {
+export const GenderOfUser = ({ onSuccess, updateUserData }: GenderOfUserProps) => {
   const [selectedInterest, setSelectedInterest] = useState('');
 
   const handleNext = () => {
@@ -21,7 +21,7 @@ export const GenderOfUser = ({ onSuccess, updateUserData  }: GenderOfUserProps) 
   };
 
   return (
-    <div className="flex flex-col items-center justify-start bg-white">
+    <div className="w-full flex flex-col items-center justify-start bg-white">
       <h1 data-cy="Interest-Title" className="text-2xl font-sans font-semibold text-center">
         What’s your gender?
       </h1>
@@ -30,9 +30,9 @@ export const GenderOfUser = ({ onSuccess, updateUserData  }: GenderOfUserProps) 
         Please enter your gender to continue.
       </p>
 
-      <div>
+      <div className="w-full">
         <Select value={selectedInterest} onValueChange={setSelectedInterest}>
-          <SelectTrigger className="w-[400px] sm:w-[350px] h-10" data-cy="Interest-Select" data-testid="select-trigger-gender">
+          <SelectTrigger className="w-[340px] md:w-[360px] h-10" data-cy="Interest-Select" data-testid="select-trigger-gender">
             <SelectValue placeholder="Select" />
           </SelectTrigger>
           <SelectContent>

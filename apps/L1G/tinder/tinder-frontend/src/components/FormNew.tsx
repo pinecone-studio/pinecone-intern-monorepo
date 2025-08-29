@@ -98,7 +98,11 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
 
   return (
     <Form {...form}>
-      <form data-testid="profile-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-full max-w-[400px] mx-auto">
+      <form
+        data-testid="profile-form"
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-4 w-full max-w-[400px] mx-auto h-[380px] min-h-[380px] max-h-fit sm:h-[400px] md:h-fit overflow-scroll"
+      >
         <ProfileInputField control={form.control} name="name" label="Name" placeholder="Enter your name" testId="profile-name-input" />
         <ProfileInputField control={form.control} name="bio" label="Bio" placeholder="Tell us about yourself" testId="profile-bio-input" />
 
@@ -107,9 +111,9 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
           name="interest"
           data-testid="interest"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="w-full px-1">
               <FormLabel>Interest</FormLabel>
-              <FormControl>
+              <FormControl className="h-[40px]">
                 <MultiSelect onValueChange={(val) => field.onChange(val)} options={interestOptions} value={field.value} maxCount={10} />
               </FormControl>
               <FormMessage />
@@ -120,7 +124,7 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
         <ProfileInputField control={form.control} name="profession" label="Profession" placeholder="Enter your profession" testId="profile-profession-input" />
         <ProfileInputField control={form.control} name="work" label="School/Work" placeholder="What do you do?" testId="profile-work-input" />
 
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center ">
           <Button onClick={onBack} type="button" className="border-[#E4E4E7] border text-black bg-white hover:bg-[#E4E4E7] w-16 h-9 rounded-full py-2 px-4">
             Back
           </Button>
@@ -133,4 +137,3 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
     </Form>
   );
 };
-

@@ -21,7 +21,7 @@ export const GenderSelect = ({ onSuccess, updateUserData }: GenderSelectProps) =
   };
 
   return (
-    <div className="flex flex-col items-center justify-start bg-white">
+    <div className="w-full flex flex-col items-center justify-start bg-white">
       <h1 data-cy="Interest-Title" className="text-2xl font-sans font-semibold text-center">
         Who are you interested in?
       </h1>
@@ -32,7 +32,7 @@ export const GenderSelect = ({ onSuccess, updateUserData }: GenderSelectProps) =
 
       <div>
         <Select value={selectedInterest} onValueChange={setSelectedInterest}>
-          <SelectTrigger className="w-[400px] sm:w-[350px] h-10" data-cy="Interest-Select" data-testid="select-trigger">
+          <SelectTrigger className="w-[340px] md:w-[360px] h-10" data-cy="Interest-Select" data-testid="select-trigger">
             <SelectValue placeholder="Select" />
           </SelectTrigger>
           <SelectContent>
