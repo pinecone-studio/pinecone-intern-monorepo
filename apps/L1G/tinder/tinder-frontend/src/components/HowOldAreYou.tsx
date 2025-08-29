@@ -1,14 +1,13 @@
 'use client';
 import React, { useState, useCallback, useMemo } from 'react';
-import React, { useState, useCallback, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { Calendar as CalendarIcon } from 'lucide-react';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { generateYearOptions, MIN_YEAR, MONTHS, validateDate } from './date-utils';
+import { UserData } from 'types/chat';
 
 type Props = {
   onSuccess?: (_date: Date) => void;
