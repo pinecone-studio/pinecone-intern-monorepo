@@ -4,7 +4,10 @@ import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import OrderList from '@/components/home/OrderList';
 
+<<<<<<< HEAD
+=======
 // Next.js Image-г жирийн <img> болгоно
+>>>>>>> 75c277a42 (orderlist)
 jest.mock('next/image', () => ({
   __esModule: true,
   default: (props: any) => {
@@ -25,11 +28,13 @@ const baseProps = {
 describe('<OrderList />', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+<<<<<<< HEAD
   });
 
   test('нэр, нэгж үнэ, тоо, зураг зөв render-лагдана', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+<<<<<<< HEAD
   });
 
   test('нэр, нэгж үнэ, тоо, зураг зөв render-лагдана', () => {
@@ -52,7 +57,28 @@ describe('<OrderList />', () => {
     expect(img.src).toContain('/img/buuz.jpg');
   });
 
-  test("'+’ товч дарахад onAdd зөв аргументаар дуудагдана", () => {
+=======
+  });
+
+  test('нэр, нэгж үнэ, тоо, зураг зөв render-лагдана', () => {
+    render(<OrderList {...baseProps} count={3} />);
+
+    // нэр
+    expect(screen.getByText('Бууз')).toBeInTheDocument();
+
+    // нэгж үнэ
+    expect(screen.getByText(/Нэгж:\s*4500₮/)).toBeInTheDocument();
+
+    // тоо
+    expect(screen.getByText('3')).toBeInTheDocument();
+
+    // зураг (alt нь хоолны нэртэй тэнцүү)
+    const img = screen.getByAltText('Бууз') as HTMLImageElement;
+    expect(img).toBeInTheDocument();
+    expect(img.src).toContain('/img/buuz.jpg');
+  });
+
+>>>>>>> 75c277a42 (orderlist)
   test("'+’ товч дарахад onAdd зөв аргументаар дуудагдана", () => {
     const handleAdd = jest.fn();
     render(<OrderList {...baseProps} count={2} onAdd={handleAdd} />);
@@ -102,7 +128,10 @@ describe('<OrderList />', () => {
     const handleDelete = jest.fn();
     const { container } = render(<OrderList {...baseProps} count={1} removeItem={handleDelete} />);
 
+<<<<<<< HEAD
+=======
     // Trash нь <button aria-label="Устгах"> доторх svg тул svg-ийг шууд дарж өгнө
+>>>>>>> 75c277a42 (orderlist)
     const trashIcon = container.querySelector('svg.lucide-trash') || container.querySelector('svg');
     expect(trashIcon).toBeTruthy();
 
