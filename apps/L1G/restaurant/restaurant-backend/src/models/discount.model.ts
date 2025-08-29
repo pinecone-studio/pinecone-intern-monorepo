@@ -6,8 +6,7 @@ export type DiscountType = {
   discountRate: number;
   startDate: Date;
   endDate: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  food?: Types.ObjectId[];
 };
 
 export const DiscountSchema = new Schema<DiscountType>(
@@ -20,6 +19,13 @@ export const DiscountSchema = new Schema<DiscountType>(
       type: Number,
       required: true,
     },
+    food: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Food',
+        required: false,
+      },
+    ],
     startDate: {
       type: Date,
       required: true,
