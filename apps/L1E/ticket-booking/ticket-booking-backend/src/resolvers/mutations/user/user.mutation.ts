@@ -7,6 +7,13 @@ import {
 } from "../../../generated";
 import mongoose from 'mongoose';
 
+// Helper functions to reduce complexity
+const validateObjectId = (id: string): void => {
+  if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error('Invalid ObjectId format');
+  }
+};
+
 const buildUpdateFields = (updates: {
   fullName?: string;
   email?: string;
@@ -54,10 +61,7 @@ export const userMutations = {
     { _id, fullName, email, role, phone }: MutationUpdateUserArgs
   ) => {
     try {
-      // Check if _id is a valid ObjectId
-      if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
-        throw new Error('Invalid ObjectId format');
-      }
+      validateObjectId(_id);
       
       const updateFields = buildUpdateFields({ fullName, email, role, phone });
       
@@ -77,10 +81,7 @@ export const userMutations = {
     { _id }: MutationDeleteUserArgs
   ) => {
     try {
-      // Check if _id is a valid ObjectId
-      if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
-        throw new Error('Invalid ObjectId format');
-      }
+      validateObjectId(_id);
       
       const deletedUser = await User.findByIdAndDelete(_id);
       if (!deletedUser) {

@@ -7,6 +7,30 @@ import {
 } from "../../../generated";
 import mongoose from 'mongoose';
 
+// Helper functions to reduce complexity
+const validateObjectId = (id: string): void => {
+  if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error('Invalid ObjectId format');
+  }
+};
+
+const buildEventUpdateData = (title?: string, description?: string, date?: string, location?: string) => {
+  const updates = [
+    ['title', title],
+    ['description', description],
+    ['date', date ? new Date(date) : undefined],
+    ['location', location]
+  ].filter(([, value]) => value !== undefined);
+  
+  return Object.fromEntries(updates);
+};
+
+const validateEventDate = (updateData: Record<string, unknown>): void => {
+  if (updateData.date && updateData.date instanceof Date && isNaN(updateData.date.getTime())) {
+    throw new Error('Invalid date format');
+  }
+};
+
 export const eventMutations = {
   createEvent: async (
     _: ResolversParentTypes['Mutation'], 
@@ -39,24 +63,10 @@ export const eventMutations = {
     { _id, title, description, date, location }: MutationUpdateEventArgs
   ) => {
     try {
-      // Check if _id is a valid ObjectId
-      if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
-        throw new Error('Invalid ObjectId format');
-      }
+      validateObjectId(_id);
       
-      const updates = [
-        ['title', title],
-        ['description', description],
-        ['date', date ? new Date(date) : undefined],
-        ['location', location]
-      ].filter(([, value]) => value !== undefined);
-      
-      const updateData = Object.fromEntries(updates);
-      
-      // Validate date if provided
-      if (updateData.date && isNaN(updateData.date.getTime())) {
-        throw new Error('Invalid date format');
-      }
+      const updateData = buildEventUpdateData(title, description, date, location);
+      validateEventDate(updateData);
       
       const updatedEvent = await Event.findByIdAndUpdate(_id, updateData, { new: true });
       if (!updatedEvent) {
@@ -74,10 +84,7 @@ export const eventMutations = {
     { _id }: MutationDeleteEventArgs
   ) => {
     try {
-      // Check if _id is a valid ObjectId
-      if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
-        throw new Error('Invalid ObjectId format');
-      }
+      validateObjectId(_id);
       
       const deletedEvent = await Event.findByIdAndDelete(_id);
       if (!deletedEvent) {

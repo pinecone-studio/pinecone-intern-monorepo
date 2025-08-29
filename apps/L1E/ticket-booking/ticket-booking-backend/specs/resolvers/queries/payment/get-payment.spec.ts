@@ -74,7 +74,7 @@ describe('Get Payment Query', () => {
 
   test('Should handle null _id parameter', async () => {
     const queryArgs = {
-      _id: null as any
+      _id: null as unknown as string
     };
 
     const result = await paymentQueries.getPayment({} as ResolversParentTypes['Query'], queryArgs);

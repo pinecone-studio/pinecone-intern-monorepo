@@ -7,6 +7,13 @@ import {
 } from "../../../generated";
 import mongoose from 'mongoose';
 
+// Helper functions to reduce complexity
+const validateObjectId = (id: string): void => {
+  if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error('Invalid ObjectId format');
+  }
+};
+
 export const ticketMutations = {
   createTicket: async (
     _: ResolversParentTypes['Mutation'], 
@@ -33,10 +40,7 @@ export const ticketMutations = {
     { _id, status }: MutationUpdateTicketArgs
   ) => {
     try {
-      // Check if _id is a valid ObjectId
-      if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
-        throw new Error('Invalid ObjectId format');
-      }
+      validateObjectId(_id);
       
       const updatedTicket = await Ticket.findByIdAndUpdate(_id, { status }, { new: true });
       if (!updatedTicket) {
@@ -54,10 +58,7 @@ export const ticketMutations = {
     { _id }: MutationDeleteTicketArgs
   ) => {
     try {
-      // Check if _id is a valid ObjectId
-      if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
-        throw new Error('Invalid ObjectId format');
-      }
+      validateObjectId(_id);
       
       const deletedTicket = await Ticket.findByIdAndDelete(_id);
       if (!deletedTicket) {

@@ -47,19 +47,34 @@ describe('Get Tickets Query', () => {
   });
 
   afterEach(async () => {
-    // Clean up test tickets
+    await cleanupTestData();
+  });
+
+  const cleanupTestData = async () => {
+    await cleanupTickets();
+    await cleanupEvent();
+    await cleanupUser();
+  };
+
+  const cleanupTickets = async () => {
     for (const ticket of testTickets) {
       if (ticket?._id) {
         await Ticket.deleteOne({ _id: ticket._id });
       }
     }
+  };
+
+  const cleanupEvent = async () => {
     if (testEvent?._id) {
       await Event.deleteOne({ _id: testEvent._id });
     }
+  };
+
+  const cleanupUser = async () => {
     if (testUser?._id) {
       await User.deleteOne({ _id: testUser._id });
     }
-  });
+  };
 
   test('Should get all tickets successfully', async () => {
     const retrievedTickets = await ticketQueries.getTickets({} as ResolversParentTypes['Query']);

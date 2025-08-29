@@ -8,7 +8,7 @@ import { ResolversParentTypes } from '../../../../src/generated';
 import type { EventType } from '../../../../src/models/event.model';
 import type { UserType } from '../../../../src/models/user.model';
 
-describe('Create Ticket Mutation', () => {
+describe('Create Ticket Mutation - Basic Tests', () => {
   let testEvent: EventType;
   let testUser: UserType;
 
@@ -116,56 +116,5 @@ describe('Create Ticket Mutation', () => {
     for (const ticket of tickets) {
       await Ticket.deleteOne({ _id: ticket._id });
     }
-  });
-
-  test('Should handle invalid event ID', async () => {
-    const ticketData = {
-      eventId: '507f1f77bcf86cd799439011',
-      userId: testUser._id.toString(),
-      price: 50.00
-    };
-
-    const createdTicket = await ticketMutations.createTicket({} as ResolversParentTypes['Mutation'], ticketData);
-    expect(createdTicket).toBeDefined();
-    expect(createdTicket.eventId.toString()).toBe('507f1f77bcf86cd799439011');
-  });
-
-  test('Should handle invalid user ID', async () => {
-    const ticketData = {
-      eventId: testEvent._id.toString(),
-      userId: '507f1f77bcf86cd799439011',
-      price: 50.00
-    };
-
-    const createdTicket = await ticketMutations.createTicket({} as ResolversParentTypes['Mutation'], ticketData);
-    expect(createdTicket).toBeDefined();
-    expect(createdTicket.userId.toString()).toBe('507f1f77bcf86cd799439011');
-  });
-
-  test('Should handle negative price', async () => {
-    const ticketData = {
-      eventId: testEvent._id.toString(),
-      userId: testUser._id.toString(),
-      price: -10.00
-    };
-
-    const createdTicket = await ticketMutations.createTicket({} as ResolversParentTypes['Mutation'], ticketData);
-    expect(createdTicket).toBeDefined();
-    expect(createdTicket.price).toBe(-10.00);
-  });
-
-  test('Should handle database error during creation', async () => {
-    const mockSave = jest.spyOn(Ticket.prototype, 'save').mockRejectedValueOnce(new Error('Database error'));
-    
-    const ticketData = {
-      eventId: testEvent._id.toString(),
-      userId: testUser._id.toString(),
-      price: 50.00
-    };
-
-    await expect(ticketMutations.createTicket({} as ResolversParentTypes['Mutation'], ticketData))
-      .rejects.toThrow('Database error');
-    
-    mockSave.mockRestore();
   });
 });

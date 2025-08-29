@@ -131,31 +131,18 @@ describe('Update User Mutation', () => {
     expect(updatedUser._id.toString()).toBe(testUser._id.toString());
   });
 
-  test('Should handle database error during update', async () => {
+  test('Should handle errors and edge cases', async () => {
     const mockFindByIdAndUpdate = jest.spyOn(User, 'findByIdAndUpdate').mockRejectedValueOnce(new Error('Database error'));
-    
-    const updateData = {
-      _id: testUser._id.toString(),
-      fullName: 'Updated User Name'
-    };
-
-    await expect(userMutations.updateUser({} as ResolversParentTypes['Mutation'], updateData))
+    await expect(userMutations.updateUser({} as ResolversParentTypes['Mutation'], { _id: testUser._id.toString(), fullName: 'Updated User Name' }))
       .rejects.toThrow('Database error');
-    
     mockFindByIdAndUpdate.mockRestore();
-  });
 
-  test('Should handle different types of database errors', async () => {
-    const mockFindByIdAndUpdate = jest.spyOn(User, 'findByIdAndUpdate').mockRejectedValueOnce(new Error('Connection timeout'));
-    
-    const updateData = {
-      _id: testUser._id.toString(),
-      fullName: 'Updated User Name'
-    };
-
-    await expect(userMutations.updateUser({} as ResolversParentTypes['Mutation'], updateData))
+    const mockTimeout = jest.spyOn(User, 'findByIdAndUpdate').mockRejectedValueOnce(new Error('Connection timeout'));
+    await expect(userMutations.updateUser({} as ResolversParentTypes['Mutation'], { _id: testUser._id.toString(), fullName: 'Updated User Name' }))
       .rejects.toThrow('Connection timeout');
-    
-    mockFindByIdAndUpdate.mockRestore();
+    mockTimeout.mockRestore();
+
+    await expect(userMutations.updateUser({} as ResolversParentTypes['Mutation'], { _id: 'invalid-object-id', fullName: 'Updated User Name' }))
+      .rejects.toThrow('Invalid ObjectId format');
   });
 });

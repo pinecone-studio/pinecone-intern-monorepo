@@ -22,6 +22,11 @@ export const ticketQueries = {
   },
   
   getTickets: async (_: ResolversParentTypes['Query']) => {
-    return await Ticket.find();
+    try {
+      return await Ticket.find();
+    } catch (error) {
+      console.error('Error getting tickets:', error);
+      return [];
+    }
   },
 };

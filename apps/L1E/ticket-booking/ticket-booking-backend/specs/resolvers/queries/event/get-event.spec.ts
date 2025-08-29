@@ -143,26 +143,13 @@ describe('Get Event Query', () => {
     expect(retrievedEvent).toBeNull();
   });
 
-  test('Should handle null _id parameter', async () => {
-    const queryArgs = {
-      _id: null as any
-    };
+  test('Should handle edge cases and errors', async () => {
+    const nullIdResult = await eventQueries.getEvent({} as ResolversParentTypes['Query'], { _id: null as unknown as string });
+    expect(nullIdResult).toBeNull();
 
-    const result = await eventQueries.getEvent({} as ResolversParentTypes['Query'], queryArgs);
-    
-    expect(result).toBeNull();
-  });
-
-  test('Should handle database error gracefully', async () => {
     const mockFindById = jest.spyOn(Event, 'findById').mockRejectedValueOnce(new Error('Database error'));
-    
-    const queryArgs = {
-      _id: '507f1f77bcf86cd799439011'
-    };
-
-    const result = await eventQueries.getEvent({} as ResolversParentTypes['Query'], queryArgs);
-    
-    expect(result).toBeNull();
+    const dbErrorResult = await eventQueries.getEvent({} as ResolversParentTypes['Query'], { _id: '507f1f77bcf86cd799439011' });
+    expect(dbErrorResult).toBeNull();
     mockFindById.mockRestore();
   });
 });

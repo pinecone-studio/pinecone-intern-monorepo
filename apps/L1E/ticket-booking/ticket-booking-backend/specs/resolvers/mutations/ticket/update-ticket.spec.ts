@@ -119,7 +119,7 @@ describe('Update Ticket Mutation', () => {
   test('Should handle invalid status value', async () => {
     const updateData = {
       _id: testTicket._id.toString(),
-      status: 'INVALID_STATUS' as any
+      status: 'INVALID_STATUS' as unknown as string
     };
 
     // This should not throw an error since we're not validating status values in the mutation

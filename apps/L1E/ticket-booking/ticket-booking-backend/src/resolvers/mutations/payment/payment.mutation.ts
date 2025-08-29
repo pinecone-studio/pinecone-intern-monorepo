@@ -7,6 +7,13 @@ import {
 } from "../../../generated";
 import mongoose from 'mongoose';
 
+// Helper functions to reduce complexity
+const validateObjectId = (id: string): void => {
+  if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error('Invalid ObjectId format');
+  }
+};
+
 export const paymentMutations = {
   createPayment: async (
     _: ResolversParentTypes['Mutation'], 
@@ -32,10 +39,7 @@ export const paymentMutations = {
     { _id, status }: MutationUpdatePaymentArgs
   ) => {
     try {
-      // Check if _id is a valid ObjectId
-      if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
-        throw new Error('Invalid ObjectId format');
-      }
+      validateObjectId(_id);
       
       const updatedPayment = await Payment.findByIdAndUpdate(_id, { status }, { new: true });
       if (!updatedPayment) {
@@ -53,10 +57,7 @@ export const paymentMutations = {
     { _id }: MutationDeletePaymentArgs
   ) => {
     try {
-      // Check if _id is a valid ObjectId
-      if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
-        throw new Error('Invalid ObjectId format');
-      }
+      validateObjectId(_id);
       
       const deletedPayment = await Payment.findByIdAndDelete(_id);
       if (!deletedPayment) {

@@ -2,7 +2,7 @@ import { eventMutations } from '../../../../src/resolvers/mutations/event/event.
 import { Event } from '../../../../src/models/event.model';
 import { ResolversParentTypes } from '../../../../src/generated';
 
-describe('Create Event Mutation', () => {
+describe('Create Event Mutation - Basic Tests', () => {
 
   test('Should create a new event successfully', async () => {
     const eventData = {
@@ -82,32 +82,20 @@ describe('Create Event Mutation', () => {
     await Event.deleteOne({ _id: createdEvent._id });
   });
 
-  test('Should create event with special characters in title and location', async () => {
+  test('Should create event with minimum required fields', async () => {
     const eventData = {
-      title: 'Test Event with Special Characters: @#$%^&*()',
-      description: 'Event with special characters',
+      title: 'Minimal Event',
       date: '2024-12-31T23:59:59.000Z',
-      location: 'Location with special chars: @#$%^&*()'
+      location: 'Minimal Location'
     };
 
     const createdEvent = await eventMutations.createEvent({} as ResolversParentTypes['Mutation'], eventData);
     
-    expect(createdEvent.title).toBe(eventData.title);
-    expect(createdEvent.location).toBe(eventData.location);
+    expect(createdEvent.title).toBe('Minimal Event');
+    expect(createdEvent.location).toBe('Minimal Location');
+    expect(createdEvent.description).toBeUndefined();
 
     await Event.deleteOne({ _id: createdEvent._id });
-  });
-
-  test('Should handle invalid date format gracefully', async () => {
-    const eventData = {
-      title: 'Invalid Date Event',
-      description: 'Testing invalid date',
-      date: 'invalid-date-format',
-      location: 'Test Location'
-    };
-
-    await expect(eventMutations.createEvent({} as ResolversParentTypes['Mutation'], eventData))
-      .rejects.toThrow();
   });
 
   test('Should create multiple events successfully', async () => {
@@ -134,85 +122,5 @@ describe('Create Event Mutation', () => {
     for (const event of events) {
       await Event.deleteOne({ _id: event._id });
     }
-  });
-
-  test('Should create event with minimum required fields', async () => {
-    const eventData = {
-      title: 'Minimal Event',
-      date: '2024-12-31T23:59:59.000Z',
-      location: 'Minimal Location'
-    };
-
-    const createdEvent = await eventMutations.createEvent({} as ResolversParentTypes['Mutation'], eventData);
-    
-    expect(createdEvent.title).toBe('Minimal Event');
-    expect(createdEvent.location).toBe('Minimal Location');
-    expect(createdEvent.description).toBeUndefined();
-
-    await Event.deleteOne({ _id: createdEvent._id });
-  });
-
-  test('Should handle database error during creation', async () => {
-    const mockSave = jest.spyOn(Event.prototype, 'save').mockRejectedValueOnce(new Error('Database error'));
-    
-    const eventData = {
-      title: 'Test Event',
-      description: 'This is a test event',
-      date: '2024-12-31T23:59:59.000Z',
-      location: 'Test Location'
-    };
-
-    await expect(eventMutations.createEvent({} as ResolversParentTypes['Mutation'], eventData))
-      .rejects.toThrow('Database error');
-    
-    mockSave.mockRestore();
-  });
-
-  test('Should handle different types of database errors', async () => {
-    const mockSave = jest.spyOn(Event.prototype, 'save').mockRejectedValueOnce(new Error('Connection timeout'));
-    
-    const eventData = {
-      title: 'Test Event',
-      description: 'This is a test event',
-      date: '2024-12-31T23:59:59.000Z',
-      location: 'Test Location'
-    };
-
-    await expect(eventMutations.createEvent({} as ResolversParentTypes['Mutation'], eventData))
-      .rejects.toThrow('Connection timeout');
-    
-    mockSave.mockRestore();
-  });
-
-  test('Should handle validation error during creation', async () => {
-    const mockSave = jest.spyOn(Event.prototype, 'save').mockRejectedValueOnce(new Error('Validation failed'));
-    
-    const eventData = {
-      title: 'Test Event',
-      description: 'This is a test event',
-      date: '2024-12-31T23:59:59.000Z',
-      location: 'Test Location'
-    };
-
-    await expect(eventMutations.createEvent({} as ResolversParentTypes['Mutation'], eventData))
-      .rejects.toThrow('Validation failed');
-    
-    mockSave.mockRestore();
-  });
-
-  test('Should handle network error during creation', async () => {
-    const mockSave = jest.spyOn(Event.prototype, 'save').mockRejectedValueOnce(new Error('Network timeout'));
-    
-    const eventData = {
-      title: 'Test Event',
-      description: 'This is a test event',
-      date: '2024-12-31T23:59:59.000Z',
-      location: 'Test Location'
-    };
-
-    await expect(eventMutations.createEvent({} as ResolversParentTypes['Mutation'], eventData))
-      .rejects.toThrow('Network timeout');
-    
-    mockSave.mockRestore();
   });
 });

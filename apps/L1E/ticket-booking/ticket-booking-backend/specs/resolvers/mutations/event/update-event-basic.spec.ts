@@ -3,11 +3,10 @@ import { Event } from '../../../../src/models/event.model';
 import { ResolversParentTypes } from '../../../../src/generated';
 import type { EventType } from '../../../../src/models/event.model';
 
-describe('Update Event Mutation', () => {
+describe('Update Event Mutation - Basic Tests', () => {
   let testEvent: EventType;
 
   beforeEach(async () => {
-    // Create a test event for each test
     const eventData = {
       title: 'Test Event',
       description: 'This is a test event',
@@ -18,7 +17,6 @@ describe('Update Event Mutation', () => {
   });
 
   afterEach(async () => {
-    // Clean up test event
     if (testEvent?._id) {
       await Event.deleteOne({ _id: testEvent._id });
     }
@@ -94,16 +92,6 @@ describe('Update Event Mutation', () => {
     expect(updatedEvent.location).toBe('Updated Location');
   });
 
-  test('Should throw error for non-existent event', async () => {
-    const updateData = {
-      _id: '507f1f77bcf86cd799439011', // Non-existent ObjectId
-      title: 'Updated Title'
-    };
-
-    await expect(eventMutations.updateEvent({} as ResolversParentTypes['Mutation'], updateData))
-      .rejects.toThrow('Event not found');
-  });
-
   test('Should handle partial updates with undefined values', async () => {
     const updateData = {
       _id: testEvent._id.toString(),
@@ -130,56 +118,5 @@ describe('Update Event Mutation', () => {
     
     expect(updatedEvent).toBeDefined();
     expect(updatedEvent._id.toString()).toBe(testEvent._id.toString());
-  });
-
-  test('Should update event with special characters', async () => {
-    const updateData = {
-      _id: testEvent._id.toString(),
-      title: 'Event with Special Chars: @#$%^&*()',
-      location: 'Location with Special Chars: @#$%^&*()'
-    };
-
-    const updatedEvent = await eventMutations.updateEvent({} as ResolversParentTypes['Mutation'], updateData);
-    
-    expect(updatedEvent.title).toBe('Event with Special Chars: @#$%^&*()');
-    expect(updatedEvent.location).toBe('Location with Special Chars: @#$%^&*()');
-  });
-
-  test('Should handle invalid date format in update', async () => {
-    const updateData = {
-      _id: testEvent._id.toString(),
-      date: 'Invalid Date'
-    };
-
-    await expect(eventMutations.updateEvent({} as ResolversParentTypes['Mutation'], updateData))
-      .rejects.toThrow();
-  });
-
-  test('Should handle database error during update', async () => {
-    const mockFindByIdAndUpdate = jest.spyOn(Event, 'findByIdAndUpdate').mockRejectedValueOnce(new Error('Database error'));
-    
-    const updateData = {
-      _id: testEvent._id.toString(),
-      title: 'Updated Event Title'
-    };
-
-    await expect(eventMutations.updateEvent({} as ResolversParentTypes['Mutation'], updateData))
-      .rejects.toThrow('Database error');
-    
-    mockFindByIdAndUpdate.mockRestore();
-  });
-
-  test('Should handle different types of database errors', async () => {
-    const mockFindByIdAndUpdate = jest.spyOn(Event, 'findByIdAndUpdate').mockRejectedValueOnce(new Error('Connection timeout'));
-    
-    const updateData = {
-      _id: testEvent._id.toString(),
-      title: 'Updated Event Title'
-    };
-
-    await expect(eventMutations.updateEvent({} as ResolversParentTypes['Mutation'], updateData))
-      .rejects.toThrow('Connection timeout');
-    
-    mockFindByIdAndUpdate.mockRestore();
   });
 });
