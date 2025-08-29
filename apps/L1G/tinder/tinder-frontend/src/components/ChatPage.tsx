@@ -1,4 +1,5 @@
 'use client';
+
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import ChatPerson from '@/components/ChatPerson';
 import ChatWindow from '@/components/ChatWindow';
@@ -18,30 +19,27 @@ const ChatPage: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [socketError, setSocketError] = useState<string | null>(null);
   const { selectedUser, topRowUsers, bottomUsers, chattedUsers, handleUserSelect, moveUserToBottom, setChattedUsers } = useUserManagement(data);
-
-  const markMessagesAsSeen = useMarkMessagesAsSeen(selectedUser, data, setConversations);
-
-  const { handleSend, sending } = useMessageSending({
-    selectedUser,
-    data,
-    setConversations,
-    setChattedUsers,
-    moveUserToBottom,
-    setSocketError,
-    refetch,
-  });
-
-  useSocketConnection({
-    selectedUser,
-    data,
-    setConversations,
-    setSocketError,
-    markMessagesAsSeen,
-  });
-
+  const messages = useMemo(() => {
+    if (!selectedUser) return [];
+    return conversations[selectedUser.id] || [];
+  }, [selectedUser, conversations]);
+  const markMessagesAsSeen = useMarkMessagesAsSeen(selectedUser, setConversations);
+  useEffect(() => {
+    if (!selectedUser) return;
+    markMessagesAsSeen();
+  }, [selectedUser, markMessagesAsSeen]);
+  /* eslint-disable-next-line complexity */
+  useEffect(() => {
+    if (!selectedUser || messages.length === 0) return;
+    const lastMessage = messages[messages.length - 1];
+    if (lastMessage && lastMessage.sender === 'them' && !lastMessage.seen) {
+      markMessagesAsSeen();
+    }
+  }, [messages, selectedUser, markMessagesAsSeen]);
   useEffect(() => {
     if (!chatData?.getChatWithUser || !selectedUser || !data?.getMe?.id) return;
-    const messages: Message[] = chatData.getChatWithUser.messages.map((msg: any) => ({
+
+    const serverMessages: Message[] = chatData.getChatWithUser.messages.map((msg: any) => ({
       id: msg.id,
       text: msg.content,
       sender: msg.senderId === data.getMe.id ? 'me' : 'them',
@@ -52,9 +50,16 @@ const ChatPage: React.FC = () => {
       }),
       seen: msg.seen,
     }));
-    setConversations((prev) => ({ ...prev, [selectedUser.id]: messages }));
-  }, [chatData, selectedUser, data]);
 
+    setConversations((prev) => {
+      return {
+        ...prev,
+        [selectedUser.id]: serverMessages.sort((a, b) => {
+          return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
+        }),
+      };
+    });
+  }, [chatData, selectedUser, data]);
   useEffect(() => {
     if (!selectedUser || !data?.getMe?.id) return;
     const matchId = selectedUser.id;
@@ -63,23 +68,31 @@ const ChatPage: React.FC = () => {
     if (!participantId) return;
     fetchChat({ variables: { userId, participantId } });
   }, [selectedUser, data, fetchChat]);
-
-  const messages = useMemo(() => {
-    if (!selectedUser) return [];
-    return conversations[selectedUser.id] || [];
-  }, [selectedUser, conversations]);
-
   const lastSeenMessageId = useMemo(() => {
     const seenMessages = messages.filter((m) => m.sender === 'me' && m.seen);
     if (seenMessages.length === 0) return null;
     return seenMessages[seenMessages.length - 1].id;
   }, [messages]);
-
+  const { handleSend, sending } = useMessageSending({
+    selectedUser,
+    data,
+    setConversations,
+    setChattedUsers,
+    moveUserToBottom,
+    setSocketError,
+    refetch,
+  });
+  useSocketConnection({
+    selectedUser,
+    data,
+    setConversations,
+    setSocketError,
+    markMessagesAsSeen,
+  });
   const handleKeyDown = useCallback(
-    // eslint-disable-next-line complexity
+    /* eslint-disable-next-line complexity */
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      const isOnlyEnter = e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey;
-      if (isOnlyEnter) {
+      if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey) {
         e.preventDefault();
         if (!sending) {
           handleSend(inputValue, setInputValue);
@@ -105,12 +118,7 @@ const ChatPage: React.FC = () => {
     [handleUserSelect]
   );
 
-  if (loading)
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
+  if (loading) return <Loading />;
   if (error) return <div>Error loading chat: {error.message}</div>;
 
   return (
