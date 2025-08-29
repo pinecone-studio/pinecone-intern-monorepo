@@ -8,11 +8,9 @@ import { useGetMeQuery } from '@/generated';
 import { useRouter } from 'next/navigation';
 
 export const Header = () => {
-  const router = useRouter();
   const goToProfileBtn = () => {
     router.push('/profile');
   };
-
   const { data, loading } = useGetMeQuery();
   const router = useRouter();
   let firstImage = '/profile.jpg';
