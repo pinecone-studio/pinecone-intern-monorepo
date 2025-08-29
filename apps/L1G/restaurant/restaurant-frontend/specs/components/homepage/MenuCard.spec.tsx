@@ -5,6 +5,7 @@ import MenuCard, { Props } from '@/components/home/MenuCard';
 
 jest.mock('next/image', () => ({
   __esModule: true,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default: (props: any) => {
     const { src, alt, ...rest } = props;
     return <img src={src} alt={alt} {...rest} />;
