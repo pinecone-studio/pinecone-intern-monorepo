@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import { ConfirmEmail } from './ConfirmEmail';
 import { EmailForm } from './EmailForm';
-import { UserData } from '@/app/(auth)/signup/page';
 import { OtpType } from '@/generated';
+import { UserData } from 'types/chat';
 
 type Props = {
   updateUserData: (_: Partial<UserData>) => void;

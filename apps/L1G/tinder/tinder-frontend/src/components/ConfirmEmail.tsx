@@ -7,7 +7,7 @@ import { useVerifyOtpMutation, useRequestSignupMutation, OtpType } from '@/gener
 import { ResetPassword } from './ResetPassword';
 import { OtpForm } from './OtpForm';
 import { CreatePassword } from './CreatePassword';
-import type { UserData } from '@/app/(auth)/signup/page';
+import { UserData } from 'types/chat';
 
 export const FormSchema = z.object({
   otp: z.string().length(4, { message: 'Your one-time password must be 4 digits.' }).regex(/^\d+$/, { message: 'OTP must contain only digits.' }),

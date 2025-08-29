@@ -10,8 +10,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Separator } from '@/components/ui/separator';
 import { useRouter } from 'next/navigation';
-import { UserData } from '@/app/(auth)/signup/page';
 import { ConfirmEmail } from './ConfirmEmail';
+import { UserData } from 'types/chat';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email' }),

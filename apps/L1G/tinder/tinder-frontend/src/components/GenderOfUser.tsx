@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import type { UserData } from '@/app/(auth)/signup/page';
+import { UserData } from 'types/chat';
 
 type GenderOfUserProps = {
   onSuccess: () => void;

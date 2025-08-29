@@ -5,7 +5,7 @@ import { X, Plus, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import axios from 'axios';
 import { useUploadImagesMutation } from '@/generated';
-import { UserData } from '@/app/(auth)/signup/page';
+import { UserData } from 'types/chat';
 type ProfileImagesProps = {
   onSuccess: () => void;
   onBack: () => void;

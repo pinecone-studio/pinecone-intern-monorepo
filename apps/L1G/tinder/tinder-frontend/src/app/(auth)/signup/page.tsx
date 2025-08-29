@@ -4,22 +4,7 @@ import { MultiStepForm1 } from '@/components/MultiStepForm1';
 import MultiStepForm2 from '@/components/MultiStepForm2';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-
-export type UserData = {
-  id?: string;
-  email?: string;
-  otpId?: string;
-  password?: string;
-  name?: string;
-  gender?: string;
-  genderPreferences?: string;
-  dateOfBirth?: Date | null;
-  bio?: string;
-  interests?: string[];
-  profession?: string;
-  schoolWork?: string;
-  images?: string[];
-};
+import { UserData } from 'types/chat';
 
 const Signup = () => {
   const router = useRouter();
