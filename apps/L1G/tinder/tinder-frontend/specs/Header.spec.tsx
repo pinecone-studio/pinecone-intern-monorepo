@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Header } from '@/components/Header';
 import { useGetMeQuery } from '@/generated';
@@ -8,9 +8,10 @@ jest.mock('@/generated', () => ({
   useGetMeQuery: jest.fn(),
 }));
 
+const mockPush = jest.fn();
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
-    push: jest.fn(),
+    push: mockPush,
   }),
 }));
 
@@ -28,25 +29,22 @@ describe('Header', () => {
     });
 
     render(<Header />);
-
     const profileImage = screen.getByAltText(/Profile Picture/i);
     expect(profileImage).toBeInTheDocument();
     expect(profileImage).toHaveAttribute('src', expect.stringContaining('profile.jpg'));
   });
 
   it('renders first user image when data is loaded', () => {
-    const userImageUrl = 'https://example.com/avatar.png';
     mockedUseGetMeQuery.mockReturnValue({
       data: {
         getMe: {
-          images: [userImageUrl],
+          images: ['https://example.com/avatar.png'],
         },
       },
       loading: false,
     });
 
     render(<Header />);
-
     const profileImage = screen.getByAltText(/Profile Picture/i);
     expect(profileImage).toHaveAttribute('src', expect.stringContaining('avatar.png'));
   });
@@ -67,27 +65,31 @@ describe('Header', () => {
     });
 
     render(<Header />);
-
     const profileImage = screen.getByAltText(/Profile Picture/i);
     expect(profileImage).toHaveAttribute('src', expect.stringContaining('profile.jpg'));
   });
-  it('navigates to /chat when the Messages button is clicked', () => {
-    const pushMock = jest.fn();
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    jest.mocked(require('next/navigation')).useRouter = () => ({
-      push: pushMock,
-    });
 
+  it('navigates to /chat when the Messages button is clicked', () => {
     mockedUseGetMeQuery.mockReturnValue({
       data: null,
       loading: true,
     });
 
     render(<Header />);
-
     const button = screen.getByLabelText(/Messages/i);
-    button.click();
+    fireEvent.click(button);
+    expect(mockPush).toHaveBeenCalledWith('/chat');
+  });
 
-    expect(pushMock).toHaveBeenCalledWith('/chat');
+  it('navigates to /profile when profile image button is clicked', () => {
+    mockedUseGetMeQuery.mockReturnValue({
+      data: null,
+      loading: true,
+    });
+
+    render(<Header />);
+    const profileButton = screen.getByAltText(/Profile Picture/i).closest('button');
+    fireEvent.click(profileButton!);
+    expect(mockPush).toHaveBeenCalledWith('/profile');
   });
 });
