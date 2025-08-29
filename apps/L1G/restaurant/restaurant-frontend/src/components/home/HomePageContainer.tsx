@@ -1,26 +1,13 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { useEffect, useState } from 'react';
 import { useEffect, useState } from 'react';
 import MenuCard from './MenuCard';
 import { useGetCategoriesQuery } from '@/generated';
 import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import OrderList from './OrderList';
 import OrderType from './OrderType';
-
-export type AddPayload = {
-  id: string;
-  image: string;
-  foodName: string;
-  price: string;
-};
-export type CartItem = {
-  id: string;
-  image: string;
-  foodName: string;
-  price: string;
-  selectCount: number;
-};
+import { usePathname } from 'next/navigation';
+import { AddPayload, CartItem } from '@/types/cart';
+import { loadCart, saveCart } from '@/utils/storage';
 export function removeItemReducer(prev: CartItem[], id: string): CartItem[] {
   const norm = (v: string) => String(v).trim();
   const target = norm(id);
@@ -52,7 +39,20 @@ const HomePageContainer = () => {
 
   const [activeCategory, setActiveCategory] = useState('Үндсэн хоол');
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [isClicked, setIsClicked] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setDrawerOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    setCart(loadCart());
+  }, []);
+
+  useEffect(() => {
+    saveCart(cart);
+  }, [cart]);
 
   const filteredItems = (foodsData?.getFoods ?? []).filter((item): item is NonNullable<typeof item> => item?.category?.categoryName === activeCategory);
 

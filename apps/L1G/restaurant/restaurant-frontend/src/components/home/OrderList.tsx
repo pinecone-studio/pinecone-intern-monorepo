@@ -48,13 +48,14 @@ const OrderList = ({ image, foodName, price, count, onAdd, onRemove, id, removeI
         </div>
       </div>
       <div className="flex flex-col items-center justify-between">
-        <button aria-label="Устгах" className="w-10 h-10 rounded-md bg-zinc-100 flex justify-center items-center">
-          <Trash
-            onClick={() => {
-              removeItem(id);
-            }}
-            className="w-4 h-4"
-          />
+        <button
+          onClick={() => {
+            removeItem(id);
+          }}
+          aria-label="Устгах"
+          className="w-10 h-10 rounded-md bg-zinc-100 flex justify-center items-center"
+        >
+          <Trash className="w-4 h-4" />
         </button>
       </div>
     </div>
