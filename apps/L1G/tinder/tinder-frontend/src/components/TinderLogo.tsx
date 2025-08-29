@@ -1,6 +1,10 @@
-export const TinderLogo = () => {
+type TinderLogoProps = {
+  handleTohome: () => void;
+};
+
+export const TinderLogo = ({ handleTohome }: TinderLogoProps) => {
   return (
-    <div className="flex gap-1">
+    <div onClick={handleTohome} data-testid="tinder-logo" className="flex gap-1 cursor-pointer">
       <svg width="21" height="24" viewBox="0 0 21 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="paint0_linear_3613_948" x1="2028.91" y1="-0.00860596" x2="-339.005" y2="1999.42" gradientUnits="userSpaceOnUse">

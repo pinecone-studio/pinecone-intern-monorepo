@@ -87,4 +87,18 @@ describe('Header', () => {
     fireEvent.click(profileButton!);
     expect(mockPush).toHaveBeenCalledWith('/profile');
   });
+  it('navigates to /home when TinderLogo is clicked', () => {
+    mockedUseGetMeQuery.mockReturnValue({
+      data: null,
+      loading: true,
+    });
+
+    render(<Header />);
+
+    const tinderLogoDiv = screen.getByTestId('tinder-logo');
+
+    fireEvent.click(tinderLogoDiv);
+
+    expect(mockPush).toHaveBeenCalledWith('/home');
+  });
 });
