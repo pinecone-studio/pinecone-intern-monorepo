@@ -1,26 +1,13 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { useEffect, useState } from 'react';
 import { useEffect, useState } from 'react';
 import MenuCard from './MenuCard';
 import { useGetCategoriesQuery, useGetFoodsQuery } from '@/generated';
 import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import OrderList from './OrderList';
 import OrderType from './OrderType';
-
-export type AddPayload = {
-  id: string;
-  image: string;
-  foodName: string;
-  price: string;
-};
-export type CartItem = {
-  id: string;
-  image: string;
-  foodName: string;
-  price: string;
-  selectCount: number;
-};
+import { usePathname } from 'next/navigation';
+import { AddPayload, CartItem } from '@/types/cart';
+import { loadCart, saveCart } from '@/utils/storage';
 export function removeItemReducer(prev: CartItem[], id: string): CartItem[] {
   const norm = (v: string) => String(v).trim();
   const target = norm(id);
@@ -53,7 +40,20 @@ const HomePageContainer = () => {
 
   const [activeCategory, setActiveCategory] = useState('Үндсэн хоол');
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [isClicked, setIsClicked] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setDrawerOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    setCart(loadCart());
+  }, []);
+
+  useEffect(() => {
+    saveCart(cart);
+  }, [cart]);
 
   const filteredItems = (foodsData?.getFoods ?? []).filter((item): item is NonNullable<typeof item> => item?.category?.categoryName === activeCategory);
 
@@ -89,9 +89,8 @@ const HomePageContainer = () => {
               data-testid="homepage-container-filter-button"
               key={category?.categoryId}
               onClick={() => {
-                if (category?.categoryName) {
-                  setActiveCategory(category.categoryName);
-                }
+                const name = category?.categoryName?.trim();
+                if (name) setActiveCategory(name);
               }}
               className={`whitespace-nowrap text-sm font-medium pb-2 border-b-2 transition-colors ${
                 activeCategory === category?.categoryName ? 'text-orange-600 border-orange-600' : 'text-gray-500 border-transparent hover:text-gray-700'
