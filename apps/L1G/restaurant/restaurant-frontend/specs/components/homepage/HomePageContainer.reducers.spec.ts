@@ -1,5 +1,5 @@
 import { addToCartReducer, removeOneReducer, removeItemReducer } from '@/components/home/HomePageContainer';
-import { CartItem } from '@/types/cart';
+import type { CartItem } from '@/types/cart';
 
 describe('removeItemReducer', () => {
   const base: CartItem = {
