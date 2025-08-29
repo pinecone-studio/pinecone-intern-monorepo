@@ -47,11 +47,11 @@ const HowOldAreYou = ({ onSuccess, onBack, initialDate, currentDate = new Date()
   };
 
   return (
-    <div className="flex items-center justify-center pt-4">
-      <div className="w-[336px] bg-white">
-        <div className="mb-6 text-center">
-          <h1 className="text-2xl font-bold text-gray-900">How old are you?</h1>
-          <p className="mt-1 text-sm text-gray-500">Please enter your date of birth to continue</p>
+    <div className="w-[340px] md:w-[360px] flex flex-col items-center px-4 gap-6">
+      <div className="w-full max-w-[400px] flex flex-col items-center gap-6">
+        <div className="flex justify-center items-center flex-col">
+          <h1 className="font-sans font-semibold text-2xl ">How old are you</h1>
+          <p className="font-sans text-sm font-normal leading-5 text-muted-foreground">Please enter your age to continue</p>
         </div>
 
         <div className="space-y-3">
