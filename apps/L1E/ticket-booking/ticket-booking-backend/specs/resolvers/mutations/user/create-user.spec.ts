@@ -58,72 +58,35 @@ describe('Create User Mutation', () => {
     await User.deleteOne({ _id: firstUser._id });
   });
 
-  test('Should handle database error during creation', async () => {
-    const mockSave = jest.spyOn(User.prototype, 'save').mockRejectedValueOnce(new Error('Database error'));
+  test('Should handle various database errors during creation', async () => {
+    const originalSave = User.prototype.save;
+    const originalFindOne = User.findOne;
     
-    const userData = {
-      email: `test${Date.now()}${Math.random()}@example.com`,
-      fullName: 'Test User',
-      password: 'password123',
-      role: 'USER',
-      phone: '1234567890'
-    };
+    const errorTypes = [
+      'Database error',
+      'Connection timeout', 
+      'Validation failed',
+      'Network timeout'
+    ];
 
-    await expect(userMutations.createUser({} as ResolversParentTypes['Mutation'], userData))
-      .rejects.toThrow('Database error');
-    
-    mockSave.mockRestore();
-  });
+    for (const errorMessage of errorTypes) {
+      const userData = {
+        email: `test${Date.now()}${Math.random()}@example.com`,
+        fullName: 'Test User',
+        password: 'password123',
+        role: 'USER',
+        phone: '1234567890'
+      };
+      
+      User.findOne = jest.fn().mockResolvedValue(null);
+      User.prototype.save = jest.fn().mockRejectedValue(new Error(errorMessage));
+      
+      await expect(userMutations.createUser({} as ResolversParentTypes['Mutation'], userData))
+        .rejects.toThrow(errorMessage);
+    }
 
-  test('Should handle different types of database errors', async () => {
-    const mockSave = jest.spyOn(User.prototype, 'save').mockRejectedValueOnce(new Error('Connection timeout'));
-    
-    const userData = {
-      email: `test${Date.now()}${Math.random()}@example.com`,
-      fullName: 'Test User',
-      password: 'password123',
-      role: 'USER',
-      phone: '1234567890'
-    };
-
-    await expect(userMutations.createUser({} as ResolversParentTypes['Mutation'], userData))
-      .rejects.toThrow('Connection timeout');
-    
-    mockSave.mockRestore();
-  });
-
-  test('Should handle validation error during creation', async () => {
-    const mockSave = jest.spyOn(User.prototype, 'save').mockRejectedValueOnce(new Error('Validation failed'));
-    
-    const userData = {
-      email: `test${Date.now()}${Math.random()}@example.com`,
-      fullName: 'Test User',
-      password: 'password123',
-      role: 'USER',
-      phone: '1234567890'
-    };
-
-    await expect(userMutations.createUser({} as ResolversParentTypes['Mutation'], userData))
-      .rejects.toThrow('Validation failed');
-    
-    mockSave.mockRestore();
-  });
-
-  test('Should handle network error during creation', async () => {
-    const mockSave = jest.spyOn(User.prototype, 'save').mockRejectedValueOnce(new Error('Network timeout'));
-    
-    const userData = {
-      email: `test${Date.now()}${Math.random()}@example.com`,
-      fullName: 'Test User',
-      password: 'password123',
-      role: 'USER',
-      phone: '1234567890'
-    };
-
-    await expect(userMutations.createUser({} as ResolversParentTypes['Mutation'], userData))
-      .rejects.toThrow('Network timeout');
-    
-    mockSave.mockRestore();
+    User.prototype.save = originalSave;
+    User.findOne = originalFindOne;
   });
 
   test('Should handle partial update fields correctly', async () => {
@@ -134,7 +97,6 @@ describe('Create User Mutation', () => {
       role: 'USER'
     };
     const user = await userMutations.createUser({} as ResolversParentTypes['Mutation'], userData);
-    // testUsers.push(user); // This line was not in the original file, so it's not added.
 
     const updateData = {
       _id: user._id.toString(),

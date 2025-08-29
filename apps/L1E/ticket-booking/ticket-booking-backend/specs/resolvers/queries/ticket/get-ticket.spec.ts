@@ -135,23 +135,16 @@ describe('Get Ticket Query', () => {
     expect(retrievedTicket).toBeNull();
   });
 
-  test('Should handle null ID', async () => {
-    const queryArgs = {
-      _id: null as unknown as string
-    };
-
-    const retrievedTicket = await ticketQueries.getTicket({} as ResolversParentTypes['Query'], queryArgs);
-    
-    expect(retrievedTicket).toBeNull();
-  });
-
   test('Should handle edge cases and errors', async () => {
     const nullIdResult = await ticketQueries.getTicket({} as ResolversParentTypes['Query'], { _id: null as unknown as string });
     expect(nullIdResult).toBeNull();
 
-    const mockFindById = jest.spyOn(Ticket, 'findById').mockRejectedValueOnce(new Error('Database error'));
+    const originalFindById = Ticket.findById;
+    Ticket.findById = jest.fn().mockRejectedValue(new Error('Database connection failed'));
+    
     const dbErrorResult = await ticketQueries.getTicket({} as ResolversParentTypes['Query'], { _id: '507f1f77bcf86cd799439011' });
     expect(dbErrorResult).toBeNull();
-    mockFindById.mockRestore();
+    
+    Ticket.findById = originalFindById;
   });
 });

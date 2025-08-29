@@ -33,7 +33,7 @@ describe('Get Tickets Query', () => {
     };
     testUser = await userMutations.createUser({} as ResolversParentTypes['Mutation'], userData);
 
-    // Create multiple test tickets
+
     testTickets = [];
     for (let i = 0; i < 3; i++) {
       const ticketData = {
@@ -51,29 +51,11 @@ describe('Get Tickets Query', () => {
   });
 
   const cleanupTestData = async () => {
-    await cleanupTickets();
-    await cleanupEvent();
-    await cleanupUser();
-  };
-
-  const cleanupTickets = async () => {
-    for (const ticket of testTickets) {
-      if (ticket?._id) {
-        await Ticket.deleteOne({ _id: ticket._id });
-      }
-    }
-  };
-
-  const cleanupEvent = async () => {
-    if (testEvent?._id) {
-      await Event.deleteOne({ _id: testEvent._id });
-    }
-  };
-
-  const cleanupUser = async () => {
-    if (testUser?._id) {
-      await User.deleteOne({ _id: testUser._id });
-    }
+    await Promise.all([
+      ...testTickets.filter(t => t?._id).map(t => Ticket.deleteOne({ _id: t._id })),
+      testEvent?._id ? Event.deleteOne({ _id: testEvent._id }) : Promise.resolve(),
+      testUser?._id ? User.deleteOne({ _id: testUser._id }) : Promise.resolve()
+    ]);
   };
 
   test('Should get all tickets successfully', async () => {
@@ -83,7 +65,7 @@ describe('Get Tickets Query', () => {
     expect(Array.isArray(retrievedTickets)).toBe(true);
     expect(retrievedTickets.length).toBeGreaterThanOrEqual(3);
     
-    // Verify our test tickets are included
+
     const testTicketIds = testTickets.map(ticket => ticket._id.toString());
     const retrievedTicketIds = retrievedTickets.map(ticket => ticket._id.toString());
     
@@ -93,7 +75,7 @@ describe('Get Tickets Query', () => {
   });
 
   test('Should return empty array when no tickets exist', async () => {
-    // Delete all tickets first
+
     await Ticket.deleteMany({});
     
     const retrievedTickets = await ticketQueries.getTickets({} as ResolversParentTypes['Query']);
@@ -119,7 +101,8 @@ describe('Get Tickets Query', () => {
   });
 
   test('Should handle database error gracefully', async () => {
-    const mockFind = jest.spyOn(Ticket, 'find').mockRejectedValueOnce(new Error('Database error'));
+    const originalFind = Ticket.find;
+    Ticket.find = jest.fn().mockRejectedValue(new Error('Database connection failed'));
     
     const result = await ticketQueries.getTickets({} as ResolversParentTypes['Query']);
     
@@ -127,6 +110,6 @@ describe('Get Tickets Query', () => {
     expect(Array.isArray(result)).toBe(true);
     expect(result.length).toBe(0);
     
-    mockFind.mockRestore();
+    Ticket.find = originalFind;
   });
 });

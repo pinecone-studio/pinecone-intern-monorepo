@@ -7,7 +7,6 @@ describe('Update User Mutation', () => {
   let testUser: UserType;
 
   beforeEach(async () => {
-    // Create a test user for each test
     const userData = {
       email: `test${Date.now()}${Math.random()}@example.com`,
       fullName: 'Test User',
@@ -19,7 +18,6 @@ describe('Update User Mutation', () => {
   });
 
   afterEach(async () => {
-    // Clean up test user
     if (testUser?._id) {
       await User.deleteOne({ _id: testUser._id });
     }
@@ -132,15 +130,21 @@ describe('Update User Mutation', () => {
   });
 
   test('Should handle errors and edge cases', async () => {
-    const mockFindByIdAndUpdate = jest.spyOn(User, 'findByIdAndUpdate').mockRejectedValueOnce(new Error('Database error'));
+    const originalFindByIdAndUpdate = User.findByIdAndUpdate;
+    
+
+    User.findByIdAndUpdate = jest.fn().mockRejectedValue(new Error('Database error'));
     await expect(userMutations.updateUser({} as ResolversParentTypes['Mutation'], { _id: testUser._id.toString(), fullName: 'Updated User Name' }))
       .rejects.toThrow('Database error');
-    mockFindByIdAndUpdate.mockRestore();
 
-    const mockTimeout = jest.spyOn(User, 'findByIdAndUpdate').mockRejectedValueOnce(new Error('Connection timeout'));
+
+    User.findByIdAndUpdate = jest.fn().mockRejectedValue(new Error('Connection timeout'));
     await expect(userMutations.updateUser({} as ResolversParentTypes['Mutation'], { _id: testUser._id.toString(), fullName: 'Updated User Name' }))
       .rejects.toThrow('Connection timeout');
-    mockTimeout.mockRestore();
+
+
+    User.findByIdAndUpdate = originalFindByIdAndUpdate;
+
 
     await expect(userMutations.updateUser({} as ResolversParentTypes['Mutation'], { _id: 'invalid-object-id', fullName: 'Updated User Name' }))
       .rejects.toThrow('Invalid ObjectId format');

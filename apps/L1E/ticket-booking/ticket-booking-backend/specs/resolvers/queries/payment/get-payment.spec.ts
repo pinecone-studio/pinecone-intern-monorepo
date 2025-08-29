@@ -83,7 +83,8 @@ describe('Get Payment Query', () => {
   });
 
   test('Should handle database error gracefully', async () => {
-    const mockFindById = jest.spyOn(Payment, 'findById').mockRejectedValueOnce(new Error('Database error'));
+    const originalFindById = Payment.findById;
+    Payment.findById = jest.fn().mockRejectedValue(new Error('Database connection failed'));
     
     const queryArgs = {
       _id: '507f1f77bcf86cd799439011'
@@ -92,6 +93,6 @@ describe('Get Payment Query', () => {
     const result = await paymentQueries.getPayment({} as ResolversParentTypes['Query'], queryArgs);
     
     expect(result).toBeNull();
-    mockFindById.mockRestore();
+    Payment.findById = originalFindById;
   });
 });

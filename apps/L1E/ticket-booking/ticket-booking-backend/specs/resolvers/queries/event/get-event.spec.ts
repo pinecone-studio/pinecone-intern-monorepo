@@ -147,9 +147,12 @@ describe('Get Event Query', () => {
     const nullIdResult = await eventQueries.getEvent({} as ResolversParentTypes['Query'], { _id: null as unknown as string });
     expect(nullIdResult).toBeNull();
 
-    const mockFindById = jest.spyOn(Event, 'findById').mockRejectedValueOnce(new Error('Database error'));
+    const originalFindById = Event.findById;
+    Event.findById = jest.fn().mockRejectedValue(new Error('Database connection failed'));
+    
     const dbErrorResult = await eventQueries.getEvent({} as ResolversParentTypes['Query'], { _id: '507f1f77bcf86cd799439011' });
     expect(dbErrorResult).toBeNull();
-    mockFindById.mockRestore();
+    
+    Event.findById = originalFindById;
   });
 });

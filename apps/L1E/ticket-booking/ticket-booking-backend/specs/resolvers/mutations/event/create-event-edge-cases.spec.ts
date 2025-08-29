@@ -19,4 +19,33 @@ describe('Create Event Mutation - Edge Cases', () => {
 
     await Event.deleteOne({ _id: createdEvent._id });
   });
+
+  test('Should handle invalid date format', async () => {
+    const eventData = {
+      title: 'Test Event',
+      description: 'Test event description',
+      date: 'invalid-date-format',
+      location: 'Test Location'
+    };
+
+    await expect(eventMutations.createEvent({} as ResolversParentTypes['Mutation'], eventData))
+      .rejects.toThrow('Invalid date format');
+  });
+
+  test('Should handle database error during creation', async () => {
+    const originalSave = Event.prototype.save;
+    Event.prototype.save = jest.fn().mockRejectedValue(new Error('Database connection failed'));
+    
+    const eventData = {
+      title: 'Test Event',
+      description: 'Test event description',
+      date: '2024-12-31T23:59:59.000Z',
+      location: 'Test Location'
+    };
+
+    await expect(eventMutations.createEvent({} as ResolversParentTypes['Mutation'], eventData))
+      .rejects.toThrow('Database connection failed');
+    
+    Event.prototype.save = originalSave;
+  });
 });

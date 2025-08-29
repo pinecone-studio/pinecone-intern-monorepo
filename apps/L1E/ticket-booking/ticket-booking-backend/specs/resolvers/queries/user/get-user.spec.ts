@@ -136,9 +136,12 @@ describe('Get User Query', () => {
     const nullIdResult = await userQueries.getUser({} as ResolversParentTypes['Query'], { _id: null as unknown as string });
     expect(nullIdResult).toBeNull();
 
-    const mockFindById = jest.spyOn(User, 'findById').mockRejectedValueOnce(new Error('Database error'));
+    const originalFindById = User.findById;
+    User.findById = jest.fn().mockRejectedValue(new Error('Database connection failed'));
+    
     const dbErrorResult = await userQueries.getUser({} as ResolversParentTypes['Query'], { _id: '507f1f77bcf86cd799439011' });
     expect(dbErrorResult).toBeNull();
-    mockFindById.mockRestore();
+    
+    User.findById = originalFindById;
   });
 });

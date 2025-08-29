@@ -83,7 +83,8 @@ describe('Create Ticket Mutation - Edge Cases', () => {
   });
 
   test('Should handle database error during creation', async () => {
-    const mockSave = jest.spyOn(Ticket.prototype, 'save').mockRejectedValueOnce(new Error('Database error'));
+    const originalSave = Ticket.prototype.save;
+    Ticket.prototype.save = jest.fn().mockRejectedValue(new Error('Database error'));
     
     const ticketData = {
       eventId: testEvent._id.toString(),
@@ -94,6 +95,6 @@ describe('Create Ticket Mutation - Edge Cases', () => {
     await expect(ticketMutations.createTicket({} as ResolversParentTypes['Mutation'], ticketData))
       .rejects.toThrow('Database error');
     
-    mockSave.mockRestore();
+    Ticket.prototype.save = originalSave;
   });
 });

@@ -67,7 +67,8 @@ describe('Create Payment Mutation', () => {
   });
 
   test('Should handle database error during creation', async () => {
-    const mockSave = jest.spyOn(Payment.prototype, 'save').mockRejectedValueOnce(new Error('Database error'));
+    const originalSave = Payment.prototype.save;
+    Payment.prototype.save = jest.fn().mockRejectedValue(new Error('Database error'));
     
     const paymentData = {
       ticketId: '507f1f77bcf86cd799439011',
@@ -77,6 +78,6 @@ describe('Create Payment Mutation', () => {
     await expect(paymentMutations.createPayment({} as ResolversParentTypes['Mutation'], paymentData))
       .rejects.toThrow('Database error');
     
-    mockSave.mockRestore();
+    Payment.prototype.save = originalSave;
   });
 });

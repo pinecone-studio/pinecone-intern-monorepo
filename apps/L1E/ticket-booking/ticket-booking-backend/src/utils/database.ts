@@ -7,8 +7,13 @@ export const connectToDatabase = async () => {
     return;
   }
   
+  if (!databaseUri) {
+    console.error('MONGODB_URI environment variable is not defined');
+    return;
+  }
+  
   try {
-    await connect(databaseUri ?? '', {
+    await connect(databaseUri, {
       maxPoolSize: 10,
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,

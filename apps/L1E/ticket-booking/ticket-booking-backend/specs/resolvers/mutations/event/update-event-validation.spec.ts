@@ -43,7 +43,8 @@ describe('Update Event Mutation - Validation Tests', () => {
   });
 
   test('Should handle database error during update', async () => {
-    const mockFindByIdAndUpdate = jest.spyOn(Event, 'findByIdAndUpdate').mockRejectedValueOnce(new Error('Database error'));
+    const originalFindByIdAndUpdate = Event.findByIdAndUpdate;
+    Event.findByIdAndUpdate = jest.fn().mockRejectedValue(new Error('Database error'));
     
     const updateData = {
       _id: testEvent._id.toString(),
@@ -53,11 +54,12 @@ describe('Update Event Mutation - Validation Tests', () => {
     await expect(eventMutations.updateEvent({} as ResolversParentTypes['Mutation'], updateData))
       .rejects.toThrow('Database error');
     
-    mockFindByIdAndUpdate.mockRestore();
+    Event.findByIdAndUpdate = originalFindByIdAndUpdate;
   });
 
   test('Should handle different types of database errors', async () => {
-    const mockFindByIdAndUpdate = jest.spyOn(Event, 'findByIdAndUpdate').mockRejectedValueOnce(new Error('Connection timeout'));
+    const originalFindByIdAndUpdate = Event.findByIdAndUpdate;
+    Event.findByIdAndUpdate = jest.fn().mockRejectedValue(new Error('Connection timeout'));
     
     const updateData = {
       _id: testEvent._id.toString(),
@@ -67,7 +69,7 @@ describe('Update Event Mutation - Validation Tests', () => {
     await expect(eventMutations.updateEvent({} as ResolversParentTypes['Mutation'], updateData))
       .rejects.toThrow('Connection timeout');
     
-    mockFindByIdAndUpdate.mockRestore();
+    Event.findByIdAndUpdate = originalFindByIdAndUpdate;
   });
 
   test('Should handle invalid ObjectId format', async () => {
