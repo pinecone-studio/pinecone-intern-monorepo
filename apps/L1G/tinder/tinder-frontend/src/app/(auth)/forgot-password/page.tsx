@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { ForgetPassword } from '@/components/ForgetPassword';
 import { MainHeader } from '@/components/MainHeader';
-import { UserData } from '../signup/page';
+import { UserData } from 'types/chat';
 
 const ForgotPasswordPage = () => {
   const [userData, setUserData] = useState<UserData>({});

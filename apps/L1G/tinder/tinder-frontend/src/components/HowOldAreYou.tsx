@@ -7,10 +7,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { generateYearOptions, MIN_YEAR, MONTHS, validateDate } from './date-utils';
-
-type UserData = {
-  dob?: Date;
-};
+import { UserData } from 'types/chat';
 
 type Props = {
   onSuccess?: (_date: Date) => void;
