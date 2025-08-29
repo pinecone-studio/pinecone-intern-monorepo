@@ -25,7 +25,7 @@ describe('delete table', () => {
     });
   });
 
-  it('should throw error if table by does not exist', async () => {
+  it('should throw error if table does not exist', async () => {
     try {
       await deleteTable?.({}, { tableId: '1' }, {}, {} as GraphQLResolveInfo);
     } catch (error) {

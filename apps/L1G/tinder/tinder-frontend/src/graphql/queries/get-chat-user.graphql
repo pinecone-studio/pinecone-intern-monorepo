@@ -1,0 +1,17 @@
+query GetChatWithUser($userId: ID!, $participantId: ID!) {
+  getChatWithUser(userId: $userId, participantId: $participantId) {
+    matchId
+    messages {
+      id
+      content
+      createdAt
+      seen
+      senderId
+    }
+    participant {
+      id
+      image
+      name
+    }
+  }
+}

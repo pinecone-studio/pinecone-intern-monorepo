@@ -14,22 +14,28 @@ describe('getCategoryById', () => {
   });
 
   it('should return category', async () => {
-    (CategoryModel.findById as jest.Mock).mockResolvedValue({
-      categoryId: '2',
-      categoryName: 'Test1',
+    (CategoryModel.findById as jest.Mock).mockReturnValue({
+      populate: jest.fn().mockResolvedValue({
+        categoryId: '2',
+        categoryName: 'Test',
+        food: [],
+      }),
     });
     const result = await getCategoryById?.({}, { categoryId: '2' }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual(
       expect.objectContaining({
         categoryId: '2',
-        categoryName: 'Test1',
+        categoryName: 'Test',
+        food: [],
       })
     );
     expect(CategoryModel.findById).toHaveBeenCalledTimes(1);
   });
 
   it("should throw an error if the category doesn't exist", async () => {
-    (CategoryModel.findById as jest.Mock).mockResolvedValue(null);
+    (CategoryModel.findById as jest.Mock).mockReturnValue({
+      populate: jest.fn().mockResolvedValue(null),
+    });
 
     await expect(getCategoryById?.({}, { categoryId: '3' }, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Category with ID 3 not found');
 

@@ -1,8 +1,8 @@
 'use client';
 import { CreateAccount } from '@/components/CreateAcc';
-import { UserData } from '@/app/(auth)/signup/page';
 import { GenderSelect } from './GenderSelect';
 import { GenderOfUser } from './GenderOfUser';
+import { UserData } from 'types/chat';
 
 type Props = {
   step: string;

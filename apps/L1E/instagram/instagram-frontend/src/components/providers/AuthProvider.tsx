@@ -30,9 +30,19 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 function getTokenAndUserId() {
   if (typeof window === 'undefined') return { token: null, userId: undefined };
   const token = window.localStorage.getItem('token');
+  console.log("getTokenAndUserId - token exists:", !!token);
   if (!token) return { token: null, userId: undefined };
   try {
-    const decodedToken: DecodedTokenType = jwtDecode(token);
+    const decodedToken: any = jwtDecode(token);
+    console.log("getTokenAndUserId - decoded token:", decodedToken);
+    
+    // Check if token is expired
+    const currentTime = Math.floor(Date.now() / 1000);
+    const tokenExpiry = decodedToken.exp || decodedToken.iat + 3600; // Default 1 hour if no exp
+    console.log("getTokenAndUserId - current time:", currentTime);
+    console.log("getTokenAndUserId - token expiry:", tokenExpiry);
+    console.log("getTokenAndUserId - token expired:", currentTime > tokenExpiry);
+    
     return { token, userId: decodedToken?.userId };
   } catch {
     console.error('Invalid token');
@@ -103,12 +113,17 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   }, [data]);
 
   const login = async (email: string, password: string) => {
+    console.log("Login attempt for email:", email);
     const response = await executeLogin({ variables: { input: { email, password } } });
     const token = response.data?.login.token ?? '';
     const loggedInUser = response.data?.login.user ?? null;
 
+    console.log("Login response - token exists:", !!token);
+    console.log("Login response - user exists:", !!loggedInUser);
+
     if (token && typeof window !== 'undefined') {
       window.localStorage.setItem('token', token);
+      console.log("Token stored in localStorage");
     }
     setUser(loggedInUser);
   };
@@ -122,7 +137,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   const value: AuthContextValue = { user, login, logout };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return null;
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

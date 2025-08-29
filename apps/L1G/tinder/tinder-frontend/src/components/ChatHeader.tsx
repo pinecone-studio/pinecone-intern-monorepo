@@ -4,7 +4,7 @@ import React from 'react';
 import UnmatchButton from './UnmatchButton';
 import ViewProfile from './ViewProfile';
 import Avatar from './Avatar';
-import { ChatUser } from './ChatPage';
+import { ChatUser } from 'types/chat';
 
 interface ChatHeaderProps {
   user: ChatUser;

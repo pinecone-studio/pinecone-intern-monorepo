@@ -100,6 +100,7 @@ export const CardWithImageAndInfo = ({
 
         {images.length > 1 && <ImageNavigation onPrev={prevImage} onNext={nextImage} images={images} currentIndex={currentImageIndex} />}
 
+
         <div className="absolute h-[140px] flex flex-col justify-end items-start bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 gap-2 text-white">
           <ProfileInfo profile={profile} images={images} currentImageIndex={currentImageIndex} />
         </div>

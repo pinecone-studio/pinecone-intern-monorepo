@@ -1,8 +1,8 @@
 'use client';
 
+import { ChatUser } from 'types/chat';
 import Avatar from './Avatar';
 import clsx from 'clsx';
-import { ChatUser } from './ChatPage';
 
 interface ChatPersonProps {
   selectedUser: ChatUser | null;

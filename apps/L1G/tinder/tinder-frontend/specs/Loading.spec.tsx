@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Loading from '../src/components/Loading';
 
@@ -58,5 +58,10 @@ describe('Loading Component', () => {
 
     const mainContent = screen.getByText('Please Wait...').closest('.flex-1');
     expect(mainContent).toHaveClass('flex-1');
+  });
+  test('clicking TinderLogo in Loading does not throw', () => {
+    const { getByTestId } = render(<Loading />);
+    const logo = getByTestId('tinder-logo');
+    fireEvent.click(logo);
   });
 });
