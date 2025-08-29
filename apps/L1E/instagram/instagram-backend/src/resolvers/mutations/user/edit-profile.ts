@@ -15,9 +15,10 @@ interface EditProfileResponse {
   user: any;
 }
 
-export const editProfile = async (_: unknown, args: EditProfileArgs): Promise<EditProfileResponse> => {
-  const { userId, ...updateData } = args;
-
+export const editProfile = async (_: unknown, args: EditProfileArgs ,context: { userId?: string | null }): Promise<EditProfileResponse> => {
+  const {...updateData } = args;
+   const userId = context?.userId;
+   console.log("UPDATED USER ID " ,userId)
   try {
     const existingUser = await User.findById(userId);
 
