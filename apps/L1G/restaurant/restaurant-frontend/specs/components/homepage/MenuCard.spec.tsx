@@ -24,7 +24,6 @@ describe('<MenuCard />', () => {
     render(<MenuCard {...base} />);
 
     expect(screen.getByText('Taco')).toBeInTheDocument();
-    // component нь parseInt('15.6') → 15, shortPrice(15) → "15"
     expect(screen.getByText('15')).toBeInTheDocument();
   });
 
