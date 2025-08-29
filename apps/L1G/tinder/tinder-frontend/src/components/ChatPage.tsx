@@ -28,6 +28,7 @@ const ChatPage: React.FC = () => {
     if (!selectedUser) return;
     markMessagesAsSeen();
   }, [selectedUser, markMessagesAsSeen]);
+  /* eslint-disable-next-line complexity */
   useEffect(() => {
     if (!selectedUser || messages.length === 0) return;
     const lastMessage = messages[messages.length - 1];
@@ -37,6 +38,7 @@ const ChatPage: React.FC = () => {
   }, [messages, selectedUser, markMessagesAsSeen]);
   useEffect(() => {
     if (!chatData?.getChatWithUser || !selectedUser || !data?.getMe?.id) return;
+
     const serverMessages: Message[] = chatData.getChatWithUser.messages.map((msg: any) => ({
       id: msg.id,
       text: msg.content,
@@ -48,19 +50,11 @@ const ChatPage: React.FC = () => {
       }),
       seen: msg.seen,
     }));
+
     setConversations((prev) => {
-      const prevMessages = prev[selectedUser.id] || [];
-      const optimisticMessages = prevMessages.filter((msg) => typeof msg.id === 'number');
-      const serverIds = new Set(serverMessages.map((m) => m.id));
-      const filteredOptimistic = optimisticMessages.filter((msg) => !serverIds.has(msg.id));
-      const combinedMessages = [...serverMessages, ...filteredOptimistic];
-      const uniqueMessagesMap = new Map<string | number, Message>();
-      combinedMessages.forEach((msg) => {
-        uniqueMessagesMap.set(msg.id, msg);
-      });
       return {
         ...prev,
-        [selectedUser.id]: Array.from(uniqueMessagesMap.values()).sort((a, b) => {
+        [selectedUser.id]: serverMessages.sort((a, b) => {
           return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
         }),
       };
@@ -96,6 +90,7 @@ const ChatPage: React.FC = () => {
     markMessagesAsSeen,
   });
   const handleKeyDown = useCallback(
+    /* eslint-disable-next-line complexity */
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey) {
         e.preventDefault();

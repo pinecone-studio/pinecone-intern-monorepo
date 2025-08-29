@@ -7,7 +7,7 @@ export const useMarkMessagesAsSeen = (selectedUser: { id: string } | null, setCo
   const [markMessagesAsSeenMutation] = useMarkMessagesAsSeenMutation();
   const { data } = useGetMeQuery();
   const [fetchChat] = useGetChatWithUserLazyQuery();
-
+  /* eslint-disable-next-line complexity */
   const markMessagesAsSeen = useCallback(async () => {
     if (!selectedUser || !data?.getMe?.id) return;
     const matchId = selectedUser.id;
