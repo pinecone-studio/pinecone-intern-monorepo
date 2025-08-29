@@ -12,14 +12,18 @@ describe('getDiscounts', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+
   it('should return discounts', async () => {
-    (DiscountModel.find as jest.Mock).mockResolvedValue([
-      {
-        discountId: '1',
-        discountName: 'Test',
-        discountRate: 0.15,
-      },
-    ]);
+    (DiscountModel.find as jest.Mock).mockReturnValue({
+      populate: jest.fn().mockResolvedValue([
+        {
+          discountId: '1',
+          discountName: 'Test',
+          discountRate: 0.15,
+        },
+      ]),
+    });
+
     const result = await getDiscounts?.({}, {}, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual([
       expect.objectContaining({
@@ -32,7 +36,9 @@ describe('getDiscounts', () => {
   });
 
   it('should handle database errors', async () => {
-    (DiscountModel.find as jest.Mock).mockRejectedValue(new Error('Failed to fetch discounts'));
+    (DiscountModel.find as jest.Mock).mockReturnValue({
+      populate: jest.fn().mockRejectedValue(new Error('Failed to fetch discounts')),
+    });
 
     await expect(getDiscounts?.({}, {}, {}, {} as GraphQLResolveInfo)).rejects.toThrow('Failed to fetch discounts');
   });
