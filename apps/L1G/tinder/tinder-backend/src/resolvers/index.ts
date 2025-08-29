@@ -1,4 +1,4 @@
-import { login, signup, like, createInterest, updateInterest, deleteInterest, dislike, requestSignup, verifyOtp, uploadImages, sendMessage, markMessagesAsSeen } from './mutations';
+import { login, signup, like, createInterest, updateInterest, deleteInterest, dislike, requestSignup, verifyOtp, uploadImages, sendMessage, markMessagesAsSeen, unmatch } from './mutations';
 import { forgotPassword } from './mutations/auth/forgot-password';
 import { updateProfile } from './mutations/auth/update-profile';
 import { getAllInterests, getChatWithUser, getInterest, getMe, getUser, getUserAllChatMessages, getusers } from './queries';
@@ -28,5 +28,6 @@ export const resolvers = {
     sendMessage,
     markMessagesAsSeen,
     updateProfile,
+    unmatch,
   },
 };

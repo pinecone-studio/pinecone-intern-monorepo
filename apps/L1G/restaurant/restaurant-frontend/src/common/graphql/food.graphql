@@ -3,11 +3,18 @@ query getFoods {
     foodId
     foodName
     price
-    status
+    foodStatus
     image
     category {
       categoryId
       categoryName
+    }
+    discount {
+      discountId
+      discountName
+      discountRate
+      startDate
+      endDate
     }
   }
 }
@@ -17,11 +24,18 @@ query GetFoodById($foodId: ID!) {
     foodId
     foodName
     price
-    status
+    foodStatus
     image
     category {
       categoryId
       categoryName
+    }
+    discount {
+      discountId
+      discountName
+      discountRate
+      startDate
+      endDate
     }
   }
 }
@@ -31,11 +45,18 @@ mutation CreateFood($input: CreateFoodInput!) {
     foodId
     foodName
     price
-    status
+    foodStatus
     image
     category {
       categoryId
       categoryName
+    }
+    discount {
+      discountId
+      discountName
+      discountRate
+      startDate
+      endDate
     }
   }
 }
@@ -45,11 +66,18 @@ mutation UpdateFood($foodId: ID!, $input: UpdateFoodInput!) {
     foodId
     foodName
     price
-    status
+    foodStatus
     image
     category {
       categoryId
       categoryName
+    }
+    discount {
+      discountId
+      discountName
+      discountRate
+      startDate
+      endDate
     }
   }
 }
@@ -59,11 +87,18 @@ mutation DeleteFood($foodId: ID!) {
     foodId
     foodName
     price
-    status
+    foodStatus
     image
     category {
       categoryId
       categoryName
+    }
+    discount {
+      discountId
+      discountName
+      discountRate
+      startDate
+      endDate
     }
   }
 }

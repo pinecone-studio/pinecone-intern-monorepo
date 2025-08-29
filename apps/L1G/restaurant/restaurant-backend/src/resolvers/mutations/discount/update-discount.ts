@@ -1,6 +1,5 @@
 import { MutationResolvers } from 'src/generated';
 import { DiscountModel } from 'src/models/discount.model';
-import { mapDiscount } from 'src/utils/types/discount-type';
 
 export const updateDiscount: MutationResolvers['updateDiscount'] = async (_, { discountId, input: { discountName, discountRate, startDate, endDate } }) => {
   const toUpdateDiscount = await DiscountModel.findByIdAndUpdate(discountId, { $set: { discountName, discountRate, startDate, endDate } }, { new: true, runValidators: true });
@@ -9,5 +8,5 @@ export const updateDiscount: MutationResolvers['updateDiscount'] = async (_, { d
     throw new Error(`Discount with ID ${discountId} not found`);
   }
 
-  return mapDiscount(toUpdateDiscount);
+  return toUpdateDiscount;
 };

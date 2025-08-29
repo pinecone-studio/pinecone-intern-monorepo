@@ -7,21 +7,21 @@ terraform {
   }
 }
 
-resource "vercel_project" "tinder-backend-prod" {
-  name             = "tinder-backend-prod"
-  build_command    = "nx build --skip-nx-cache tinder-backend"
+resource "vercel_project" "ticket-booking-backend-prod" {
+  name             = "ticket-booking-backend-prod"
+  build_command    = "nx build --skip-nx-cache ticket-booking-backend"
   output_directory = "./dist/apps/L1E/ticket-booking/ticket-booking-backend/.next"
   framework        = "nextjs"
 }
-resource "vercel_project" "tinder-backend-testing" {
-  name             = "tinder-backend-testing"
-  build_command    = "nx build --skip-nx-cache tinder-backend"
+resource "vercel_project" "ticket-booking-backend-testing" {
+  name             = "ticket-booking-backend-testing"
+  build_command    = "nx build --skip-nx-cache ticket-booking-backend"
   output_directory = "./dist/apps/L1E/ticket-booking/ticket-booking-backend/.next"
   framework        = "nextjs"
 }
-resource "vercel_project" "tinder-backend-dev" {
-  name             = "tinder-backend-dev"
-  build_command    = "nx build --skip-nx-cache tinder-backend"
+resource "vercel_project" "ticket-booking-backend-dev" {
+  name             = "ticket-booking-backend-dev"
+  build_command    = "nx build --skip-nx-cache ticket-booking-backend"
   output_directory = "./dist/apps/L1E/ticket-booking/ticket-booking-backend/.next"
   framework        = "nextjs"
 }

@@ -67,7 +67,7 @@ describe('login resolver', () => {
 
     expect(Usermodel.findOne).toHaveBeenCalledWith({ email: mockEmail });
     expect(bcrypt.compare).toHaveBeenCalledWith(mockPassword, mockHashedPassword);
-    expect(jwt.sign).toHaveBeenCalledWith({ userId: mockUserId, email: mockEmail }, 'test-secret', { expiresIn: '1h' });
+    expect(jwt.sign).toHaveBeenCalledWith({ userId: mockUserId, email: mockEmail }, 'test-secret', { expiresIn: '7d' });
     expect(result).toBe(mockToken);
   });
 });

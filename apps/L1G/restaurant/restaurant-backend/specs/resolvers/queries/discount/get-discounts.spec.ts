@@ -15,13 +15,9 @@ describe('getDiscounts', () => {
   it('should return discounts', async () => {
     (DiscountModel.find as jest.Mock).mockResolvedValue([
       {
-        _id: '1',
+        discountId: '1',
         discountName: 'Test',
         discountRate: 0.15,
-        startDate: new Date(),
-        endDate: new Date(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
       },
     ]);
     const result = await getDiscounts?.({}, {}, {}, {} as GraphQLResolveInfo);

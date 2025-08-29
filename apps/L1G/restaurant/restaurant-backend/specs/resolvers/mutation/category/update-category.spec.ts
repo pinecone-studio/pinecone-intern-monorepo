@@ -11,10 +11,8 @@ jest.mock('src/models/category.model', () => ({
 describe('updateCategory', () => {
   it('should update category', async () => {
     (CategoryModel.findByIdAndUpdate as jest.Mock).mockResolvedValue({
-      _id: '2',
+      categoryId: '2',
       categoryName: 'Test',
-      createdAt: '',
-      updatedAt: '',
     });
 
     const result = await updateCategory?.(
@@ -31,8 +29,6 @@ describe('updateCategory', () => {
     expect(result).toEqual({
       categoryId: '2',
       categoryName: 'Test',
-      createdAt: '',
-      updatedAt: '',
     });
   });
 

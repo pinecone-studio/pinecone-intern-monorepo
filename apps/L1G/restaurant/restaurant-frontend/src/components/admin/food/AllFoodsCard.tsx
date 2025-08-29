@@ -61,7 +61,7 @@ export const AllFoodsCard = () => {
                   <p className="text-base font-light leading-[20px] text-[#09090B]">{food?.foodName}</p>
                   <span className="text-lg font-bold leading-[20px] text-[#09090B]">{(Number(food?.price) / 1000).toFixed(1)}k</span>
                   <Badge variant="outline" className="w-fit text-xs font-semibold leading-[16px] text-[#09090B]">
-                    {food?.status}
+                    {food?.foodStatus}
                   </Badge>
                 </div>
                 <FoodUpdateDialog {...(food as Food)} refetch={refetch} />

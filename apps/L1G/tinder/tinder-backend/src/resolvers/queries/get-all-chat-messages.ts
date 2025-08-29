@@ -3,7 +3,7 @@ import { ChatMessageModel } from 'src/models/chat-message';
 import { MatchModel } from 'src/models/match';
 import { Usermodel } from 'src/models/user';
 import { QueryResolvers } from 'src/generated';
-import { LeanChatMessage, LeanMatch, LeanUser } from 'src/types';
+import { IMatchLean, LeanChatMessage, LeanUser } from 'src/types';
 
 export const getUserAllChatMessages: QueryResolvers['getUserAllChatMessages'] = async (_, { userId }) => {
   const userObjectId = new mongoose.Types.ObjectId(userId);
@@ -11,11 +11,11 @@ export const getUserAllChatMessages: QueryResolvers['getUserAllChatMessages'] = 
   const matches = await MatchModel.find({
     users: userObjectId,
     unmatched: false,
-  }).lean<LeanMatch[]>();
+  }).lean<IMatchLean[]>();
 
   const allChats = await Promise.all(
     matches.map(async (match) => {
-      const participantId = (match.users as mongoose.Types.ObjectId[]).find((id) => !id.equals(userObjectId));
+      const participantId = (match.users as any).find((id: any) => !id.equals(userObjectId));
 
       if (!participantId) return null;
 

@@ -5,32 +5,22 @@ import { updateFoodByDiscount } from 'src/resolvers/mutations';
 jest.mock('src/models/food.model', () => ({
   FoodModel: {
     findByIdAndUpdate: jest.fn().mockReturnValue({
-      populate: jest.fn(() => ({
-        populate: jest.fn().mockResolvedValue({
-          _id: '2',
-          foodName: 'Test',
-          price: '10',
-          image: 'image.jpg',
-          status: 'Идэвхитэй',
-          category: {
-            _id: '1',
-            categoryName: 'Test1',
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          },
-          discount: {
-            _id: '1',
-            discountName: 'Test1',
-            discountRate: 0.15,
-            startDate: Date.now(),
-            endDate: Date.now(),
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          },
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        }),
-      })),
+      populate: jest.fn().mockResolvedValue({
+        foodId: '2',
+        foodName: 'Test',
+        price: '10',
+        image: 'image.jpg',
+        foodStatus: 'Идэвхитэй',
+        category: {
+          _id: '1',
+          categoryName: 'Test1',
+        },
+        discount: {
+          _id: '1',
+          discountName: 'Test1',
+          discountRate: 0.15,
+        },
+      }),
     }),
   },
 }));
@@ -59,9 +49,7 @@ describe('updateFoodByDiscount', () => {
 
   it("should throw an error if the food doesn't exist", async () => {
     (FoodModel.findByIdAndUpdate as jest.Mock).mockReturnValue({
-      populate: jest.fn(() => ({
-        populate: jest.fn().mockResolvedValue(null),
-      })),
+      populate: jest.fn().mockResolvedValue(null),
     });
     await expect(
       updateFoodByDiscount?.(

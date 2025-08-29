@@ -11,7 +11,7 @@ jest.mock('src/models/category.model', () => ({
 describe('deleteCategory', () => {
   it('should delete category', async () => {
     (CategoryModel.findByIdAndDelete as jest.Mock).mockResolvedValue({
-      _id: '1',
+      categoryId: '1',
       categoryName: 'Test',
       createdAt: '',
       updatedAt: '',

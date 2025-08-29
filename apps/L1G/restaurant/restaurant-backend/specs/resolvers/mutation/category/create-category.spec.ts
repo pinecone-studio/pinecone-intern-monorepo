@@ -11,10 +11,8 @@ jest.mock('src/models/category.model', () => ({
 describe('createCategory', () => {
   it('should create new category', async () => {
     (CategoryModel.create as jest.Mock).mockReturnValue({
-      _id: '2',
+      categoryId: '2',
       categoryName: 'Test',
-      createdAt: new Date(),
-      updatedAt: new Date(),
     });
 
     const result = await createCategory?.({}, { input: { categoryName: 'Test' } }, {}, {} as GraphQLResolveInfo);

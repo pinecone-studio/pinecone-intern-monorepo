@@ -1,5 +1,6 @@
 import { ChatMessageModel } from 'src/models/chat-message';
 import { MutationResolvers } from 'src/generated';
+import { MatchModel } from 'src/models/match';
 import mongoose from 'mongoose';
 
 export const sendMessage: MutationResolvers['sendMessage'] = async (_, { senderId, receiverId, matchId, content }) => {
@@ -7,7 +8,7 @@ export const sendMessage: MutationResolvers['sendMessage'] = async (_, { senderI
   const receiverObjectId = new mongoose.Types.ObjectId(receiverId);
   const matchObjectId = new mongoose.Types.ObjectId(matchId);
 
-  const match = await mongoose.model('Match').findOne({
+  const match = await MatchModel.findOne({
     _id: matchObjectId,
     users: { $all: [senderObjectId, receiverObjectId] },
     unmatched: false,
@@ -15,6 +16,10 @@ export const sendMessage: MutationResolvers['sendMessage'] = async (_, { senderI
 
   if (!match) {
     throw new Error('No valid match found between users');
+  }
+
+  if (!match.startedConversation) {
+    await MatchModel.updateOne({ _id: match._id }, { $set: { startedConversation: true } });
   }
 
   const newMessage = await ChatMessageModel.create({

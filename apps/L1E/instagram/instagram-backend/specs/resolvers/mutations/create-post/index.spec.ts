@@ -20,24 +20,31 @@ describe("createPost mutation", () => {
       save: mockSave,
     }));
 
-    // Call the mutation
-    const result = await createPost(null, {
-      image: ["img1.jpg", "img2.jpg"],
-      description: "Test description",
-    });
+const result = await createPost(
+  null,
+  {
+    image: ["img1.jpg", "img2.jpg"],
+    description: "Test description",
+  },
+  { userId: "mockUserId" }   // 👈 add this
+);
 
-    // Assertions
-    expect(cloudinary.uploader.upload).toHaveBeenCalledTimes(2);
-    expect(cloudinary.uploader.upload).toHaveBeenCalledWith("img1.jpg", { folder: "posts" });
-    expect(cloudinary.uploader.upload).toHaveBeenCalledWith("img2.jpg", { folder: "posts" });
 
-    expect(Post).toHaveBeenCalledWith({
-      image: ["https://cloudinary.com/img1.jpg", "https://cloudinary.com/img2.jpg"],
-      description: "Test description",
-    });
+// Assertions
+expect(cloudinary.uploader.upload).toHaveBeenCalledTimes(2);
+expect(cloudinary.uploader.upload).toHaveBeenCalledWith("img1.jpg", { folder: "posts" });
+expect(cloudinary.uploader.upload).toHaveBeenCalledWith("img2.jpg", { folder: "posts" });
 
-    expect(mockSave).toHaveBeenCalled();
-    expect(result.image).toEqual(["https://cloudinary.com/img1.jpg", "https://cloudinary.com/img2.jpg"]);
-    expect(result.description).toBe("Test description");
+expect(Post).toHaveBeenCalledWith({
+  image: ["https://cloudinary.com/img1.jpg", "https://cloudinary.com/img2.jpg"],
+  description: "Test description",
+  user: "mockUserId",
+  createdAt: expect.any(Date),
+});
+
+expect(mockSave).toHaveBeenCalled();
+expect(result.image).toEqual(["https://cloudinary.com/img1.jpg", "https://cloudinary.com/img2.jpg"]);
+expect(result.description).toBe("Test description");
+
   });
 });

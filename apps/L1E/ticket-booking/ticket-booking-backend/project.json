@@ -72,7 +72,7 @@
       "defaultConfiguration": "development",
       "configurations": {
         "development": {
-          "groups": ["ticket-booking-backend"],
+          "groups": ["2E-TicketBooking-Backend"],
           "env": "dev"
         }
       }
@@ -82,7 +82,7 @@
       "defaultConfiguration": "testing",
       "configurations": {
         "testing": {
-          "groups": ["ticket-booking-backend"],
+          "groups": ["2E-TicketBooking-Backend"],
           "env": "test"
         }
       }
@@ -92,7 +92,7 @@
       "defaultConfiguration": "prod",
       "configurations": {
         "prod": {
-          "groups": ["ticket-booking-backend"],
+          "groups": ["2E-TicketBooking-Backend"],
           "env": "prod"
         }
       }
@@ -102,6 +102,17 @@
       "options": {
         "commands": ["graphql-codegen --config ./apps/L1E/ticket-booking/ticket-booking-backend/codegen.ts"]
       }
+    },
+    "codegen:local": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["graphql-codegen --config ./apps/L1E/ticket-booking/ticket-booking-backend/codegen.ts"]
+      },
+    "dependsOn": [
+      {
+        "target": "get-secrets:dev"
+      }
+    ]
     },
     "export": {
       "executor": "@nx/next:export",
@@ -134,10 +145,14 @@
       "options": {
         "commands": [
           "npx dotenv -v VERCEL_ORG_ID=team_puLVHNFpVLxyXCwomoMRkucw -v VERCEL_PROJECT_ID=prj_qPfsjESqt5wjMVPJcDshE7bjb9sn -- vercel pull --yes --environment=preview --token=wsZ8QIWpp8RAnnmDsUPc4p0m",
-          "npx env-cmd -f apps/L1E/ticket-booking/ticket-booking-backend/.env vercel build --token=wsZ8QIWpp8RAnnmDsUPc4p0m",
+          "npx nx build ticket-booking-backend --skip-nx-cache",
+          "mkdir -p .vercel/output",
+          "echo '{\"version\":3,\"functions\":{\"./api/graphql\":{\"runtime\":\"@vercel/node\"}}}' > .vercel/output/config.json",
+          "cp -r dist/apps/L1E/ticket-booking/ticket-booking-backend/.next .vercel/output/",
           "npx dotenv -v VERCEL_ORG_ID=team_puLVHNFpVLxyXCwomoMRkucw -v VERCEL_PROJECT_ID=prj_qPfsjESqt5wjMVPJcDshE7bjb9sn -- vercel --archive=tgz --prebuilt --token=wsZ8QIWpp8RAnnmDsUPc4p0m"
         ],
-        "parallel": false
+        "parallel": false,
+        "forwardAllArgs": false
       },
       "dependsOn": [
         {

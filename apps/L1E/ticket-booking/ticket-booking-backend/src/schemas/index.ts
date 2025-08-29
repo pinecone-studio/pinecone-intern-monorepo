@@ -1,4 +1,12 @@
 import { mergeTypeDefs } from '@graphql-tools/merge';
-import { typeDefs as CommonTypeDefs } from './common.schema';
+import { userTypeDefs } from "./user.schema"    
+import { eventTypeDefs } from "./event.schema" 
+import { ticketTypeDefs } from "./ticket.schema"
+import { paymentTypeDefs } from "./payment.schema"
 
-export const typeDefs = mergeTypeDefs([CommonTypeDefs]);
+export const typeDefs = mergeTypeDefs([
+  userTypeDefs,
+  eventTypeDefs,
+  ticketTypeDefs,
+  paymentTypeDefs,
+]);

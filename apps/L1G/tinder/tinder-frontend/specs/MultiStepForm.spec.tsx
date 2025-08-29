@@ -26,6 +26,14 @@ jest.mock('@/components/CreatePassword', () => ({
     </div>
   ),
 }));
+jest.mock('@/components/GenderOfUser', () => ({
+  GenderOfUser: ({ onSuccess }) => (
+    <div>
+      What’s your gender?
+      <button onClick={onSuccess}>Next</button>
+    </div>
+  ),
+}));
 jest.mock('@/components/GenderSelect', () => ({
   GenderSelect: ({ onSuccess }) => (
     <div>
@@ -46,10 +54,16 @@ describe('MultiStepForm1', () => {
     render(<MultiStepForm1 step="createAccount" setStep={mockSetStep} />);
     expect(screen.getByText(/Create an account/i)).toBeInTheDocument();
     fireEvent.click(screen.getByText('Next'));
+
+    expect(mockSetStep).toHaveBeenCalledWith('genderOfUser');
+  });
+  it('renders genderSelect step and triggers onSuccess', () => {
+    render(<MultiStepForm1 step="genderOfUser" setStep={mockSetStep} />);
+    expect(screen.getByText('What’s your gender?')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Next'));
     expect(mockSetStep).toHaveBeenCalledWith('genderSelect');
   });
-
-  it('renders genderSelect step and triggers onSuccess', () => {
+    it('renders genderSelect step and triggers onSuccess', () => {
     render(<MultiStepForm1 step="genderSelect" setStep={mockSetStep} />);
     expect(screen.getByText('Who are you interested in?')).toBeInTheDocument();
     fireEvent.click(screen.getByText('Next'));
@@ -61,6 +75,7 @@ describe('MultiStepForm1', () => {
     expect(screen.queryByText(/Create an account/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/confirm email/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/create password/i)).not.toBeInTheDocument();
+    expect(screen.queryByText('What’s your gender?')).not.toBeInTheDocument();
     expect(screen.queryByText('Who are you interested in?')).not.toBeInTheDocument();
   });
 });

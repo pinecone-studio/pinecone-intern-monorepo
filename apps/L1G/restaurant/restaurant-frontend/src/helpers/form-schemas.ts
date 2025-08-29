@@ -53,4 +53,36 @@ const initialValuesFood = {
   image: undefined,
 };
 
-export { formSchemaUser, initialValuesUser, formSchemaFood, initialValuesFood };
+const formSchemaDiscount = z.object({
+  discountName: z.string().min(2, {
+    message: 'Хямдралын нэр оруулна уу!',
+  }),
+  discountRate: z.coerce
+    .number()
+    .min(1, {
+      message: 'Хямдралын хувь оруулна уу!',
+    })
+    .refine((val) => !isNaN(Number(val)) && Number(val) > 0, { message: 'Зөв хувь оруулна уу!' }),
+  discountDate: z
+    .object({
+      from: z.union([z.date(), z.string()]).optional(),
+      to: z.union([z.date(), z.string()]).optional(),
+    })
+    .refine(
+      (date) => {
+        return date && date.from && date.to;
+      },
+      { message: 'Хугацаа сонгоно уу!' }
+    ),
+});
+
+const initialValuesDiscount = {
+  discountName: '',
+  discountRate: 0,
+  discountDate: {
+    from: undefined,
+    to: undefined,
+  },
+};
+
+export { formSchemaUser, initialValuesUser, formSchemaFood, initialValuesFood, formSchemaDiscount, initialValuesDiscount };

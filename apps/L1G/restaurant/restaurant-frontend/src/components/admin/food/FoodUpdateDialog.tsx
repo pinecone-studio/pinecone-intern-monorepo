@@ -11,7 +11,7 @@ import { FoodUpdateDialogProps } from '@/utils/FoodTypes';
 import { formSchemaFood } from '@/helpers/form-schemas';
 import { FoodUpdateForm } from './FoodUpdateForm';
 
-export const FoodUpdateDialog = ({ foodId, foodName, image, price, status, category, refetch }: FoodUpdateDialogProps) => {
+export const FoodUpdateDialog = ({ foodId, foodName, image, price, foodStatus, category, refetch }: FoodUpdateDialogProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [updateFood] = useUpdateFoodMutation();
@@ -33,7 +33,7 @@ export const FoodUpdateDialog = ({ foodId, foodName, image, price, status, categ
           input: {
             foodName: values.foodName,
             price: values.price,
-            status: values.status,
+            foodStatus: values.status,
             image: imageUrl,
             categoryId: values.category,
           },
@@ -71,7 +71,7 @@ export const FoodUpdateDialog = ({ foodId, foodName, image, price, status, categ
             <X className="w-4 h-4" />
           </DialogClose>
         </div>
-        <FoodUpdateForm foodName={foodName} price={price} category={category} status={status} image={image} onSubmit={handleSubmit} isSubmitting={isSubmitting} />
+        <FoodUpdateForm foodName={foodName} price={price} category={category} foodStatus={foodStatus} image={image} onSubmit={handleSubmit} isSubmitting={isSubmitting} />
       </DialogContent>
     </Dialog>
   );

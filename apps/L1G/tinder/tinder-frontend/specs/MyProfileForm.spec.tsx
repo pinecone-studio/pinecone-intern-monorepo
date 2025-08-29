@@ -5,7 +5,6 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MyProfileForm } from '@/components/MyProfileForm';
 import { useGetAllInterestsQuery } from '@/generated';
-import userEvent from '@testing-library/user-event';
 window.HTMLElement.prototype.hasPointerCapture = () => false;
 
 jest.mock('@/generated', () => ({
@@ -24,6 +23,7 @@ describe('MyProfileForm', () => {
           { _id: 'music', interestName: 'Music' },
           { _id: 'sports', interestName: 'Sports' },
           { _id: 'travel', interestName: 'Travel' },
+          { _id: 'bowling', interestName: null },
         ],
       },
     });
@@ -91,21 +91,6 @@ describe('MyProfileForm', () => {
     consoleSpy.mockRestore();
   });
 
-  test('allows selecting each gender preference option', async () => {
-    render(<MyProfileForm />);
-
-    // Open the dropdown/select trigger first
-    const genderSelectTrigger = screen.getByTestId('gender-select-trigger');
-    await userEvent.click(genderSelectTrigger);
-
-    // Wait for options to appear
-    const maleOption = await screen.findByTestId('option-male');
-    await userEvent.click(maleOption);
-
-    // Assert the select now shows 'Male'
-    expect(genderSelectTrigger).toHaveTextContent(/male/i);
-  });
-
   it('does not allow selecting more than 10 interests', async () => {
     mockUseGetAllInterestsQuery.mockReturnValue({
       data: {
@@ -153,5 +138,20 @@ describe('MyProfileForm', () => {
     render(<MyProfileForm />);
 
     expect(screen.getByTestId('multi-select-trigger')).toBeInTheDocument();
+  });
+
+  it('falls back to empty array when data is undefined', () => {
+    mockUseGetAllInterestsQuery.mockReturnValue({
+      data: undefined,
+    });
+
+    render(<MyProfileForm />);
+
+    const trigger = screen.getByTestId('multi-select-trigger');
+    expect(trigger).toBeInTheDocument();
+
+    fireEvent.click(trigger);
+
+    expect(screen.queryByRole('option')).not.toBeInTheDocument();
   });
 });

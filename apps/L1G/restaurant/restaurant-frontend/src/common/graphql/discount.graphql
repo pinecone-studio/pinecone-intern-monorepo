@@ -1,0 +1,39 @@
+query getDiscounts {
+  getDiscounts {
+    discountId
+    discountName
+    discountRate
+    startDate
+    endDate
+  }
+}
+
+mutation CreateDiscount($input: CreateDiscountInput!) {
+  createDiscount(input: $input) {
+    discountId
+    discountName
+    discountRate
+    startDate
+    endDate
+  }
+}
+
+mutation UpdateDiscount($discountId: ID!, $input: UpdateDiscountInput!) {
+  updateDiscount(discountId: $discountId, input: $input) {
+    discountId
+    discountName
+    discountRate
+    startDate
+    endDate
+  }
+}
+
+mutation DeleteDiscount($discountId: ID!) {
+  deleteDiscount(discountId: $discountId) {
+    discountId
+    discountName
+    discountRate
+    startDate
+    endDate
+  }
+}

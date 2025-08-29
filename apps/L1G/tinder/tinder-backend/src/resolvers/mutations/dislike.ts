@@ -1,12 +1,12 @@
 import { Usermodel } from 'src/models/user';
 import { MatchModel } from 'src/models/match';
 import mongoose from 'mongoose';
-import { disLikeArgs } from 'src/types';
+import { DislikeArgs } from 'src/types';
 interface DislikeResponse {
   isMatch: boolean;
   message: string;
 }
-export const dislike = async (_: unknown, args: disLikeArgs): Promise<DislikeResponse> => {
+export const dislike = async (_: unknown, args: DislikeArgs): Promise<DislikeResponse> => {
   const { dislikedByUser, dislikeReceiver } = args;
 
   try {

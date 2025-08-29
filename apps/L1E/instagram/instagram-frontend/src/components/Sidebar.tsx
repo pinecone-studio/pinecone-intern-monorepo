@@ -2,6 +2,8 @@
 import Link from 'next/link';
 import { Home, Search, AlignJustify, Heart, PlusSquare, ImagePlus, BookOpenCheck, Instagram } from 'lucide-react';
 import { usePost } from "./context/PostContext"
+import { useAuth } from "./providers/AuthProvider"
+import { useRouter } from 'next/navigation';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,10 +25,23 @@ import SearchResults from './search/Search';
 export const Sidebar: React.FC = () => {
 
   const { handlePostClick} = usePost();
+  const { user } = useAuth();
+  const router = useRouter();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  
   const handleSearchClick = () => {
     setIsSearchOpen(!isSearchOpen);
   }
+
+  const handleCreatePost = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!user) {
+      alert("Please log in to create a post. Redirecting to login page...");
+      router.push('/signin');
+      return;
+    }
+    handlePostClick();
+  };
   // console.log('PostStep in Sidebar:', postStep);
   // console.log(handlePostClick, "clickinggg")
   return (
@@ -64,7 +79,7 @@ export const Sidebar: React.FC = () => {
                   </Link>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className='w-[154px] h-[72px] rounded-md flex flex-col mt-2 items-start justify-start mr-4'>
-                  <DropdownMenuItem data-cy="create-post" onClick={(e) => { e.preventDefault(); handlePostClick(); }} className='flex pt-[6px] pr-[8px] justify-between items-center self-stretch'>
+                  <DropdownMenuItem data-cy="create-post" onClick={handleCreatePost} className='flex pt-[6px] pr-[8px] justify-between items-center self-stretch'>
                     Post <ImagePlus className='w-[16px] h-[16px]' />
                   </DropdownMenuItem>
                   <DropdownMenuItem className='flex p-[6px_8px] justify-between items-center self-stretch'>
@@ -122,7 +137,7 @@ export const Sidebar: React.FC = () => {
                     </Link>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className='w-[154px] h-[72px] rounded-md flex flex-col mt-2 items-start justify-start mr-4'>
-                    <DropdownMenuItem data-cy="create-post" onClick={(e) => { e.preventDefault(); handlePostClick(); }} className='flex pt-[6px] pr-[8px] justify-between items-center self-stretch'>
+                    <DropdownMenuItem data-cy="create-post" onClick={handleCreatePost} className='flex pt-[6px] pr-[8px] justify-between items-center self-stretch'>
                       Post <ImagePlus className='w-[16px] h-[16px]' />
                     </DropdownMenuItem>
                     <DropdownMenuItem className='flex p-[6px_8px] justify-between items-center self-stretch'>

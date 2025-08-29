@@ -2,6 +2,15 @@
 import Image from "next/image";
   import { Button } from "@/components/ui/button";
    const SelectImagePage: React.FC = () => {
+  
+  const handleSelectFromComputer = () => {
+    const input = document.getElementById("global-image-input") as HTMLInputElement;
+    if (input) {
+      input.value = ""; 
+      input.click();
+    }
+  };
+
   return (
     <div>
       <div className="flex flex-col w-[638px] h-[678px] items-center gap-[196px]">
@@ -14,7 +23,7 @@ import Image from "next/image";
         <div className="h-[175px] rounded-lg p-8 text-center flex flex-col items-center justify-center">
 
                     <label
-                      htmlFor="image-upload"
+                      htmlFor="global-image-input"
                       className="cursor-pointer flex flex-col items-center justify-center h-full"
                     >
                       <Image src="/filedrop.svg" alt="Upload Icon" width={96} height={77} />
@@ -23,7 +32,7 @@ import Image from "next/image";
                     <Button
                       variant="outline"
                       className="mt-2 bg-blue-400 w-[178px] h-[40px] p-[8px_16px] hover:bg-blue-500 text-white"
-                       onClick={() => document.getElementById("global-image-input")?.click()}
+                       onClick={handleSelectFromComputer}
                     >
                       Select from computer
                     </Button>

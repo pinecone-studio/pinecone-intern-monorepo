@@ -2,7 +2,6 @@ import { GraphQLResolveInfo } from 'graphql';
 import { DiscountModel } from 'src/models/discount.model';
 import { createDiscount } from 'src/resolvers/mutations';
 
-Date.now = jest.fn(() => 1487076708000);
 jest.mock('src/models/discount.model', () => ({
   DiscountModel: {
     create: jest.fn(),
@@ -12,21 +11,17 @@ jest.mock('src/models/discount.model', () => ({
 describe('createDiscount', () => {
   it('should create new discount', async () => {
     (DiscountModel.create as jest.Mock).mockReturnValue({
-      _id: '1',
+      discountId: '1',
       discountName: 'Test',
-      discountRate: 0.15,
-      startDate: Date.now(),
-      endDate: Date.now(),
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      discountRate: 15,
     });
 
-    const result = await createDiscount?.({}, { input: { discountName: 'Test', discountRate: 0.15, startDate: '2/14/2017', endDate: '2/14/2017' } }, {}, {} as GraphQLResolveInfo);
+    const result = await createDiscount?.({}, { input: { discountName: 'Test', discountRate: 15, startDate: '2/14/2017', endDate: '2/14/2017' } }, {}, {} as GraphQLResolveInfo);
     expect(result).toEqual(
       expect.objectContaining({
         discountId: '1',
         discountName: 'Test',
-        discountRate: 0.15,
+        discountRate: 15,
       })
     );
   });

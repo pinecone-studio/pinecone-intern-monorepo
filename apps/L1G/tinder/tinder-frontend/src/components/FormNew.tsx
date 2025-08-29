@@ -59,6 +59,9 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
       const response = await updateProfile({
         variables: {
           updateProfileId: userData.id,
+          genderPreferences: userData.genderPreferences,
+          gender: userData.gender,
+          dateOfBirth: userData.dateOfBirth instanceof Date ? userData.dateOfBirth.toISOString() : userData.dateOfBirth || undefined,
           name: values.name,
           bio: values.bio,
           interests: values.interest,
@@ -86,10 +89,12 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
   }
 
   const interestOptions =
-    data?.getAllInterests.map((i) => ({
-      value: i._id,
-      label: i.interestName,
-    })) || [];
+    data?.getAllInterests
+      .filter((i) => !!i.interestName)
+      .map((i) => ({
+        value: i._id,
+        label: i.interestName as string,
+      })) || [];
 
   return (
     <Form {...form}>
@@ -128,3 +133,4 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
     </Form>
   );
 };
+

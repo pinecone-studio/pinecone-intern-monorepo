@@ -1,25 +1,18 @@
 'use client';
 
+import { ChatUser } from 'types/chat';
 import Avatar from './Avatar';
 import clsx from 'clsx';
 
-interface User {
-  id: number;
-  name: string;
-  age: number;
-  job: string;
-  avatar: string[];
-}
-
 interface ChatPersonProps {
-  selectedUser: User | null;
-  onUserSelect: (_user: User) => void;
-  bottomUsers: User[];
-  chattedUsers?: Set<number>;
+  selectedUser: ChatUser | null;
+  onUserSelect: (_user: ChatUser) => void;
+  bottomUsers: ChatUser[];
+  chattedUsers?: Set<string>;
 }
 
 const ChatPerson: React.FC<ChatPersonProps> = ({ selectedUser, onUserSelect, bottomUsers, chattedUsers }) => {
-  const chattedSet = chattedUsers ?? new Set<number>();
+  const chattedSet = chattedUsers ?? new Set<string>();
 
   return (
     <div className="flex flex-col w-[300px] border-r border-gray-300">
@@ -40,7 +33,7 @@ const ChatPerson: React.FC<ChatPersonProps> = ({ selectedUser, onUserSelect, bot
                 {chatUser.name}, {chatUser.age}
               </p>
 
-              <p className="text-[13px] text-gray-500">{chatUser.job}</p>
+              <p className="text-[13px] text-gray-500">{chatUser.profession}</p>
             </div>
           </div>
         );
@@ -50,4 +43,3 @@ const ChatPerson: React.FC<ChatPersonProps> = ({ selectedUser, onUserSelect, bot
 };
 
 export default ChatPerson;
-

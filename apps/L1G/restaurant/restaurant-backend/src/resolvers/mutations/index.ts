@@ -18,3 +18,7 @@ export * from './discount/create-discount';
 export * from './discount/delete-discount';
 export * from './discount/update-discount';
 export * from './food/update-food-by-discount';
+export * from './order/create-order';
+export * from './order/update-order';
+export * from './order/delete-order';
+export * from './food/update-food-by-status';

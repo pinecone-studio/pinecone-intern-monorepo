@@ -6,13 +6,12 @@ import { z } from 'zod';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { MultiSelect } from './MultiSelect';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { profileFormSchema } from './schema/ProfileFormSchema';
-import { NameEmailFields } from './NameEmailFields';
 import { BirthDateField } from './BirthDateField';
 import { Separator } from '@/components/ui/separator';
 import { ProfessionSchoolFields } from './ProfessionSchoolFields';
 import { useGetAllInterestsQuery } from '@/generated';
+import { NameGenderPreferenceFields } from './NameGenderPreferenceFields';
 
 export const MyProfileForm = () => {
   const form = useForm<z.infer<typeof profileFormSchema>>({
@@ -30,10 +29,12 @@ export const MyProfileForm = () => {
 
   const { data } = useGetAllInterestsQuery();
   const interestOptions =
-    data?.getAllInterests.map((i) => ({
-      value: i._id,
-      label: i.interestName,
-    })) || [];
+    data?.getAllInterests
+      .filter((i) => !!i.interestName)
+      .map((i) => ({
+        value: i._id,
+        label: i.interestName as string,
+      })) || [];
 
   const onSubmit = async (_data: z.infer<typeof profileFormSchema>) => {
     console.log(_data);
@@ -52,42 +53,8 @@ export const MyProfileForm = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-6">
-            <NameEmailFields control={form.control} />
+            <NameGenderPreferenceFields control={form.control} />
             <BirthDateField control={form.control} />
-            <FormField
-              control={form.control}
-              name="genderPreference"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel id="genderPreference-label" className="flex" htmlFor="genderPreference">
-                    Gender Preference
-                  </FormLabel>
-                  <FormControl>
-                    <Select {...field} onValueChange={field.onChange} defaultValue={field.value}>
-                      <SelectTrigger id="genderPreference" className="w-[180px]" aria-labelledby="genderPreference-label" data-testid="gender-select-trigger">
-                        <SelectValue placeholder="" />
-                      </SelectTrigger>
-
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem data-testid="option-male" value="Male">
-                            Male
-                          </SelectItem>
-                          <SelectItem data-testid="option-female" value="Female">
-                            Female
-                          </SelectItem>
-                          <SelectItem data-testid="option-both" value="Both">
-                            Both
-                          </SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             <FormField
               control={form.control}
               name="bio"

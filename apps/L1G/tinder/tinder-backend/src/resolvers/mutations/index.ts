@@ -6,3 +6,4 @@ export * from './auth';
 export * from './image-upload';
 export * from './mark-message';
 export * from './send-message';
+export * from './unmatch';

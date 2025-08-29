@@ -13,20 +13,20 @@ import { formSchemaFood } from '@/helpers/form-schemas';
 import Image from 'next/image';
 import { RadioInput } from './FormRadioInput';
 
-const updateFormDefaults = (foodName: string, price: string, image: string | undefined, categoryId: string, status: string) => ({
+const updateFormDefaults = (foodName: string, price: string, image: string | undefined, categoryId: string, foodStatus: string) => ({
   foodName: foodName || '',
   price: price || '',
   image: image || undefined,
   category: categoryId || '',
-  status: status as 'Идэвхитэй' | 'Идэвхигүй',
+  status: foodStatus as 'Идэвхитэй' | 'Идэвхигүй',
 });
 
-export const FoodUpdateForm = ({ foodName, price, status, image, category, onSubmit, isSubmitting }: FoodUpdateFormProps) => {
+export const FoodUpdateForm = ({ foodName, price, foodStatus, image, category, onSubmit, isSubmitting }: FoodUpdateFormProps) => {
   const [foodImage, setFoodImage] = useState<string>('');
 
   const form = useForm<z.infer<typeof formSchemaFood>>({
     resolver: zodResolver(formSchemaFood),
-    defaultValues: updateFormDefaults(foodName, price, image, category.categoryId, status),
+    defaultValues: updateFormDefaults(foodName, price, image, category.categoryId, foodStatus),
   });
   useEffect(() => {
     form.reset({
@@ -34,9 +34,9 @@ export const FoodUpdateForm = ({ foodName, price, status, image, category, onSub
       price: price || '',
       image: image || undefined,
       category: category.categoryId || '',
-      status: status as 'Идэвхитэй' | 'Идэвхигүй',
+      status: foodStatus as 'Идэвхитэй' | 'Идэвхигүй',
     });
-  }, [foodName, price, image, category.categoryId, status, form]);
+  }, [foodName, price, image, category.categoryId, foodStatus, form]);
 
   useEffect(() => {
     if (image) {

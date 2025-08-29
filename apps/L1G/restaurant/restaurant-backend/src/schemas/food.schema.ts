@@ -6,7 +6,7 @@ export const foodTypeDefs = gql`
     foodName: String!
     price: String!
     image: String!
-    status: String!
+    foodStatus: String!
     category: Category!
     discount: Discount
     createdAt: String
@@ -17,7 +17,7 @@ export const foodTypeDefs = gql`
     foodName: String!
     price: String!
     image: String!
-    status: String!
+    foodStatus: String!
     categoryId: ID!
   }
 
@@ -25,7 +25,7 @@ export const foodTypeDefs = gql`
     foodName: String
     price: String
     image: String
-    status: String
+    foodStatus: String!
     categoryId: ID
   }
 
@@ -39,5 +39,6 @@ export const foodTypeDefs = gql`
     updateFood(foodId: ID!, input: UpdateFoodInput!): Food!
     deleteFood(foodId: ID!): Food!
     updateFoodByDiscount(foodId: ID!, discountId: ID!): Food!
+    updateFoodByStatus(foodId: ID!, foodStatus: String!): Food!
   }
 `;
