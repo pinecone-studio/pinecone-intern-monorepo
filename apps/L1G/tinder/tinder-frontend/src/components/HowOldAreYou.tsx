@@ -8,11 +8,14 @@ import { format } from 'date-fns';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { generateYearOptions, MIN_YEAR, MONTHS, validateDate } from './date-utils';
 
+type UserData = any;
+
 type Props = {
   onSuccess?: (_date: Date) => void;
   onBack?: () => void;
   initialDate?: Date;
   currentDate?: Date;
+  updateUserData?: (data: Partial<UserData>) => void;
 };
 
 const HowOldAreYou = ({ onSuccess, onBack, initialDate, currentDate = new Date() }: Props) => {
