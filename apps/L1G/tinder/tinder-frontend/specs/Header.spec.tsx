@@ -1,13 +1,7 @@
-<<<<<<< HEAD
-import { Header } from '@/components/Header';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { useRouter } from 'next/navigation';import '@testing-library/jest-dom';
-=======
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Header } from '@/components/Header';
->>>>>>> fd8568c85 (fix(bol): bolson shuuu)
 import { useGetMeQuery } from '@/generated';
 
 jest.mock('@/generated', () => ({
@@ -26,18 +20,6 @@ jest.mock('next/navigation', () => ({
 const mockedUseGetMeQuery = useGetMeQuery as jest.Mock;
 
 describe('Header', () => {
-<<<<<<< HEAD
-  const mockPush = jest.fn();
-
-  beforeEach(() => {
-    (useRouter as jest.Mock).mockReturnValue({
-      push: mockPush,
-    });
-    mockPush.mockClear();
-  });
-  it('renders with fallback image when loading', () => {
-    mockedUseGetMeQuery.mockReturnValue({ data: null, loading: true });
-=======
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -47,7 +29,6 @@ describe('Header', () => {
       data: null,
       loading: true,
     });
->>>>>>> fd8568c85 (fix(bol): bolson shuuu)
 
     render(<Header />);
 
@@ -108,7 +89,7 @@ describe('Header', () => {
     expect(pushMock).toHaveBeenCalledWith('/chat');
   });
 
-    it('navigates to profile when profile button is clicked', () => {
+  it('navigates to profile when profile button is clicked', () => {
     render(<Header />);
 
     const profileButton = screen.getByAltText(/Profile Picture/i).closest('button');
