@@ -73,6 +73,10 @@ export const UsertypeDefs = gql`
     isMatch: Boolean!
     message: String!
   }
+  type UnmatchResponse {
+    success: Boolean!
+    message: String!
+  }
 
   type Query {
     getMe: User!
@@ -107,5 +111,7 @@ export const UsertypeDefs = gql`
 
     sendMessage(senderId: ID!, receiverId: ID!, matchId: ID!, content: String!): ChatMessage!
     markMessagesAsSeen(matchId: ID!, userId: ID!): Boolean
+
+    unmatch(matchId: ID!): UnmatchResponse!
   }
 `;

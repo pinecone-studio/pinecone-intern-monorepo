@@ -7,6 +7,9 @@ import { useGetMeQuery } from '@/generated';
 jest.mock('@/generated', () => ({
   useGetMeQuery: jest.fn(),
 }));
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
 
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
@@ -26,6 +29,7 @@ describe('Header', () => {
       data: null,
       loading: true,
     });
+
 
     render(<Header />);
 
@@ -84,5 +88,14 @@ describe('Header', () => {
     button.click();
 
     expect(pushMock).toHaveBeenCalledWith('/chat');
+  });
+
+    it('navigates to profile when profile button is clicked', () => {
+    render(<Header />);
+
+    const profileButton = screen.getByAltText(/Profile Picture/i).closest('button');
+    fireEvent.click(profileButton!);
+
+    expect(mockPush).toHaveBeenCalledWith('/profile');
   });
 });

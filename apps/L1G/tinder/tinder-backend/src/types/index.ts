@@ -69,3 +69,12 @@ export type LeanChatMessage = {
   createdAt: Date;
   seen?: boolean;
 };
+
+export type UnmatchArgs = {
+  matchId: string;
+};
+
+export interface IUnmatchResponse {
+  success: boolean;
+  message: string;
+}

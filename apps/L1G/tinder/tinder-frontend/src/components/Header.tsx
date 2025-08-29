@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { TinderLogo } from './TinderLogo';
 import { MessageSquare } from 'lucide-react';
@@ -7,6 +8,11 @@ import { useGetMeQuery } from '@/generated';
 import { useRouter } from 'next/navigation';
 
 export const Header = () => {
+  const router = useRouter();
+  const goToProfileBtn = () => {
+    router.push('/profile');
+  };
+
   const { data, loading } = useGetMeQuery();
   const router = useRouter();
   let firstImage = '/profile.jpg';
@@ -32,9 +38,9 @@ export const Header = () => {
             <MessageSquare size={16} strokeWidth={2} aria-hidden="true" color="#09090B" />
           </Button>
 
-          <div className="relative w-[40px] h-[40px] rounded-full overflow-hidden">
+          <Button onClick={goToProfileBtn} className="relative w-[40px] h-[40px] rounded-full overflow-hidden">
             <Image src={firstImage} alt="Profile Picture" fill className="object-cover" />
-          </div>
+          </Button>
         </div>
       </div>
     </div>

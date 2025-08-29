@@ -11,7 +11,12 @@ comments: [Comment!]!
 createdAt: Date!
 }
 
-type Mutation {
+extend type Query {
+  getPosts: [Post!]!
+  getMyPosts: [Post!]!
+}
+
+extend type Mutation {
   createPost(image: [String!]!, description: String): Post!
 }
 `

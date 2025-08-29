@@ -2,7 +2,7 @@
 import { ArrowLeft } from "lucide-react";
 import { CREATE_POST } from "@/graphql/mutations/createPost/Post";
 import ImageCarousel from "@/components/ImageCarousels";
-import { useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client/react/hooks";
 
 
 type PostStep = "idle" | "select-image" | "add-caption" | "preview";
@@ -21,7 +21,7 @@ type CaptionProps = {
   loading: boolean;
 };
 
- const Caption = ({
+const Caption = ({
   selectedImages,
   currentIndex,
   onAddImageClick,
