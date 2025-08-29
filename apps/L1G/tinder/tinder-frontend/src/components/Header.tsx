@@ -18,13 +18,16 @@ export const Header = () => {
   if (!loading && data?.getMe?.images?.length) {
     firstImage = data.getMe.images[0];
   }
+  const handleTohome = () => {
+    router.push('/home');
+  };
   const handleTochat = () => {
     router.push('/chat');
   };
   return (
     <div className="w-full h-[64px] py-4 flex justify-center items-center border border-b-[#E4E4E7] px-4">
       <div className="w-[1280px] max-w-[1280px] flex justify-between items-center">
-        <TinderLogo />
+        <TinderLogo handleTohome={handleTohome} />
 
         <div className="w-fit h-fit flex justify-center items-center gap-4">
           <Button
