@@ -2,9 +2,7 @@
 import { ArrowLeft } from "lucide-react";
 import { CREATE_POST } from "@/graphql/mutations/createPost/Post";
 import ImageCarousel from "@/components/ImageCarousels";
-import { useMutation } from "@apollo/client";
-import { useAuth } from "@/components/providers/AuthProvider";
-import { useRouter } from "next/navigation";
+import { useMutation } from "@apollo/client/react/hooks";
 
 
 type PostStep = "idle" | "select-image" | "add-caption" | "preview";
@@ -23,7 +21,7 @@ type CaptionProps = {
   loading: boolean;
 };
 
- const Caption = ({
+const Caption = ({
   selectedImages,
   currentIndex,
   onAddImageClick,
@@ -38,63 +36,20 @@ type CaptionProps = {
 
   const wordCount = caption.trim() === "" ? 0 : caption.trim().split(/\s+/).length;
   const maxWords = 2200;
-  const { user } = useAuth();
-  const router = useRouter();
-  
   const [createPost, { loading }] = useMutation(CREATE_POST, {
     onCompleted: () => resetPost(),
-    onError: (error) => {
-      console.error("Post creation error details:", {
-        message: error.message,
-        graphQLErrors: error.graphQLErrors,
-        networkError: error.networkError,
-        extraInfo: error.extraInfo
-      });
-      if (error.message.includes("Unauthorized")) {
-        alert("Please log in to create a post. Redirecting to login page...");
-        // router.push('/signin');
-      } else {
-        alert("Error creating post: " + error.message);
-      }
-    }
+
+
+
   });
 
   const handleShare = async () => {
-    console.log("handleShare called, user:", user);
-    console.log("selectedImages:", selectedImages.length);
-    console.log("caption:", caption);
-    console.log("selectedImages[0] preview:", selectedImages[0]?.substring(0, 50) + "...");
-    
-    if (!user) {
-      alert("Please log in to create a post. Redirecting to login page...");
-      router.push('/signin');
-      return;
-    }
-    
     try {
-      // Test with simple string first
-      const testImages = ["https://example.com/test-image.jpg"];
-      console.log("Testing with simple image URL first...");
       await createPost({
-        variables: { image: testImages, description: caption },
+        variables: { image: selectedImages, description: caption },
       });
     } catch (err) {
-      console.error("Error with test image:", err);
-      
-      // If test fails, try with actual images
-      try {
-        console.log("Attempting to create post with variables:", { 
-          image: selectedImages, 
-          description: caption,
-          imageLength: selectedImages.length,
-          firstImageLength: selectedImages[0]?.length
-        });
-        await createPost({
-          variables: { image: selectedImages, description: caption },
-        });
-      } catch (err2) {
-        console.error("Error in handleShare:", err2);
-      }
+      console.error(err);
     }
   };
   const resetPost = () => {
@@ -113,19 +68,7 @@ type CaptionProps = {
           <div className="h-[24px] flex justify-between items-center w-[997px]  p-[0px_8px]">
             <ArrowLeft data-cy="back-icon" onClick={() => setPostStep("preview")} className="h-[16px] w-[16px]" />
             <h2 className="text-[16px] font-bold">Create new post</h2>
-            <div className="flex gap-2">
-              <button 
-                className="text-red-600 cursor-pointer text-[12px] font-bold px-2 py-1 border border-red-600 rounded"
-                onClick={() => {
-                  console.log("Testing re-login...");
-                  localStorage.removeItem('token');
-                  router.push('/signin');
-                }}
-              >
-                Re-login
-              </button>
-              <p className="text-blue-600 cursor-pointer text-[14px] font-bold" onClick={handleShare}>   {loading ? "Sharing..." : "Share"} </p>
-            </div>
+            <p className="text-blue-600 cursor-pointer text-[14px] font-bold" onClick={handleShare}>   {loading ? "Sharing..." : "Share"} </p>
           </div>
           <div>.</div>
         </div>
