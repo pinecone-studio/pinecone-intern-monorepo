@@ -23,6 +23,12 @@ const authLink = setContext((_, { headers }) => {
     return { headers };
   }
   const token = window.localStorage.getItem("token");
+  console.log("Apollo authLink - token exists:", !!token);
+  if (token) {
+    console.log("Apollo authLink - token length:", token.length);
+    console.log("Apollo authLink - token preview:", token.substring(0, 20) + "...");
+    console.log("Apollo authLink - authorization header:", `Bearer ${token}`);
+  }
   return {
     headers: {
       ...headers,
