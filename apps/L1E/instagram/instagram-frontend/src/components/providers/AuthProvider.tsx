@@ -86,7 +86,6 @@ function normalizeUser(data: any): AuthUser {
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<AuthUser | null>(null);
-
   const [executeLogin] = useMutation<LoginMutationResult, LoginMutationVars>(LOGIN_MUTATION);
 
   const { userId } = getTokenAndUserId();

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Settings } from "lucide-react";
+import Link from "next/link";
 
 interface Props {
   isMine: boolean;
@@ -11,7 +12,7 @@ const ProfileButtons = ({ isMine, isPrivate }: Props) => {
     return (
       <div className="flex gap-4 items-center">
         <div className="flex gap-2">
-          <Button variant="secondary" className="px-[16px] font-medium hover:bg-[#F4F4F5]">Edit Profile</Button>
+         <Link href='/edit-profile'> <Button variant="secondary" className="px-[16px] font-medium hover:bg-[#F4F4F5]">Edit Profile</Button></Link>
           <Button variant="secondary" className="px-[16px] font-medium hover:bg-[#F4F4F5]">Ad tools</Button>
         </div>
         <Settings strokeWidth={1} />
