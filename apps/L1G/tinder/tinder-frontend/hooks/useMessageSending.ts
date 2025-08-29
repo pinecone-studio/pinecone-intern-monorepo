@@ -12,7 +12,8 @@ interface UseMessageSendingProps {
   setSocketError: React.Dispatch<React.SetStateAction<string | null>>;
   refetch: () => void;
 }
-
+/* eslint-disable-next-line complexity */
+// eslint-disable-next-line no-unused-vars
 export const useMessageSending = ({ selectedUser, data, setConversations, setChattedUsers, moveUserToBottom, setSocketError, refetch }: UseMessageSendingProps) => {
   const [sendMessageMutation] = useSendMessageMutation();
   const [sending, setSending] = useState(false);
@@ -28,6 +29,7 @@ export const useMessageSending = ({ selectedUser, data, setConversations, setCha
   );
 
   const handleSend = useCallback(
+    /* eslint-disable-next-line complexity */
     async (inputValue: string, setInputValue: (_value: string) => void) => {
       const content = inputValue.trim();
       if (sending || !content || !selectedUser || !data?.getMe?.id) return;

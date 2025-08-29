@@ -14,13 +14,15 @@ export const Header = () => {
   };
 
   const { data, loading } = useGetMeQuery();
-
+  const router = useRouter();
   let firstImage = '/profile.jpg';
 
   if (!loading && data?.getMe?.images?.length) {
     firstImage = data.getMe.images[0];
   }
-
+  const handleTochat = () => {
+    router.push('/chat');
+  };
   return (
     <div className="w-full h-[64px] py-4 flex justify-center items-center border border-b-[#E4E4E7] px-4">
       <div className="w-[1280px] max-w-[1280px] flex justify-between items-center">
@@ -30,6 +32,7 @@ export const Header = () => {
           <Button
             type="button"
             aria-label="Messages"
+            onClick={handleTochat}
             className="w-10 h-10 flex bg-transparent items-center justify-center rounded-full hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400"
           >
             <MessageSquare size={16} strokeWidth={2} aria-hidden="true" color="#09090B" />
