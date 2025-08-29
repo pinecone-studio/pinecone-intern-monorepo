@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom';
-import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { toast } from 'sonner';
 import { DiscountCreateDialog } from '@/components/admin/menu/DiscountCreateDialog';
 import { createDiscountErrorMock, createDiscountMock } from 'specs/utils/FoodMockData';
+import { MockedProvider } from '@apollo/client/testing';
 
 jest.mock('sonner', () => ({
   toast: {
@@ -22,7 +22,7 @@ describe('DiscountCreateDialog', () => {
 
   it('should render', () => {
     const { getByTestId } = render(
-      <MockedProvider mocks={[createDiscountMock]} addTypename={false}>
+      <MockedProvider mocks={[createDiscountMock]}>
         <DiscountCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -38,7 +38,7 @@ describe('DiscountCreateDialog', () => {
 
   it('should create new discount and show toast success', async () => {
     const { getByTestId, queryByTestId } = render(
-      <MockedProvider mocks={[createDiscountMock]} addTypename={false}>
+      <MockedProvider mocks={[createDiscountMock]}>
         <DiscountCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -63,9 +63,11 @@ describe('DiscountCreateDialog', () => {
 
     const calendar = getByTestId('discount-create-calendar');
 
-    const today = new Date();
+    const today = new Date('9/21/2025');
     const startDay = today.getDate();
     const endDay = startDay;
+
+    console.log(startDay, endDay);
 
     const startDateButton = Array.from(calendar.querySelectorAll('button')).find((btn) => btn.textContent?.trim() === startDay.toString() && !btn.disabled);
     if (startDateButton) {
@@ -99,7 +101,7 @@ describe('DiscountCreateDialog', () => {
 
   it('should show toast error when create mutation fails', async () => {
     const { getByTestId, queryByTestId } = render(
-      <MockedProvider mocks={[createDiscountErrorMock]} addTypename={false}>
+      <MockedProvider mocks={[createDiscountErrorMock]}>
         <DiscountCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -125,7 +127,7 @@ describe('DiscountCreateDialog', () => {
 
     const calendar = getByTestId('discount-create-calendar');
 
-    const today = new Date();
+    const today = new Date('9/21/2025');
     const startDay = today.getDate();
     const endDay = startDay;
 
