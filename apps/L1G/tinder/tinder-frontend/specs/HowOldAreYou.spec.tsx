@@ -1,138 +1,154 @@
-/// <reference types="jest" />
-import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
-import HowOldAreYou from '@/components/HowOldAreYou';
+import React, { ReactNode } from 'react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import HowOldAreYou from '@/components/HowOldAreYou';
+import { validateDate } from '@/components/date-utils';
+import userEvent from '@testing-library/user-event';
+import { format } from 'date-fns';
 
-const mockUpdateUserData = jest.fn();
-const mockOnSuccess = jest.fn();
-const mockOnBack = jest.fn();
+jest.mock('@/components/ui/select', () => ({
+  Select: ({ children, value, onValueChange, 'data-testid': t }: { children: ReactNode; value: string; onValueChange: (_v: string) => void; 'data-testid': string }) => (
+    <select data-testid={t} value={value} onChange={(e) => onValueChange(e.target.value)}>
+      {children}
+    </select>
+  ),
+  SelectTrigger: ({ children }: { children: ReactNode }) => <>{children}</>,
+  SelectContent: ({ children }: { children: ReactNode }) => <>{children}</>,
+  SelectItem: ({ value, children }: { value: string; children: ReactNode }) => <option value={value}>{children}</option>,
+  SelectValue: ({ placeholder }: { placeholder: string }) => <>{placeholder}</>,
+}));
 
-// Mock Date.now to control current date
-const mockToday = new Date('2024-01-01T00:00:00Z');
-beforeAll(() => {
-  jest.spyOn(global.Date, 'now').mockImplementation(() => mockToday.valueOf());
-});
+jest.mock('@/components/ui/popover', () => ({
+  Popover: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+  PopoverTrigger: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+  PopoverContent: ({ children }: { children: ReactNode }) => <div>{children}</div>,
+}));
 
-afterAll(() => {
-  jest.restoreAllMocks();
-});
-
-// Mock for Calendar component to simplify date selection
 jest.mock('@/components/ui/calendar', () => ({
-  Calendar: ({ onSelect, selected, disabled }: { onSelect: (_date: Date) => void; selected: Date | null; disabled?: (_date: Date) => boolean }) => (
-    <div>
-      <button onClick={() => onSelect(new Date('2000-01-01'))} disabled={disabled?.(new Date('2000-01-01'))}>
-        Select 2000-01-01
+  Calendar: ({ onSelect, disabled }: { onSelect: (_d?: Date) => void; disabled: (_d: Date) => boolean }) => (
+    <div data-testid="calendar-component">
+      <button data-testid="day-1" onClick={() => onSelect(new Date(2000, 0, 1))} aria-disabled={disabled(new Date(2000, 0, 1)) ? 'true' : 'false'}>
+        1
       </button>
-      <button onClick={() => onSelect(new Date('1899-01-01'))} disabled={disabled?.(new Date('1899-01-01'))}>
-        Select 1899-01-01
+      <button data-testid="future-day" onClick={() => onSelect(new Date(3000, 0, 1))} aria-disabled={disabled(new Date(3000, 0, 1)) ? 'true' : 'false'}>
+        1
       </button>
-      {selected && <div>Selected: {selected.toISOString()}</div>}
+      <button data-testid="undefined-day" onClick={() => onSelect(undefined)}>
+        undefined
+      </button>
     </div>
   ),
 }));
 
-describe('HowOldAreYou Component', () => {
+jest.mock('@/components/date-utils', () => ({ ...jest.requireActual('@/components/date-utils'), validateDate: jest.fn() }));
+
+beforeAll(() => {
+  Element.prototype.hasPointerCapture = () => false;
+});
+
+describe('HowOldAreYou', () => {
+  const mockOnSuccess = jest.fn(),
+    mockOnBack = jest.fn();
+  let user: ReturnType<typeof userEvent.setup>;
+
   beforeEach(() => {
     jest.clearAllMocks();
+    user = userEvent.setup();
+    (validateDate as jest.Mock).mockImplementation((_d: Date | undefined, _current: Date) =>
+      !_d
+        ? { isValid: false, error: 'Please enter your date of birth' }
+        : _current.getFullYear() - _d.getFullYear() < 18
+        ? { isValid: false, error: 'You must be at least 18 years old.' }
+        : { isValid: true, error: '' }
+    );
   });
 
-  it('renders correctly', () => {
-    render(<HowOldAreYou onSuccess={mockOnSuccess} onBack={mockOnBack} updateUserData={mockUpdateUserData} />);
-    expect(screen.getByText('How old are you')).toBeInTheDocument();
-    expect(screen.getByText('Please enter your age to continue')).toBeInTheDocument();
-    expect(screen.getByTestId('date-picker-button')).toBeInTheDocument();
-    expect(screen.getByTestId('next-button')).toBeInTheDocument();
-  });
-
-  it('opens calendar when date button is clicked', async () => {
-    render(<HowOldAreYou onSuccess={mockOnSuccess} onBack={mockOnBack} updateUserData={mockUpdateUserData} />);
-    await act(async () => {
-      fireEvent.click(screen.getByTestId('date-picker-button'));
-    });
-    expect(screen.getByRole('dialog')).toBeInTheDocument();
-  });
-
-  it('submits form with valid date', async () => {
-    render(<HowOldAreYou onSuccess={mockOnSuccess} onBack={mockOnBack} updateUserData={mockUpdateUserData} />);
-
-    act(() => {
-      fireEvent.click(screen.getByTestId('date-picker-button'));
-    });
-
-    act(() => {
-      const validDateButton = screen.getByRole('button', { name: 'Select 2000-01-01' });
-      fireEvent.click(validDateButton);
-    });
-
-    act(() => {
-      fireEvent.click(screen.getByTestId('next-button'));
-    });
-  });
-
-  it('shows validation error when no date is selected', async () => {
-    render(<HowOldAreYou onSuccess={mockOnSuccess} onBack={mockOnBack} updateUserData={mockUpdateUserData} />);
-
-    // Clear the default date (if applicable)
-    await act(async () => {
-      fireEvent.click(screen.getByTestId('date-picker-button'));
-    });
-
-    // Simulate clearing the date or selecting an invalid one
-    await act(async () => {
-      // Assuming the Calendar allows clearing or selecting an invalid date
-      // If the Calendar component doesn't support clearing, you may need to mock it
-      fireEvent.click(screen.getByTestId('next-button'));
-    });
-
-    await waitFor(() => {
-      expect(screen.queryByText('A date of birth is required.')).not.toBeInTheDocument();
-    });
-  });
-
-  it('displays "Pick a date" when no date is selected', () => {
-    render(<HowOldAreYou onSuccess={mockOnSuccess} onBack={mockOnBack} updateUserData={mockUpdateUserData} />);
-    // Simulate no date selected (default state)
-    expect(screen.getByText('Pick a date')).toBeInTheDocument();
-  });
-
-  it('displays formatted date when a date is selected', async () => {
-    render(<HowOldAreYou onSuccess={mockOnSuccess} onBack={mockOnBack} updateUserData={mockUpdateUserData} />);
-
-    // Open the calendar
-    await act(async () => {
-      fireEvent.click(screen.getByTestId('date-picker-button'));
-    });
-
-    // Select a valid date (e.g., 2000-01-01)
-    await act(async () => {
-      const validDateButton = screen.getByRole('button', { name: 'Select 2000-01-01' });
-      fireEvent.click(validDateButton);
-    });
-  });
-
-  it('disables invalid dates', async () => {
-    render(<HowOldAreYou onSuccess={mockOnSuccess} onBack={mockOnBack} updateUserData={mockUpdateUserData} />);
-
-    // Open the calendar
-    await act(async () => {
-      fireEvent.click(screen.getByTestId('date-picker-button'));
-    });
-
-    // Check that an invalid date (1899-01-01) is disabled
-    const invalidDateButton = screen.getByRole('button', { name: 'Select 1899-01-01' });
-    expect(invalidDateButton).toBeDisabled();
-  });
-
-  it('should call onBack when back button is clicked', async () => {
-    render(<HowOldAreYou onSuccess={mockOnSuccess} onBack={mockOnBack} updateUserData={mockUpdateUserData} />);
-
-    const backButton = screen.getByRole('button', { name: /Back/i });
-    await act(async () => {
-      fireEvent.click(backButton);
-    });
-
+  it('back button works', () => {
+    render(<HowOldAreYou onBack={mockOnBack} />);
+    fireEvent.click(screen.getByTestId('back-button'));
     expect(mockOnBack).toHaveBeenCalled();
+  });
+
+  it('shows error if no date', () => {
+    render(<HowOldAreYou />);
+    fireEvent.click(screen.getByTestId('next-button'));
+    expect(screen.getByTestId('error-message')).toHaveTextContent('Please enter your date of birth');
+  });
+
+  it('calls onSuccess if valid date', async () => {
+    const d = new Date(2000, 0, 1);
+    render(<HowOldAreYou onSuccess={mockOnSuccess} initialDate={d} />);
+    fireEvent.click(screen.getByTestId('next-button'));
+    await waitFor(() => expect(mockOnSuccess).toHaveBeenCalledWith(d));
+  });
+
+  it('selecting day updates button text', async () => {
+    render(<HowOldAreYou />);
+    await user.click(screen.getByTestId('date-button'));
+    fireEvent.click(screen.getByTestId('day-1'));
+    await waitFor(() => expect(screen.getByTestId('date-button')).toHaveTextContent('January 1st, 2000'));
+  });
+
+  it('changes year/month', async () => {
+    render(<HowOldAreYou />);
+    await user.click(screen.getByTestId('date-button'));
+    fireEvent.change(screen.getByTestId('year-select'), { target: { value: '2005' } });
+    fireEvent.change(screen.getByTestId('month-select'), { target: { value: '8' } });
+    expect((screen.getByTestId('year-select') as HTMLSelectElement).value).toBe('2005');
+    expect((screen.getByTestId('month-select') as HTMLSelectElement).value).toBe('8');
+  });
+
+  it('disables future dates', () => {
+    render(<HowOldAreYou currentDate={new Date()} />);
+    expect(screen.getByTestId('future-day')).toHaveAttribute('aria-disabled', 'true');
+    expect(screen.getByTestId('day-1')).toHaveAttribute('aria-disabled', 'false');
+  });
+
+  it('shows error if underage', () => {
+    render(<HowOldAreYou onSuccess={mockOnSuccess} initialDate={new Date(new Date().getFullYear() - 10, 0, 1)} />);
+    fireEvent.click(screen.getByTestId('next-button'));
+    expect(screen.getByTestId('error-message')).toHaveTextContent('You must be at least 18 years old.');
+  });
+
+  it('handles undefined date', () => {
+    render(<HowOldAreYou />);
+    fireEvent.click(screen.getByTestId('undefined-day'));
+    expect(screen.getByTestId('date-button')).toHaveTextContent('Pick a date');
+  });
+
+  it('does not override set date', async () => {
+    const d = new Date(1990, 5, 15);
+    render(<HowOldAreYou initialDate={d} />);
+    await user.click(screen.getByTestId('date-button'));
+    fireEvent.change(screen.getByTestId('year-select'), { target: { value: '2000' } });
+    fireEvent.change(screen.getByTestId('month-select'), { target: { value: '0' } });
+    expect(screen.getByTestId('date-button')).toHaveTextContent(format(d, 'PPP'));
+  });
+
+  it('does not throw without onSuccess', () => {
+    render(<HowOldAreYou initialDate={new Date(2000, 0, 1)} />);
+    fireEvent.click(screen.getByTestId('next-button'));
+    expect(screen.queryByTestId('error-message')).not.toBeInTheDocument();
+  });
+
+  it('validateDate true with undefined date does not call onSuccess', () => {
+    (validateDate as jest.Mock).mockReturnValue({ isValid: true, error: '' });
+    render(<HowOldAreYou />);
+    fireEvent.click(screen.getByTestId('next-button'));
+    expect(screen.queryByTestId('error-message')).not.toBeInTheDocument();
+  });
+
+  it('clears error after valid selection', async () => {
+    render(<HowOldAreYou onSuccess={mockOnSuccess} />);
+    fireEvent.click(screen.getByTestId('next-button'));
+    await user.click(screen.getByTestId('date-button'));
+    fireEvent.change(screen.getByTestId('year-select'), { target: { value: '2000' } });
+    fireEvent.change(screen.getByTestId('month-select'), { target: { value: '0' } });
+    fireEvent.click(screen.getByTestId('day-1'));
+    fireEvent.click(screen.getByTestId('next-button'));
+    await waitFor(() => {
+      expect(screen.queryByTestId('error-message')).not.toBeInTheDocument();
+      expect(mockOnSuccess).toHaveBeenCalledWith(expect.any(Date));
+    });
   });
 });

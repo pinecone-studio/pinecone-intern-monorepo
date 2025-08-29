@@ -15,3 +15,18 @@ export type ChatUser = {
   age: number;
   startedConversation: boolean;
 };
+export type UserData = {
+  id?: string;
+  email?: string;
+  otpId?: string;
+  password?: string;
+  name?: string;
+  gender?: string;
+  genderPreferences?: string;
+  dateOfBirth?: Date | null;
+  bio?: string;
+  interests?: string[];
+  profession?: string;
+  schoolWork?: string;
+  images?: string[];
+};

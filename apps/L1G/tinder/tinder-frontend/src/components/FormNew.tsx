@@ -6,9 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { MultiSelect } from './MultiSelect';
 import { useGetAllInterestsQuery, useUpdateProfileMutation } from '../generated';
-import { UserData } from '@/app/(auth)/signup/page';
 import { useState } from 'react';
 import { ProfileInputField } from './ProfileInputField';
+import { UserData } from 'types/chat';
 
 type ProfileFormProps = {
   onSuccess: () => void;
@@ -133,4 +133,3 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
     </Form>
   );
 };
-
