@@ -105,13 +105,6 @@ describe('getOrdersByUserId', () => {
     ]);
   });
 
-  //   it('should throw error if user does not exist', async () => {
-  //     try {
-  //       expect(getFoodOrdersByUser?.({}, { input: { userId: '1' } }, {}, {} as GraphQLResolveInfo));
-  //     } catch (error) {
-  //       expect(error).toEqual(new Error('order with userId : 1 not found'));
-  //     }
-  //   });
   it("should throw an error if the food doesn't exist", async () => {
     (FoodOrderModel.find as jest.Mock).mockReturnValue({
       populate: jest.fn().mockReturnValue({
