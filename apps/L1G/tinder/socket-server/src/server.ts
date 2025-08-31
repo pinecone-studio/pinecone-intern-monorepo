@@ -1,4 +1,3 @@
-// socket-server.ts
 import express from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
@@ -15,31 +14,39 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
   console.log('🔌 Client connected:', socket.id);
-  
+
   // Join room
   socket.on('join room', (matchId: string) => {
     socket.join(matchId);
     console.log(`📥 Socket ${socket.id} joined room ${matchId}`);
   });
 
-  // Handle message
+  // Handle chat message
   socket.on('chat message', (msg) => {
     const { matchId, content, senderId, receiverId } = msg;
-
     console.log(`📨 Message in room ${matchId}: ${content}`);
-
-    // Emit only to room (i.e. sender + receiver)
-    io.to(matchId).emit('chat message', msg);
+    io.to(matchId).emit('chat message', msg); // Broadcast to the room
   });
-  //Seen logic
+
+  // Handle seen message update
   socket.on('seen messages', ({ matchId, userId }) => {
     console.log(`👁️ Messages seen in room ${matchId} by user ${userId}`);
-
-    // Notify everyone else in the room (except sender) that messages were seen
     socket.to(matchId).emit('messages seen update', { matchId, userId });
   });
 
-  //Leave
+  // Handle unmatch event
+  socket.on('unmatch', (matchId: string) => {
+    console.log(`🚫 Unmatch event triggered in room ${matchId}`);
+
+    // Notify both users in the room about the unmatch
+    socket.to(matchId).emit('unmatched', matchId);
+
+    // Optionally, remove users from the room (depending on your use case)
+    socket.leave(matchId);
+    console.log(`📤 Socket ${socket.id} left room ${matchId}`);
+  });
+
+  // Leave room
   socket.on('leave room', (matchId: string) => {
     socket.leave(matchId);
     console.log(`📤 Socket ${socket.id} left room ${matchId}`);
