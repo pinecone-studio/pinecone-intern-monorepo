@@ -35,8 +35,8 @@ describe('AllFoodsCard', () => {
       }
     }).as('deleteFoodError');
     cy.visit('/food');
-    cy.get('[data-cy=delete-dialog-trigger-0]').click().wait(1000);
-    cy.get('[data-cy=delete-dialog-delete-button]').click().wait(1000);
+    cy.get('[data-cy=delete-dialog-trigger-0]').click();
+    cy.get('[data-cy=delete-dialog-delete-button]').click();
     cy.wait('@deleteFoodError');
     cy.get('body').should('contain.text', 'Хоол устгахад алдаа гарлаа!').should('be.visible');
   });
