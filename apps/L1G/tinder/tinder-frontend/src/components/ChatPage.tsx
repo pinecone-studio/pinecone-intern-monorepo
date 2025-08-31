@@ -128,6 +128,7 @@ const ChatPage: React.FC = () => {
       <div className="flex justify-center">
         <ChatPerson selectedUser={selectedUser} onUserSelect={handleUserSelectWithErrorReset} bottomUsers={bottomUsers} chattedUsers={chattedUsers} />
         <ChatWindow
+          matchId={selectedUser?.id}
           lastSeenMessageId={lastSeenMessageId}
           sending={sending}
           selectedUser={selectedUser}
