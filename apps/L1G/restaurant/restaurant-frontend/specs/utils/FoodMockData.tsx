@@ -1,6 +1,57 @@
 /* eslint max-lines: "off" */
-import { CreateCategoryDocument, CreateDiscountDocument, DeleteFoodDocument, GetFoodsDocument, UpdateFoodDocument } from '@/generated';
+import { CreateCategoryDocument, CreateDiscountDocument, CreateFoodDocument, DeleteFoodDocument, GetFoodsDocument, UpdateFoodDocument } from '@/generated';
 import { MockedResponse } from '@apollo/client/testing';
+
+const createFoodMock: MockedResponse = {
+  request: {
+    query: CreateFoodDocument,
+    variables: {
+      input: {
+        foodName: 'test',
+        price: '200',
+        foodStatus: 'Идэвхитэй',
+        image: 'https://example.com/foodimage.jpg',
+      },
+    },
+  },
+  result: {
+    data: {
+      createFood: {
+        foodId: '1',
+        foodName: 'test',
+        price: '200',
+        foodStatus: 'Идэвхитэй',
+        image: 'https://example.com/foodimage.jpg',
+        category: {
+          categoryId: '1',
+          categoryName: 'Dessert',
+        },
+        discount: {
+          discountId: '1',
+          discountName: 'New',
+          discountRate: 10,
+          startDate: new Date('9/21/2025'),
+          endDate: new Date('9/21/2025'),
+        },
+      },
+    },
+  },
+};
+
+const createFoodErrorMock: MockedResponse = {
+  request: {
+    query: CreateFoodDocument,
+    variables: {
+      input: {
+        foodName: 'test',
+        price: '200',
+        foodStatus: 'Идэвхитэй',
+        image: 'https://example.com/foodimage.jpg',
+      },
+    },
+  },
+  error: new Error('Network error'),
+};
 
 const getFoodsMock: MockedResponse = {
   request: {
@@ -19,6 +70,13 @@ const getFoodsMock: MockedResponse = {
             categoryId: '1',
             categoryName: 'Dessert',
           },
+          discount: {
+            discountId: '1',
+            discountName: 'Test',
+            discountRate: 10,
+            startDate: new Date('9/21/2025'),
+            endDate: new Date('9/21/2025'),
+          },
         },
         {
           foodId: '2',
@@ -29,6 +87,13 @@ const getFoodsMock: MockedResponse = {
           category: {
             categoryId: '2',
             categoryName: 'Main dish',
+          },
+          discount: {
+            discountId: '2',
+            discountName: 'Test',
+            discountRate: 10,
+            startDate: new Date('9/21/2025'),
+            endDate: new Date('9/21/2025'),
           },
         },
       ],
@@ -66,6 +131,13 @@ const deleteFoodByIdMock: MockedResponse = {
           categoryId: '1',
           categoryName: 'Dessert',
         },
+        discount: {
+          discountId: '1',
+          discountName: 'Test',
+          discountRate: 10,
+          startDate: new Date('9/21/2025'),
+          endDate: new Date('9/21/2025'),
+        },
       },
     },
   },
@@ -87,6 +159,13 @@ const getFoodsAfterDeleteMock: MockedResponse = {
           category: {
             categoryId: '2',
             categoryName: 'Main dish',
+          },
+          discount: {
+            discountId: '1',
+            discountName: 'Test',
+            discountRate: 10,
+            startDate: new Date('9/21/2025'),
+            endDate: new Date('9/21/2025'),
           },
         },
       ],
@@ -166,7 +245,6 @@ const updateFoodMock: MockedResponse = {
         price: '20000',
         foodStatus: 'Идэвхитэй',
         image: 'https://example.com/foodimage.jpg',
-        categoryId: '2',
       },
     },
   },
@@ -179,8 +257,15 @@ const updateFoodMock: MockedResponse = {
         foodStatus: 'Идэвхитэй',
         image: 'https://example.com/foodimage.jpg',
         category: {
-          categoryId: '2',
-          categoryName: 'Main dish',
+          categoryId: '1',
+          categoryName: 'Dessert',
+        },
+        discount: {
+          discountId: '1',
+          discountName: 'New',
+          discountRate: 10,
+          startDate: new Date('9/21/20205'),
+          endDate: new Date('9/21/20205'),
         },
       },
     },
@@ -197,7 +282,6 @@ const updateFoodErrorMock: MockedResponse = {
         price: '20000',
         foodStatus: 'Идэвхитэй',
         image: 'https://example.com/foodimage.jpg',
-        categoryId: '2',
       },
     },
   },
@@ -242,8 +326,8 @@ const createDiscountMock: MockedResponse = {
       input: {
         discountName: 'Test',
         discountRate: 20,
-        startDate: new Date('9/28/2025').toLocaleString(),
-        endDate: new Date('9/28/2025').toLocaleString(),
+        startDate: new Date('9/21/2025').toLocaleString(),
+        endDate: new Date('9/21/2025').toLocaleString(),
       },
     },
   },
@@ -267,8 +351,8 @@ const createDiscountErrorMock: MockedResponse = {
       input: {
         discountName: 'Test',
         discountRate: 20,
-        startDate: new Date('9/28/2025'),
-        endDate: new Date('9/28/2025'),
+        startDate: new Date('9/21/2025'),
+        endDate: new Date('9/21/2025'),
       },
     },
   },
@@ -276,6 +360,8 @@ const createDiscountErrorMock: MockedResponse = {
 };
 
 export {
+  createFoodMock,
+  createFoodErrorMock,
   getFoodsMock,
   deleteFoodByIdMock,
   getFoodsAfterDeleteMock,

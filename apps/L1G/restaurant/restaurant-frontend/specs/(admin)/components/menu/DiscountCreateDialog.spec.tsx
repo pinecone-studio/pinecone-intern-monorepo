@@ -63,7 +63,7 @@ describe('DiscountCreateDialog', () => {
 
     const calendar = getByTestId('discount-create-calendar');
 
-    const today = new Date();
+    const today = new Date('9/21/2025');
     const startDay = today.getDate();
     const endDay = startDay;
 
@@ -125,7 +125,7 @@ describe('DiscountCreateDialog', () => {
 
     const calendar = getByTestId('discount-create-calendar');
 
-    const today = new Date();
+    const today = new Date('9/21/2025');
     const startDay = today.getDate();
     const endDay = startDay;
 

@@ -3,6 +3,7 @@ describe('AllFoodsCard', () => {
     cy.visit('/food');
     cy.get('[data-cy=allfoods]').should('be.visible');
   });
+
   it('should delete food and show toast success', () => {
     cy.intercept('POST', '**/graphql', (req) => {
       if (req.body.operationName === 'DeleteFood') {
@@ -20,6 +21,7 @@ describe('AllFoodsCard', () => {
     cy.wait('@deleteFoodSuccess');
     cy.contains('Хоол амжилттай устгагдлаа!').should('be.visible');
   });
+
   it('should show toast error when delete food dails', () => {
     cy.intercept('POST', '**/graphql', (req) => {
       if (req.body.operationName === 'DeleteFood') {

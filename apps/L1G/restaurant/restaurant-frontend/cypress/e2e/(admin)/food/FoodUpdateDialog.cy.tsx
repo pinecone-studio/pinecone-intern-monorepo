@@ -3,6 +3,7 @@ describe('FoodUpdateDialog', () => {
     cy.visit('/food');
     cy.get('[data-cy=allfoods]').should('be.visible');
   });
+
   it('should update food and show toast success', () => {
     cy.intercept('POST', '**/graphql', (req) => {
       if (req.body.operationName === 'UpdateFood') {
@@ -22,6 +23,7 @@ describe('FoodUpdateDialog', () => {
     cy.wait('@updateFoodSuccess');
     cy.contains('Хоол амжилттай шинэчлэгдлээ!').should('be.visible');
   });
+
   it('should show toast error when update food fails', () => {
     cy.intercept('POST', '**/graphql', (req) => {
       if (req.body.operationName === 'UpdateFood') {

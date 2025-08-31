@@ -1,11 +1,11 @@
 /* eslint max-lines: "off" */
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { CreateFoodDocument, GetCategoriesDocument } from '@/generated';
-import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+import { MockedProvider } from '@apollo/client/testing';
 import { UploadImage } from '@/utils/ImageUpload';
 import { toast } from 'sonner';
 import { FoodCreateDialog } from '@/components/admin';
+import { createFoodErrorMock, createFoodMock } from 'specs/utils/FoodMockData';
 
 beforeAll(() => {
   /* eslint-disable @typescript-eslint/no-empty-function */
@@ -28,72 +28,6 @@ jest.mock('@/utils/ImageUpload', () => ({
   UploadImage: jest.fn(),
 }));
 
-const getCategoriesMock: MockedResponse = {
-  request: {
-    query: GetCategoriesDocument,
-  },
-  result: {
-    data: {
-      getCategories: [
-        {
-          categoryId: '1',
-          categoryName: 'Dessert',
-        },
-        {
-          categoryId: '2',
-          categoryName: 'Main dish',
-        },
-      ],
-    },
-  },
-};
-
-const createFoodMock: MockedResponse = {
-  request: {
-    query: CreateFoodDocument,
-    variables: {
-      input: {
-        foodName: 'test',
-        price: '200',
-        foodStatus: 'Идэвхитэй',
-        image: 'https://example.com/foodimage.jpg',
-        categoryId: '1',
-      },
-    },
-  },
-  result: {
-    data: {
-      createFood: {
-        foodId: '1',
-        foodName: 'test',
-        price: '200',
-        foodStatus: 'Идэвхитэй',
-        image: 'https://example.com/foodimage.jpg',
-        category: {
-          categoryId: '1',
-          categoryName: 'Dessert',
-        },
-      },
-    },
-  },
-};
-
-const createFoodErrorMock: MockedResponse = {
-  request: {
-    query: CreateFoodDocument,
-    variables: {
-      input: {
-        foodName: 'test',
-        price: '200',
-        foodStatus: 'Идэвхитэй',
-        image: 'https://example.com/foodimage.jpg',
-        categoryId: '1',
-      },
-    },
-  },
-  error: new Error('Network error'),
-};
-
 const mockUrl = 'blob:http://localhost/foodimage.png';
 global.URL.createObjectURL = jest.fn().mockReturnValue(mockUrl);
 
@@ -111,7 +45,7 @@ describe('FoodCreateDialog', () => {
 
   it('should render', async () => {
     const { getByTestId, findByTestId } = render(
-      <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
+      <MockedProvider mocks={[createFoodMock]} addTypename={false}>
         <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -127,7 +61,7 @@ describe('FoodCreateDialog', () => {
 
   it('should closes dialog when close button is clicked', async () => {
     const { getByTestId } = render(
-      <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
+      <MockedProvider mocks={[createFoodMock]} addTypename={false}>
         <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -148,7 +82,7 @@ describe('FoodCreateDialog', () => {
     const mockFile = new File(['foodimage'], 'foodimage.png', { type: 'image/png' });
 
     const { getByTestId } = render(
-      <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
+      <MockedProvider mocks={[createFoodMock]} addTypename={false}>
         <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -172,7 +106,7 @@ describe('FoodCreateDialog', () => {
 
   it('should handle empty file input', async () => {
     const { getByTestId } = render(
-      <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
+      <MockedProvider mocks={[createFoodMock]} addTypename={false}>
         <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -195,10 +129,11 @@ describe('FoodCreateDialog', () => {
     const mockFile = new File(['foodimage'], 'foodimage.png', { type: 'image/png' });
 
     const { getByTestId } = render(
-      <MockedProvider mocks={[getCategoriesMock]} addTypename={false}>
+      <MockedProvider mocks={[createFoodMock]} addTypename={false}>
         <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
+
     expect(getByTestId('create-food-dialog-open')).toBeInTheDocument();
     fireEvent.click(getByTestId('create-food-dialog-open'));
 
@@ -228,7 +163,7 @@ describe('FoodCreateDialog', () => {
     const mockFile = new File(['foodimage'], 'foodimage.png', { type: 'image/png' });
 
     const { getByTestId, getByPlaceholderText, queryByTestId } = render(
-      <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
+      <MockedProvider mocks={[createFoodMock]} addTypename={false}>
         <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -243,7 +178,6 @@ describe('FoodCreateDialog', () => {
     const statusInput = getByTestId('food-status-active');
     const priceInput = getByPlaceholderText('Үнэ');
     const imageInput = getByTestId('create-food-image-input');
-    const categorySelect = getByTestId('create-food-category-select');
     const submitButton = getByTestId('create-food-submit-button');
 
     fireEvent.change(foodNameInput, { target: { value: 'test' } });
@@ -255,19 +189,6 @@ describe('FoodCreateDialog', () => {
     await waitFor(() => {
       expect(screen.getByTestId('create-food-image-preview')).toBeInTheDocument();
     });
-
-    await waitFor(() => {
-      expect(categorySelect).toBeInTheDocument();
-    });
-
-    fireEvent.click(categorySelect);
-
-    await waitFor(() => {
-      expect(getByTestId('create-food-category-dropdown')).toBeInTheDocument();
-    });
-
-    const categoryOption = getByTestId('create-food-category-option-1');
-    fireEvent.click(categoryOption);
 
     fireEvent.change(priceInput, { target: { value: '200' } });
 
@@ -294,7 +215,7 @@ describe('FoodCreateDialog', () => {
     const mockFile = new File(['foodimage'], 'foodimage.png', { type: 'image/png' });
 
     const { getByTestId, getByPlaceholderText } = render(
-      <MockedProvider mocks={[getCategoriesMock, createFoodErrorMock]} addTypename={false}>
+      <MockedProvider mocks={[createFoodErrorMock]} addTypename={false}>
         <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -309,7 +230,6 @@ describe('FoodCreateDialog', () => {
     const statusInput = getByTestId('food-status-active');
     const priceInput = getByPlaceholderText('Үнэ');
     const imageInput = getByTestId('create-food-image-input');
-    const categorySelect = getByTestId('create-food-category-select');
     const submitButton = getByTestId('create-food-submit-button');
 
     fireEvent.change(foodNameInput, { target: { value: 'test' } });
@@ -321,16 +241,6 @@ describe('FoodCreateDialog', () => {
     await waitFor(() => {
       expect(screen.getByTestId('create-food-image-preview')).toBeInTheDocument();
     });
-
-    await waitFor(() => {
-      expect(categorySelect).toBeInTheDocument();
-    });
-    fireEvent.click(categorySelect);
-    await waitFor(() => {
-      expect(getByTestId('create-food-category-dropdown')).toBeInTheDocument();
-    });
-    const categoryOption = getByTestId('create-food-category-option-1');
-    fireEvent.click(categoryOption);
 
     fireEvent.change(priceInput, { target: { value: '200' } });
 

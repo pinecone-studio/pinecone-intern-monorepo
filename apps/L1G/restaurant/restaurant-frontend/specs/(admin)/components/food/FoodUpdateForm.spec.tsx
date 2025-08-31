@@ -1,7 +1,7 @@
 /* eslint-disable */
 import '@testing-library/jest-dom';
 import { FoodUpdateForm } from '@/components/admin';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 
 beforeAll(() => {
   global.ResizeObserver = class {
@@ -16,12 +16,8 @@ const mockDataProps = {
   price: '20000',
   foodStatus: 'Идэвхитэй',
   image: 'https://example.com/foodimage.jpg',
-  category: {
-    categoryId: '2',
-    categoryName: 'Main dish',
-  },
   onSubmit: jest.fn(),
-  isSubmitting: false,
+  loading: false,
 };
 
 const mockDataPropsWithEmptyValues = {
@@ -29,12 +25,8 @@ const mockDataPropsWithEmptyValues = {
   price: '',
   foodStatus: 'Идэвхитэй',
   image: '',
-  category: {
-    categoryId: '',
-    categoryName: '',
-  },
   onSubmit: jest.fn(),
-  isSubmitting: false,
+  loading: false,
 };
 
 const mockUrl = 'blob:http://localhost/foodimage.png';
@@ -51,7 +43,6 @@ describe('FoodUpdateForm', () => {
     expect(getByTestId('food-update-foodName-input')).toBeInTheDocument();
     expect(getByTestId('food-status-active')).toBeInTheDocument();
     expect(getByTestId('food-update-image-input')).toBeInTheDocument();
-    expect(getByTestId('food-update-category-select')).toBeInTheDocument();
     expect(getByTestId('food-update-price-input')).toBeInTheDocument();
     expect(getByTestId('food-update-submit-button')).toBeInTheDocument();
   });
@@ -62,31 +53,25 @@ describe('FoodUpdateForm', () => {
     expect(getByTestId('food-update-foodName-input')).toBeInTheDocument();
     expect(getByTestId('food-status-active')).toBeInTheDocument();
     expect(getByTestId('food-update-image-input')).toBeInTheDocument();
-    expect(getByTestId('food-update-category-select')).toBeInTheDocument();
     expect(getByTestId('food-update-price-input')).toBeInTheDocument();
     expect(getByTestId('food-update-submit-button')).toBeInTheDocument();
   });
 
   it('should handle empty file input', async () => {
     const { getByTestId, queryByTestId } = render(
-      <FoodUpdateForm
-        foodName={mockDataProps.foodName}
-        price={mockDataProps.price}
-        foodStatus={mockDataProps.foodStatus}
-        category={mockDataProps.category}
-        image=""
-        onSubmit={mockDataProps.onSubmit}
-        isSubmitting={mockDataProps.isSubmitting}
-      />
+      <FoodUpdateForm foodName={mockDataProps.foodName} price={mockDataProps.price} foodStatus={mockDataProps.foodStatus} image="" onSubmit={mockDataProps.onSubmit} loading={mockDataProps.loading} />
     );
 
     const imageInput = getByTestId('food-update-image-input');
     expect(imageInput).toBeInTheDocument();
     expect(imageInput).toHaveAttribute('type', 'file');
-    fireEvent.change(imageInput, {
-      target: {
-        files: null,
-      },
+
+    act(() => {
+      fireEvent.change(imageInput, {
+        target: {
+          files: null,
+        },
+      });
     });
 
     expect(queryByTestId('food-update-image-preview')).not.toBeInTheDocument();
@@ -130,16 +115,15 @@ describe('FoodUpdateForm', () => {
     });
   });
 
-  it('should prevent multiple submissions when isSubmitting is true', async () => {
+  it('should prevent multiple submissions when loading is true', async () => {
     const { getByTestId } = render(
       <FoodUpdateForm
         foodName={mockDataProps.foodName}
         price={mockDataProps.price}
         foodStatus={mockDataProps.foodStatus}
         image={mockDataProps.image}
-        category={mockDataProps.category}
         onSubmit={mockDataProps.onSubmit}
-        isSubmitting={true}
+        loading={true}
       />
     );
 

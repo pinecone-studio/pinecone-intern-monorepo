@@ -102,3 +102,87 @@ mutation DeleteFood($foodId: ID!) {
     }
   }
 }
+
+mutation AddFoodToCategory($categoryId: ID!, $foodId: ID!) {
+  addFoodToCategory(categoryId: $categoryId, foodId: $foodId) {
+    foodId
+    foodName
+    price
+    foodStatus
+    image
+    category {
+      categoryId
+      categoryName
+    }
+    discount {
+      discountId
+      discountName
+      discountRate
+      startDate
+      endDate
+    }
+  }
+}
+
+mutation AddFoodToDiscount($discountId: ID!, $foodId: ID!) {
+  addFoodToDiscount(discountId: $discountId, foodId: $foodId) {
+    foodId
+    foodName
+    price
+    foodStatus
+    image
+    category {
+      categoryId
+      categoryName
+    }
+    discount {
+      discountId
+      discountName
+      discountRate
+      startDate
+      endDate
+    }
+  }
+}
+
+mutation deleteFoodFromDiscount($discountId: ID!, $foodId: ID!) {
+  deleteFoodFromDiscount(discountId: $discountId, foodId: $foodId) {
+    foodId
+    foodName
+    price
+    foodStatus
+    image
+    category {
+      categoryId
+      categoryName
+    }
+    discount {
+      discountId
+      discountName
+      discountRate
+      startDate
+      endDate
+    }
+  }
+}
+
+mutation DeleteFoodFromCategory($categoryId: ID!, $foodId: ID!) {
+  deleteFoodFromCategory(categoryId: $categoryId, foodId: $foodId) {
+    foodId
+    foodName
+    price
+    foodStatus
+    image
+    category {
+      categoryId
+      categoryName
+    }
+    discount {
+      discountId
+      discountName
+      discountRate
+      startDate
+      endDate
+    }
+  }
+}
