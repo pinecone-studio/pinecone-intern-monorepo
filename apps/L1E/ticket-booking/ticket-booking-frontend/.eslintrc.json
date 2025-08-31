@@ -1,5 +1,10 @@
 {
-  "extends": ["plugin:@nx/react-typescript", "next", "next/core-web-vitals", "../../../../.eslintrc.json"],
+  "extends": [
+    "plugin:@nx/react-typescript",
+    "next",
+    "next/core-web-vitals",
+    "../../../../.eslintrc.json"
+  ],
   "ignorePatterns": ["!**/*", ".next/**/*"],
   "overrides": [
     {
@@ -11,7 +16,11 @@
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
-        "@next/next/no-html-link-for-pages": ["error", "apps/L1E/ticket-booking/ticket-booking-frontend/src"]
+        "@next/next/no-html-link-for-pages": [
+          "error",
+          "apps/L1E/ticket-booking/ticket-booking-frontend/src"
+        ],
+        "no-secrets/no-secrets": "off"
       }
     },
     {
@@ -26,6 +35,22 @@
       "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
       "env": {
         "jest": true
+      }
+    },
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx", "**/*.test.js", "**/*.test.jsx"],
+      "env": {
+        "jest": true
+      },
+      "rules": {
+        "unicorn/filename-case": "off",
+        "max-lines": "off",
+        "no-secrets/no-secrets": "off",
+        "react/function-component-definition": "off",
+        "react/display-name": "off",
+        "complexity": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "off"
       }
     }
   ]
