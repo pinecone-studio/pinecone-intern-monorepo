@@ -23,9 +23,10 @@ interface ChatWindowProps {
   sending: boolean;
   lastSeenMessageId: string;
   matchId: string | undefined;
+  onUnmatched?: () => void;
 }
 
-const ChatWindow = ({ matchId, lastSeenMessageId, selectedUser, messages, inputValue, onInputChange, onKeyDown, onSend, sending }: ChatWindowProps) => {
+const ChatWindow = ({ matchId, lastSeenMessageId, selectedUser, messages, inputValue, onInputChange, onKeyDown, onSend, sending, onUnmatched }: ChatWindowProps) => {
   const bottomRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (bottomRef.current) {
@@ -49,7 +50,7 @@ const ChatWindow = ({ matchId, lastSeenMessageId, selectedUser, messages, inputV
 
   return (
     <div className="w-[980px] h-[930px] flex flex-col border-r border-gray-200">
-      <ChatHeader matchId={matchId} user={selectedUser} />
+      <ChatHeader onUnmatched={onUnmatched} matchId={matchId} user={selectedUser} />
 
       <div className="flex-1 p-4 space-y-4 bg-white h-[790px] overflow-y-auto">
         {messages.length === 0 ? (

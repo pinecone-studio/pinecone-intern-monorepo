@@ -43,7 +43,7 @@ export const useUserManagement = (data: any) => {
     setChattedUsers(chattedUserIds);
   }, [data]);
 
-  const handleUserSelect = useCallback((user: ChatUser) => {
+  const handleUserSelect = useCallback((user: ChatUser | null) => {
     setSelectedUser(user);
   }, []);
 

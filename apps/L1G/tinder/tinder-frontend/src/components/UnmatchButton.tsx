@@ -8,16 +8,17 @@ import { useUnmatchMutation } from '@/generated';
 
 type UnmatchButtonProps = {
   matchId: string | undefined;
+  onUnmatched?: () => void;
 };
 
-const UnmatchButton: React.FC<UnmatchButtonProps> = ({ matchId }) => {
+const UnmatchButton: React.FC<UnmatchButtonProps> = ({ matchId, onUnmatched }) => {
   const router = useRouter();
 
   const [unmatch, { loading }] = useUnmatchMutation({
     variables: { matchId: matchId ?? '' },
     onCompleted: (data) => {
       if (data.unmatch?.success) {
-        router.push('/chat');
+        onUnmatched?.();
       } else {
         alert(data.unmatch?.message);
       }

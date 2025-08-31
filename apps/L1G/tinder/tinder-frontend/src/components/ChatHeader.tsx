@@ -9,9 +9,10 @@ import { ChatUser } from 'types/chat';
 interface ChatHeaderProps {
   user: ChatUser;
   matchId: string | undefined;
+  onUnmatched?: () => void;
 }
 
-const ChatHeader = ({ user, matchId }: ChatHeaderProps) => {
+const ChatHeader = ({ user, matchId, onUnmatched }: ChatHeaderProps) => {
   console.log(user);
 
   return (
@@ -27,7 +28,7 @@ const ChatHeader = ({ user, matchId }: ChatHeaderProps) => {
       </div>
       <div className="flex gap-2">
         <ViewProfile user={user} />
-        {matchId && <UnmatchButton matchId={matchId} />}
+        {matchId && <UnmatchButton matchId={matchId} onUnmatched={onUnmatched} />}
       </div>
     </div>
   );
