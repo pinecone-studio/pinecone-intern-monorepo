@@ -8,9 +8,10 @@ interface UseSocketConnectionProps {
   setConversations: React.Dispatch<React.SetStateAction<Record<string, Message[]>>>;
   setSocketError: React.Dispatch<React.SetStateAction<string | null>>;
   markMessagesAsSeen: () => void;
+  handleUnmatched: (matchId: string) => void;
 }
 
-export const useSocketConnection = ({ selectedUser, data, setConversations, setSocketError, markMessagesAsSeen }: UseSocketConnectionProps) => {
+export const useSocketConnection = ({ selectedUser, data, setConversations, setSocketError, markMessagesAsSeen, handleUnmatched }: UseSocketConnectionProps) => {
   const generateTimestamp = useCallback(
     (): string =>
       new Date().toLocaleTimeString('en-US', {
@@ -69,10 +70,15 @@ export const useSocketConnection = ({ selectedUser, data, setConversations, setS
         });
       }
     };
+    const handleUnmatchedEvent = (matchId: string) => {
+      if (matchId === selectedUser?.id) {
+        handleUnmatched(matchId);
+      }
+    };
 
     socket.on('chat message', handleChatMessage);
     socket.on('messages seen update', handleSeenUpdate);
-
+    socket.on('unmatched', handleUnmatchedEvent);
     return () => {
       try {
         socket.emit('leave room', matchId);
@@ -81,6 +87,7 @@ export const useSocketConnection = ({ selectedUser, data, setConversations, setS
       }
       socket.off('chat message', handleChatMessage);
       socket.off('messages seen update', handleSeenUpdate);
+      socket.off('unmatched', handleUnmatchedEvent);
       clearTimeout(timeout);
     };
   }, [selectedUser, data, setConversations, setSocketError, markMessagesAsSeen, generateTimestamp]);
