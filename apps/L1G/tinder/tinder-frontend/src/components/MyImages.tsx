@@ -1,31 +1,59 @@
 'use client';
 import { Separator } from '@/components/ui/separator';
-import { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { X, Plus, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
-export const MyImages = () => {
-  const [uploadedImages, setUploadedImages] = useState<string[]>(['', '', '', '', '', '']);
-  const [isUploading, setIsUploading] = useState<boolean[]>([false, false, false, false, false, false]);
+// interface MyImagesProps {
+//   user?: {
+//     images?: string[];
+//     onImagesChange?: (images: string[]) => void;
+//   };
+// }
+type MyImagesProps = {
+  user: { images?: string[] };
+  onImagesChange: (imgs: string[]) => void;
+};
+
+export const MyImages: React.FC<MyImagesProps> = ({ user, onImagesChange }) => {
+  const MAX_IMAGES = 6;
+const [uploadedImages, setUploadedImages] = useState<string[]>(
+    user?.images && user.images.length > 0 
+      ? [...user.images, ...Array(MAX_IMAGES - user.images.length).fill('')] 
+      : Array(MAX_IMAGES).fill('')
+  );
+
+  const [isUploading, setIsUploading] = useState<boolean[]>(Array(MAX_IMAGES).fill(false));
+ useEffect(() => {
+    if (user?.images) {
+      setUploadedImages([
+        ...user.images,
+        ...Array(MAX_IMAGES - user.images.length).fill(''),
+      ]);
+    }
+  }, [user?.images]); 
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleRemoveImage = (index: number) => {
     setUploadedImages((prev) => {
-      const newImages = prev.filter((_, i) => i !== index);
-      newImages.push('');
+      const newImages = [...prev];
+      newImages[index] = '';
+      onImagesChange?.(newImages.filter((img) => img));
       return newImages;
     });
 
     setIsUploading((prev) => {
-      const newUploading = prev.filter((_, i) => i !== index);
-      newUploading.push(false);
+      const newUploading = [...prev];
+      newUploading[index] = false;
       return newUploading;
     });
   };
+
   const getFirstEmptyIndex = () => uploadedImages.findIndex((img) => !img);
+
   const updateUploadingState = (index: number, value: boolean) => {
     setIsUploading((prev) => {
       const newUploading = [...prev];
@@ -33,6 +61,7 @@ export const MyImages = () => {
       return newUploading;
     });
   };
+
   const uploadToCloudinary = async (file: File): Promise<string | null> => {
     if (!cloudName) {
       console.error('Cloudinary cloud name is missing!');
@@ -51,12 +80,16 @@ export const MyImages = () => {
       return null;
     }
   };
+
   const handleUploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
     const index = getFirstEmptyIndex();
-    if (index === -1) return;
+    if (index === -1) {
+      alert('You can upload up to 6 images only.');
+      return;
+    }
 
     updateUploadingState(index, true);
 
@@ -65,12 +98,14 @@ export const MyImages = () => {
       setUploadedImages((prev) => {
         const newImages = [...prev];
         newImages[index] = url;
+        onImagesChange?.(newImages.filter((img) => img));
         return newImages;
       });
     }
 
     updateUploadingState(index, false);
   };
+
   return (
     <div className="flex flex-col md:w-[672px] max-w-[672px]">
       <div className="flex flex-col gap-[1px] justify-start items-start ">
