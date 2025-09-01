@@ -19,6 +19,7 @@ const UnmatchButton: React.FC<UnmatchButtonProps> = ({ matchId, onUnmatched }) =
     onCompleted: (data) => {
       if (data.unmatch?.success) {
         onUnmatched?.();
+        router.push('/chat');
       } else {
         alert(data.unmatch?.message);
       }

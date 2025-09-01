@@ -39,7 +39,7 @@ const ChatWindow = ({ matchId, lastSeenMessageId, selectedUser, messages, inputV
   if (!selectedUser) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="text-center">
+        <div className="text-center flex justify-center items-center">
           <MessageSquare size={64} className="mx-auto mb-4 text-gray-400" />
           <h3 className="mb-2 text-lg font-medium text-gray-900">Select a match to start chatting</h3>
           <p className="text-gray-500">Choose someone from your matches to begin a conversation.</p>
