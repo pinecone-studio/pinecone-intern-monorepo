@@ -1,5 +1,17 @@
 /* eslint max-lines: "off" */
-import { CreateCategoryDocument, CreateDiscountDocument, DeleteFoodDocument, GetFoodsDocument, UpdateFoodDocument } from '@/generated';
+import {
+  CreateCategoryDocument,
+  CreateDiscountDocument,
+  DeleteCategoryDocument,
+  DeleteDiscountDocument,
+  DeleteFoodDocument,
+  GetCategoriesDocument,
+  GetDiscountsDocument,
+  GetFoodsDocument,
+  UpdateCategoryDocument,
+  UpdateDiscountDocument,
+  UpdateFoodDocument,
+} from '@/generated';
 import { MockedResponse } from '@apollo/client/testing';
 
 const getFoodsMock: MockedResponse = {
@@ -280,6 +292,296 @@ const createDiscountErrorMock: MockedResponse = {
   error: new Error('Network error'),
 };
 
+const updateCategoryMock: MockedResponse = {
+  request: {
+    query: UpdateCategoryDocument,
+    variables: {
+      categoryId: '1',
+      input: {
+        categoryName: 'Dessert',
+      },
+    },
+  },
+  result: {
+    data: {
+      updateCategory: {
+        categoryId: '1',
+        categoryName: 'Dessert',
+        food: {
+          foodId: '2',
+          foodName: 'Test1',
+          price: '20000',
+          foodStatus: 'Идэвхитэй',
+          image: 'https://example.com/foodimage.jpg',
+        },
+      },
+    },
+  },
+};
+
+const updateCategoryErrorMock: MockedResponse = {
+  request: {
+    query: UpdateCategoryDocument,
+    variables: {
+      categoryId: '1',
+      input: {
+        categoryName: 'Dessert',
+      },
+    },
+  },
+  error: new Error('Network error'),
+};
+
+const updateDiscountMock: MockedResponse = {
+  request: {
+    query: UpdateDiscountDocument,
+    variables: {
+      discountId: '1',
+      input: {
+        discountName: 'Test',
+        discountRate: 20,
+        startDate: new Date(parseInt('1/1/1970')).toLocaleString(),
+        endDate: new Date(parseInt('1/1/1970')).toLocaleString(),
+      },
+    },
+  },
+  result: {
+    data: {
+      updateDiscount: {
+        discountId: '1',
+        discountName: 'Test',
+        discountRate: 20,
+        startDate: new Date('').toLocaleString(),
+        endDate: new Date('').toLocaleString(),
+      },
+    },
+  },
+};
+
+const updateDiscountErrorMock: MockedResponse = {
+  request: {
+    query: UpdateDiscountDocument,
+    variables: {
+      discountId: '1',
+      input: {
+        discountName: 'Test',
+        discountRate: 20,
+        startDate: new Date(parseInt('1/1/1970')).toLocaleString(),
+        endDate: new Date(parseInt('1/1/1970')).toLocaleString(),
+      },
+    },
+  },
+  error: new Error('Network error'),
+};
+
+const getCategoriesMock: MockedResponse = {
+  request: {
+    query: GetCategoriesDocument,
+  },
+  result: {
+    data: {
+      getCategories: [
+        {
+          categoryId: '1',
+          categoryName: 'Dessert',
+          food: {
+            foodId: '1',
+            foodName: 'Test1',
+            price: '20000',
+            foodStatus: 'Идэвхитэй',
+            image: 'https://example.com/foodimage.jpg',
+          },
+        },
+        {
+          categoryId: '2',
+          categoryName: 'Main',
+          food: {
+            foodId: '2',
+            foodName: 'Test2',
+            price: '20000',
+            foodStatus: 'Идэвхитэй',
+            image: 'https://example.com/foodimage.jpg',
+          },
+        },
+      ],
+    },
+  },
+};
+
+const getCategoriesErrorMock: MockedResponse = {
+  request: {
+    query: GetCategoriesDocument,
+  },
+  error: new Error('Network error'),
+};
+
+const getDiscountsMock: MockedResponse = {
+  request: {
+    query: GetDiscountsDocument,
+  },
+  result: {
+    data: {
+      getDiscounts: [
+        {
+          discountId: '1',
+          discountName: 'Test',
+          discountRate: 20,
+          startDate: new Date('').toLocaleString(),
+          endDate: new Date('').toLocaleString(),
+          food: {
+            foodId: '1',
+            foodName: 'Test1',
+            price: '20000',
+            foodStatus: 'Идэвхитэй',
+            image: 'https://example.com/foodimage.jpg',
+          },
+        },
+        {
+          discountId: '2',
+          discountName: 'Test2',
+          discountRate: 20,
+          startDate: new Date('').toLocaleString(),
+          endDate: new Date('').toLocaleString(),
+          food: {
+            foodId: '2',
+            foodName: 'Test2',
+            price: '20000',
+            foodStatus: 'Идэвхитэй',
+            image: 'https://example.com/foodimage.jpg',
+          },
+        },
+      ],
+    },
+  },
+};
+
+const getDiscountsErrorMock: MockedResponse = {
+  request: {
+    query: GetDiscountsDocument,
+  },
+  error: new Error('Network error'),
+};
+
+const deleteCategoryByIdMock: MockedResponse = {
+  request: {
+    query: DeleteCategoryDocument,
+    variables: {
+      categoryId: '1',
+    },
+  },
+  result: {
+    data: {
+      deleteCategory: {
+        categoryId: '1',
+        categoryName: 'Dessert',
+        food: {
+          foodId: '1',
+          foodName: 'Test1',
+          price: '20000',
+          foodStatus: 'Идэвхитэй',
+          image: 'https://example.com/foodimage.jpg',
+        },
+      },
+    },
+  },
+};
+
+const deleteCategoryErrorMock: MockedResponse = {
+  request: {
+    query: DeleteCategoryDocument,
+    variables: {
+      categoryId: '1',
+    },
+  },
+  error: new Error('Network error'),
+};
+
+const deleteDiscountByIdMock: MockedResponse = {
+  request: {
+    query: DeleteDiscountDocument,
+    variables: {
+      discountId: '1',
+    },
+  },
+  result: {
+    data: {
+      deleteDiscount: {
+        discountId: '1',
+        discountName: 'Test',
+        discountRate: 20,
+        startDate: new Date('').toLocaleString(),
+        endDate: new Date('').toLocaleString(),
+        food: {
+          foodId: '1',
+          foodName: 'Test1',
+          price: '20000',
+          foodStatus: 'Идэвхитэй',
+          image: 'https://example.com/foodimage.jpg',
+        },
+      },
+    },
+  },
+};
+
+const deleteDiscountErrorMock: MockedResponse = {
+  request: {
+    query: DeleteDiscountDocument,
+    variables: {
+      discountId: '1',
+    },
+  },
+  error: new Error('Network error'),
+};
+
+const getCategoriesAfterDeleteMock: MockedResponse = {
+  request: {
+    query: GetCategoriesDocument,
+  },
+  result: {
+    data: {
+      getCategopries: [
+        {
+          categoryId: '2',
+          categoryName: 'Main',
+          food: {
+            foodId: '2',
+            foodName: 'Test2',
+            price: '20000',
+            foodStatus: 'Идэвхитэй',
+            image: 'https://example.com/foodimage.jpg',
+          },
+        },
+      ],
+    },
+  },
+};
+
+const getDiscountsAfterDeleteMock: MockedResponse = {
+  request: {
+    query: GetDiscountsDocument,
+  },
+  result: {
+    data: {
+      getDiscounts: [
+        {
+          discountId: '2',
+          discountName: 'Test2',
+          discountRate: 20,
+          startDate: new Date('').toLocaleString(),
+          endDate: new Date('').toLocaleString(),
+          food: {
+            foodId: '2',
+            foodName: 'Test2',
+            price: '20000',
+            foodStatus: 'Идэвхитэй',
+            image: 'https://example.com/foodimage.jpg',
+          },
+        },
+      ],
+    },
+  },
+};
+
 export {
   getFoodsMock,
   deleteFoodByIdMock,
@@ -295,4 +597,18 @@ export {
   createCategoryErrorMock,
   createDiscountMock,
   createDiscountErrorMock,
+  updateCategoryMock,
+  updateDiscountErrorMock,
+  updateCategoryErrorMock,
+  updateDiscountMock,
+  getCategoriesMock,
+  getCategoriesErrorMock,
+  getDiscountsMock,
+  getDiscountsErrorMock,
+  deleteCategoryByIdMock,
+  getDiscountsAfterDeleteMock,
+  getCategoriesAfterDeleteMock,
+  deleteDiscountByIdMock,
+  deleteCategoryErrorMock,
+  deleteDiscountErrorMock,
 };
