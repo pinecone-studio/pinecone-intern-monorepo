@@ -15,6 +15,7 @@ export type ChatUser = {
   age: number;
   startedConversation: boolean;
 };
+
 export type UserData = {
   id?: string;
   email?: string;

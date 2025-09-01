@@ -17,7 +17,7 @@ type Props = {
   updateUserData?: (_data: Partial<UserData>) => void;
 };
 
-const HowOldAreYou = ({ onSuccess, onBack, initialDate, currentDate = new Date() }: Props) => {
+const HowOldAreYou = ({ onSuccess, onBack, initialDate, currentDate = new Date(), updateUserData }: Props) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(initialDate);
   const [month, setMonth] = useState<Date>(initialDate || new Date());
   const [error, setError] = useState('');
@@ -34,7 +34,20 @@ const HowOldAreYou = ({ onSuccess, onBack, initialDate, currentDate = new Date()
       return;
     }
     setError('');
-    if (selectedDate) onSuccess?.(selectedDate);
+
+    if (!selectedDate) return;
+
+    const year = selectedDate.getFullYear();
+    const month = selectedDate.getMonth();
+    const day = selectedDate.getDate();
+
+    const dateOnlyUTC = new Date(Date.UTC(year, month, day));
+
+    updateUserData?.({
+      dateOfBirth: dateOnlyUTC,
+    });
+
+    onSuccess?.(dateOnlyUTC);
   };
 
   const handleSelectChange = (type: 'year' | 'month', value: string) => {
