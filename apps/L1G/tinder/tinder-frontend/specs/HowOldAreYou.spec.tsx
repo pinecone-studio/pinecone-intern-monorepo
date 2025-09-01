@@ -76,7 +76,7 @@ describe('HowOldAreYou', () => {
   });
 
   it('calls onSuccess if valid date', async () => {
-    const d = new Date(2000, 0, 1);
+    const d = new Date(Date.UTC(2000, 0, 1));
     render(<HowOldAreYou onSuccess={mockOnSuccess} initialDate={d} />);
     fireEvent.click(screen.getByTestId('next-button'));
     await waitFor(() => expect(mockOnSuccess).toHaveBeenCalledWith(d));
