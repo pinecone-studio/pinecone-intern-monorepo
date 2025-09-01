@@ -10,6 +10,12 @@ jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
 
+jest.mock('@/app/context/AuthContext', () => ({
+  useAuth: () => ({
+    setUser: jest.fn(),
+  }),
+}));
+
 const signInMock: MockedResponse = {
   request: {
     query: SignInDocument,

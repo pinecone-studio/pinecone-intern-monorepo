@@ -30,25 +30,26 @@ export const ProfilePictureUpload = ({ currentImage, onImageUpdate, isLoading = 
       const imageUrl = await uploadCloudinaryPicture(file);
       onImageUpdate(imageUrl);
       onSucces?.('Профайл зураг шинэчлэгдлээ');
-    } catch (error) {
+    } catch {
       onError?.('Зураг байршуулахад алдаа гарлаа');
     } finally {
       setUploading(false);
     }
   };
+
   return (
-    <div className="relative group">
-      <Avatar className="w-24 h-24 border-2 border-green-500">
+    <div className="relative group" data-testid="profile-upload">
+      <Avatar className="w-24 h-24 border-2 border-green-500" data-testid="profile-avatar">
         <AvatarImage src={currentImage || 'placeholder.svg'} alt="Profile picture" />
         <AvatarFallback>
           <User className="w-12 h-12 text-gray-400" />
         </AvatarFallback>
       </Avatar>
       <div className="absolute bottom-2 right-2">
-        <Button size="sm" variant="secondary" className="rounded-full p-2 h-8 w-8" disabled={uploading || isLoading} asChild>
+        <Button size="sm" variant="secondary" className="rounded-full p-2 h-8 w-8" disabled={uploading || isLoading} asChild data-testid="profile-edit-btn">
           <label htmlFor="profile-picture-upload" className="cursor-pointer">
             <Edit className="w-4 h-4" />
-            <input id="profile-picture-upload" type="file" accept="image/*" onChange={handleFileSelect} className="hidden" />
+            <input id="profile-picture-upload" type="file" accept="image/*" onChange={handleFileSelect} className="hidden" data-testid="profile-upload-input" disabled={uploading || isLoading} />
           </label>
         </Button>
       </div>

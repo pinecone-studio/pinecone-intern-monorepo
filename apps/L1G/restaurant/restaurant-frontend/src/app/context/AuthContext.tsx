@@ -2,8 +2,8 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useGetUserQuery } from '@/generated';
-import { jwtDecode } from 'jwt-decode';
 import jwt from 'jsonwebtoken';
+
 type JwtPayload = { userId: string };
 
 type User = {
@@ -16,12 +16,12 @@ type User = {
 
 type AuthCtx = {
   user: User;
-  setUser: (u: User) => void;
+  setUser: React.Dispatch<React.SetStateAction<User>>; // ✅ callback setter зөвшөөрнө
   token: string | null;
   signIn: (userData: User, token: string) => void;
 };
 
-const AuthContext = createContext<AuthCtx | undefined>(undefined);
+export const AuthContext = createContext<AuthCtx | undefined>(undefined);
 
 export const useAuth = () => {
   const ctx = useContext(AuthContext);
@@ -34,10 +34,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
   const [decodedId, setDecodedId] = useState<string | null>(null);
 
-  const signIn = (userData: User, jwt: string) => {
+  const signIn = (userData: User, jwtToken: string) => {
     setUser(userData);
-    setToken(jwt);
-    localStorage.setItem('token', jwt);
+    setToken(jwtToken);
+    localStorage.setItem('token', jwtToken);
   };
 
   const { data } = useGetUserQuery({
@@ -46,12 +46,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     fetchPolicy: 'network-only',
   });
 
+  // LocalStorage-с token унших
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedToken = localStorage.getItem('token');
       if (savedToken && !user) {
         try {
-          const decoded = jwt.decode(savedToken);
+          const decoded = jwt.decode(savedToken) as JwtPayload | null;
           if (decoded?.userId) {
             setToken(savedToken);
             setDecodedId(decoded.userId);
@@ -63,9 +64,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     }
   }, [user]);
-  console.log(decodedId);
-  console.log(user);
 
+  // GraphQL-аас хэрэглэгчийн мэдээлэл авах
   useEffect(() => {
     if (data?.getUser) {
       const userData: User = {

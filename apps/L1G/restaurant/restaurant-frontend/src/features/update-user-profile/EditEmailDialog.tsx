@@ -15,23 +15,22 @@ interface EditEmailDialogProps {
   onUpdate: (email: string) => Promise<void>;
   isLoading?: boolean;
 }
+
 export const EditEmailDialog = ({ currentEmail, onUpdate, isLoading = false }: EditEmailDialogProps) => {
   const [open, setOpen] = useState(false);
   const [updating, setUpdating] = useState(false);
 
   const form = useForm<EmailFormValues>({
     resolver: zodResolver(emailSchema),
-    defaultValues: {
-      email: currentEmail,
-    },
+    defaultValues: { email: currentEmail },
   });
 
   const onSubmit = async (data: EmailFormValues) => {
+    setUpdating(true);
     try {
       await onUpdate(data.email);
       setOpen(false);
       form.reset({ email: data.email });
-    } catch (error) {
     } finally {
       setUpdating(false);
     }
@@ -40,18 +39,18 @@ export const EditEmailDialog = ({ currentEmail, onUpdate, isLoading = false }: E
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="sm" className="p-1 h-8 w-8">
+        <Button variant="ghost" size="sm" className="p-1 h-8 w-8" data-testid="open-email-dialog">
           <Pencil className="w-4 h-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md" data-testid="email-dialog">
         <DialogHeader>
           <DialogTitle>Имэйл хаяг</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" data-testid="email-form">
             <DialogClose asChild className="absolute top-3 right-4">
-              <Button type="button" variant="secondary">
+              <Button type="button" variant="secondary" data-testid="close-email-dialog">
                 x
               </Button>
             </DialogClose>
@@ -61,13 +60,13 @@ export const EditEmailDialog = ({ currentEmail, onUpdate, isLoading = false }: E
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="Шинэчлэх хаяг" type="email" {...field} disabled={updating || isLoading} />
+                    <Input type="email" placeholder="Шинэчлэх хаяг" {...field} disabled={updating || isLoading} data-testid="email-input" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full bg-amber-800 hover:bg-amber-900 text-white" disabled={updating || isLoading}>
+            <Button type="submit" className="w-full bg-amber-800 hover:bg-amber-900 text-white" disabled={updating || isLoading} data-testid="email-submit">
               {updating ? 'Шинэчилж байна...' : 'Шинэчлэх'}
             </Button>
           </form>

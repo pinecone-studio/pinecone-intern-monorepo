@@ -11,7 +11,7 @@ import { passwordSchema, type PasswordFormValues } from '@/utils/UpdateUserUtils
 import { zodResolver } from '@hookform/resolvers/zod';
 
 interface EditPasswordDialogProps {
-  onUpdate: (currentPasasword: string, newPassword: string) => Promise<void>;
+  onUpdate: (newPassword: string) => Promise<void>;
   isLoading?: boolean;
 }
 
@@ -21,40 +21,35 @@ export const EditPasswordDialog = ({ onUpdate, isLoading = false }: EditPassword
 
   const form = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordSchema),
-    defaultValues: {
-      currentPassword: '',
-      newPassword: '',
-      confirmPassword: '',
-    },
+    defaultValues: { currentPassword: '', newPassword: '', confirmPassword: '' },
   });
 
   const onSubmit = async (data: PasswordFormValues) => {
     setUpdating(true);
     try {
-      await onUpdate(data.currentPassword, data.newPassword);
+      await onUpdate(data.newPassword);
       setOpen(false);
       form.reset();
-    } catch (error) {
     } finally {
       setUpdating(false);
     }
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="sm" className="p-1 h-8 w-8">
+        <Button variant="ghost" size="sm" className="p-1 h-8 w-8" data-testid="open-password-dialog">
           <Pencil className="w-4 h-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md" data-testid="password-dialog">
         <DialogHeader>
           <DialogTitle>Нууц үг</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" data-testid="password-form">
             <DialogClose asChild className="absolute top-3 right-4">
-              <Button type="button" variant="secondary">
+              <Button type="button" variant="secondary" data-testid="close-password-dialog">
                 x
               </Button>
             </DialogClose>
@@ -64,7 +59,7 @@ export const EditPasswordDialog = ({ onUpdate, isLoading = false }: EditPassword
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="Хуучин нууц үг" type="password" {...field} disabled={updating || isLoading} />
+                    <Input type="password" placeholder="Хуучин нууц үг" {...field} disabled={updating || isLoading} data-testid="current-password-input" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -76,7 +71,7 @@ export const EditPasswordDialog = ({ onUpdate, isLoading = false }: EditPassword
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="Шинэ нууц үг" type="password" {...field} disabled={updating || isLoading} />
+                    <Input type="password" placeholder="Шинэ нууц үг" {...field} disabled={updating || isLoading} data-testid="new-password-input" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -88,13 +83,13 @@ export const EditPasswordDialog = ({ onUpdate, isLoading = false }: EditPassword
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="Шинэ нууц үг давтах" type="password" {...field} disabled={updating || isLoading} />
+                    <Input type="password" placeholder="Шинэ нууц үг давтах" {...field} disabled={updating || isLoading} data-testid="confirm-password-input" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full bg-amber-800 hover:bg-amber-900 text-white" disabled={updating || isLoading}>
+            <Button type="submit" className="w-full bg-amber-800 hover:bg-amber-900 text-white" disabled={updating || isLoading} data-testid="password-submit">
               {updating ? 'Шинэчилж байна...' : 'Шинэчлэх'}
             </Button>
           </form>

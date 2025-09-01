@@ -22,9 +22,7 @@ export const EditPhoneDialog = ({ phone, onUpdate, isLoading = false }: EditPhon
 
   const form = useForm<PhoneFormValues>({
     resolver: zodResolver(phoneSchema),
-    defaultValues: {
-      phone: phone,
-    },
+    defaultValues: { phone },
   });
 
   const onSubmit = async (data: PhoneFormValues) => {
@@ -33,7 +31,6 @@ export const EditPhoneDialog = ({ phone, onUpdate, isLoading = false }: EditPhon
       await onUpdate(data.phone);
       setOpen(false);
       form.reset({ phone: data.phone });
-    } catch (error) {
     } finally {
       setUpdating(false);
     }
@@ -42,20 +39,18 @@ export const EditPhoneDialog = ({ phone, onUpdate, isLoading = false }: EditPhon
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="sm" className="p-1 h-8 w-8">
+        <Button variant="ghost" size="sm" className="p-1 h-8 w-8" data-testid="open-phone-dialog">
           <Pencil className="w-4 h-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md" data-testid="phone-dialog">
         <DialogHeader>
-          <DialogHeader>
-            <DialogTitle>Утас</DialogTitle>
-          </DialogHeader>
+          <DialogTitle>Утас</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4" data-testid="phone-form">
             <DialogClose asChild className="absolute top-3 right-4">
-              <Button type="button" variant="secondary">
+              <Button type="button" variant="secondary" data-testid="close-phone-dialog">
                 x
               </Button>
             </DialogClose>
@@ -65,13 +60,13 @@ export const EditPhoneDialog = ({ phone, onUpdate, isLoading = false }: EditPhon
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input placeholder="0000-0000" {...field} disabled={updating || isLoading} />
+                    <Input placeholder="0000-0000" {...field} disabled={updating || isLoading} data-testid="phone-input" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full bg-amber-800 hover:bg-amber-900 text-white" disabled={updating || isLoading}>
+            <Button type="submit" className="w-full bg-amber-800 hover:bg-amber-900 text-white" disabled={updating || isLoading} data-testid="phone-submit">
               {updating ? 'Шинэчилж байна...' : 'Шинэчлэх'}
             </Button>
           </form>
