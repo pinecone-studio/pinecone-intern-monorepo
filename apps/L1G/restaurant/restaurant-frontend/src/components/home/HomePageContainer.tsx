@@ -38,7 +38,7 @@ export function removeOneReducer(prev: CartItem[], id: string): CartItem[] {
 const HomePageContainer = () => {
   const { data: categoriesData } = useGetCategoriesQuery();
 
-  const [activeCategory, setActiveCategory] = useState('Үндсэн хоол');
+  const [activeCategory, setActiveCategory] = useState<string | undefined>(undefined);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const pathname = usePathname();
@@ -55,28 +55,19 @@ const HomePageContainer = () => {
     saveCart(cart);
   }, [cart]);
 
-  const filteredItems = (foodsData?.getFoods ?? []).filter((item): item is NonNullable<typeof item> => item?.category?.categoryName === activeCategory);
+  useEffect(() => {
+    if (categoriesData?.getCategories?.length) {
+      setActiveCategory(categoriesData.getCategories[0]?.categoryName);
+    }
+  }, [categoriesData]);
+
+  const filteredItems = categoriesData?.getCategories.find((item) => item?.categoryName === activeCategory)?.food ?? [];
 
   const addToCart = (id: string, image: string, foodName: string, price: string) => {
     setCart((prev) => addToCartReducer(prev, { id, image, foodName, price }));
   };
-
-  const removeOne = (id: string) => {
-    setCart((prev) => removeOneReducer(prev, id));
-  };
-  const removeItem = (id: string) => {
-    setCart((prev) => removeItemReducer(prev, id));
-  };
-  useEffect(() => {
-    const raw = localStorage.getItem('foodData');
-    if (raw) {
-      setCart(JSON.parse(raw));
-    }
-  }, []);
-  useEffect(() => {
-    localStorage.setItem('foodData', JSON.stringify(cart));
-  }, [cart]);
-
+  const removeOne = (id: string) => setCart((prev) => removeOneReducer(prev, id));
+  const removeItem = (id: string) => setCart((prev) => removeItemReducer(prev, id));
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-white px-4 py-6 text-center border-b">
@@ -105,8 +96,8 @@ const HomePageContainer = () => {
       <div className="p-4">
         <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
           {filteredItems.map((value) => {
-            const count = cart.find((c) => c.id === value.foodId)?.selectCount ?? 0;
-            return <MenuCard key={value?.foodId} image={value.image} foodName={value.foodName} price={value.price} id={value?.foodId} onAdd={addToCart} count={count} onRemove={removeItem} />;
+            const count = cart.find((c) => c.id === value?.foodId)?.selectCount ?? 0;
+            return <MenuCard key={value?.foodId} image={value!.image} foodName={value!.foodName} price={value!.price} id={value!.foodId} onAdd={addToCart} count={count} onRemove={removeItem} />;
           })}
         </div>
       </div>
