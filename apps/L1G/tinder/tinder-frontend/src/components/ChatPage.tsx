@@ -145,30 +145,35 @@ const ChatPage: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-screen w-screen bg-white">
       {socketError && <div className="error-message text-red-500 p-2 text-center bg-gray-800 border-b border-gray-100">{socketError}</div>}
 
-      <Matches topRowUsers={topRowUsers} selectedUser={selectedUser} onUserSelect={handleUserSelectWithErrorReset} />
+      {/* Matches: show always on desktop, and on mobile only if NOT viewing ChatWindow */}
+      {(!showChatOnMobile || window.innerWidth >= 768) && (
+        <div className="w-full max-w-[980px]">
+          <Matches topRowUsers={topRowUsers} selectedUser={selectedUser} onUserSelect={handleUserSelectWithErrorReset} />
+        </div>
+      )}
 
-      <div className="flex w-full h-[calc(100vh-120px)] items-center justify-center">
-        <ChatPerson
-          selectedUser={selectedUser}
-          onUserSelect={handleUserSelectWithErrorReset}
-          bottomUsers={bottomUsers}
-          chattedUsers={chattedUsers}
-          className={`${showChatOnMobile ? 'hidden md:flex' : 'flex'}`}
-        />
+      <div className="flex w-full h-[calc(100vh-120px)] md:h-[calc(100vh-140px)] max-w-[980px] mx-auto">
+        {/* On mobile: show ChatPerson only if chat window NOT visible */}
+        <div className={`${showChatOnMobile ? 'hidden' : 'flex'} md:flex w-full md:w-[350px]`}>
+          <ChatPerson selectedUser={selectedUser} onUserSelect={handleUserSelectWithErrorReset} bottomUsers={bottomUsers} chattedUsers={chattedUsers} className="" />
+        </div>
 
-        <ChatWindow
-          onUnmatched={handleUnmatched}
-          matchId={selectedUser?.id}
-          lastSeenMessageId={lastSeenMessageId}
-          sending={sending}
-          selectedUser={selectedUser}
-          messages={messages}
-          inputValue={inputValue}
-          onInputChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          onSend={handleSendClick}
-          onBack={handleBackToMessages}
-        />
+        {/* On mobile: show ChatWindow only if chat window visible */}
+        <div className={`${showChatOnMobile ? 'flex' : 'hidden'} w-full md:flex md:flex-1`}>
+          <ChatWindow
+            onUnmatched={handleUnmatched}
+            matchId={selectedUser?.id}
+            lastSeenMessageId={lastSeenMessageId}
+            sending={sending}
+            selectedUser={selectedUser}
+            messages={messages}
+            inputValue={inputValue}
+            onInputChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            onSend={handleSendClick}
+            onBack={handleBackToMessages} // back button for mobile step 2
+          />
+        </div>
       </div>
     </div>
   );

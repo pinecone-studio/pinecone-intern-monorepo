@@ -1,20 +1,22 @@
 'use client';
 import Image from 'next/image';
-import { ChatUser } from 'types/chat';
+import type { ChatUser } from 'types/chat';
 
 interface AvatarProps {
   user: ChatUser;
-  size?: number;
+  width?: number;
+  height?: number;
+  className?: string;
 }
 
-const Avatar = ({ user, size = 48 }: AvatarProps) => {
-  const hasImage = user.images.length > 0;
+const Avatar = ({ user, width, height, className }: AvatarProps) => {
+  const hasImage = user.images?.length > 0;
   const defaultAvatar = '/profile.jpg';
   const src = hasImage ? user.images[0] : defaultAvatar;
 
   return (
-    <div className="overflow-hidden rounded-full" style={{ width: size, height: size }}>
-      <Image src={src} alt={user.name || 'Avatar'} width={size} height={size} className="object-cover w-full h-full" />
+    <div className={`overflow-hidden ${className}`} style={{ width: width, height: height }}>
+      <Image src={src} alt={user.name || 'Avatar'} width={width} height={height} className="object-cover w-full h-full" />
     </div>
   );
 };

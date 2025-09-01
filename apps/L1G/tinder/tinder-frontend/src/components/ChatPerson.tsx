@@ -34,7 +34,7 @@ const ChatPerson: React.FC<ChatPersonProps> = ({ selectedUser, onUserSelect, bot
               onClick={() => onUserSelect(chatUser)}
               className={clsx('flex items-center cursor-pointer border-b border-gray-100 hover:bg-gray-100 p-4 transition-colors gap-4', isSelected && 'bg-white', hasChatted && 'bg-gray-850')}
             >
-              <Avatar user={chatUser} size={56} />
+              <Avatar user={chatUser} width={56} height={56} className="rounded-full" />
 
               <div className="flex flex-col flex-1 min-w-0">
                 <p className={clsx('text-[16px] font-medium truncate', isSelected ? 'text-pink-400' : 'text-white')}>{chatUser.name}</p>
