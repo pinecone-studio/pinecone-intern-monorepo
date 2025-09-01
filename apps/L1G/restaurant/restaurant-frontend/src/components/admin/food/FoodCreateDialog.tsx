@@ -10,7 +10,7 @@ import { Plus, X } from 'lucide-react';
 import { useState } from 'react';
 import Image from 'next/image';
 import { GetFoodsQuery, useCreateFoodMutation } from '@/generated';
-import { UploadImage } from '@/utils/image-upload';
+import { UploadImage } from '@/utils/ImageUpload';
 import { RadioInput, TextInput } from '@/components/admin';
 import { toast } from 'sonner';
 import { ApolloQueryResult } from '@apollo/client';

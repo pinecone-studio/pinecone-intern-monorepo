@@ -8,6 +8,7 @@ import UnmatchButton from '@/components/UnmatchButton';
 
 // --- MOCK: Router ---
 const mockPush = jest.fn();
+
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: mockPush }),
 }));

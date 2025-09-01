@@ -18,7 +18,6 @@ jest.mock('@/components/UnmatchButton', () => {
     ),
   };
 });
-
 jest.mock('@/components/ViewProfile', () => {
   return {
     __esModule: true,
@@ -277,7 +276,6 @@ describe('ChatHeader', () => {
     expect(consoleSpy).toHaveBeenCalledWith('Block user clicked');
     consoleSpy.mockRestore();
   });
-
   describe('accessibility', () => {
     it('has proper focus management for dropdown', () => {
       render(<ChatHeader user={mockUser} matchId={matchId} />);
