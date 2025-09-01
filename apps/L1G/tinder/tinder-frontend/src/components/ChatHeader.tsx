@@ -73,9 +73,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ user, matchId, onUnmatched, onB
               <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg z-50 overflow-hidden animate-in fade-in-0 zoom-in-95 duration-200">
                 <div className="py-2">
                   <ViewProfile user={user} />
-
-                  <div className="border-t border-gray-100 my-1"></div>
-
                   <button onClick={handleBlock} className="flex items-center gap-3 w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                     <Shield size={18} className="text-orange-500" />
                     <span className="font-medium">Block User</span>
@@ -88,7 +85,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ user, matchId, onUnmatched, onB
 
                   {matchId && (
                     <>
-                      <div className="border-t border-gray-100 my-1"></div>
                       <UnmatchButton matchId={matchId} onUnmatched={onUnmatched} />
                     </>
                   )}
@@ -131,9 +127,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ user, matchId, onUnmatched, onB
               <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg z-50 overflow-hidden animate-in fade-in-0 zoom-in-95 duration-200">
                 <div className="py-2">
                   <ViewProfile user={user} />
-
-                  <div className="border-t border-gray-100 my-1"></div>
-
                   <button onClick={handleBlock} className="flex items-center gap-3 w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                     <Shield size={18} className="text-orange-500" />
                     <span className="font-medium">Block User</span>
@@ -146,7 +139,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ user, matchId, onUnmatched, onB
 
                   {matchId && (
                     <>
-                      <div className="border-t border-gray-100 my-1"></div>
                       <UnmatchButton matchId={matchId} onUnmatched={onUnmatched} />
                     </>
                   )}

@@ -20,7 +20,7 @@ const ChatPerson: React.FC<ChatPersonProps> = ({ selectedUser, onUserSelect, bot
   return (
     <div className={clsx('flex flex-col bg-white', 'w-full md:w-[350px] h-full md:border-x border-t rounded-l-xl md:border-gray-200', className)}>
       <div className="px-4 h-[80px] py-4">
-        <h2 className="text-[20px] font-semibold">Messages</h2>
+        <p className="text-[20px] font-semibold">Messages</p>
       </div>
 
       <div className="flex-1 overflow-y-auto">
@@ -37,7 +37,7 @@ const ChatPerson: React.FC<ChatPersonProps> = ({ selectedUser, onUserSelect, bot
               <Avatar user={chatUser} width={56} height={56} className="rounded-full" />
 
               <div className="flex flex-col flex-1 min-w-0">
-                <p className={clsx('text-[16px] font-medium truncate', isSelected ? 'text-pink-400' : 'text-white')}>{chatUser.name}</p>
+                <p className={clsx('text-[16px] font-medium truncate', isSelected ? 'text-pink-400' : 'text-black')}>{chatUser.name}</p>
 
                 <p className="text-[14px] text-gray-400 truncate">
                   {chatUser.profession} • {chatUser.age}
