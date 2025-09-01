@@ -1,7 +1,7 @@
 /* eslint max-lines: "off" */
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { CreateFoodDocument, GetCategoriesDocument } from '@/generated';
+import { CreateFoodDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { UploadImage } from '@/utils/ImageUpload';
 import { toast } from 'sonner';
@@ -28,26 +28,6 @@ jest.mock('@/utils/ImageUpload', () => ({
   UploadImage: jest.fn(),
 }));
 
-const getCategoriesMock: MockedResponse = {
-  request: {
-    query: GetCategoriesDocument,
-  },
-  result: {
-    data: {
-      getCategories: [
-        {
-          categoryId: '1',
-          categoryName: 'Dessert',
-        },
-        {
-          categoryId: '2',
-          categoryName: 'Main dish',
-        },
-      ],
-    },
-  },
-};
-
 const createFoodMock: MockedResponse = {
   request: {
     query: CreateFoodDocument,
@@ -57,7 +37,6 @@ const createFoodMock: MockedResponse = {
         price: '200',
         foodStatus: 'Идэвхитэй',
         image: 'https://example.com/foodimage.jpg',
-        categoryId: '1',
       },
     },
   },
@@ -87,7 +66,6 @@ const createFoodErrorMock: MockedResponse = {
         price: '200',
         foodStatus: 'Идэвхитэй',
         image: 'https://example.com/foodimage.jpg',
-        categoryId: '1',
       },
     },
   },
@@ -111,7 +89,7 @@ describe('FoodCreateDialog', () => {
 
   it('should render', async () => {
     const { getByTestId, findByTestId } = render(
-      <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
+      <MockedProvider mocks={[createFoodMock]}>
         <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -127,7 +105,7 @@ describe('FoodCreateDialog', () => {
 
   it('should closes dialog when close button is clicked', async () => {
     const { getByTestId } = render(
-      <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
+      <MockedProvider mocks={[createFoodMock]}>
         <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -148,7 +126,7 @@ describe('FoodCreateDialog', () => {
     const mockFile = new File(['foodimage'], 'foodimage.png', { type: 'image/png' });
 
     const { getByTestId } = render(
-      <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
+      <MockedProvider mocks={[createFoodMock]}>
         <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -172,7 +150,7 @@ describe('FoodCreateDialog', () => {
 
   it('should handle empty file input', async () => {
     const { getByTestId } = render(
-      <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
+      <MockedProvider mocks={[createFoodMock]}>
         <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -195,7 +173,7 @@ describe('FoodCreateDialog', () => {
     const mockFile = new File(['foodimage'], 'foodimage.png', { type: 'image/png' });
 
     const { getByTestId } = render(
-      <MockedProvider mocks={[getCategoriesMock]} addTypename={false}>
+      <MockedProvider mocks={[createFoodMock]}>
         <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -228,7 +206,7 @@ describe('FoodCreateDialog', () => {
     const mockFile = new File(['foodimage'], 'foodimage.png', { type: 'image/png' });
 
     const { getByTestId, getByPlaceholderText, queryByTestId } = render(
-      <MockedProvider mocks={[getCategoriesMock, createFoodMock]} addTypename={false}>
+      <MockedProvider mocks={[createFoodMock]}>
         <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -243,7 +221,6 @@ describe('FoodCreateDialog', () => {
     const statusInput = getByTestId('food-status-active');
     const priceInput = getByPlaceholderText('Үнэ');
     const imageInput = getByTestId('create-food-image-input');
-    const categorySelect = getByTestId('create-food-category-select');
     const submitButton = getByTestId('create-food-submit-button');
 
     fireEvent.change(foodNameInput, { target: { value: 'test' } });
@@ -255,19 +232,6 @@ describe('FoodCreateDialog', () => {
     await waitFor(() => {
       expect(screen.getByTestId('create-food-image-preview')).toBeInTheDocument();
     });
-
-    await waitFor(() => {
-      expect(categorySelect).toBeInTheDocument();
-    });
-
-    fireEvent.click(categorySelect);
-
-    await waitFor(() => {
-      expect(getByTestId('create-food-category-dropdown')).toBeInTheDocument();
-    });
-
-    const categoryOption = getByTestId('create-food-category-option-1');
-    fireEvent.click(categoryOption);
 
     fireEvent.change(priceInput, { target: { value: '200' } });
 
@@ -294,7 +258,7 @@ describe('FoodCreateDialog', () => {
     const mockFile = new File(['foodimage'], 'foodimage.png', { type: 'image/png' });
 
     const { getByTestId, getByPlaceholderText } = render(
-      <MockedProvider mocks={[getCategoriesMock, createFoodErrorMock]} addTypename={false}>
+      <MockedProvider mocks={[createFoodErrorMock]}>
         <FoodCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -309,7 +273,6 @@ describe('FoodCreateDialog', () => {
     const statusInput = getByTestId('food-status-active');
     const priceInput = getByPlaceholderText('Үнэ');
     const imageInput = getByTestId('create-food-image-input');
-    const categorySelect = getByTestId('create-food-category-select');
     const submitButton = getByTestId('create-food-submit-button');
 
     fireEvent.change(foodNameInput, { target: { value: 'test' } });
@@ -321,16 +284,6 @@ describe('FoodCreateDialog', () => {
     await waitFor(() => {
       expect(screen.getByTestId('create-food-image-preview')).toBeInTheDocument();
     });
-
-    await waitFor(() => {
-      expect(categorySelect).toBeInTheDocument();
-    });
-    fireEvent.click(categorySelect);
-    await waitFor(() => {
-      expect(getByTestId('create-food-category-dropdown')).toBeInTheDocument();
-    });
-    const categoryOption = getByTestId('create-food-category-option-1');
-    fireEvent.click(categoryOption);
 
     fireEvent.change(priceInput, { target: { value: '200' } });
 

@@ -35,10 +35,6 @@ const mockDataProps = {
   price: '20000',
   foodStatus: 'Идэвхитэй',
   image: 'https://example.com/foodimage.jpg',
-  category: {
-    categoryId: '2',
-    categoryName: 'Main dish',
-  },
   refetch: jest.fn(),
 };
 
@@ -100,7 +96,6 @@ describe('FoodUpdateDialog', () => {
     const activeStatusInput = getByTestId('food-status-active');
     const priceInput = getByTestId('food-update-price-input');
     const imageInput = getByTestId('food-update-image-input');
-    const categorySelect = getByTestId('food-update-category-select');
     const submitButton = getByTestId('food-update-submit-button');
 
     fireEvent.change(foodNameInput, { target: { value: '' } });
@@ -124,9 +119,6 @@ describe('FoodUpdateDialog', () => {
       expect(getByTestId('food-update-image-preview')).toBeInTheDocument();
     });
 
-    expect(categorySelect).toBeInTheDocument();
-    expect(categorySelect).toHaveTextContent('Main dish');
-
     fireEvent.change(priceInput, { target: { value: '' } });
     fireEvent.change(priceInput, { target: { value: '20000' } });
 
@@ -139,8 +131,6 @@ describe('FoodUpdateDialog', () => {
       },
       { timeout: 1000 }
     );
-
-    // screen.debug();
 
     await waitFor(
       () => {
@@ -174,7 +164,6 @@ describe('FoodUpdateDialog', () => {
     const foodNameInput = getByTestId('food-update-foodName-input');
     const activeStatusInput = getByTestId('food-status-active');
     const priceInput = getByTestId('food-update-price-input');
-    const categorySelect = getByTestId('food-update-category-select');
     const submitButton = getByTestId('food-update-submit-button');
 
     fireEvent.change(foodNameInput, { target: { value: '' } });
@@ -187,9 +176,6 @@ describe('FoodUpdateDialog', () => {
     await waitFor(() => {
       expect(getByTestId('food-update-image-preview')).toBeInTheDocument();
     });
-
-    expect(categorySelect).toBeInTheDocument();
-    expect(categorySelect).toHaveTextContent('Main dish');
 
     fireEvent.change(priceInput, { target: { value: '' } });
     fireEvent.change(priceInput, { target: { value: '20000' } });
@@ -239,7 +225,6 @@ describe('FoodUpdateDialog', () => {
     const activeStatusInput = getByTestId('food-status-active');
     const priceInput = getByTestId('food-update-price-input');
     const imageInput = getByTestId('food-update-image-input');
-    const categorySelect = getByTestId('food-update-category-select');
     const submitButton = getByTestId('food-update-submit-button');
 
     fireEvent.change(foodNameInput, { target: { value: '' } });
@@ -262,9 +247,6 @@ describe('FoodUpdateDialog', () => {
     await waitFor(() => {
       expect(getByTestId('food-update-image-preview')).toBeInTheDocument();
     });
-
-    expect(categorySelect).toBeInTheDocument();
-    expect(categorySelect).toHaveTextContent('Main dish');
 
     fireEvent.change(priceInput, { target: { value: '' } });
     fireEvent.change(priceInput, { target: { value: '20000' } });

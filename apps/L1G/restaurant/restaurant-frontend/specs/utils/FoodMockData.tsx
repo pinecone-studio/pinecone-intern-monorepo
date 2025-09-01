@@ -166,7 +166,6 @@ const updateFoodMock: MockedResponse = {
         price: '20000',
         foodStatus: 'Идэвхитэй',
         image: 'https://example.com/foodimage.jpg',
-        categoryId: '2',
       },
     },
   },
@@ -197,7 +196,6 @@ const updateFoodErrorMock: MockedResponse = {
         price: '20000',
         foodStatus: 'Идэвхитэй',
         image: 'https://example.com/foodimage.jpg',
-        categoryId: '2',
       },
     },
   },
@@ -235,6 +233,13 @@ const createCategoryErrorMock: MockedResponse = {
   error: new Error('Network error'),
 };
 
+const today = new Date();
+const startDay = today.getDate() + 1;
+const endDay = today.getDate() + 2;
+
+const startDate = new Date(`9/${startDay}/2025`);
+const endDate = new Date(`9/${endDay}/2025`);
+
 const createDiscountMock: MockedResponse = {
   request: {
     query: CreateDiscountDocument,
@@ -242,8 +247,8 @@ const createDiscountMock: MockedResponse = {
       input: {
         discountName: 'Test',
         discountRate: 20,
-        startDate: new Date('9/28/2025').toLocaleString(),
-        endDate: new Date('9/28/2025').toLocaleString(),
+        startDate: startDate.toLocaleString(),
+        endDate: endDate.toLocaleString(),
       },
     },
   },
@@ -253,8 +258,8 @@ const createDiscountMock: MockedResponse = {
         discountId: '2',
         discountName: 'Test',
         discountRate: 20,
-        startDate: new Date('').toLocaleString(),
-        endDate: new Date('').toLocaleString(),
+        startDate: startDate.toLocaleString(),
+        endDate: endDate.toLocaleString(),
       },
     },
   },
@@ -267,8 +272,8 @@ const createDiscountErrorMock: MockedResponse = {
       input: {
         discountName: 'Test',
         discountRate: 20,
-        startDate: new Date('9/28/2025'),
-        endDate: new Date('9/28/2025'),
+        startDate: startDate.toLocaleString(),
+        endDate: endDate.toLocaleString(),
       },
     },
   },
