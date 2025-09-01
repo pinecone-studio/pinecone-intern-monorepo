@@ -10,8 +10,8 @@ type NameEmailFieldsProps = {
 
 export const NameEmailFields = ({ control }: NameEmailFieldsProps) => {
   return (
-    <div className="flex gap-6">
-      <div className="space-y-2 w-1/2">
+    <div className="flex flex-col gap-5 md:flex-row md:gap-6">
+      <div className="space-y-2 md:w-1/2">
         <FormField
           control={control}
           name="name"
@@ -26,7 +26,7 @@ export const NameEmailFields = ({ control }: NameEmailFieldsProps) => {
           )}
         />
       </div>
-      <div className="space-y-2 w-1/2">
+      <div className="space-y-2 md:w-1/2">
         <FormField
           control={control}
           name="email"
