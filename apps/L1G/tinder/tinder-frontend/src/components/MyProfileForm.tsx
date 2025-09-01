@@ -42,7 +42,7 @@ export const MyProfileForm = () => {
 
   return (
     <div className="flex flex-col w-full max-w-[672px]">
-      <div className="flex flex-col gap-[1px] justify-start items-start ">
+      <div className="flex flex-col gap-[1px] justify-start items-start">
         <p className="text-[18px] font-sans font-[500] text-[#09090B]">Personal Information</p>
         <p className="text-[14px] font-sans font-[400] text-[#71717A]">This is how others will see you on the site.</p>
       </div>
@@ -50,10 +50,12 @@ export const MyProfileForm = () => {
       <div className="py-6">
         <Separator />
       </div>
+
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="">
+          <div className="flex flex-col gap-6 px-1">
             <NameGenderPreferenceFields control={form.control} />
+
             <BirthDateField control={form.control} />
             <FormField
               control={form.control}

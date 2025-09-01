@@ -5,12 +5,12 @@ import { WhiteTinderLogo } from '@/components/TinderLogo';
 
 const Profile = () => {
   return (
-    <div className="w-screen h-screen flex flex-col">
+    <div className="w-screen min-h-screen flex overflow-y-auto flex-col">
       <div className="flex-shrink-0">
         <Header />
       </div>
 
-      <div className="flex-1 overflow-y-auto flex justify-center items-start py-6 px-4 sm:px-6 md:px-8">
+      <div className="flex-1 w-full overflow-x-auto flex justify-center items-start py-6 px-4 sm:px-6 md:px-8">
         <div className="w-full max-w-[1334px] h-fit flex flex-col gap-6">
           <MyProfile />
         </div>
