@@ -1,4 +1,4 @@
-import { Food, GetFoodsQuery } from '@/generated';
+import { Food, GetCategoriesQuery, GetDiscountsQuery, GetFoodsQuery } from '@/generated';
 import { formSchemaFood } from '@/helpers/form-schemas';
 import { ApolloQueryResult } from '@apollo/client';
 import { z } from 'zod';
@@ -20,4 +20,19 @@ type FoodUpdateFormProps = {
   loading: boolean;
 };
 
-export { type FoodUpdateDialogProps, type FoodUpdateFormProps };
+type DiscountUpdateProps = {
+  discountId: string;
+  discountName: string;
+  discountRate: number;
+  startDate: string;
+  endDate: string;
+  refetch: () => Promise<ApolloQueryResult<GetDiscountsQuery>>;
+};
+
+type CategoryUpdateProps = {
+  categoryId: string;
+  categoryName: string;
+  refetch: () => Promise<ApolloQueryResult<GetCategoriesQuery>>;
+};
+
+export { type FoodUpdateDialogProps, type FoodUpdateFormProps, type DiscountUpdateProps, type CategoryUpdateProps };
