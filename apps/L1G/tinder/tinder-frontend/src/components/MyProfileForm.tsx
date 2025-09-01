@@ -12,6 +12,8 @@ import { Separator } from '@/components/ui/separator';
 import { ProfessionSchoolFields } from './ProfessionSchoolFields';
 import { useGetAllInterestsQuery } from '@/generated';
 import { NameGenderPreferenceFields } from './NameGenderPreferenceFields';
+import { NameEmailFields } from './NameEmailFields';
+import { GenderSelect } from './GenderSelect';
 
 export const MyProfileForm = () => {
   const form = useForm<z.infer<typeof profileFormSchema>>({
@@ -53,8 +55,9 @@ export const MyProfileForm = () => {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="">
-          <div className="flex flex-col gap-6">
-            <NameGenderPreferenceFields control={form.control} />
+          <div className="flex flex-col gap-6 px-1">
+            <NameEmailFields control={form.control} />
+
             <BirthDateField control={form.control} />
             <FormField
               control={form.control}
@@ -87,10 +90,6 @@ export const MyProfileForm = () => {
             <Button type="submit" className="rounded-md w-fit py-2 px-4 bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
               Update Profile
             </Button>
-
-            <div className="h-[1000px] bg-gray-100" data-testid="dummy-content">
-              <p>Dummy content to test scrolling...</p>
-            </div>
           </div>
         </form>
       </Form>
