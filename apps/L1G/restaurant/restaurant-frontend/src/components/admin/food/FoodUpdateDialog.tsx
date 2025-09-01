@@ -11,14 +11,11 @@ import { FoodUpdateDialogProps } from '@/utils/FoodTypes';
 import { formSchemaFood } from '@/helpers/form-schemas';
 import { FoodUpdateForm } from './FoodUpdateForm';
 
-export const FoodUpdateDialog = ({ foodId, foodName, image, price, foodStatus, category, refetch }: FoodUpdateDialogProps) => {
+export const FoodUpdateDialog = ({ foodId, foodName, image, price, foodStatus, refetch }: FoodUpdateDialogProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [updateFood] = useUpdateFoodMutation();
+  const [updateFood, { loading }] = useUpdateFoodMutation();
 
   const handleSubmit = async (values: z.infer<typeof formSchemaFood>) => {
-    setIsSubmitting(true);
-
     try {
       let imageUrl: string;
       if (values.image instanceof File) {
@@ -35,7 +32,6 @@ export const FoodUpdateDialog = ({ foodId, foodName, image, price, foodStatus, c
             price: values.price,
             foodStatus: values.status,
             image: imageUrl,
-            categoryId: values.category,
           },
         },
       });
@@ -48,8 +44,6 @@ export const FoodUpdateDialog = ({ foodId, foodName, image, price, foodStatus, c
       toast.error('Хоол шинэчлэхэд алдаа гарлаа!', {
         position: 'bottom-right',
       });
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -71,7 +65,7 @@ export const FoodUpdateDialog = ({ foodId, foodName, image, price, foodStatus, c
             <X className="w-4 h-4" />
           </DialogClose>
         </div>
-        <FoodUpdateForm foodName={foodName} price={price} category={category} foodStatus={foodStatus} image={image} onSubmit={handleSubmit} isSubmitting={isSubmitting} />
+        <FoodUpdateForm foodName={foodName} price={price} foodStatus={foodStatus} image={image} onSubmit={handleSubmit} loading={loading} />
       </DialogContent>
     </Dialog>
   );

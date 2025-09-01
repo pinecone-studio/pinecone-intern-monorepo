@@ -22,9 +22,11 @@ interface ChatWindowProps {
   onSend: () => void;
   sending: boolean;
   lastSeenMessageId: string;
+  matchId: string | undefined;
+  onUnmatched?: () => void;
 }
 
-const ChatWindow = ({ lastSeenMessageId, selectedUser, messages, inputValue, onInputChange, onKeyDown, onSend, sending }: ChatWindowProps) => {
+const ChatWindow = ({ matchId, lastSeenMessageId, selectedUser, messages, inputValue, onInputChange, onKeyDown, onSend, sending, onUnmatched }: ChatWindowProps) => {
   const bottomRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (bottomRef.current) {
@@ -37,7 +39,7 @@ const ChatWindow = ({ lastSeenMessageId, selectedUser, messages, inputValue, onI
   if (!selectedUser) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="text-center">
+        <div className="text-center flex justify-center items-center">
           <MessageSquare size={64} className="mx-auto mb-4 text-gray-400" />
           <h3 className="mb-2 text-lg font-medium text-gray-900">Select a match to start chatting</h3>
           <p className="text-gray-500">Choose someone from your matches to begin a conversation.</p>
@@ -48,7 +50,7 @@ const ChatWindow = ({ lastSeenMessageId, selectedUser, messages, inputValue, onI
 
   return (
     <div className="w-[980px] h-[930px] flex flex-col border-r border-gray-200">
-      <ChatHeader user={selectedUser} />
+      <ChatHeader onUnmatched={onUnmatched} matchId={matchId} user={selectedUser} />
 
       <div className="flex-1 p-4 space-y-4 bg-white h-[790px] overflow-y-auto">
         {messages.length === 0 ? (

@@ -23,6 +23,7 @@ jest.mock('utils/socket', () => ({
     connected: true,
   },
 }));
+
 const MockChatWindow = jest.fn(({ selectedUser, messages, inputValue, onInputChange, onKeyDown, onSend, lastSeenMessageId }: any) => {
   return (
     <div data-testid="chat-window">
@@ -63,7 +64,7 @@ jest.mock('@/components/ChatPerson', () => {
 });
 
 jest.mock('@/components/ChatWindow', () => {
-  return function MockChatWindow({ selectedUser, messages, inputValue, onInputChange, onKeyDown, onSend, lastSeenMessageId }: any) {
+  return function MockChatWindow({ onUnmatched, selectedUser, messages, inputValue, onInputChange, onKeyDown, onSend, lastSeenMessageId }) {
     return (
       <div data-testid="chat-window" data-messages={JSON.stringify(messages)}>
         <div data-testid="chat-with">Chat with: {selectedUser?.name || 'None'}</div>
@@ -72,6 +73,10 @@ jest.mock('@/components/ChatWindow', () => {
         <input data-testid="chat-input" value={inputValue || ''} onChange={onInputChange} onKeyDown={onKeyDown} />
         <button onClick={onSend} data-testid="send-button">
           Send
+        </button>
+        {/* Add this line */}
+        <button onClick={onUnmatched} data-testid="trigger-unmatch">
+          Trigger Unmatch
         </button>
       </div>
     );
@@ -1316,5 +1321,19 @@ describe('ChatPage - Additional Coverage Tests', () => {
 
     // Should contain all messages
     expect(filtered2).toHaveLength(2);
+  });
+
+  test('handleUnmatched calls refetch when unmatch occurs', () => {
+    render(<ChatPage />);
+
+    // Clear any previous calls to refetch
+    mockRefetch.mockClear();
+
+    // Wait for component to render and find the trigger button
+    const triggerUnmatchButton = screen.getByTestId('trigger-unmatch');
+    fireEvent.click(triggerUnmatchButton);
+
+    // Verify refetch was called (this covers the handleUnmatched function)
+    expect(mockRefetch).toHaveBeenCalledTimes(1);
   });
 });

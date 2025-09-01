@@ -7,7 +7,7 @@ import { z } from 'zod';
 type TextInputProps = {
   control: Control<z.infer<typeof formSchemaFood>>;
   placeholder: string;
-  fieldName: 'foodName' | 'price' | 'category';
+  fieldName: 'foodName' | 'price';
   'data-testid'?: string;
   'data-cy'?: string;
 };

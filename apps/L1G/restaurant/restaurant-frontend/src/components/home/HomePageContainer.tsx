@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import MenuCard from './MenuCard';
-import { useGetCategoriesQuery, useGetFoodsQuery } from '@/generated';
+import { useGetCategoriesQuery } from '@/generated';
 import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import OrderList from './OrderList';
 import OrderType from './OrderType';
@@ -34,10 +34,9 @@ export function removeOneReducer(prev: CartItem[], id: string): CartItem[] {
 }
 
 const HomePageContainer = () => {
-  const { data: foodsData } = useGetFoodsQuery();
   const { data: categoriesData } = useGetCategoriesQuery();
 
-  const [activeCategory, setActiveCategory] = useState('Үндсэн хоол');
+  const [activeCategory, setActiveCategory] = useState<string | undefined>(undefined);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const pathname = usePathname();
@@ -54,14 +53,19 @@ const HomePageContainer = () => {
     saveCart(cart);
   }, [cart]);
 
-  const filteredItems = (foodsData?.getFoods ?? []).filter((item): item is NonNullable<typeof item> => item?.category?.categoryName === activeCategory);
+  useEffect(() => {
+    if (categoriesData?.getCategories?.length) {
+      setActiveCategory(categoriesData.getCategories[0]?.categoryName);
+    }
+  }, [categoriesData]);
+
+  const filteredItems = categoriesData?.getCategories.find((item) => item?.categoryName === activeCategory)?.food ?? [];
 
   const addToCart = (id: string, image: string, foodName: string, price: string) => {
     setCart((prev) => addToCartReducer(prev, { id, image, foodName, price }));
   };
   const removeOne = (id: string) => setCart((prev) => removeOneReducer(prev, id));
   const removeItem = (id: string) => setCart((prev) => removeItemReducer(prev, id));
-
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-white px-4 py-6 text-center border-b">
@@ -72,7 +76,7 @@ const HomePageContainer = () => {
         <div className="flex space-x-6 overflow-x-auto">
           {categoriesData?.getCategories.map((category) => (
             <button
-              data-testid="homepage-container-filter-button"
+              data-testid={`homepage-container-filter-button-${category?.categoryName || 'empty'}`}
               key={category?.categoryId}
               onClick={() => {
                 const name = category?.categoryName?.trim();
@@ -91,19 +95,19 @@ const HomePageContainer = () => {
       <div className="p-4">
         <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
           {filteredItems.map((value) => {
-            const count = cart.find((c) => c.id === value.foodId)?.selectCount ?? 0;
-            return <MenuCard key={value?.foodId} image={value.image} foodName={value.foodName} price={value.price} id={value?.foodId} onAdd={addToCart} count={count} onRemove={removeItem} />;
+            const count = cart.find((c) => c.id === value?.foodId)?.selectCount ?? 0;
+            return <MenuCard key={value?.foodId} image={value!.image} foodName={value!.foodName} price={value!.price} id={value!.foodId} onAdd={addToCart} count={count} onRemove={removeItem} />;
           })}
         </div>
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t">
-        <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+        <Drawer data-testid="drawer-content" open={drawerOpen} onOpenChange={setDrawerOpen}>
           <DrawerTrigger className="w-full bg-amber-800 hover:bg-amber-900 text-white py-4 text-lg font-medium rounded-lg" onClick={() => setDrawerOpen(true)}>
             Захиалах
           </DrawerTrigger>
 
-          <DrawerContent>
+          <DrawerContent data-testid="drawer-content">
             <DrawerHeader>
               <DrawerTitle>Таны захиалга</DrawerTitle>
             </DrawerHeader>

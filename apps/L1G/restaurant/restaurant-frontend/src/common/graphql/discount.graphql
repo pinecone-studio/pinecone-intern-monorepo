@@ -5,6 +5,13 @@ query getDiscounts {
     discountRate
     startDate
     endDate
+    food {
+      foodId
+      foodName
+      foodStatus
+      price
+      image
+    }
   }
 }
 

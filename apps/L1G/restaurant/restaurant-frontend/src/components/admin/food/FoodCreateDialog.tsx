@@ -11,7 +11,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { GetFoodsQuery, useCreateFoodMutation } from '@/generated';
 import { UploadImage } from '@/utils/ImageUpload';
-import { RadioInput, SelectCategoryInput, TextInput } from '@/components/admin';
+import { RadioInput, TextInput } from '@/components/admin';
 import { toast } from 'sonner';
 import { ApolloQueryResult } from '@apollo/client';
 import { formSchemaFood, initialValuesFood } from '@/helpers/form-schemas';
@@ -36,7 +36,6 @@ export const FoodCreateDialog = ({ refetch }: { refetch: () => Promise<ApolloQue
             price: values.price,
             foodStatus: values.status,
             image: imageUrl,
-            categoryId: values.category,
           },
         },
       });
@@ -130,7 +129,6 @@ export const FoodCreateDialog = ({ refetch }: { refetch: () => Promise<ApolloQue
                 </FormItem>
               )}
             />
-            <SelectCategoryInput control={form.control} />
             <TextInput data-cy="create-food-price-input" data-testid="create-food-price-input" control={form.control} fieldName="price" placeholder="Үнэ" />
             <Button data-cy="create-food-submit-button" data-testid="create-food-submit-button" className="flex w-full h-[36px] rounded-md py-2 px-4 bg-[#1D1F24] " type="submit" disabled={loading}>
               {loading ? 'Үүсгэж байна...' : 'Үүсгэх'}
