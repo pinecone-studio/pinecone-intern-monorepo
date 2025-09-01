@@ -15,6 +15,13 @@ mutation CreateDiscount($input: CreateDiscountInput!) {
     discountRate
     startDate
     endDate
+    food {
+      foodId
+      foodName
+      price
+      image
+      foodStatus
+    }
   }
 }
 
