@@ -1,6 +1,5 @@
 export * from './DeleteDialog';
 export * from './food/FoodCreateDialog';
-export * from './food/FormSelectInput';
 export * from './food/FormTextInput';
 export * from './food/AllFoodsCard';
 export * from './food/FoodUpdateDialog';
