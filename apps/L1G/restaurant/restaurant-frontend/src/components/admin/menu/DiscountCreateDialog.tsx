@@ -76,8 +76,8 @@ export const DiscountCreateDialog = ({ refetch }: { refetch: () => Promise<Apoll
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormFieldInput control={form.control} placeholder="Хямдралын нэр" type="text" fieldName="discountName" data-testid="discount-create-name-input" />
-            <FormFieldInput control={form.control} placeholder="Хямдралын хувь" type="number" fieldName="discountRate" data-testid="discount-create-rate-input" />
+            <FormFieldInput control={form.control} placeholder="Хямдралын нэр" type="text" fieldName="discountName" data-testid="discount-create-name-input" disabled={false} />
+            <FormFieldInput control={form.control} placeholder="Хямдралын хувь" type="number" fieldName="discountRate" data-testid="discount-create-rate-input" disabled={false} />
             <FormField
               control={form.control}
               name="discountDate"
