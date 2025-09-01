@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import TinderCardLib from 'react-tinder-card';
 import { UserProfile } from '@/app/page';
 import { TinderCardContent } from './TinderCardContent';
 
@@ -10,9 +10,9 @@ interface TinderCardProps {
   onLike: (_profileId: string) => void;
   onDislike: (_profileId: string) => void;
 }
+
 const TinderCard = ({ profile, onLike, onDislike }: TinderCardProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [direction, setDirection] = useState<'left' | 'right' | null>(null);
   const [imageError, setImageError] = useState(false);
 
   const images = Array.isArray(profile?.images) && profile.images.length > 0 ? profile.images : ['/favicon.ico'];
@@ -25,37 +25,36 @@ const TinderCard = ({ profile, onLike, onDislike }: TinderCardProps) => {
     setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
-  const handleLike = () => {
-    setDirection('right');
-  };
-
-  const handleDislike = () => {
-    setDirection('left');
-  };
-
   const handleImageError = () => {
     setImageError(true);
   };
 
-  useEffect(() => {
-    if (!direction || !profile) return;
-
-    const timeout = setTimeout(() => {
-      if (direction === 'right') {
-        onLike(profile.id);
-      } else {
-        onDislike(profile.id);
-      }
-      setDirection(null);
-      setCurrentImageIndex(0);
-    }, 300);
-    return () => clearTimeout(timeout);
-  }, [direction, onLike, onDislike, profile]);
-
   if (!profile) return null;
 
   return (
-    <AnimatePresence>
+    <TinderCardLib
+      data-testid="tinder-card"
+      className="absolute w-fit h-fit flex justify-center items-center"
+      preventSwipe={['up', 'down']} // Allow left and right swipes only
+      swipeRequirementType="position" // Use position-based swipe detection
+      swipeThreshold={100} // Require 100px swipe distance to trigger
+      onSwipe={(dir) => {
+        if (dir === 'right') {
+          onLike(profile.id);
+        } else if (dir === 'left') {
+          onDislike(profile.id);
+        }
+      }}
+      // Disable mouse dragging by overriding pointer events
+      style={{ pointerEvents: 'none' }} // Prevents mouse interaction
+      // Re-enable pointer events for touch to allow swipe
+      onTouchStart={(e: any) => {
+        e.currentTarget.style.pointerEvents = 'auto';
+      }}
+      onTouchEnd={(e: any) => {
+        e.currentTarget.style.pointerEvents = 'none';
+      }}
+    >
       <TinderCardContent
         profile={profile}
         images={images}
@@ -64,11 +63,11 @@ const TinderCard = ({ profile, onLike, onDislike }: TinderCardProps) => {
         handleImageError={handleImageError}
         nextImage={nextImage}
         prevImage={prevImage}
-        handleLike={handleLike}
-        handleDislike={handleDislike}
-        direction={direction}
+        handleLike={() => onLike(profile.id)} // for button tap
+        handleDislike={() => onDislike(profile.id)} // for button tap
+        direction={null} // not used anymore
       />
-    </AnimatePresence>
+    </TinderCardLib>
   );
 };
 
