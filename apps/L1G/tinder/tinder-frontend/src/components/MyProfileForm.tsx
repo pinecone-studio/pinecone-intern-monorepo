@@ -10,19 +10,22 @@ import { profileFormSchema } from './schema/ProfileFormSchema';
 import { BirthDateField } from './BirthDateField';
 import { Separator } from '@/components/ui/separator';
 import { ProfessionSchoolFields } from './ProfessionSchoolFields';
-import { useGetAllInterestsQuery } from '@/generated';
+import { UpdateProfileDocument, useGetAllInterestsQuery } from '@/generated';
 import { NameGenderPreferenceFields } from './NameGenderPreferenceFields';
+import { useMutation } from '@apollo/client';
 
 interface MyProfileFormProps {
   user?: {
+    id?: string;
     name?: string;
     email?: string;
-    birthDate?: string; 
+    birthDate?: string;
     genderPreferences?: string;
     bio?: string;
-    interests?: string[];
+    interests?: { _id: string; interestName: string }[];
     profession?: string;
     schoolWork?: string;
+    images?: string[]; 
   };
 }
 
@@ -34,11 +37,61 @@ export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user }) => {
       birthDate: user?.birthDate ? new Date(user.birthDate) : new Date('2000-01-01'),
       genderPreference: user?.genderPreferences ?? 'Female',
       bio: user?.bio ?? '',
-      interests: user?.interests ?? [],
+      interests: user?.interests?.map((i) => i._id) ?? [],
       profession: user?.profession ?? '',
       school: user?.schoolWork ?? '',
     },
   });
+
+  useEffect(() => {
+    if (user) {
+      form.reset({
+        name: user.name || '',
+        email: user.email || '',
+        birthDate: user.birthDate ? new Date(user.birthDate) : new Date('2000-01-01'),
+        genderPreference: user.genderPreferences ?? 'Female',
+        bio: user.bio || '',
+        interests: user.interests?.map((i) => i._id) || [],
+        profession: user.profession || '',
+        school: user.schoolWork || '',
+      });
+    }
+  }, [user, form]);
+
+  const [updateProfile] = useMutation(UpdateProfileDocument, {
+    onCompleted: (data) => {
+      console.log('Profile updated successfully', data);
+    },
+    onError: (error) => {
+      console.error('Error updating profile:', error);
+    },
+  });
+
+  const onSubmit = async (data: z.infer<typeof profileFormSchema>) => {
+    console.log('Updated profile data:', data);
+    if (!user?.id) {
+      console.error('User ID is missing');
+      return;
+    }
+    try {
+      await updateProfile({
+        variables: {
+          updateProfileId: user?.id || '',
+          name: data.name,
+          email: data.email,
+          // dateOfBirth: data.birthDate,
+          dateOfBirth: data.birthDate.toISOString().split('T')[0],
+          genderPreferences: data.genderPreference,
+          bio: data.bio,
+          interests: data.interests,
+          profession: data.profession,
+          schoolWork: data.school,
+        },
+      });
+    } catch (error) {
+      console.error('Update mutation failed:', error);
+    }
+  };
 
   const { data } = useGetAllInterestsQuery();
   const interestOptions =
@@ -48,10 +101,6 @@ export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user }) => {
         value: i._id,
         label: i.interestName as string,
       })) || [];
-
-  const onSubmit = async (data: z.infer<typeof profileFormSchema>) => {
-    console.log('Updated profile data:', data);
-  };
 
   return (
     <div className="flex flex-col w-full max-w-[672px]">
