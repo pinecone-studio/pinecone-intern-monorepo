@@ -18,7 +18,6 @@ const ChatPage: React.FC = () => {
   const [conversations, setConversations] = useState<Record<string, Message[]>>({});
   const [inputValue, setInputValue] = useState('');
   const [socketError, setSocketError] = useState<string | null>(null);
-  const [localMatchIds, setLocalMatchIds] = useState<string[]>([]);
 
   const { selectedUser, topRowUsers, bottomUsers, chattedUsers, handleUserSelect, moveUserToBottom, setChattedUsers } = useUserManagement(data);
   const messages = useMemo(() => {
@@ -26,11 +25,6 @@ const ChatPage: React.FC = () => {
     return conversations[selectedUser.id] || [];
   }, [selectedUser, conversations]);
   const markMessagesAsSeen = useMarkMessagesAsSeen(selectedUser, setConversations);
-  useEffect(() => {
-    if (data?.getMe?.matchIds) {
-      setLocalMatchIds(data.getMe.matchIds.map((m: any) => m?.matchedUser?.id));
-    }
-  }, [data]);
 
   useEffect(() => {
     if (!selectedUser) return;

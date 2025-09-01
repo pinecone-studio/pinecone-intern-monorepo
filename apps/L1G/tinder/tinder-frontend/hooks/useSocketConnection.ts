@@ -8,7 +8,7 @@ interface UseSocketConnectionProps {
   setConversations: React.Dispatch<React.SetStateAction<Record<string, Message[]>>>;
   setSocketError: React.Dispatch<React.SetStateAction<string | null>>;
   markMessagesAsSeen: () => void;
-  handleUnmatched: (matchId: string) => void;
+  handleUnmatched: (_matchId: string) => void;
 }
 
 export const useSocketConnection = ({ selectedUser, data, setConversations, setSocketError, markMessagesAsSeen, handleUnmatched }: UseSocketConnectionProps) => {
