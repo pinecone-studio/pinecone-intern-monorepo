@@ -11,9 +11,7 @@ import { BirthDateField } from './BirthDateField';
 import { Separator } from '@/components/ui/separator';
 import { ProfessionSchoolFields } from './ProfessionSchoolFields';
 import { useGetAllInterestsQuery } from '@/generated';
-import { NameGenderPreferenceFields } from './NameGenderPreferenceFields';
 import { NameEmailFields } from './NameEmailFields';
-import { GenderSelect } from './GenderSelect';
 
 export const MyProfileForm = () => {
   const form = useForm<z.infer<typeof profileFormSchema>>({

@@ -22,7 +22,7 @@ type CreateAccountProps = {
   userData: UserData;
   updateUserData: (_: Partial<UserData>) => void;
 };
-
+// eslint-disable-next-line complexity
 export const CreateAccount = ({ onSuccess, userData, updateUserData }: CreateAccountProps) => {
   const router = useRouter();
   const [step, setStep] = useState<'email' | 'otp'>('email');

@@ -65,6 +65,6 @@ describe('YourDetailsPage Component', () => {
 
     const container = screen.getByTestId('details-page-container');
     expect(container).toBeInTheDocument();
-    expect(container).toHaveClass('w-[400px]');
+    expect(container).toHaveClass('w-[340px] md:w-[400px] h-full md:h-fit flex flex-col items-center justify-center bg-background px-4');
   });
 });
