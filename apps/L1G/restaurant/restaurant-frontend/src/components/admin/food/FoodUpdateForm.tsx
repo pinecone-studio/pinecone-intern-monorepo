@@ -1,7 +1,7 @@
 'use client';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, Plus, X } from 'lucide-react';
+import { Plus, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,30 +13,28 @@ import { formSchemaFood } from '@/helpers/form-schemas';
 import Image from 'next/image';
 import { RadioInput } from './FormRadioInput';
 
-const updateFormDefaults = (foodName: string, price: string, image: string | undefined, categoryId: string, foodStatus: string) => ({
+const updateFormDefaults = (foodName: string, price: string, image: string | undefined, foodStatus: string) => ({
   foodName: foodName || '',
   price: price || '',
   image: image || undefined,
-  category: categoryId || '',
   status: foodStatus as 'Идэвхитэй' | 'Идэвхигүй',
 });
 
-export const FoodUpdateForm = ({ foodName, price, foodStatus, image, category, onSubmit, isSubmitting }: FoodUpdateFormProps) => {
+export const FoodUpdateForm = ({ foodName, price, foodStatus, image, onSubmit, loading }: FoodUpdateFormProps) => {
   const [foodImage, setFoodImage] = useState<string>('');
 
   const form = useForm<z.infer<typeof formSchemaFood>>({
     resolver: zodResolver(formSchemaFood),
-    defaultValues: updateFormDefaults(foodName, price, image, category.categoryId, foodStatus),
+    defaultValues: updateFormDefaults(foodName, price, image, foodStatus),
   });
   useEffect(() => {
     form.reset({
       foodName: foodName || '',
       price: price || '',
       image: image || undefined,
-      category: category.categoryId || '',
       status: foodStatus as 'Идэвхитэй' | 'Идэвхигүй',
     });
-  }, [foodName, price, image, category.categoryId, foodStatus, form]);
+  }, [foodName, price, image, foodStatus, form]);
 
   useEffect(() => {
     if (image) {
@@ -95,31 +93,9 @@ export const FoodUpdateForm = ({ foodName, price, foodStatus, image, category, o
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="category"
-          render={({ field: _field }) => (
-            <FormItem>
-              <div className="relative">
-                <FormControl>
-                  <button
-                    type="button"
-                    data-testid="food-update-category-select"
-                    className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    disabled={!!category.categoryName}
-                  >
-                    <span>{category.categoryName}</span>
-                    <ChevronDown className="h-4 w-4 opacity-50" />
-                  </button>
-                </FormControl>
-              </div>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <TextInput data-testid="food-update-price-input" control={form.control} fieldName="price" placeholder="Үнэ" />
-        <Button data-cy="food-update-submit-button" data-testid="food-update-submit-button" className="flex w-full h-[36px] rounded-md py-2 px-4 bg-[#1D1F24] " type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Шинэчилж байна...' : 'Шинэчлэх'}
+        <Button data-cy="food-update-submit-button" data-testid="food-update-submit-button" className="flex w-full h-[36px] rounded-md py-2 px-4 bg-[#1D1F24] " type="submit" disabled={loading}>
+          {loading ? 'Шинэчилж байна...' : 'Шинэчлэх'}
         </Button>
       </form>
     </Form>

@@ -1,3 +1,4 @@
+/* eslint max-lines: "off" */
 import '@testing-library/jest-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, waitFor } from '@testing-library/react';
@@ -11,6 +12,7 @@ jest.mock('sonner', () => ({
     error: jest.fn(),
   },
 }));
+
 const mockDataProps = {
   refetch: jest.fn(),
 };
@@ -22,7 +24,7 @@ describe('DiscountCreateDialog', () => {
 
   it('should render', () => {
     const { getByTestId } = render(
-      <MockedProvider mocks={[createDiscountMock]} addTypename={false}>
+      <MockedProvider mocks={[createDiscountMock]}>
         <DiscountCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -38,7 +40,7 @@ describe('DiscountCreateDialog', () => {
 
   it('should create new discount and show toast success', async () => {
     const { getByTestId, queryByTestId } = render(
-      <MockedProvider mocks={[createDiscountMock]} addTypename={false}>
+      <MockedProvider mocks={[createDiscountMock]}>
         <DiscountCreateDialog refetch={mockDataProps.refetch} />
       </MockedProvider>
     );
@@ -55,6 +57,7 @@ describe('DiscountCreateDialog', () => {
     fireEvent.change(rateInput, { target: { value: 20 } });
 
     const selectDate = getByTestId('discount-create-select-date');
+
     fireEvent.click(selectDate);
 
     await waitFor(() => {
@@ -63,9 +66,13 @@ describe('DiscountCreateDialog', () => {
 
     const calendar = getByTestId('discount-create-calendar');
 
-    const today = new Date();
-    const startDay = today.getDate();
-    const endDay = startDay;
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const startDay = tomorrow.getDate().toString();
+
+    const dayAfterTomorrow = new Date();
+    dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+    const endDay = dayAfterTomorrow.getDate().toString();
 
     const startDateButton = Array.from(calendar.querySelectorAll('button')).find((btn) => btn.textContent?.trim() === startDay.toString() && !btn.disabled);
     if (startDateButton) {
@@ -76,6 +83,13 @@ describe('DiscountCreateDialog', () => {
     if (endDateButton) {
       fireEvent.click(endDateButton);
     }
+
+    await waitFor(
+      () => {
+        expect(queryByTestId('discount-create-calendar')).not.toBeInTheDocument();
+      },
+      { timeout: 2000 }
+    );
 
     const submitButton = getByTestId('discount-create-submit-button');
     fireEvent.click(submitButton);
@@ -125,19 +139,30 @@ describe('DiscountCreateDialog', () => {
 
     const calendar = getByTestId('discount-create-calendar');
 
-    const today = new Date();
-    const startDay = today.getDate();
-    const endDay = startDay;
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const startDay = tomorrow.getDate().toString();
+
+    const dayAfterTomorrow = new Date();
+    dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+    const endDay = dayAfterTomorrow.getDate().toString();
 
     const startDateButton = Array.from(calendar.querySelectorAll('button')).find((btn) => btn.textContent?.trim() === startDay.toString() && !btn.disabled);
     if (startDateButton) {
       fireEvent.click(startDateButton);
     }
-    const endDateButton = Array.from(calendar.querySelectorAll('button')).find((btn) => btn.textContent?.trim() === endDay.toString() && !btn.disabled);
 
+    const endDateButton = Array.from(calendar.querySelectorAll('button')).find((btn) => btn.textContent?.trim() === endDay.toString() && !btn.disabled);
     if (endDateButton) {
       fireEvent.click(endDateButton);
     }
+
+    await waitFor(
+      () => {
+        expect(queryByTestId('discount-create-calendar')).not.toBeInTheDocument();
+      },
+      { timeout: 2000 }
+    );
 
     const submitButton = getByTestId('discount-create-submit-button');
     fireEvent.click(submitButton);

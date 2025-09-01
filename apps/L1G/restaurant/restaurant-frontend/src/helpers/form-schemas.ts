@@ -33,9 +33,6 @@ const formSchemaFood = z.object({
       message: 'Үнэ оруулна уу!',
     })
     .refine((val) => !isNaN(Number(val)) && Number(val) > 0, { message: 'Зөв үнэ оруулна уу!' }),
-  category: z.string().min(1, {
-    message: 'Категори сонгоно уу!',
-  }),
   status: z.enum(['Идэвхитэй', 'Идэвхигүй']),
   image: z.union([
     z.any().refine((file) => file instanceof File && file.size > 0, {
@@ -48,7 +45,6 @@ const formSchemaFood = z.object({
 const initialValuesFood = {
   foodName: '',
   price: '',
-  category: '',
   status: 'Идэвхитэй' as 'Идэвхитэй' | 'Идэвхигүй',
   image: undefined,
 };
