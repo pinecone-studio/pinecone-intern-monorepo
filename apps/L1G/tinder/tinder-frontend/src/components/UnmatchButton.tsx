@@ -4,10 +4,35 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { useUnmatchMutation } from '@/generated';
 
-const UnmatchButton = () => {
+type UnmatchButtonProps = {
+  matchId: string | undefined;
+  onUnmatched?: () => void;
+};
+
+const UnmatchButton: React.FC<UnmatchButtonProps> = ({ matchId, onUnmatched }) => {
   const router = useRouter();
 
+  const [unmatch, { loading }] = useUnmatchMutation({
+    variables: { matchId: matchId ?? '' },
+    onCompleted: (data) => {
+      if (data.unmatch?.success) {
+        onUnmatched?.();
+        router.push('/chat');
+      } else {
+        alert(data.unmatch?.message);
+      }
+    },
+    onError: (error) => {
+      console.error('Unmatch error:', error);
+      alert('Something went wrong. Please try again.');
+    },
+  });
+  if (matchId == undefined) {
+    console.warn('UnmatchButton: matchId is undefined, button will not render.');
+    return null;
+  }
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -30,8 +55,8 @@ const UnmatchButton = () => {
           </DialogClose>
 
           <DialogClose asChild>
-            <Button variant="outline" className="rounded-full hover:bg-[#E11D48E5] hover:text-white border">
-              Unmatch
+            <Button variant="outline" className="rounded-full hover:bg-[#E11D48E5] hover:text-white border" onClick={() => unmatch()} disabled={loading}>
+              {loading ? 'Unmatching...' : 'Unmatch'}
             </Button>
           </DialogClose>
         </DialogFooter>

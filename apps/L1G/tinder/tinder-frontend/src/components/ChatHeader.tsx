@@ -8,9 +8,13 @@ import { ChatUser } from 'types/chat';
 
 interface ChatHeaderProps {
   user: ChatUser;
+  matchId: string | undefined;
+  onUnmatched?: () => void;
 }
 
-const ChatHeader = ({ user }: ChatHeaderProps) => {
+const ChatHeader = ({ user, matchId, onUnmatched }: ChatHeaderProps) => {
+  console.log(user);
+
   return (
     <div data-testid="chat-header" className="flex items-center justify-between p-4 border-b border-r border-gray-200">
       <div className="flex items-center gap-3">
@@ -24,7 +28,7 @@ const ChatHeader = ({ user }: ChatHeaderProps) => {
       </div>
       <div className="flex gap-2">
         <ViewProfile user={user} />
-        <UnmatchButton />
+        {matchId && <UnmatchButton matchId={matchId} onUnmatched={onUnmatched} />}
       </div>
     </div>
   );

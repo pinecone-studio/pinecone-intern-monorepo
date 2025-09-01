@@ -18,12 +18,14 @@ const ChatPage: React.FC = () => {
   const [conversations, setConversations] = useState<Record<string, Message[]>>({});
   const [inputValue, setInputValue] = useState('');
   const [socketError, setSocketError] = useState<string | null>(null);
+
   const { selectedUser, topRowUsers, bottomUsers, chattedUsers, handleUserSelect, moveUserToBottom, setChattedUsers } = useUserManagement(data);
   const messages = useMemo(() => {
     if (!selectedUser) return [];
     return conversations[selectedUser.id] || [];
   }, [selectedUser, conversations]);
   const markMessagesAsSeen = useMarkMessagesAsSeen(selectedUser, setConversations);
+
   useEffect(() => {
     if (!selectedUser) return;
     markMessagesAsSeen();
@@ -82,12 +84,16 @@ const ChatPage: React.FC = () => {
     setSocketError,
     refetch,
   });
+  const handleUnmatched = () => {
+    refetch();
+  };
   useSocketConnection({
     selectedUser,
     data,
     setConversations,
     setSocketError,
     markMessagesAsSeen,
+    handleUnmatched,
   });
   const handleKeyDown = useCallback(
     /* eslint-disable-next-line complexity */
@@ -128,6 +134,8 @@ const ChatPage: React.FC = () => {
       <div className="flex justify-center">
         <ChatPerson selectedUser={selectedUser} onUserSelect={handleUserSelectWithErrorReset} bottomUsers={bottomUsers} chattedUsers={chattedUsers} />
         <ChatWindow
+          onUnmatched={handleUnmatched}
+          matchId={selectedUser?.id}
           lastSeenMessageId={lastSeenMessageId}
           sending={sending}
           selectedUser={selectedUser}

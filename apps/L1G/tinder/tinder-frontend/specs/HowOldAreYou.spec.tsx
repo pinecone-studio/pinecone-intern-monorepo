@@ -93,9 +93,9 @@ describe('HowOldAreYou', () => {
     render(<HowOldAreYou />);
     await user.click(screen.getByTestId('date-button'));
     fireEvent.change(screen.getByTestId('year-select'), { target: { value: '2005' } });
-    fireEvent.change(screen.getByTestId('month-select'), { target: { value: '8' } });
+    fireEvent.change(screen.getByTestId('month-select'), { target: { value: '9' } });
     expect((screen.getByTestId('year-select') as HTMLSelectElement).value).toBe('2005');
-    expect((screen.getByTestId('month-select') as HTMLSelectElement).value).toBe('8');
+    expect((screen.getByTestId('month-select') as HTMLSelectElement).value).toBe('9');
   });
 
   it('disables future dates', () => {

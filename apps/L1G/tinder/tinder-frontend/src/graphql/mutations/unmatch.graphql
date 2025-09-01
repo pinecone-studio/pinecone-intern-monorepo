@@ -1,0 +1,6 @@
+mutation Unmatch($matchId: ID!) {
+  unmatch(matchId: $matchId) {
+    success
+    message
+  }
+}
