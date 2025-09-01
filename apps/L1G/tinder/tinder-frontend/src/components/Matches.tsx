@@ -1,7 +1,9 @@
-import React from 'react';
+'use client';
+
+import type React from 'react';
 import clsx from 'clsx';
 import Avatar from './Avatar';
-import { ChatUser } from 'types/chat';
+import type { ChatUser } from 'types/chat';
 
 interface MatchesProps {
   topRowUsers: ChatUser[];
@@ -11,11 +13,11 @@ interface MatchesProps {
 
 const Matches: React.FC<MatchesProps> = ({ topRowUsers, selectedUser, onUserSelect }) => {
   return (
-    <div className="flex items-center justify-center w-full">
-      <div className="w-full max-w-[1280px] px-4 border-b border-gray-200">
-        <p className="text-[20px] font-medium py-4">Matches</p>
+    <div className="w-full max-w-[1330px] bg-white">
+      <div className="w-full  mx-auto px-4">
+        <p className="text-[20px] font-semibold py-4">New Matches</p>
 
-        <div className="flex gap-8 pb-4 overflow-x-auto">
+        <div className="flex gap-4 pb-4 overflow-x-auto scrollbar-hide">
           {topRowUsers.map((person) => {
             const isSelected = selectedUser?.id === person.id;
 
@@ -23,15 +25,13 @@ const Matches: React.FC<MatchesProps> = ({ topRowUsers, selectedUser, onUserSele
               <div
                 key={person.id}
                 onClick={() => onUserSelect(person)}
-                className={clsx('flex flex-col items-center min-w-[60px] cursor-pointer transition-opacity hover:opacity-80', isSelected ? 'opacity-100' : 'opacity-70')}
+                className={clsx('flex flex-col items-center min-w-[80px] cursor-pointer transition-all hover:scale-105', isSelected ? 'opacity-100' : 'opacity-80')}
               >
-                <Avatar user={person} size={40} />
+                <div className={clsx('rounded-full p-1', person === topRowUsers[0] ? 'bg-gradient-to-r from-yellow-400 to-orange-500' : '')}>
+                  <Avatar user={person} size={60} />
+                </div>
 
-                <p className={clsx('text-[14px] font-medium mt-3 text-center', isSelected ? 'text-red-600' : 'text-black')}>
-                  {person.name}, {person.age}
-                </p>
-
-                <p className="text-[13px] text-gray-500 text-center">{person.profession}</p>
+                <p className={clsx('text-[12px] font-medium mt-2 text-center truncate w-full', isSelected ? 'text-pink-400' : 'text-white')}>{person.name}</p>
               </div>
             );
           })}

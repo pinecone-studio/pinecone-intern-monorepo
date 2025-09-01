@@ -1,12 +1,14 @@
 'use client';
 
+import type React from 'react';
+
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import ChatPerson from '@/components/ChatPerson';
 import ChatWindow from '@/components/ChatWindow';
 import Matches from '@/components/Matches';
 import { useGetChatWithUserLazyQuery, useGetMeQuery } from '@/generated';
 import Loading from './Loading';
-import { Message } from 'types/chat';
+import type { Message } from 'types/chat';
 import { useMessageSending } from 'hooks/useMessageSending';
 import { useSocketConnection } from 'hooks/useSocketConnection';
 import { useUserManagement } from 'hooks/useUserManagement';
@@ -18,6 +20,7 @@ const ChatPage: React.FC = () => {
   const [conversations, setConversations] = useState<Record<string, Message[]>>({});
   const [inputValue, setInputValue] = useState('');
   const [socketError, setSocketError] = useState<string | null>(null);
+  const [showChatOnMobile, setShowChatOnMobile] = useState(false);
 
   const { selectedUser, topRowUsers, bottomUsers, chattedUsers, handleUserSelect, moveUserToBottom, setChattedUsers } = useUserManagement(data);
   const messages = useMemo(() => {
@@ -30,7 +33,7 @@ const ChatPage: React.FC = () => {
     if (!selectedUser) return;
     markMessagesAsSeen();
   }, [selectedUser, markMessagesAsSeen]);
-  /* eslint-disable-next-line complexity */
+
   useEffect(() => {
     if (!selectedUser || messages.length === 0) return;
     const lastMessage = messages[messages.length - 1];
@@ -38,6 +41,7 @@ const ChatPage: React.FC = () => {
       markMessagesAsSeen();
     }
   }, [messages, selectedUser, markMessagesAsSeen]);
+
   useEffect(() => {
     if (!chatData?.getChatWithUser || !selectedUser || !data?.getMe?.id) return;
 
@@ -62,6 +66,7 @@ const ChatPage: React.FC = () => {
       };
     });
   }, [chatData, selectedUser, data]);
+
   useEffect(() => {
     if (!selectedUser || !data?.getMe?.id) return;
     const matchId = selectedUser.id;
@@ -70,11 +75,13 @@ const ChatPage: React.FC = () => {
     if (!participantId) return;
     fetchChat({ variables: { userId, participantId } });
   }, [selectedUser, data, fetchChat]);
+
   const lastSeenMessageId = useMemo(() => {
     const seenMessages = messages.filter((m) => m.sender === 'me' && m.seen);
     if (seenMessages.length === 0) return null;
     return seenMessages[seenMessages.length - 1].id;
   }, [messages]);
+
   const { handleSend, sending } = useMessageSending({
     selectedUser,
     data,
@@ -84,9 +91,11 @@ const ChatPage: React.FC = () => {
     setSocketError,
     refetch,
   });
+
   const handleUnmatched = () => {
     refetch();
   };
+
   useSocketConnection({
     selectedUser,
     data,
@@ -95,8 +104,8 @@ const ChatPage: React.FC = () => {
     markMessagesAsSeen,
     handleUnmatched,
   });
+
   const handleKeyDown = useCallback(
-    /* eslint-disable-next-line complexity */
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey) {
         e.preventDefault();
@@ -120,19 +129,33 @@ const ChatPage: React.FC = () => {
     (user: any) => {
       handleUserSelect(user);
       setSocketError(null);
+      setShowChatOnMobile(true);
     },
     [handleUserSelect]
   );
+
+  const handleBackToMessages = useCallback(() => {
+    setShowChatOnMobile(false);
+  }, []);
 
   if (loading) return <Loading />;
   if (error) return <div>Error loading chat: {error.message}</div>;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {socketError && <div className="error-message text-red-500 p-2 text-center">{socketError}</div>}
+    <div className="flex flex-col items-center justify-center min-h-screen w-screen bg-white">
+      {socketError && <div className="error-message text-red-500 p-2 text-center bg-gray-800 border-b border-gray-100">{socketError}</div>}
+
       <Matches topRowUsers={topRowUsers} selectedUser={selectedUser} onUserSelect={handleUserSelectWithErrorReset} />
-      <div className="flex justify-center">
-        <ChatPerson selectedUser={selectedUser} onUserSelect={handleUserSelectWithErrorReset} bottomUsers={bottomUsers} chattedUsers={chattedUsers} />
+
+      <div className="flex w-full h-[calc(100vh-120px)] items-center justify-center">
+        <ChatPerson
+          selectedUser={selectedUser}
+          onUserSelect={handleUserSelectWithErrorReset}
+          bottomUsers={bottomUsers}
+          chattedUsers={chattedUsers}
+          className={`${showChatOnMobile ? 'hidden md:flex' : 'flex'}`}
+        />
+
         <ChatWindow
           onUnmatched={handleUnmatched}
           matchId={selectedUser?.id}
@@ -144,6 +167,7 @@ const ChatPage: React.FC = () => {
           onInputChange={handleInputChange}
           onKeyDown={handleKeyDown}
           onSend={handleSendClick}
+          onBack={handleBackToMessages}
         />
       </div>
     </div>

@@ -1,10 +1,11 @@
 /* eslint-disable complexity */
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import type React from 'react';
+import { useEffect, useRef } from 'react';
 import { MessageSquare, Send, MessageSquareDashedIcon } from 'lucide-react';
 import ChatHeader from './ChatHeader';
-import { ChatUser } from 'types/chat';
+import type { ChatUser } from 'types/chat';
 
 interface Message {
   id: string;
@@ -24,9 +25,11 @@ interface ChatWindowProps {
   lastSeenMessageId: string;
   matchId: string | undefined;
   onUnmatched?: () => void;
+  onBack?: () => void;
+  className?: string;
 }
 
-const ChatWindow = ({ matchId, lastSeenMessageId, selectedUser, messages, inputValue, onInputChange, onKeyDown, onSend, sending, onUnmatched }: ChatWindowProps) => {
+const ChatWindow = ({ matchId, lastSeenMessageId, selectedUser, messages, inputValue, onInputChange, onKeyDown, onSend, sending, onUnmatched, onBack, className }: ChatWindowProps) => {
   const bottomRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (bottomRef.current) {
@@ -38,8 +41,8 @@ const ChatWindow = ({ matchId, lastSeenMessageId, selectedUser, messages, inputV
 
   if (!selectedUser) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-center flex justify-center items-center">
+      <div className="flex items-center justify-center h-full w-full">
+        <div className="text-center flex flex-col justify-center items-center">
           <MessageSquare size={64} className="mx-auto mb-4 text-gray-400" />
           <h3 className="mb-2 text-lg font-medium text-gray-900">Select a match to start chatting</h3>
           <p className="text-gray-500">Choose someone from your matches to begin a conversation.</p>
@@ -49,10 +52,10 @@ const ChatWindow = ({ matchId, lastSeenMessageId, selectedUser, messages, inputV
   }
 
   return (
-    <div className="w-[980px] h-[930px] flex flex-col border-r border-gray-200">
-      <ChatHeader onUnmatched={onUnmatched} matchId={matchId} user={selectedUser} />
+    <div className={`w-full max-w-full md:w-[980px] h-full flex flex-col border-t border-r border-gray-200 rounded-r-xl ${className || ''}`}>
+      <ChatHeader onUnmatched={onUnmatched} matchId={matchId} user={selectedUser} onBack={onBack} />
 
-      <div className="flex-1 p-4 space-y-4 bg-white h-[790px] overflow-y-auto">
+      <div className="flex-1 p-4 space-y-4 bg-white overflow-y-auto">
         {messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center">
             <MessageSquareDashedIcon size={48} color="gray" />
@@ -74,7 +77,9 @@ const ChatWindow = ({ matchId, lastSeenMessageId, selectedUser, messages, inputV
                     <p className="text-sm">{msg.text}</p>
                     <p className={`text-xs mt-1 ${msg.sender === 'me' ? 'text-pink-100' : 'text-gray-500'}`}>{msg.timestamp}</p>
                   </div>
-                  {isLastSeen && <img src={selectedUser?.images?.[0]} alt="Seen" className="w-5 h-5 rounded-full border-2 border-white absolute -bottom-5 -right-0" title="Seen" />}
+                  {isLastSeen && (
+                    <img src={selectedUser?.images?.[0] || '/placeholder.svg'} alt="Seen" className="w-5 h-5 rounded-full border-2 border-white absolute -bottom-5 -right-0" title="Seen" />
+                  )}
                 </div>
               );
             })}

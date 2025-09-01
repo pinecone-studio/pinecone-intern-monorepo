@@ -1,9 +1,11 @@
 'use client';
 
-import React from 'react';
+import type React from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { UserX } from 'lucide-react';
 import { useUnmatchMutation } from '@/generated';
 
 type UnmatchButtonProps = {
@@ -13,11 +15,13 @@ type UnmatchButtonProps = {
 
 const UnmatchButton: React.FC<UnmatchButtonProps> = ({ matchId, onUnmatched }) => {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
 
   const [unmatch, { loading }] = useUnmatchMutation({
     variables: { matchId: matchId ?? '' },
     onCompleted: (data) => {
       if (data.unmatch?.success) {
+        setOpen(false);
         onUnmatched?.();
         router.push('/chat');
       } else {
@@ -29,16 +33,16 @@ const UnmatchButton: React.FC<UnmatchButtonProps> = ({ matchId, onUnmatched }) =
       alert('Something went wrong. Please try again.');
     },
   });
-  if (matchId == undefined) {
-    console.warn('UnmatchButton: matchId is undefined, button will not render.');
-    return null;
-  }
+
+  if (!matchId) return null;
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="w-[112px] h-[40px] text-sm font-medium bg-white border hover:bg-gray-100">
-          Unmatch
-        </Button>
+        <button className="flex items-center gap-3 w-full px-4 py-3 text-left text-sm text-red-600 hover:bg-red-50 transition-colors">
+          <UserX size={18} className="text-red-500" />
+          <span className="font-medium">Unmatch</span>
+        </button>
       </DialogTrigger>
 
       <DialogContent className="w-[400px]">
@@ -48,17 +52,13 @@ const UnmatchButton: React.FC<UnmatchButtonProps> = ({ matchId, onUnmatched }) =
         </DialogHeader>
 
         <DialogFooter className="flex justify-between gap-2">
-          <DialogClose asChild>
-            <Button variant="outline" className="rounded-full hover:bg-[#E11D48E5] hover:text-white border" onClick={() => router.push('/chat')}>
-              Keep match
-            </Button>
-          </DialogClose>
+          <Button variant="outline" className="rounded-full hover:bg-gray-100 bg-transparent" onClick={() => setOpen(false)}>
+            Keep match
+          </Button>
 
-          <DialogClose asChild>
-            <Button variant="outline" className="rounded-full hover:bg-[#E11D48E5] hover:text-white border" onClick={() => unmatch()} disabled={loading}>
-              {loading ? 'Unmatching...' : 'Unmatch'}
-            </Button>
-          </DialogClose>
+          <Button variant="destructive" className="rounded-full" onClick={() => unmatch()} disabled={loading}>
+            {loading ? 'Unmatching...' : 'Unmatch'}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
