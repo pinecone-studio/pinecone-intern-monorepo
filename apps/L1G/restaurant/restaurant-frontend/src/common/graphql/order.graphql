@@ -4,6 +4,25 @@ query GetFoodOrdersByUser($input: getFoodOrdersByUserInput!) {
     orderNumber
     status
     totalPrice
-    createdAt
+  }
+}
+mutation CreateFoodOrder($input: CreateFoodOrderInput!) {
+  createFoodOrder(input: $input) {
+    orderId
+    orderNumber
+    status
+    totalPrice
+    user {
+      userId
+    }
+    table {
+      tableId
+    }
+    foodOrder {
+      food {
+        foodId
+      }
+      quantity
+    }
   }
 }

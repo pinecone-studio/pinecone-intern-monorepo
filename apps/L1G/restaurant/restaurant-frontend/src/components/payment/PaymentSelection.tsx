@@ -8,6 +8,21 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import jwt from 'jsonwebtoken';
+import { OrderData, OrderTypeValue } from '@/types/order';
+import { useCreateFoodOrderMutation } from '@/generated';
+import { set } from 'cypress/types/lodash';
+import { array } from 'zod';
+
+type foodOrderProps = {
+  foodId: string;
+  quantity: string;
+};
+type OrderProps = {
+  foodOrder: foodOrderProps[];
+  userId: string;
+  table: string;
+  totalPrice: number;
+};
 export default function PaymentSelection() {
   const [selectedPayment, setSelectedPayment] = useState<string>('');
   const [deliveryOption, setDeliveryOption] = useState('takeaway');
@@ -74,11 +89,31 @@ export default function PaymentSelection() {
     setTargetAmount('');
   };
 
+  const CheckoutButton = ({ foodOrder, userId, table, totalPrice }: OrderProps) => {
+    const [createOrder] = useCreateFoodOrderMutation();
+    const order = createOrder({ variables: { input: { user: userId, table: table, totalPrice: totalPrice, FoodOrderItem: foodOrder } } });
+    console.log(order, 'zahialaga');
+  };
   const finalAmount = totalBeforeWallet - walletDeduction;
   const user = localStorage.getItem('token');
   const userid = jwt.decode(user!);
-  console.log(userid.user._id);
+  const table = localStorage.getItem('tableName');
+  const tableName = JSON.parse(table!);
+  const [orderFood, setOrderFood] = useState<foodOrderProps[]>([]);
+  order?.items.forEach((val) => {
+    const foodName = val.id;
+    const quantity = val.selectCount;
+    setOrderFood((prevOrderFood) => [...prevOrderFood, foodName, quantity]);
+  });
 
+  const handlePaymentSelect = (methodId: string) => {
+    setSelectedPayment(methodId);
+    if (methodId === 'wallet') {
+      setIsWalletDrawerOpen(true);
+    } else {
+      CheckoutButton({ orderFood, userid, tableName, finalAmount });
+    }
+  };
   return (
     <div className="max-w-sm mx-auto bg-white min-h-screen">
       <div className="w-full h-fit flex justify-end">
