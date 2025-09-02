@@ -23,7 +23,7 @@ const Signup = () => {
 
   return (
     <div className="w-screen h-screen flex justify-center items-center relative">
-      <div className="w-[640px] h-fit flex flex-col gap-6 items-center justify-start top-[150px] fixed">
+      <div className="w-[640px] h-fit flex flex-col gap-6 items-center justify-start top-[80px] md:top-[150px] fixed">
         <MainHeader />
 
         <div className="w-fit max-w-[640px] h-fit flex flex-col gap-4">
