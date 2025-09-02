@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
@@ -55,7 +56,7 @@ describe('MyProfile Component', () => {
     );
     // Wait for loading to complete
     await screen.findByText('MyProfileForm Component');
-    
+
     const profileButton = screen.getByRole('button', { name: /Profile/i });
     expect(profileButton).toHaveClass('bg-[#F4F4F5]');
   });
@@ -66,10 +67,10 @@ describe('MyProfile Component', () => {
         <MyProfile />
       </TestWrapper>
     );
-    
+
     // Wait for component to load
     await screen.findByText('MyProfileForm Component');
-    
+
     const user = userEvent.setup();
 
     const imagesButton = screen.getByRole('button', { name: /Images/i });
@@ -84,13 +85,13 @@ describe('MyProfile Component', () => {
         <MyProfile />
       </TestWrapper>
     );
-    
+
     await screen.findByText('MyProfileForm Component');
-     const user = userEvent.setup();
+    const user = userEvent.setup();
 
     const appearanceButton = screen.getByRole('button', { name: /Appearance/i });
     await user.click(appearanceButton);
-     expect(screen.getByText('Appearance Settings')).toBeInTheDocument();
+    expect(screen.getByText('Appearance Settings')).toBeInTheDocument();
   });
 
   it('switches to Notifications view when Notifications menu is clicked', async () => {
@@ -99,16 +100,16 @@ describe('MyProfile Component', () => {
         <MyProfile />
       </TestWrapper>
     );
-    
+
     await screen.findByText('MyProfileForm Component');
-    
+
     const user = userEvent.setup();
 
     const notificationsButton = screen.getByRole('button', { name: /Notifications/i });
     await user.click(notificationsButton);
     expect(screen.getByText('Notification Settings')).toBeInTheDocument();
   });
-    it('displays error message when query fails', async () => {
+  it('displays error message when query fails', async () => {
     render(
       <TestWrapper mocks={[mockGetMeQueryError]}>
         <MyProfile />
@@ -125,7 +126,18 @@ describe('MyProfile Component', () => {
 describe('MenuContent Component', () => {
   it('renders fallback (null) when an invalid menu type is passed', () => {
     const { container } = render(
-      <MenuContent menu={'invalid' as any} user={{}} images={[]} setImages={() => {}} />
+      <MenuContent
+        menu={'invalid' as any}
+        user={
+          {
+            //intenionally empty
+          }
+        }
+        images={[]}
+        setImages={() => {
+          //intenionally empty
+        }}
+      />
     );
     expect(container.firstChild).toBeNull();
   });
@@ -135,13 +147,15 @@ describe('MyProfileHeader Component', () => {
   it('renders the user greeting and email', () => {
     const mockUser = {
       name: 'Test User',
-      email: 'test@example.com'
+      email: 'test@example.com',
     };
-    
+
     render(
       <MyProfileHeader
         isOpen={false}
-         setIsOpen={() => {}}
+        setIsOpen={() => {
+          //intenionally empty
+        }}
         user={mockUser}
       />
     );
@@ -152,11 +166,13 @@ describe('MyProfileHeader Component', () => {
     render(
       <MyProfileHeader
         isOpen={false}
-        setIsOpen={() => {}}
+        setIsOpen={() => {
+          //intenionally empty
+        }}
         user={undefined}
       />
     );
-    
+
     expect(screen.getByText('Hi, Name')).toBeInTheDocument();
     expect(screen.getByText('email@example.com')).toBeInTheDocument();
   });
@@ -165,24 +181,20 @@ describe('MyProfileHeader Component', () => {
     render(
       <MyProfileHeader
         isOpen={false}
-        setIsOpen={() => {}}
+        setIsOpen={() => {
+          //intenionally empty
+        }}
         user={{ name: null, email: null } as any}
       />
     );
-    
+
     expect(screen.getByText('Hi, Name')).toBeInTheDocument();
     expect(screen.getByText('email@example.com')).toBeInTheDocument();
   });
   it('opens the mobile menu when menu button is clicked', async () => {
     const user = userEvent.setup();
     const setIsOpen = jest.fn();
-    render(
-      <MyProfileHeader 
-        isOpen={false} 
-        setIsOpen={setIsOpen}
-        user={{ name: 'Test', email: 'test@example.com' }}
-      />
-    );
+    render(<MyProfileHeader isOpen={false} setIsOpen={setIsOpen} user={{ name: 'Test', email: 'test@example.com' }} />);
     const button = screen.getByTestId('open-mobile-menu');
     await user.click(button);
     expect(setIsOpen).toHaveBeenCalledWith(true);
@@ -203,10 +215,10 @@ describe('Mobile drawer behavior', () => {
         <MyProfile />
       </TestWrapper>
     );
-    
+
     // Wait for component to load
     await screen.findByText('MyProfileForm Component');
-    
+
     const openButton = screen.getByTestId('open-mobile-menu');
     await user.click(openButton);
     return user;
@@ -249,15 +261,14 @@ describe('Mobile drawer behavior', () => {
         <MyProfile />
       </TestWrapper>
     );
-    
+
     await screen.findByText('MyProfileForm Component');
-    
+
     const drawer = screen.getByTestId('mobile-drawer');
     expect(drawer.className).toContain('-translate-x-full');
   });
 
   it('applies open class when isOpen is true', async () => {
-    const user = await openDrawer();
     const drawer = screen.getByTestId('mobile-drawer');
     expect(drawer.className).toContain('translate-x-0');
   });
