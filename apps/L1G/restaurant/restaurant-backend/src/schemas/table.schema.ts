@@ -22,6 +22,7 @@ export const tableTypeDefs = gql`
 
   type Query {
     getTables: [Table!]!
+    getTableByName(tableName: String!): Table!
   }
 
   type Mutation {
