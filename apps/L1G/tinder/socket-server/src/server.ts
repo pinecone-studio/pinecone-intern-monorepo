@@ -15,10 +15,22 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
   console.log('🔌 Client connected:', socket.id);
 
-  // Join room
+  // Join a single room
   socket.on('join room', (matchId: string) => {
     socket.join(matchId);
     console.log(`📥 Socket ${socket.id} joined room ${matchId}`);
+  });
+
+  // Join multiple rooms at once
+  socket.on('joinRooms', (roomIds: string[]) => {
+    if (!Array.isArray(roomIds)) {
+      console.warn(`⚠️ joinRooms expects an array of strings`);
+      return;
+    }
+    roomIds.forEach((roomId) => {
+      socket.join(roomId);
+      console.log(`📥 Socket ${socket.id} joined room ${roomId}`);
+    });
   });
 
   // Handle chat message
