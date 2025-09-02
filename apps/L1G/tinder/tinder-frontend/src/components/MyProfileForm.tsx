@@ -13,7 +13,6 @@ import { ProfessionSchoolFields } from './ProfessionSchoolFields';
 import { UpdateProfileDocument, useGetAllInterestsQuery } from '@/generated';
 import { NameGenderPreferenceFields } from './NameGenderPreferenceFields';
 import { useMutation } from '@apollo/client';
-
 interface MyProfileFormProps {
   user?: {
     id?: string;
@@ -28,35 +27,34 @@ interface MyProfileFormProps {
   };
   images?: string[];
 }
-
 export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user, images }) => {
   const form = useForm<z.infer<typeof profileFormSchema>>({
     defaultValues: {
-      name: user?.name ?? '',
-      email: user?.email ?? '',
+      name: user?.name,
+      email: user?.email,
       birthDate: user?.dateOfBirth ? new Date(user.dateOfBirth) : undefined,
-      genderPreference: user?.genderPreferences ?? 'Female',
-      bio: user?.bio ?? '',
+      genderPreference: user?.genderPreferences,
+      bio: user?.bio,
       interests: user?.interests?.map((i) => i._id) ?? [],
-      profession: user?.profession ?? '',
-      school: user?.schoolWork ?? '',
+      profession: user?.profession,
+      school: user?.schoolWork,
     },
   });
   useEffect(() => {
     if (user) {
       form.reset({
-        name: user.name || '',
-        email: user.email || '',
+        name: user.name,
+        email: user.email,
         birthDate: user.dateOfBirth ? new Date(user.dateOfBirth) : undefined,
         genderPreference: user.genderPreferences ?? 'Female',
-        bio: user.bio || '',
-        interests: user.interests?.map((i) => i._id) || [],
-        profession: user.profession || '',
-        school: user.schoolWork || '',
+        bio: user.bio,
+        interests: user.interests?.map((i) => i._id),
+        profession: user.profession,
+        school: user.schoolWork,
       });
     }
   }, [user, form]);
-  const [updateProfile] = useMutation(UpdateProfileDocument, {
+  const [updateProfile, { loading }] = useMutation(UpdateProfileDocument, {
     onCompleted: (data) => {
       console.log('Profile updated successfully', data);
     },
@@ -78,7 +76,7 @@ export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user, images }) =>
     try {
       await updateProfile({
         variables: {
-          updateProfileId: user?.id || '',
+          updateProfileId: user?.id,
           name: data.name,
           email: data.email,
           dateOfBirth: data.birthDate ? formatDate(data.birthDate) : null,
@@ -90,10 +88,7 @@ export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user, images }) =>
           images: images ?? [],
         },
       });
-    } catch (error) {
-      console.error('Update mutation failed:', error);
-    }
-  };
+    } catch (error) {console.error('Update mutation failed:', error);}};
   const { data } = useGetAllInterestsQuery();
   const interestOptions =
     data?.getAllInterests
@@ -108,14 +103,11 @@ export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user, images }) =>
         <p className="text-[18px] font-sans font-[500] text-[#09090B]">Personal Information</p>
         <p className="text-[14px] font-sans font-[400] text-[#71717A]">This is how others will see you on the site.</p>
       </div>
-      <div className="py-6">
-        <Separator />
-      </div>
+      <div className="py-6"><Separator /></div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="">
           <div className="flex flex-col gap-6 px-1">
             <NameGenderPreferenceFields control={form.control} />
-            {/* <BirthDateField control={form.control} /> */}
             <FormField
               control={form.control}
               name="birthDate"
@@ -123,12 +115,11 @@ export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user, images }) =>
                 <FormItem>
                   <FormLabel className="flex">Birth Date</FormLabel>
                   <FormControl>
-                    <BirthDateField control={form.control} initialDate={field.value} />
+                    <BirthDateField initialDate={field.value} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
-              )}
-            />
+              )}/>
             <FormField
               control={form.control}
               name="bio"
@@ -140,8 +131,7 @@ export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user, images }) =>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
-              )}
-            />
+              )}/>
             <FormField
               control={form.control}
               name="interests"
@@ -154,11 +144,10 @@ export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user, images }) =>
                   <FormDescription>You can select up to a maximum of 10 interests.</FormDescription>
                   <FormMessage />
                 </FormItem>
-              )}
-            />
-            <ProfessionSchoolFields control={form.control} />
-            <Button type="submit" className="rounded-md w-fit py-2 px-4 bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
-              Update Profile
+              )}/>            
+              <ProfessionSchoolFields control={form.control} />
+            <Button type="submit" className="rounded-md w-fit py-2 px-4 bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100" disabled={loading}>
+              {loading ? 'Updating...' : 'Update Profile'}
             </Button>
           </div>
         </form>

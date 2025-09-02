@@ -113,7 +113,7 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
   );
 };
 
-export const MenuContent = ({ menu, user, images, setImages }: { menu: MenuType; user?: any; images: string[]; setImages: (imgs: string[]) => void }) => {
+export const MenuContent = ({ menu, user, images, setImages }: { menu: MenuType; user?: any; images: string[]; setImages: (_imgs: string[]) => void }) => {
   switch (menu) {
     case 'profile':
       return <MyProfileForm user={user} images={images} />;
@@ -139,7 +139,7 @@ export const MyProfileHeader = ({ setIsOpen, user }: { isOpen: boolean; setIsOpe
         </div>
         <div className="flex flex-col gap-1">
           <p className="text-2xl font-sans font-semibold text-[#09090B]">Hi, {user?.name || 'Name'}</p>
-          <p className="text-sm font-sans font-normal text-[#71717A]">{user?.email || 'email@example.com'}</p>{' '}
+          <p className="text-sm font-sans font-normal text-[#71717A]">{user?.email || 'email@example.com'}</p>
         </div>
         <div className="md:hidden w-10" />
       </div>

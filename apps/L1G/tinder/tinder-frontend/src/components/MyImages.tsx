@@ -6,27 +6,22 @@ import { X, Plus, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
-// interface MyImagesProps {
-//   user?: {
-//     images?: string[];
-//     onImagesChange?: (images: string[]) => void;
-//   };
-// }
 type MyImagesProps = {
   user: { images?: string[] };
-  onImagesChange: (imgs: string[]) => void;
+  onImagesChange: (_images: string[]) => void;
 };
 
 export const MyImages: React.FC<MyImagesProps> = ({ user, onImagesChange }) => {
   const MAX_IMAGES = 6;
-const [uploadedImages, setUploadedImages] = useState<string[]>(
+  const [uploadedImages, setUploadedImages] = useState<string[]>(
     user?.images && user.images.length > 0 
       ? [...user.images, ...Array(MAX_IMAGES - user.images.length).fill('')] 
       : Array(MAX_IMAGES).fill('')
   );
 
   const [isUploading, setIsUploading] = useState<boolean[]>(Array(MAX_IMAGES).fill(false));
- useEffect(() => {
+  
+  useEffect(() => {
     if (user?.images) {
       setUploadedImages([
         ...user.images,
@@ -34,6 +29,7 @@ const [uploadedImages, setUploadedImages] = useState<string[]>(
       ]);
     }
   }, [user?.images]); 
+  
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
