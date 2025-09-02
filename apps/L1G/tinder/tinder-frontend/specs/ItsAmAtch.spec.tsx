@@ -109,7 +109,7 @@ describe('Match Component', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText(/It&#39s a Match/i)).toBeInTheDocument();
+      expect(screen.getByText(/It's a Match/i)).toBeInTheDocument();
       expect(screen.getByText(`You matched with ${mockUser2.name}`)).toBeInTheDocument();
       expect(screen.getByPlaceholderText(/Say something nice/i)).toBeInTheDocument();
       expect(screen.getByTestId('Send')).toBeInTheDocument();
