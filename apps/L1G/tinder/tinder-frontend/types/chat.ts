@@ -31,3 +31,6 @@ export type UserData = {
   schoolWork?: string;
   images?: string[];
 };
+export interface ChatUserWithLastMessage extends ChatUser {
+  lastMessage?: Message;
+}

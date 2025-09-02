@@ -23,28 +23,32 @@ export const useSocketConnection = ({ selectedUser, data, setConversations, setS
   );
 
   useEffect(() => {
-    if (!selectedUser || !data?.getMe?.id) return;
+    if (!data?.getMe?.id) return; // No user logged in, no connection
 
-    const matchId = selectedUser.id;
-    const userId = data.getMe.id;
+    // Get array of match IDs (rooms) to join, join all at once
+    const roomsToJoin: string[] = data.getMe.matchIds?.map((match: any) => match.id) || [];
+
+    if (roomsToJoin.length === 0) return; // No rooms to join
 
     try {
-      socket.emit('join room', matchId);
+      socket.emit('joinRooms', roomsToJoin);
     } catch (err) {
-      console.error('Failed to join room:', err);
-      setSocketError('Failed to connect to chat. Please try again.');
+      console.error('Failed to join rooms:', err);
+      setSocketError('Failed to connect to chat rooms. Please try again.');
     }
 
     const timeout = setTimeout(() => {
       markMessagesAsSeen();
     }, 500);
 
+    // Handle incoming chat messages for any joined room
     const handleChatMessage = (msg: { matchId: string; content: string; senderId: string; receiverId: string }) => {
-      if (msg.matchId === matchId && msg.senderId !== data?.getMe?.id) {
+      // Only update conversation if message is from a room we're in AND sender is not me
+      if (roomsToJoin.includes(msg.matchId) && msg.senderId !== data.getMe.id) {
         setConversations((prev) => ({
           ...prev,
-          [matchId]: [
-            ...(prev[matchId] || []),
+          [msg.matchId]: [
+            ...(prev[msg.matchId] || []),
             {
               id: Date.now(),
               text: msg.content,
@@ -56,22 +60,25 @@ export const useSocketConnection = ({ selectedUser, data, setConversations, setS
       }
     };
 
+    // Handle seen messages update for any joined room
     const handleSeenUpdate = ({ matchId: updatedMatchId, userId: seenUserId }: { matchId: string; userId: string }) => {
-      if (updatedMatchId === matchId && seenUserId !== userId) {
+      if (roomsToJoin.includes(updatedMatchId) && seenUserId !== data.getMe.id) {
         setConversations((prev) => {
-          const messagesForMatch = prev[matchId] || [];
+          const messagesForMatch = prev[updatedMatchId] || [];
           const updatedMessages = messagesForMatch.map((msg) => {
             if (msg.sender === 'me' && !msg.seen) {
               return { ...msg, seen: true };
             }
             return msg;
           });
-          return { ...prev, [matchId]: updatedMessages };
+          return { ...prev, [updatedMatchId]: updatedMessages };
         });
       }
     };
+
+    // Handle unmatched event for any joined room
     const handleUnmatchedEvent = (matchId: string) => {
-      if (matchId === selectedUser?.id) {
+      if (roomsToJoin.includes(matchId)) {
         handleUnmatched(matchId);
       }
     };
@@ -79,16 +86,19 @@ export const useSocketConnection = ({ selectedUser, data, setConversations, setS
     socket.on('chat message', handleChatMessage);
     socket.on('messages seen update', handleSeenUpdate);
     socket.on('unmatched', handleUnmatchedEvent);
+
     return () => {
       try {
-        socket.emit('leave room', matchId);
+        roomsToJoin.forEach((room) => {
+          socket.emit('leave room', room);
+        });
       } catch (err) {
-        console.error('Failed to leave room:', err);
+        console.error('Failed to leave rooms:', err);
       }
       socket.off('chat message', handleChatMessage);
       socket.off('messages seen update', handleSeenUpdate);
       socket.off('unmatched', handleUnmatchedEvent);
       clearTimeout(timeout);
     };
-  }, [selectedUser, data, setConversations, setSocketError, markMessagesAsSeen, generateTimestamp]);
+  }, [data, setConversations, setSocketError, markMessagesAsSeen, handleUnmatched, generateTimestamp]);
 };

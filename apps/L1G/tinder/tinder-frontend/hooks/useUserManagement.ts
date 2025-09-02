@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { ChatUser } from 'types/chat';
+import { ChatUser, ChatUserWithLastMessage, Message } from 'types/chat';
 
-export const useUserManagement = (data: any) => {
+export const useUserManagement = (data: any, conversations: Record<string, Message[]>) => {
   const [selectedUser, setSelectedUser] = useState<ChatUser | null>(null);
   const [topRowUsers, setTopRowUsers] = useState<ChatUser[]>([]);
   const [bottomUsers, setBottomUsers] = useState<ChatUser[]>([]);
@@ -9,13 +9,15 @@ export const useUserManagement = (data: any) => {
 
   useEffect(() => {
     const matchIds = data?.getMe?.matchIds ?? [];
-    const allMatches: ChatUser[] = matchIds
+    const allMatches: ChatUserWithLastMessage[] = matchIds
       .filter((match: any) => !!match && !!match.matchedUser)
-      // eslint-disable-next-line complexity
       .map((match: any) => {
         const user = match!.matchedUser;
         const birthDate = user.dateOfBirth ? new Date(user.dateOfBirth) : null;
         const age = birthDate ? new Date().getFullYear() - birthDate.getFullYear() : 0;
+
+        const messages = conversations[match!.id] ?? [];
+        const lastMessage = messages.length > 0 ? messages[messages.length - 1] : undefined;
 
         return {
           id: match!.id,
@@ -25,6 +27,7 @@ export const useUserManagement = (data: any) => {
           profession: user.profession || '',
           age,
           startedConversation: match!.startedConversation,
+          lastMessage,
         };
       });
 
@@ -41,7 +44,7 @@ export const useUserManagement = (data: any) => {
 
     const chattedUserIds = new Set(usersStartedConversation.map((user) => user.id));
     setChattedUsers(chattedUserIds);
-  }, [data]);
+  }, [data, conversations]);
 
   const handleUserSelect = useCallback((user: ChatUser | null) => {
     setSelectedUser(user);
