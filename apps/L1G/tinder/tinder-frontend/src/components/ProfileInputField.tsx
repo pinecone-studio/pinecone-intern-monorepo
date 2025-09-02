@@ -15,7 +15,7 @@ export const ProfileInputField = ({ control, name, label, placeholder, testId }:
     control={control}
     name={name}
     render={({ field }) => (
-      <FormItem>
+      <FormItem className="px-1">
         <FormLabel>{label}</FormLabel>
         <FormControl>
           <Input data-testid={testId} placeholder={placeholder} {...field} />

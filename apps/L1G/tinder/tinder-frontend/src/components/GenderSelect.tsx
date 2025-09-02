@@ -32,7 +32,7 @@ export const GenderSelect = ({ onSuccess, updateUserData }: GenderSelectProps) =
 
       <div>
         <Select value={selectedInterest} onValueChange={setSelectedInterest}>
-          <SelectTrigger className="w-[400px] sm:w-[350px] h-10" data-cy="Interest-Select" data-testid="select-trigger">
+          <SelectTrigger className="w-[340px] md:w-[360px] h-10" data-cy="Interest-Select" data-testid="select-trigger">
             <SelectValue placeholder="Select" />
           </SelectTrigger>
           <SelectContent>
