@@ -28,6 +28,13 @@ export const AllFoodsCard = () => {
     }
   };
 
+  function shortPrice(price: number) {
+    if (price >= 1000) {
+      return `${(price / 1000).toFixed(3).replace(/\.?0+$/, '')}k`;
+    }
+    return `${price}`;
+  }
+
   return (
     <div data-cy="allfoods" className="flex flex-col w-[600px] h-[691px] gap-5 top-[219px] left-[500px]">
       <div className="flex items-center justify-between">
@@ -59,7 +66,7 @@ export const AllFoodsCard = () => {
                 </div>
                 <div className="flex flex-col gap-2 w-[345px] h-[87px]">
                   <p className="text-base font-light leading-[20px] text-[#09090B]">{food?.foodName}</p>
-                  <span className="text-lg font-bold leading-[20px] text-[#09090B]">{(Number(food?.price) / 1000).toFixed(1)}k</span>
+                  <span className="text-lg font-bold leading-[20px] text-[#09090B]">{shortPrice(parseInt(food?.price as string))}</span>
                   <Badge variant="outline" className="w-fit text-xs font-semibold leading-[16px] text-[#09090B]">
                     {food?.foodStatus}
                   </Badge>

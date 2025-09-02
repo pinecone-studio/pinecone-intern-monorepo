@@ -1,9 +1,19 @@
+/* eslint max-lines: "off" */
 import '@testing-library/jest-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { toast } from 'sonner';
 import { AllFoodsCard } from '@/components/admin';
-import { deleteFoodByIdMock, getFoodsErrorMock, getFoodsLoadingMock, getFoodsMock, getFoodsEmptyArrayMock, getFoodsAfterDeleteMock, deleteFoodErrorMock } from 'specs/utils/FoodMockData';
+import {
+  deleteFoodByIdMock,
+  getFoodsErrorMock,
+  getFoodsLoadingMock,
+  getFoodsMock,
+  getFoodsEmptyArrayMock,
+  getFoodsAfterDeleteMock,
+  deleteFoodErrorMock,
+  getFoodsWithShortPriceMock,
+} from 'specs/utils/FoodMockData';
 
 jest.mock('sonner', () => ({
   toast: {
@@ -145,5 +155,16 @@ describe('AllFoodsCard', () => {
         position: 'bottom-right',
       });
     });
+  });
+
+  it('should renders short price correctly', async () => {
+    const { findByText } = render(
+      <MockedProvider mocks={[getFoodsWithShortPriceMock]}>
+        <AllFoodsCard />
+      </MockedProvider>
+    );
+
+    const shortPrice = await findByText('200');
+    expect(shortPrice).toBeInTheDocument();
   });
 });
