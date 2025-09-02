@@ -109,7 +109,7 @@ describe('Match Component', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText(/Its a Match/i)).toBeInTheDocument();
+      expect(screen.getByText(/It&#39s a Match/i)).toBeInTheDocument();
       expect(screen.getByText(`You matched with ${mockUser2.name}`)).toBeInTheDocument();
       expect(screen.getByPlaceholderText(/Say something nice/i)).toBeInTheDocument();
       expect(screen.getByTestId('Send')).toBeInTheDocument();
@@ -120,7 +120,7 @@ describe('Match Component', () => {
     expect(images[0]).toHaveAttribute('src', mockUser1.images[0]);
     expect(images[0]).toHaveAttribute('alt', 'Your profile');
     expect(images[1]).toHaveAttribute('src', mockUser2.images[0]);
-    expect(images[1]).toHaveAttribute('alt', `Baatarvan's profile`);
+    expect(images[1]).toHaveAttribute('alt', `${mockUser2.name}'s profile`);
   });
 
   it('calls onClose when close button is clicked', async () => {

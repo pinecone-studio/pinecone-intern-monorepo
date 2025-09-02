@@ -19,6 +19,7 @@ const getFilteredProfiles = (data: any, currentUserId: string) => {
   return (data?.getusers ?? [])
     .filter((u: any): u is NonNullable<typeof u> => u && (typeof u.id === 'string' || typeof u.id === 'number'))
     .filter((u: any) => u.id.toString() !== currentUserId)
+
     .map((u: any) => ({
       id: u.id.toString(),
       name: u.name ?? 'Unknown',
