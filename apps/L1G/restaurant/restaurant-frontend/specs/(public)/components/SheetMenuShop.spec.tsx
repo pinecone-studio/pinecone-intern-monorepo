@@ -1,4 +1,4 @@
-import { SheetMenuShop } from '@/components/SheetMenuShop';
+import { SheetMenuShop } from '@/components/sheets/SheetMenuShop';
 import { render } from '@testing-library/react';
 
 describe('aboutus page', () => {

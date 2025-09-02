@@ -1,4 +1,4 @@
-import { SheetMenu } from '@/components/Sheetmenu';
+import { SheetMenu } from '@/components/sheets/Sheetmenu';
 import { render } from '@testing-library/react';
 
 describe('aboutus page', () => {

@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { CreateFoodDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { UploadImage } from '@/utils/ImageUpload';
+import { UploadImage } from '@/utils/image-upload';
 import { toast } from 'sonner';
 import { FoodCreateDialog } from '@/components/admin';
 
@@ -24,7 +24,7 @@ jest.mock('sonner', () => ({
   },
 }));
 
-jest.mock('@/utils/ImageUpload', () => ({
+jest.mock('@/utils/image-upload', () => ({
   UploadImage: jest.fn(),
 }));
 

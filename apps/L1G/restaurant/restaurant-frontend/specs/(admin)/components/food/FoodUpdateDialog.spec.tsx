@@ -2,7 +2,7 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { MockedProvider } from '@apollo/client/testing';
-import { UploadImage } from '@/utils/ImageUpload';
+import { UploadImage } from '@/utils/image-upload';
 import { toast } from 'sonner';
 import { FoodUpdateDialog } from '@/components/admin';
 import { updateFoodErrorMock, updateFoodMock } from 'specs/utils/FoodMockData';
@@ -22,7 +22,7 @@ jest.mock('sonner', () => ({
   },
 }));
 
-jest.mock('@/utils/ImageUpload', () => ({
+jest.mock('@/utils/image-upload', () => ({
   UploadImage: jest.fn(),
 }));
 

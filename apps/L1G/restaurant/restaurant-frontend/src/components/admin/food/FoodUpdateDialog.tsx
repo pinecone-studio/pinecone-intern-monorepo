@@ -5,9 +5,9 @@ import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from '
 import { Pencil, X } from 'lucide-react';
 import { useState } from 'react';
 import { useUpdateFoodMutation } from '@/generated';
-import { UploadImage } from '@/utils/ImageUpload';
+import { UploadImage } from '@/utils/image-upload';
 import { toast } from 'sonner';
-import { FoodUpdateDialogProps } from '@/utils/FoodTypes';
+import { FoodUpdateDialogProps } from '@/utils/food-types';
 import { formSchemaFood } from '@/helpers/form-schemas';
 import { FoodUpdateForm } from './FoodUpdateForm';
 

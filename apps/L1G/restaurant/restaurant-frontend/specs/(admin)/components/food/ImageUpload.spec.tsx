@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import '@testing-library/jest-dom';
-import { UploadImage } from '@/utils/ImageUpload';
+import { UploadImage } from '@/utils/image-upload';
 import axios from 'axios';
 
 jest.mock('axios');
