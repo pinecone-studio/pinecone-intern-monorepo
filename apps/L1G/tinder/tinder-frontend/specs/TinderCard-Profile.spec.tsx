@@ -92,20 +92,4 @@ describe('TinderCard profile info and button behavior', () => {
     fireEvent.click(screen.getByTestId('swipe-left'));
     await waitFor(() => expect(onDislike).toHaveBeenCalledWith('1'));
   });
-
-  it('enables pointer events on touch start and disables on touch end', () => {
-    render(<TinderCard profile={mockProfile} onLike={jest.fn()} onDislike={jest.fn()} />);
-    const wrapper = screen.getByTestId('tinder-card-wrapper');
-
-    // Initially disabled
-    expect(wrapper).toHaveStyle({ pointerEvents: 'none' });
-
-    // Touch start → enables
-    fireEvent.touchStart(wrapper);
-    expect(wrapper).toHaveStyle({ pointerEvents: 'auto' });
-
-    // Touch end → disables again
-    fireEvent.touchEnd(wrapper);
-    expect(wrapper).toHaveStyle({ pointerEvents: 'none' });
-  });
 });

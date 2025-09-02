@@ -32,19 +32,10 @@ const TinderCard = ({ profile, onLike, onDislike }: TinderCardProps) => {
   if (!profile) return null;
 
   return (
-    <div
-      data-testid="tinder-card-wrapper"
-      style={{ pointerEvents: 'none' }}
-      onTouchStart={(e) => {
-        e.currentTarget.style.pointerEvents = 'auto';
-      }}
-      onTouchEnd={(e) => {
-        e.currentTarget.style.pointerEvents = 'none';
-      }}
-    >
+    <div data-testid="tinder-card-wrapper" className="absolute w-screen h-full flex justify-center items-center">
       <TinderCardLib
         data-testid="tinder-card"
-        className="absolute w-fit h-fit flex justify-center items-center"
+        className="absolute w-full h-full flex justify-center items-center"
         preventSwipe={['up', 'down']}
         swipeRequirementType="position"
         swipeThreshold={100}
