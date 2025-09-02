@@ -15,7 +15,7 @@ export const ProtectedRoute = ({ allowedRoles, children }: ProtectedRouteProps) 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      router.push('/login');
+      router.push('/403');
       return;
     }
 
