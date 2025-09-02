@@ -1,4 +1,4 @@
-import AboutUsComponent from '@/components/AboutUsComponent';
+import AboutUsComponent from '@/components/sheets/AboutUsComponent';
 import { render } from '@testing-library/react';
 
 describe('aboutus page', () => {

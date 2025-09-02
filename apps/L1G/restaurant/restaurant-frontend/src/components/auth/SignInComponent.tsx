@@ -7,11 +7,27 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useSignInMutation } from '@/generated';
-import { useRouter } from 'next/navigation';
+import { useGetTableByNameQuery, useSignInMutation } from '@/generated';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 export const SignInComponent = () => {
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const tableName = searchParams.get('table');
+
+  const { data } = useGetTableByNameQuery({
+    skip: !tableName,
+    variables: {
+      tableName: tableName!,
+    },
+  });
+
+  useEffect(() => {
+    if (data?.getTableByName?.tableId) {
+      localStorage.setItem('tableId', data.getTableByName.tableId);
+    }
+  }, [data]);
   const [signIn] = useSignInMutation();
 
   const formSchema = z.object({
@@ -46,8 +62,13 @@ export const SignInComponent = () => {
           },
         },
       });
+
       localStorage.setItem('token', data?.signIn.token || '');
-      router.push('/');
+      if (data?.signIn.user.role === 'admin') {
+        router.push('/order');
+      } else if (data?.signIn.user.role === 'user') {
+        router.push('/');
+      }
     } catch (error) {
       form.setError('password', {
         type: 'manual',

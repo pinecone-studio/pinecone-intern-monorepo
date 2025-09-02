@@ -1,4 +1,4 @@
-import { SheetMenuNotif } from '@/components/SheetMenuNotif';
+import { SheetMenuNotif } from '@/components/sheets/SheetMenuNotif';
 import { render } from '@testing-library/react';
 
 describe('aboutus page', () => {
