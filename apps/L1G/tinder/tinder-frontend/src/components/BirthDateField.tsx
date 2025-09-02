@@ -8,9 +8,10 @@ import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { generateYearOptions, MIN_YEAR, MONTHS } from './date-utils';
 import { FormDescription, FormItem, FormMessage } from '@/components/ui/form';
-type Props = { 
-  initialDate?: Date; 
-  currentDate?: Date; 
+import { isDateDisabled } from 'utils/date-utils';
+type Props = {
+  initialDate?: Date;
+  currentDate?: Date;
 };
 
 export const BirthDateField = ({ initialDate, currentDate = new Date() }: Props) => {
@@ -35,24 +36,15 @@ export const BirthDateField = ({ initialDate, currentDate = new Date() }: Props)
     }
   }, [formBirthDate, selectedDate]);
 
-  const years = useMemo(
-    () => generateYearOptions(currentDate.getFullYear()).reverse(),
-    [currentDate]
-  );
+  const years = useMemo(() => generateYearOptions(currentDate.getFullYear()).reverse(), [currentDate]);
 
-  const isDisabled = useCallback(
-    (date: Date) => date > currentDate || date < new Date(MIN_YEAR, 0, 1),
-    [currentDate]
-  );
+  const isDisabled = useCallback((date: Date) => isDateDisabled(date, currentDate, MIN_YEAR), [currentDate]);
 
   const handleSelectChange = (type: 'year' | 'month', value: string) => {
     const newDate = new Date(month);
     if (type === 'year') newDate.setFullYear(Number(value));
     else newDate.setMonth(Number(value));
     setMonth(newDate);
-
-    // Remove this automatic date setting - let user explicitly select a date
-    // if (!selectedDate) setSelectedDate(newDate);
   };
 
   const handleDateSelect = (date: Date | undefined) => {
@@ -62,20 +54,12 @@ export const BirthDateField = ({ initialDate, currentDate = new Date() }: Props)
       setValue('birthDate', date, { shouldValidate: true });
     }
   };
-   return (
-  <FormItem className="flex flex-col">
+  return (
+    <FormItem className="flex flex-col">
       <Popover open={isOpen} onOpenChange={setOpen}>
         <PopoverTrigger asChild data-testid="qpopover-trigger">
-          <Button
-            variant="outline"
-            className="justify-between w-full font-normal text-left border rounded-lg bg-gray-50 hover:bg-gray-100"
-            data-testid="qdate-button"
-          >
-            {selectedDate ? (
-              format(selectedDate, 'PPP')
-            ) : (
-              <span className="text-[#71717A]">Pick a date</span>
-            )}
+          <Button variant="outline" className="justify-between w-full font-normal text-left border rounded-lg bg-gray-50 hover:bg-gray-100" data-testid="qdate-button">
+            {selectedDate ? format(selectedDate, 'PPP') : <span className="text-[#71717A]">Pick a date</span>}
             <CalendarIcon className="w-4 h-4 ml-2 opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -83,11 +67,7 @@ export const BirthDateField = ({ initialDate, currentDate = new Date() }: Props)
         <PopoverContent className="w-[335px] p-4" align="start">
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-2 gap-3">
-              <Select
-                value={String(month.getFullYear())}
-                onValueChange={(v) => handleSelectChange('year', v)}
-                data-testid="qyear-select"
-              >
+              <Select value={String(month.getFullYear())} onValueChange={(v) => handleSelectChange('year', v)} data-testid="qyear-select">
                 <SelectTrigger data-testid="qyear-select-trigger">
                   <SelectValue placeholder="Year" />
                 </SelectTrigger>
@@ -100,11 +80,7 @@ export const BirthDateField = ({ initialDate, currentDate = new Date() }: Props)
                 </SelectContent>
               </Select>
 
-              <Select
-                value={String(month.getMonth())}
-                onValueChange={(v) => handleSelectChange('month', v)}
-                data-testid="qmonth-select"
-              >
+              <Select value={String(month.getMonth())} onValueChange={(v) => handleSelectChange('month', v)} data-testid="qmonth-select">
                 <SelectTrigger data-testid="qmonth-select-trigger">
                   <SelectValue placeholder="Month" />
                 </SelectTrigger>
@@ -135,5 +111,5 @@ export const BirthDateField = ({ initialDate, currentDate = new Date() }: Props)
       <FormDescription>Your date of birth is used to calculate your age.</FormDescription>
       <FormMessage />
     </FormItem>
-    );
-    };
+  );
+};
