@@ -1,6 +1,12 @@
-import AboutUsComponent from '@/components/sheets/AboutUsComponent';
+import AboutUsComponent from '@/components/AboutUsComponent';
+import { Navbar } from '@/components/Navbar';
 
 const Aboutus = () => {
-  return <AboutUsComponent />;
+  return (
+    <div>
+      <Navbar />
+      <AboutUsComponent />
+    </div>
+  );
 };
 export default Aboutus;
