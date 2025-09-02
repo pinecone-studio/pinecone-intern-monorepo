@@ -22,7 +22,7 @@ jest.mock('sonner', () => ({
   },
 }));
 
-jest.mock('@/utils/ImageUpload', () => ({
+jest.mock('@/utils/image-upload', () => ({
   UploadImage: jest.fn(),
 }));
 
