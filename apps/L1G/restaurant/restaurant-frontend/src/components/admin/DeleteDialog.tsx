@@ -9,12 +9,14 @@ export type PropsType = {
   submitText: string;
   onClick: () => void;
   children: ReactElement;
+  className?: string;
 };
-export const DeleteDialog = ({ title, comment, submitText, children, onClick }: PropsType) => {
+
+export const DeleteDialog = ({ title, comment, submitText, children, onClick, className }: PropsType) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="secondary" className="flex w-[36px] h-[36px] rounded-md px-4 py-2 bg-[#F4F4F5]">
+        <Button variant="secondary" className={`flex w-[36px] h-[36px] rounded-md px-4 py-2 bg-[#F4F4F5] ` + className}>
           {children}
         </Button>
       </DialogTrigger>
