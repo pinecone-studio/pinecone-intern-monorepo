@@ -1,0 +1,8 @@
+query GetFoodOrdersByUser($input: getFoodOrdersByUserInput!) {
+  getFoodOrdersByUser(input: $input) {
+    orderId
+    orderNumber
+    status
+    totalPrice
+  }
+}
