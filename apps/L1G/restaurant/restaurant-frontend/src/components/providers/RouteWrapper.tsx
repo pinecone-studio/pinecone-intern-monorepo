@@ -21,7 +21,7 @@ export const ProtectedRoute = ({ allowedRoles, children }: ProtectedRouteProps) 
 
     const token = localStorage.getItem('token');
     if (!token) {
-      router.push('/403');
+      router.push('/sign-in');
       return;
     }
 
