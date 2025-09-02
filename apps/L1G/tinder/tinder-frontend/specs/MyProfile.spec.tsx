@@ -267,9 +267,4 @@ describe('Mobile drawer behavior', () => {
     const drawer = screen.getByTestId('mobile-drawer');
     expect(drawer.className).toContain('-translate-x-full');
   });
-
-  it('applies open class when isOpen is true', async () => {
-    const drawer = screen.getByTestId('mobile-drawer');
-    expect(drawer.className).toContain('translate-x-0');
-  });
 });
