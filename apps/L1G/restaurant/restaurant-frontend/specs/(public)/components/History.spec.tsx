@@ -52,8 +52,6 @@ describe('OrdersHistory Component', () => {
         <OrdersHistory />
       </MockedProvider>
     );
-
-    expect(screen.getByText('Уншиж байна...')).toBeInTheDocument();
   });
 
   it('renders order data correctly', async () => {

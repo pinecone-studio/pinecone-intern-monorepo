@@ -3,17 +3,13 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { Menu } from 'lucide-react';
 
 import { Info } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+
 import { User } from 'lucide-react';
 import { Wallet } from 'lucide-react';
 import { Home } from 'lucide-react';
 import { List } from 'lucide-react';
-import { Router } from 'next/router';
+
 export const SheetMenu = () => {
-  const router = useRouter();
-  const handleClick = () => {
-    router.push('/history'); // navigate to /new-page
-  };
   return (
     <Sheet>
       <SheetTrigger>
@@ -38,10 +34,10 @@ export const SheetMenu = () => {
               <User size={12} />
               <p className="font-[30px]">Хэрэглэгч</p>
             </div>
-            <div onClick={handleClick} className="flex gap-4 pl-3 items-center w-full h-[60px] border-b">
+            <a href="/history" className="flex gap-4 pl-3 items-center w-full h-[60px] border-b">
               <List size={12} />
               <p className="font-[30px]">Захиалгын түүх</p>
-            </div>
+            </a>
             <div className="flex gap-4 pl-3 items-center w-full h-[60px] border-b">
               <Info size={12} />
               <a href="/about-us" className="font-[30px]">
