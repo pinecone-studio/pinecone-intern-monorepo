@@ -13,16 +13,14 @@ import { useCreateFoodOrderMutation } from '@/generated';
 import { set } from 'cypress/types/lodash';
 import { array } from 'zod';
 
-type foodOrderProps = [
-  {
-    foodName: string;
-    quantity: string;
-  }
-];
+type foodOrderProps = {
+  foodId: string;
+  quantity: string;
+};
 type OrderProps = {
-  foodOrder: foodOrderProps;
+  foodOrder: foodOrderProps[];
   userId: string;
-  tableName: string;
+  table: string;
   totalPrice: number;
 };
 export default function PaymentSelection() {
@@ -92,9 +90,9 @@ export default function PaymentSelection() {
     setTargetAmount('');
   };
 
-  const CheckoutButton = ({ foodOrder, userId, tableName, totalPrice }: OrderProps) => {
-    const { createOrder } = useCreateFoodOrderMutation();
-    const order = createOrder(foodOrder, userId, tableName, totalPrice);
+  const CheckoutButton = ({ foodOrder, userId, table, totalPrice }: OrderProps) => {
+    const [createOrder] = useCreateFoodOrderMutation();
+    const order = createOrder({ variables: { input: { user: userId, table: table, totalPrice: totalPrice, FoodOrderItem: foodOrder } } });
     console.log(order, 'zahialaga');
   };
   const finalAmount = totalBeforeWallet - walletDeduction;
@@ -104,9 +102,9 @@ export default function PaymentSelection() {
   const tableName = JSON.parse(table!);
   const [orderFood, setOrderFood] = useState<foodOrderProps[]>([]);
   order?.items.forEach((val) => {
-    const foodName = val.foodName;
+    const foodName = val.id;
     const quantity = val.selectCount;
-    setOrderFood((prevOrderFood) => [...prevOrderFood, { foodName, quantity }]);
+    setOrderFood((prevOrderFood) => [...prevOrderFood, foodName, quantity]);
   });
 
   const handlePaymentSelect = (methodId: string) => {

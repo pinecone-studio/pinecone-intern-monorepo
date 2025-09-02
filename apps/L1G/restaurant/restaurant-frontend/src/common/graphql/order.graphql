@@ -8,19 +8,19 @@ query GetFoodOrdersByUser($input: getFoodOrdersByUserInput!) {
 }
 mutation CreateFoodOrder($input: CreateFoodOrderInput!) {
   createFoodOrder(input: $input) {
+    orderId
     orderNumber
-    totalPrice
     status
+    totalPrice
     user {
       userId
     }
     table {
-      tableName
+      tableId
     }
     foodOrder {
       food {
-        foodName
-        price
+        foodId
       }
       quantity
     }
