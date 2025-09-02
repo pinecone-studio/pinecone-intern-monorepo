@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -8,62 +8,80 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import jwt from 'jsonwebtoken';
+import { OrderData, OrderTypeValue } from '@/types/order';
+import { useCreateFoodOrderMutation } from '@/generated';
+import { set } from 'cypress/types/lodash';
+import { array } from 'zod';
+
+type foodOrderProps = [
+  {
+    foodName: string;
+    quantity: string;
+  }
+];
+type OrderProps = {
+  foodOrder: foodOrderProps;
+  userId: string;
+  tableName: string;
+  totalPrice: number;
+};
 export default function PaymentSelection() {
+  const orderData = localStorage.getItem('orderData');
+  const [order, setOrder] = useState<OrderData>();
+  const [baseOrderAmount, setBaseOrderAmount] = useState(0);
+  useEffect(() => {
+    if (orderData) {
+      setOrder(JSON.parse(orderData));
+    }
+  }, []);
+  useEffect(() => {
+    if (order) {
+      const total = order.items.reduce((sum, val) => sum + parseInt(val.price) * val.selectCount, 0);
+      setBaseOrderAmount(total);
+    }
+  }, [order]);
+
+  useEffect(() => {
+    if (order?.orderType) {
+      setDeliveryOption(order.orderType);
+    }
+  }, [order]);
+
   const [selectedPayment, setSelectedPayment] = useState<string>('');
-  const [deliveryOption, setDeliveryOption] = useState('takeaway');
+
+  const deliveryOptionFirstValue = order?.orderType;
+  console.log(order, order?.orderType, deliveryOptionFirstValue, '00');
+  const [deliveryOption, setDeliveryOption] = useState<OrderTypeValue | undefined>(order?.orderType);
   const [isWalletDrawerOpen, setIsWalletDrawerOpen] = useState(false);
   const [targetAmount, setTargetAmount] = useState('');
   const [walletUsed, setWalletUsed] = useState(false);
   const [walletDeduction, setWalletDeduction] = useState(0);
 
-  const baseOrderAmount = 53000;
   const deliveryFee = 4000;
   const totalBeforeWallet = baseOrderAmount + deliveryFee;
+  console.log(deliveryOptionFirstValue, deliveryOption);
 
   const paymentMethods = [
     {
       id: 'qpay',
       name: 'Qpay',
-      icon: (
-        <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center">
-          <span className="text-white font-bold text-lg">Q</span>
-        </div>
-      ),
+      icon: '/qpay.png',
     },
     {
       id: 'socialpay',
       name: 'Social Pay',
-      icon: (
-        <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
-          <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-            <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-          </div>
-        </div>
-      ),
+      icon: '/socialpay.png',
     },
     ...(!walletUsed
       ? [
           {
             id: 'wallet',
             name: 'Хэтэвч',
-            icon: (
-              <div className="w-12 h-12 bg-orange-400 rounded-full flex items-center justify-center">
-                <div className="w-8 h-6 bg-orange-600 rounded-sm relative">
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 w-4 h-2 bg-orange-600 rounded-t"></div>
-                </div>
-              </div>
-            ),
+            icon: '/log2.png',
           },
         ]
       : []),
   ];
-
-  const handlePaymentSelect = (methodId: string) => {
-    setSelectedPayment(methodId);
-    if (methodId === 'wallet') {
-      setIsWalletDrawerOpen(true);
-    }
-  };
 
   const handleWalletOrder = () => {
     const deductionAmount = Number.parseInt(targetAmount) || 0;
@@ -74,35 +92,54 @@ export default function PaymentSelection() {
     setTargetAmount('');
   };
 
+  const CheckoutButton = ({ foodOrder, userId, tableName, totalPrice }: OrderProps) => {
+    const { createOrder } = useCreateFoodOrderMutation();
+    const order = createOrder(foodOrder, userId, tableName, totalPrice);
+    console.log(order, 'zahialaga');
+  };
   const finalAmount = totalBeforeWallet - walletDeduction;
   const user = localStorage.getItem('token');
   const userid = jwt.decode(user!);
-  console.log(userid.user._id);
+  const table = localStorage.getItem('tableName');
+  const tableName = JSON.parse(table!);
+  const [orderFood, setOrderFood] = useState<foodOrderProps[]>([]);
+  order?.items.forEach((val) => {
+    const foodName = val.foodName;
+    const quantity = val.selectCount;
+    setOrderFood((prevOrderFood) => [...prevOrderFood, { foodName, quantity }]);
+  });
 
+  const handlePaymentSelect = (methodId: string) => {
+    setSelectedPayment(methodId);
+    if (methodId === 'wallet') {
+      setIsWalletDrawerOpen(true);
+    } else {
+      CheckoutButton({ orderFood, userid, tableName, finalAmount });
+    }
+  };
   return (
     <div className="max-w-sm mx-auto bg-white min-h-screen">
       <div className="w-full h-fit flex justify-end">
         <button className="flex  mt-[20px]">
-          <X className="w-6 h-6 text-gray-400" />
+          <X className="w-6 h-6 text-black " />
         </button>
       </div>
 
       <div className="flex items-center justify-between pt-[180px] ">
-        <div className="w-6"></div>
-        <h1 className="text-lg font-medium text-center flex-1">
+        <h1 className="text-[20px] font-medium text-center flex-1">
           Төлбөрийн хэрэгслээ
           <br />
           сонгоно уу
         </h1>
       </div>
-      <div className="p-4 space-y-6 pt-[100px]">
-        <Select value={deliveryOption} onValueChange={setDeliveryOption}>
+      <div className="flex flex-col p-4 gap-[40px] pt-[40px]">
+        <Select value={deliveryOption} onValueChange={(value) => setDeliveryOption(value as OrderTypeValue)}>
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Хүргэлтийн төрөл сонгоно уу" />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="takeaway">Авч явах</SelectItem>
-            <SelectItem value="dinein">Газар дээр идэх</SelectItem>
+            <SelectItem value="dine_in">Эндээ идэх</SelectItem>
           </SelectContent>
         </Select>
 
@@ -114,8 +151,10 @@ export default function PaymentSelection() {
               className={`p-4 w-full cursor-pointer transition-all ${selectedPayment === method.id ? 'ring-2 ring-blue-500 bg-blue-50' : 'hover:bg-gray-50'}`}
               onClick={() => handlePaymentSelect(method.id)}
             >
-              <div className="flex flex-col items-center space-y-2">
-                {method.icon}
+              <div className="flex flex-col justify-center items-center space-y-1 ">
+                <div className="flex flex-col w-[40px] h-[40px]">
+                  <img src={method.icon} alt="icon" className="flex w-full h-full" />
+                </div>
                 <span className="text-sm font-medium text-gray-700">{method.name}</span>
               </div>
             </Card>
@@ -123,22 +162,22 @@ export default function PaymentSelection() {
         </div>
 
         {/* Payment Summary */}
-        <div className="space-y-3 pt-8">
-          <div className="flex justify-between items-center border-b">
+        <div className="">
+          <div className="flex justify-between items-center border-b p-3">
             <span className="text-gray-600">Захиалгын нийт дүн:</span>
             <span className="font-medium">{baseOrderAmount.toLocaleString()}₮</span>
           </div>
-          <div className="flex justify-between items-center border-b">
+          <div className="flex justify-between items-center border-b p-3">
             <span className="text-gray-600">Хүргэлт сав:</span>
             <span className="font-medium">{deliveryFee.toLocaleString()}₮</span>
           </div>
           {walletUsed && (
-            <div className="flex justify-between items-center border-b">
+            <div className="flex justify-between items-center border-b p-3">
               <span className="text-gray-600">Хэтэвчээс хасагдсан дүн:</span>
               <span className="font-medium">-{walletDeduction.toLocaleString()}₮</span>
             </div>
           )}
-          <div className="flex justify-between items-center pt-2 ">
+          <div className="flex justify-between items-center p-3 ">
             <span className="font-medium">Төлөх дүн:</span>
             <span className="font-bold text-lg">{finalAmount.toLocaleString()}₮</span>
           </div>

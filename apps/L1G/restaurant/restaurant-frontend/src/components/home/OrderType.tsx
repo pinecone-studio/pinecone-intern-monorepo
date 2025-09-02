@@ -8,6 +8,7 @@ import type { CartItem } from '@/types/cart';
 import type { OrderTypeValue } from '@/types/order';
 import { X } from 'lucide-react';
 import { saveOrderData } from '@/utils/storage';
+import { useState } from 'react';
 
 type Props = {
   currentCart: CartItem[];
@@ -15,17 +16,18 @@ type Props = {
 
 const OrderType = ({ currentCart }: Props) => {
   const router = useRouter();
-
+  const [isOpen, setIsOpen] = useState<false | true>();
   const handlePick = (value: string) => {
     const v = value as OrderTypeValue;
     saveOrderData(currentCart, v);
+    setIsOpen(false);
     setTimeout(() => {
       router.push(`/orderPayment`);
     }, 0);
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen}>
       <DialogTrigger className="w-full bg-amber-800 hover:bg-amber-900 text-white py-4 text-lg font-medium rounded-lg">Захиалах</DialogTrigger>
       <DialogContent className="sm:max-w-[420px] border-[2px] border-white rounded-xl">
         <DialogHeader>
