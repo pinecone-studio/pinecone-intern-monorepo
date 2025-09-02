@@ -32,42 +32,44 @@ const TinderCard = ({ profile, onLike, onDislike }: TinderCardProps) => {
   if (!profile) return null;
 
   return (
-    <TinderCardLib
-      data-testid="tinder-card"
-      className="absolute w-fit h-fit flex justify-center items-center"
-      preventSwipe={['up', 'down']} // Allow left and right swipes only
-      swipeRequirementType="position" // Use position-based swipe detection
-      swipeThreshold={100} // Require 100px swipe distance to trigger
-      onSwipe={(dir) => {
-        if (dir === 'right') {
-          onLike(profile.id);
-        } else if (dir === 'left') {
-          onDislike(profile.id);
-        }
-      }}
-      // Disable mouse dragging by overriding pointer events
-      style={{ pointerEvents: 'none' }} // Prevents mouse interaction
-      // Re-enable pointer events for touch to allow swipe
-      onTouchStart={(e: any) => {
+    <div
+      data-testid="tinder-card-wrapper"
+      style={{ pointerEvents: 'none' }}
+      onTouchStart={(e) => {
         e.currentTarget.style.pointerEvents = 'auto';
       }}
-      onTouchEnd={(e: any) => {
+      onTouchEnd={(e) => {
         e.currentTarget.style.pointerEvents = 'none';
       }}
     >
-      <TinderCardContent
-        profile={profile}
-        images={images}
-        currentImageIndex={currentImageIndex}
-        imageError={imageError}
-        handleImageError={handleImageError}
-        nextImage={nextImage}
-        prevImage={prevImage}
-        handleLike={() => onLike(profile.id)} // for button tap
-        handleDislike={() => onDislike(profile.id)} // for button tap
-        direction={null} // not used anymore
-      />
-    </TinderCardLib>
+      <TinderCardLib
+        data-testid="tinder-card"
+        className="absolute w-fit h-fit flex justify-center items-center"
+        preventSwipe={['up', 'down']}
+        swipeRequirementType="position"
+        swipeThreshold={100}
+        onSwipe={(dir) => {
+          if (dir === 'right') {
+            onLike(profile.id);
+          } else if (dir === 'left') {
+            onDislike(profile.id);
+          }
+        }}
+      >
+        <TinderCardContent
+          profile={profile}
+          images={images}
+          currentImageIndex={currentImageIndex}
+          imageError={imageError}
+          handleImageError={handleImageError}
+          nextImage={nextImage}
+          prevImage={prevImage}
+          handleLike={() => onLike(profile.id)}
+          handleDislike={() => onDislike(profile.id)}
+          direction={null}
+        />
+      </TinderCardLib>
+    </div>
   );
 };
 
