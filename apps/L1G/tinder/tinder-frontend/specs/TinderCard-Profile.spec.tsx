@@ -8,9 +8,8 @@ const mockProfile = {
   age: 25,
   images: ['https://via.placeholder.com/400', 'https://via.placeholder.com/401'],
 };
-
 jest.mock('react-tinder-card', () => {
-  return ({ children, onSwipe, ...rest }: any) => (
+  const MockTinderCard = ({ children, onSwipe, ...rest }: any) => (
     <div data-testid="tinder-card" {...rest}>
       <button data-testid="swipe-left" onClick={() => onSwipe('left')}>
         Swipe Left
@@ -21,6 +20,8 @@ jest.mock('react-tinder-card', () => {
       {children}
     </div>
   );
+  MockTinderCard.displayName = 'MockTinderCard';
+  return MockTinderCard;
 });
 
 describe('TinderCard profile info and button behavior', () => {
@@ -94,17 +95,17 @@ describe('TinderCard profile info and button behavior', () => {
 
   it('enables pointer events on touch start and disables on touch end', () => {
     render(<TinderCard profile={mockProfile} onLike={jest.fn()} onDislike={jest.fn()} />);
-    const card = screen.getByTestId('tinder-card');
+    const wrapper = screen.getByTestId('tinder-card-wrapper');
 
-    // Initially should be disabled (from style={{ pointerEvents: 'none' }})
-    expect(card).toHaveStyle({ pointerEvents: 'none' });
+    // Initially disabled
+    expect(wrapper).toHaveStyle({ pointerEvents: 'none' });
 
     // Touch start → enables
-    fireEvent.touchStart(card);
-    expect(card).toHaveStyle({ pointerEvents: 'auto' });
+    fireEvent.touchStart(wrapper);
+    expect(wrapper).toHaveStyle({ pointerEvents: 'auto' });
 
     // Touch end → disables again
-    fireEvent.touchEnd(card);
-    expect(card).toHaveStyle({ pointerEvents: 'none' });
+    fireEvent.touchEnd(wrapper);
+    expect(wrapper).toHaveStyle({ pointerEvents: 'none' });
   });
 });
