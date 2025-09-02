@@ -21,6 +21,7 @@ const ChatPage: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [socketError, setSocketError] = useState<string | null>(null);
   const [showChatOnMobile, setShowChatOnMobile] = useState(false);
+  const [chatLoading, setChatLoading] = useState<Record<string, boolean>>({});
 
   const { selectedUser, topRowUsers, bottomUsers, chattedUsers, handleUserSelect, moveUserToBottom, setChattedUsers } = useUserManagement(data);
   const messages = useMemo(() => {
@@ -66,14 +67,18 @@ const ChatPage: React.FC = () => {
       };
     });
   }, [chatData, selectedUser, data]);
-
   useEffect(() => {
     if (!selectedUser || !data?.getMe?.id) return;
+
     const matchId = selectedUser.id;
     const userId = data.getMe.id;
     const participantId = data.getMe.matchIds?.find((m: any) => m?.id === matchId)?.matchedUser?.id;
     if (!participantId) return;
-    fetchChat({ variables: { userId, participantId } });
+
+    setChatLoading((prev) => ({ ...prev, [matchId]: true }));
+    fetchChat({ variables: { userId, participantId } }).finally(() => {
+      setChatLoading((prev) => ({ ...prev, [matchId]: false }));
+    });
   }, [selectedUser, data, fetchChat]);
 
   const lastSeenMessageId = useMemo(() => {
@@ -138,21 +143,22 @@ const ChatPage: React.FC = () => {
     setShowChatOnMobile(false);
   }, []);
 
-  if (loading) return <Loading />;
+  if (loading) return <Loading msg="Please Wait..." />;
   if (error) return <div>Error loading chat: {error.message}</div>;
+  console.log(selectedUser, 'user');
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen w-screen bg-white">
+    <div className="flex flex-col items-center justify-center w-screen bg-white">
       {socketError && <div className="error-message text-red-500 p-2 text-center bg-gray-800 border-b border-gray-100">{socketError}</div>}
 
       {/* Matches: show always on desktop, and on mobile only if NOT viewing ChatWindow */}
       {(!showChatOnMobile || window.innerWidth >= 768) && (
-        <div className="w-full max-w-[980px]">
+        <div className="w-full max-w-[1330px]">
           <Matches topRowUsers={topRowUsers} selectedUser={selectedUser} onUserSelect={handleUserSelectWithErrorReset} />
         </div>
       )}
 
-      <div className="flex w-full h-[calc(100vh-120px)] md:h-[calc(100vh-140px)] max-w-[980px] mx-auto">
+      <div className="flex w-full h-[calc(100vh-120px)] md:h-[calc(100vh-140px)] max-w-[1330px]">
         {/* On mobile: show ChatPerson only if chat window NOT visible */}
         <div className={`${showChatOnMobile ? 'hidden' : 'flex'} md:flex w-full md:w-[350px]`}>
           <ChatPerson selectedUser={selectedUser} onUserSelect={handleUserSelectWithErrorReset} bottomUsers={bottomUsers} chattedUsers={chattedUsers} className="" />
@@ -161,6 +167,7 @@ const ChatPage: React.FC = () => {
         {/* On mobile: show ChatWindow only if chat window visible */}
         <div className={`${showChatOnMobile ? 'flex' : 'hidden'} w-full md:flex md:flex-1`}>
           <ChatWindow
+            loading={selectedUser ? chatLoading[selectedUser.id] || false : false}
             onUnmatched={handleUnmatched}
             matchId={selectedUser?.id}
             lastSeenMessageId={lastSeenMessageId}
@@ -171,7 +178,7 @@ const ChatPage: React.FC = () => {
             onInputChange={handleInputChange}
             onKeyDown={handleKeyDown}
             onSend={handleSendClick}
-            onBack={handleBackToMessages} // back button for mobile step 2
+            onBack={handleBackToMessages}
           />
         </div>
       </div>

@@ -6,6 +6,7 @@ import { useEffect, useRef } from 'react';
 import { MessageSquare, Send, MessageSquareDashedIcon } from 'lucide-react';
 import ChatHeader from './ChatHeader';
 import type { ChatUser } from 'types/chat';
+import Loading from './Loading';
 
 interface Message {
   id: string;
@@ -27,9 +28,10 @@ interface ChatWindowProps {
   onUnmatched?: () => void;
   onBack?: () => void;
   className?: string;
+  loading: boolean;
 }
 
-const ChatWindow = ({ matchId, lastSeenMessageId, selectedUser, messages, inputValue, onInputChange, onKeyDown, onSend, sending, onUnmatched, onBack, className }: ChatWindowProps) => {
+const ChatWindow = ({ matchId, lastSeenMessageId, selectedUser, messages, inputValue, onInputChange, onKeyDown, onSend, sending, onUnmatched, onBack, className, loading }: ChatWindowProps) => {
   const bottomRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (bottomRef.current) {
@@ -47,6 +49,13 @@ const ChatWindow = ({ matchId, lastSeenMessageId, selectedUser, messages, inputV
           <h3 className="mb-2 text-lg font-medium text-gray-900">Select a match to start chatting</h3>
           <p className="text-gray-500">Choose someone from your matches to begin a conversation.</p>
         </div>
+      </div>
+    );
+  }
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-full w-full">
+        <Loading msg="Loading messages..." />
       </div>
     );
   }

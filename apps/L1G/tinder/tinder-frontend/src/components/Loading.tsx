@@ -1,6 +1,6 @@
 import { TinderLogo } from './TinderLogo';
 
-const Loading = () => {
+const Loading = ({ msg }: { msg: string }) => {
   const nothing = () => {
     return;
   };
@@ -15,7 +15,7 @@ const Loading = () => {
           <div className="w-8 h-8 border-4 border-gray-200 rounded-full border-t-pink-500 animate-spin"></div>
         </div>
 
-        <p className="text-sm text-gray-400">Please Wait...</p>
+        <p className="text-sm text-gray-400">{msg}</p>
       </div>
 
       <div className="pb-8">
