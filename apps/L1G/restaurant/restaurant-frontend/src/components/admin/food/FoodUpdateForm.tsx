@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useEffect, useState } from 'react';
-import { FoodUpdateFormProps } from '@/utils/FoodTypes';
+import { FoodUpdateFormProps } from '@/utils/food-types';
 import { TextInput } from './FormTextInput';
 import { formSchemaFood } from '@/helpers/form-schemas';
 import Image from 'next/image';

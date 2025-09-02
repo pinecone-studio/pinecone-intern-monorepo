@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { toast } from 'sonner';
 import { useUpdateCategoryMutation } from '@/generated';
-import { CategoryUpdateProps } from '@/utils/FoodTypes';
+import { CategoryUpdateProps } from '@/utils/food-types';
 import { Input } from '@/components/ui/input';
 
 const formSchema = z.object({

@@ -11,7 +11,7 @@ import { Popover, PopoverTrigger } from '@/components/ui/popover';
 import { toast } from 'sonner';
 import { useUpdateDiscountMutation } from '@/generated';
 import { formSchemaDiscount } from '@/helpers/form-schemas';
-import { DiscountUpdateProps } from '@/utils/FoodTypes';
+import { DiscountUpdateProps } from '@/utils/food-types';
 import { FormFieldInput } from './FormFieldInput';
 import { format } from 'date-fns';
 
