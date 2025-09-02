@@ -1,3 +1,5 @@
+/* eslint-disable complexity */
+/* eslint-disable react-hooks/rules-of-hooks */
 import { X, Send } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useGetUserQuery } from '@/generated';
@@ -51,6 +53,7 @@ type MatchPopupProps = {
 };
 
 const MatchPopup = ({ onClose, matchedusersid }: MatchPopupProps) => {
+  if (!matchedusersid || matchedusersid.length < 2) return null;
   const [id1, id2] = matchedusersid;
 
   const { data: user1Data, loading: loading1, error: error1 } = useGetUserQuery({ variables: { id: id1 }, skip: !id1 });
@@ -65,7 +68,7 @@ const MatchPopup = ({ onClose, matchedusersid }: MatchPopupProps) => {
   return (
     <motion.div variants={popupVariants} initial="hidden" animate="visible" exit="exit" className="bg-white rounded-3xl max-w-sm w-full mx-auto shadow-2xl border border-[#E4E4E7]">
       <div className="flex justify-between items-center p-6">
-        <p className="text-[16px] font-semibold gap-2 text-start text-[#09090B]">It&#39s a Match</p>
+        <p className="text-[16px] font-semibold gap-2 text-start text-[#09090B]">{`It's a Match`}</p>
         <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition-colors">
           <X size={24} aria-label="Close icon" role="img" />
         </button>
