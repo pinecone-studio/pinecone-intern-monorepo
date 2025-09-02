@@ -3,6 +3,7 @@ export * from './user/get-users';
 export * from './category/get-categories';
 export * from './category/get-category-by-id';
 export * from './table/get-tables';
+export * from './table/get-table-by-name';
 export * from './food/get-foods';
 export * from './food/get-food-by-id';
 export * from './discount/get-discounts';
