@@ -169,32 +169,6 @@ describe('MultiSelect', () => {
     expect(screen.queryByRole('dialog')).toBeNull();
   });
 
-  it('toggles all options and clears all when toggleAll is called again', async () => {
-    const user = userEvent.setup();
-
-    const Wrapper = () => {
-      const [value, setValue] = React.useState<string[]>([]);
-      return <MultiSelect options={mockOptions} value={value} onValueChange={setValue} />;
-    };
-
-    render(<Wrapper />);
-
-    await user.click(screen.getByTestId('multi-select-trigger'));
-
-    const selectAllOption = screen.getByRole('option', { name: /\(Select All\)/i });
-
-    await user.click(selectAllOption);
-
-    expect(screen.getByTestId('multi-select-trigger')).toHaveTextContent(/music/i);
-    expect(screen.getByTestId('multi-select-trigger')).toHaveTextContent(/sports/i);
-    expect(screen.getByTestId('multi-select-trigger')).toHaveTextContent(/movies/i);
-    expect(screen.getByTestId('multi-select-trigger')).toHaveTextContent(/\+ 1 more/i);
-
-    await user.click(selectAllOption);
-
-    expect(screen.getByTestId('multi-select-trigger')).not.toHaveTextContent(/music|sports|movies|books/i);
-  });
-
   it('closes popover on Escape key press', () => {
     render(<MultiSelect options={mockOptions} value={[]} />);
     fireEvent.click(screen.getByTestId('multi-select-trigger'));

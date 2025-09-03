@@ -7,7 +7,6 @@ import { Command } from '@/components/ui/command';
 
 describe('OptionList', () => {
   const mockToggleOption = jest.fn();
-  const mockToggleAll = jest.fn();
 
   const DummyIcon = () => <svg data-testid="dummy-icon" />;
 
@@ -20,7 +19,6 @@ describe('OptionList', () => {
     options: mockOptions,
     selectedValues: [],
     toggleOption: mockToggleOption,
-    toggleAll: mockToggleAll,
   };
 
   const renderComponent = (props: Partial<OptionListProps> = {}) => {
@@ -35,18 +33,10 @@ describe('OptionList', () => {
     jest.clearAllMocks();
   });
 
-  it('renders all options and (Select All)', () => {
+  it('renders all options', () => {
     renderComponent();
-    expect(screen.getByText('(Select All)')).toBeInTheDocument();
     expect(screen.getByText('Music')).toBeInTheDocument();
     expect(screen.getByText('Sports')).toBeInTheDocument();
-  });
-
-  it('calls toggleAll when clicking (Select All)', async () => {
-    const user = userEvent.setup();
-    renderComponent();
-    await user.click(screen.getByText('(Select All)'));
-    expect(mockToggleAll).toHaveBeenCalledTimes(1);
   });
 
   it('calls toggleOption when an option is clicked', async () => {
@@ -81,10 +71,10 @@ describe('OptionList', () => {
     expect(screen.queryByTestId('dummy-icon')).not.toBeInTheDocument();
   });
 
-  it('applies selected class when all options are selected', () => {
+  it('applies selected styling when option is selected', () => {
     const props = {
       ...defaultProps,
-      selectedValues: ['music', 'sports'],
+      selectedValues: ['music'],
     };
     renderComponent(props);
     const checkboxes = screen.getAllByTestId('check-icon');
