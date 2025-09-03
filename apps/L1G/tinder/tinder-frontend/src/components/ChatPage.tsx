@@ -110,6 +110,30 @@ const ChatPage: React.FC = () => {
 
   const { selectedUser, topRowUsers, bottomUsers, chattedUsers, handleUserSelect, moveUserToBottom, setChattedUsers, addNewMatch, removeMatch } = useUserManagement(data, conversations);
 
+  // Helper function to get user status by match ID
+  const getUserStatusByMatchId = useCallback(
+    (matchId: string | undefined) => {
+      if (!matchId || !data?.getMe?.matchIds) return undefined;
+
+      const match = data.getMe.matchIds.find((match) => match?.id === matchId);
+      const actualUserId = match?.matchedUser?.id;
+
+      return actualUserId ? userStatuses[actualUserId] : undefined;
+    },
+    [data?.getMe?.matchIds, userStatuses]
+  );
+
+  // Helper function to get actual user ID from match ID
+  const getActualUserIdFromMatch = useCallback(
+    (matchId: string | undefined) => {
+      if (!matchId || !data?.getMe?.matchIds) return undefined;
+
+      const match = data.getMe.matchIds.find((match) => match?.id === matchId);
+      return match?.matchedUser?.id;
+    },
+    [data?.getMe?.matchIds]
+  );
+
   // Track if component is mounted and page visibility
   useEffect(() => {
     const checkIsMobile = () => {
@@ -331,6 +355,8 @@ const ChatPage: React.FC = () => {
     onNewMatch: handleNewMatch,
     onNotification: handleNotification,
     currentPage: currentPageRef.current,
+    setUserStatuses,
+    setTypingUsers,
   });
 
   const handleKeyDown = useCallback(
@@ -384,11 +410,37 @@ const ChatPage: React.FC = () => {
     setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
   }, []);
 
+  // Get current user's status
+  const currentUserStatus = getUserStatusByMatchId(selectedUser?.id);
+  const actualUserId = getActualUserIdFromMatch(selectedUser?.id);
+
+  // Debug logs with proper user ID resolution
+  console.log('Selected user (match):', selectedUser);
+  console.log('Selected user match ID:', selectedUser?.id);
+  console.log('Actual user ID:', actualUserId);
+  console.log('All user statuses:', userStatuses);
+  console.log('Current user status:', currentUserStatus);
+
+  // Create a modified userStatuses object that maps match IDs to user statuses for ChatPerson
+  const matchIdToUserStatusMap = useMemo(() => {
+    const statusMap: Record<string, { status: 'online' | 'away' | 'offline'; lastSeen: string }> = {};
+
+    if (data?.getMe?.matchIds) {
+      data.getMe.matchIds.forEach((match) => {
+        if (match?.id && match.matchedUser?.id) {
+          const userStatus = userStatuses[match.matchedUser.id];
+          if (userStatus) {
+            statusMap[match.id] = userStatus;
+          }
+        }
+      });
+    }
+
+    return statusMap;
+  }, [data?.getMe?.matchIds, userStatuses]);
+
   if (loading) return <Loading msg="Please Wait..." />;
   if (error) return <div>Error loading chat: {error.message}</div>;
-  console.log('Selected user:', selectedUser);
-  console.log('User status:', selectedUser ? userStatuses[selectedUser.id] : undefined);
-
   return (
     <div className="flex flex-col items-center justify-center w-screen bg-white relative">
       {/* Notifications */}
@@ -420,7 +472,7 @@ const ChatPage: React.FC = () => {
       <div className="flex w-full h-[calc(100vh-120px)] md:h-[calc(100vh-140px)] max-w-[1330px]">
         {/* On mobile: show ChatPerson only if chat window NOT visible */}
         <div className={`${showChatOnMobile ? 'hidden' : 'flex'} md:flex w-full md:w-[350px]`}>
-          <ChatPerson selectedUser={selectedUser} onUserSelect={handleUserSelectWithErrorReset} bottomUsers={bottomUsers} userStatuses={userStatuses} className="" />
+          <ChatPerson selectedUser={selectedUser} onUserSelect={handleUserSelectWithErrorReset} bottomUsers={bottomUsers} userStatuses={matchIdToUserStatusMap} className="" />
         </div>
 
         {/* On mobile: show ChatWindow only if chat window visible */}
@@ -440,7 +492,7 @@ const ChatPage: React.FC = () => {
             onBack={handleBackToMessages}
             onRetryMessage={handleRetryMessage}
             typingUsers={typingUsers}
-            userStatus={selectedUser ? userStatuses[selectedUser.id] : undefined}
+            userStatus={currentUserStatus}
           />
         </div>
       </div>

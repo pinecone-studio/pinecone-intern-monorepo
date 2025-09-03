@@ -7,22 +7,25 @@ interface UseSocketConnectionProps {
   data: any;
   setConversations: React.Dispatch<React.SetStateAction<Record<string, Message[]>>>;
   setSocketError: React.Dispatch<React.SetStateAction<string | null>>;
+  setUserStatuses: React.Dispatch<React.SetStateAction<Record<string, { status: 'online' | 'away' | 'offline'; lastSeen: string }>>>;
   markMessagesAsSeen: () => void;
   handleUnmatched: (matchId: string) => void;
   onNewMatch?: (matchData: any) => void;
   onNotification?: (notification: any) => void;
   currentPage?: string;
+  setTypingUsers: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
 }
-
 export const useSocketConnection = ({
   selectedUser,
   data,
   setConversations,
   setSocketError,
+  setUserStatuses,
   markMessagesAsSeen,
   handleUnmatched,
   onNewMatch,
   onNotification,
+  setTypingUsers,
   currentPage = 'chat',
 }: UseSocketConnectionProps) => {
   const reconnectAttempts = useRef(0);
@@ -69,6 +72,9 @@ export const useSocketConnection = ({
     const userId = data.getMe.id;
     const matchIds = data.getMe.matchIds.map((match: any) => match.id);
 
+    // Get all matched user IDs
+    const matchedUserIds = data.getMe.matchIds.map((match: any) => match?.matchedUser?.id).filter(Boolean);
+
     try {
       socket.emit('authenticate', {
         userId,
@@ -76,11 +82,13 @@ export const useSocketConnection = ({
         currentPage,
       });
 
-      isAuthenticatedRef.current = true;
-      setSocketError(null);
-      reconnectAttempts.current = 0;
+      // IMPORTANT: Request current status of all users immediately after auth
+      setTimeout(() => {
+        socket.emit('get_users_status', { userIds: matchedUserIds });
+      }, 100);
 
-      console.log('✅ Socket authenticated for user:', userId);
+      isAuthenticatedRef.current = true;
+      console.log('✅ Socket authenticated, requesting statuses for:', matchedUserIds);
     } catch (err) {
       console.error('❌ Failed to authenticate socket:', err);
       setSocketError('Failed to connect to chat. Please try again.');
@@ -257,19 +265,29 @@ export const useSocketConnection = ({
 
     // Handle typing indicators
     const handleUserTyping = ({ matchId, userId: typingUserId, isTyping }: { matchId: string; userId: string; isTyping: boolean }) => {
-      if (typingUserId === userId) return; // Ignore own typing
+      if (typingUserId === userId) return;
 
-      // Update typing status (you'll need to implement this in your state)
-      // This could be a separate state or context for typing indicators
+      setTypingUsers((prev) => ({
+        ...prev,
+        [matchId]: isTyping,
+      }));
+
       console.log(`User ${typingUserId} is ${isTyping ? 'typing' : 'stopped typing'} in match ${matchId}`);
     };
 
     // Handle user status changes
     const handleUserStatusChanged = ({ userId: statusUserId, status, lastSeen }: { userId: string; status: 'online' | 'away' | 'offline'; lastSeen: string }) => {
-      if (statusUserId === userId) return; // Ignore own status
+      if (statusUserId === userId) return;
 
-      console.log(`User ${statusUserId} is now ${status}`);
-      // You can update user status in your UI state here
+      console.log(`🟢 User ${statusUserId} is now ${status}`);
+
+      setUserStatuses((prev) => ({
+        ...prev,
+        [statusUserId]: {
+          status,
+          lastSeen,
+        },
+      }));
     };
 
     // Handle notifications when not on chat page
