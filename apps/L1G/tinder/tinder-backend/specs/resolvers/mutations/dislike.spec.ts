@@ -20,34 +20,47 @@ describe('dislike resolver', () => {
     };
 
     (Usermodel.findByIdAndUpdate as jest.Mock).mockResolvedValue({});
-    (MatchModel.findOneAndUpdate as jest.Mock).mockResolvedValue(mockMatch);
+    (MatchModel.findOne as jest.Mock).mockResolvedValue(mockMatch);
+    (MatchModel.deleteOne as jest.Mock).mockResolvedValue({});
     (Usermodel.updateMany as jest.Mock).mockResolvedValue({});
 
     const result = await dislike({}, { dislikedByUser, dislikeReceiver });
 
     expect(result).toEqual({
       isMatch: false,
-      message: 'Succesfully unmatched',
+      message: 'Successfully unmatched and removed match',
     });
 
     expect(Usermodel.findByIdAndUpdate).toHaveBeenCalledTimes(2);
-    expect(Usermodel.findByIdAndUpdate).toHaveBeenCalledWith(expect.any(mongoose.Types.ObjectId), { $pull: { likedTo: expect.any(mongoose.Types.ObjectId) } });
-    expect(Usermodel.findByIdAndUpdate).toHaveBeenCalledWith(expect.any(mongoose.Types.ObjectId), { $pull: { likedBy: expect.any(mongoose.Types.ObjectId) } });
-
-    expect(MatchModel.findOneAndUpdate).toHaveBeenCalledWith(
-      {
-        users: {
-          $all: [new mongoose.Types.ObjectId(dislikedByUser), new mongoose.Types.ObjectId(dislikeReceiver)],
-        },
-        unmatched: false,
-      },
-      { unmatched: true }
+    expect(Usermodel.findByIdAndUpdate).toHaveBeenCalledWith(
+      expect.any(mongoose.Types.ObjectId), 
+      { $pull: { likedTo: expect.any(mongoose.Types.ObjectId) } }
     );
+    expect(Usermodel.findByIdAndUpdate).toHaveBeenCalledWith(
+      expect.any(mongoose.Types.ObjectId), 
+      { $pull: { likedBy: expect.any(mongoose.Types.ObjectId) } }
+    );
+
+    // Updated to match the actual implementation
+    expect(MatchModel.findOne).toHaveBeenCalledWith({
+      users: { 
+        $all: [
+          new mongoose.Types.ObjectId(dislikedByUser), 
+          new mongoose.Types.ObjectId(dislikeReceiver)
+        ] 
+      },
+      unmatched: false,
+    });
+
+    expect(MatchModel.deleteOne).toHaveBeenCalledWith({ _id: mockMatch._id });
 
     expect(Usermodel.updateMany).toHaveBeenCalledWith(
       {
         _id: {
-          $in: [new mongoose.Types.ObjectId(dislikedByUser), new mongoose.Types.ObjectId(dislikeReceiver)],
+          $in: [
+            new mongoose.Types.ObjectId(dislikedByUser), 
+            new mongoose.Types.ObjectId(dislikeReceiver)
+          ],
         },
       },
       { $pull: { matchIds: mockMatch._id } }
@@ -56,14 +69,17 @@ describe('dislike resolver', () => {
 
   it('still succeeds if no match was found', async () => {
     (Usermodel.findByIdAndUpdate as jest.Mock).mockResolvedValue({});
-    (MatchModel.findOneAndUpdate as jest.Mock).mockResolvedValue(null);
+    (MatchModel.findOne as jest.Mock).mockResolvedValue(null); // No match found
 
     const result = await dislike({}, { dislikedByUser, dislikeReceiver });
 
     expect(result).toEqual({
       isMatch: false,
-      message: 'Succesfully unmatched',
+      message: 'Successfully unmatched and removed match',
     });
+    
+    // Should not call deleteOne or updateMany when no match is found
+    expect(MatchModel.deleteOne).not.toHaveBeenCalled();
     expect(Usermodel.updateMany).not.toHaveBeenCalled();
   });
 
