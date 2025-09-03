@@ -4,5 +4,6 @@ query GetFoodOrdersByUser($input: getFoodOrdersByUserInput!) {
     orderNumber
     status
     totalPrice
+    createdAt
   }
 }
