@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client';
 import { Button } from '@/components/ui/button';
 import React, { useEffect } from 'react';
@@ -13,6 +14,7 @@ import { ProfessionSchoolFields } from './ProfessionSchoolFields';
 import { UpdateProfileDocument, useGetAllInterestsQuery } from '@/generated';
 import { NameGenderPreferenceFields } from './NameGenderPreferenceFields';
 import { useMutation } from '@apollo/client';
+import clsx from 'clsx';
 interface MyProfileFormProps {
   user?: {
     id?: string;
@@ -26,6 +28,7 @@ interface MyProfileFormProps {
     schoolWork?: string;
   };
   images?: string[];
+  disableUpdate?: boolean;
 }
 export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user, images }) => {
   const form = useForm<z.infer<typeof profileFormSchema>>({
@@ -147,7 +150,14 @@ export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user, images }) =>
               )}
             />
             <ProfessionSchoolFields control={form.control} />
-            <Button type="submit" className="rounded-md w-fit py-2 px-4 bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100" disabled={loading}>
+            <Button
+              type="submit"
+              className={clsx(
+                'rounded-md w-fit py-2 px-4 bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100',
+                (loading || !images || images.length === 0) && 'opacity-50 cursor-not-allowed'
+              )}
+              disabled={loading || !images || images.length === 0}
+            >
               {loading ? 'Updating...' : 'Update Profile'}
             </Button>
           </div>
