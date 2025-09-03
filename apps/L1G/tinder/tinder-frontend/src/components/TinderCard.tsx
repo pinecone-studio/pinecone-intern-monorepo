@@ -15,7 +15,7 @@ const TinderCard = ({ profile, onLike, onDislike }: TinderCardProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [imageError, setImageError] = useState(false);
 
-  const images = Array.isArray(profile?.images) && profile.images.length > 0 ? profile.images : ['/favicon.ico'];
+  const images = Array.isArray(profile?.images) && profile.images.length > 0 ? profile.images : ['/profile.jpg'];
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
