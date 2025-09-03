@@ -10,6 +10,7 @@ export type FoodOrder = {
   status: 'READY' | 'PREPARING' | 'DONE' | 'PENDING';
   totalPrice: number;
   orderNumber: number;
+  orderType: 'IN' | 'GO';
   user: Types.ObjectId;
   table: Types.ObjectId;
   foodOrder: FoodOrderItem[];
@@ -57,6 +58,12 @@ const FoodOrderSchema = new Schema<FoodOrder>(
       type: String,
       enum: ['READY', 'PREPARING', 'DONE', 'PENDING'],
       default: 'PENDING',
+      required: true,
+    },
+    orderType: {
+      type: String,
+      enum: ['IN', 'GO'],
+      default: 'IN',
       required: true,
     },
   },
