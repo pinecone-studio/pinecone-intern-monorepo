@@ -1,10 +1,10 @@
-import { Navbar } from '@/components/Navbar';
 import AboutUsComponent from '@/components/sheets/AboutUsComponent';
+import { Logedinnav } from '@/components/sheets/Logedinnav';
 
 const Aboutus = () => {
   return (
     <div>
-      <Navbar />
+      <Logedinnav />
       <AboutUsComponent />
     </div>
   );

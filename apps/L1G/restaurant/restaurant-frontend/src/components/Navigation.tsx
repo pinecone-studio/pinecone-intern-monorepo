@@ -1,11 +1,12 @@
 import Image from 'next/image';
 import React from 'react';
-import { Navbar } from './Navbar';
+
+import { Logedinnav } from './sheets/Logedinnav';
 
 export const Navigation = () => {
   return (
     <div className="flex flex-col gap-10  w-full h-full">
-      <Navbar />
+      <Logedinnav />
       <div className="w-full flex justify-center items-center">
         <p className="text-[20px] text-[#441500]">Захиалгын дэлгэрэнгүй</p>
       </div>

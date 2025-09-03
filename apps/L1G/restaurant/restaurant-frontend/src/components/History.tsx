@@ -1,6 +1,7 @@
 'use client';
-import { Navbar } from '@/components/Navbar';
+
 import { useGetFoodOrdersByUserQuery } from '@/generated';
+import { Logedinnav } from './sheets/Logedinnav';
 
 const OrdersHistory = () => {
   const { data, error } = useGetFoodOrdersByUserQuery({
@@ -11,7 +12,7 @@ const OrdersHistory = () => {
 
   return (
     <div>
-      <Navbar />
+      <Logedinnav />
       <div className="text-center">
         <p className="font-medium text-[#441500] pt-5 text-[20px]">Захиалгын түүх</p>
         <div className="flex justify-center  pt-4">

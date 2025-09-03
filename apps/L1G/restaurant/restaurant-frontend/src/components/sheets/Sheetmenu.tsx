@@ -26,10 +26,10 @@ export const SheetMenu = () => {
                 Нүүр хуудас
               </a>
             </div>
-            <div className="flex gap-4 pl-3 items-center w-full h-[60px] border-b">
+            <a href="/wallet" className="flex gap-4 pl-3 items-center w-full h-[60px] border-b">
               <Wallet size={12} />
               <p className="font-[30px]">Хэтэвч</p>
-            </div>
+            </a>
             <div className="flex gap-4 pl-3 items-center w-full h-[60px] border-b">
               <User size={12} />
               <p className="font-[30px]">Хэрэглэгч</p>
