@@ -1,3 +1,4 @@
+/* eslint max-lines: "off" */
 'use client';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -8,8 +9,10 @@ import { MyImages } from './MyImages';
 import clsx from 'clsx';
 import { useGetMeQuery } from '@/generated';
 import Loading from './Loading';
+import { LogoutBtn } from './LogoutBtn';
+import { useRouter } from 'next/navigation';
 
-type MenuType = 'profile' | 'images' | 'appearance' | 'notifications';
+type MenuType = 'profile' | 'images' | 'notifications' | 'logout';
 
 export const MyProfile = () => {
   const [menu, setMenu] = useState<MenuType>('profile');
@@ -46,13 +49,22 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
   const items: { label: string; value: MenuType }[] = [
     { label: 'Profile', value: 'profile' },
     { label: 'Images', value: 'images' },
-    { label: 'Appearance', value: 'appearance' },
     { label: 'Notifications', value: 'notifications' },
   ];
 
   const handleSelect = (value: MenuType) => {
     setMenu(value);
     setIsOpen(false);
+  };
+
+  const router = useRouter();
+  const handleLogout = () => {
+    try {
+      localStorage.removeItem('token');
+      router.push('/');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -72,6 +84,17 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
             {label}
           </Button>
         ))}
+        <Button
+          onClick={() => handleLogout()}
+          className={clsx(
+            'rounded-md py-2 px-4 text-sm font-sans font-medium justify-start transition-colors',
+            menu === 'logout' ? 'bg-[#F4F4F5] hover:bg-[#E4E4E7] text-[#E11D48E5]' : 'bg-transparent hover:bg-[#F4F4F5] text-[#E11D48E5]'
+          )}
+        >
+          Log out
+        </Button>
+
+        {/* <LogoutBtn /> */}
       </div>
 
       {/* Mobile Drawer */}
@@ -106,6 +129,7 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
                 {label}
               </Button>
             ))}
+            <LogoutBtn />
           </div>
         </div>
       </div>
@@ -117,9 +141,7 @@ export const MenuContent = ({ menu, user, images, setImages }: { menu: MenuType;
     case 'profile':
       return <MyProfileForm user={user} images={images} />;
     case 'images':
-    return <MyImages user={{ images }} onImagesChange={setImages} />;
-    case 'appearance':
-      return <div data-testid="appearance-settings">Appearance Settings</div>;
+      return <MyImages user={{ images }} onImagesChange={setImages} />;
     case 'notifications':
       return <div data-testid="notification-settings">Notification Settings</div>;
     default:
