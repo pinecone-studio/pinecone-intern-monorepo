@@ -90,6 +90,7 @@ export const UsertypeDefs = gql`
     getUserAllChatMessages(userId: ID!): [MatchChatMessages!]!
     getChatWithUser(userId: ID!, participantId: ID!): MatchChatMessages!
     getLikedByUsers(_id: ID!): UserLikedByResponse!
+    getOtherUsers(_id: ID!): [User!]!
   }
   type Mutation {
     forgotPassword(newPassword: String!, otpId: String!): ForgotPasswordPayload!
