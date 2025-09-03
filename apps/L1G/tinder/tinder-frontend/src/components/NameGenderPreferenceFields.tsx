@@ -35,11 +35,8 @@ export const NameGenderPreferenceFields = ({ control }: NameGenderPreferenceFiel
             <FormItem>
               <FormLabel htmlFor="genderPreference">Gender Preference</FormLabel>
               <FormControl>
-                <Select
-                  value={field.value}
-                  onValueChange={field.onChange}
-                >
-                  <SelectTrigger id="genderPreference" className="w-[335px]">
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger id="genderPreference">
                     <SelectValue placeholder="Select gender preference" />
                   </SelectTrigger>
                   <SelectContent>
