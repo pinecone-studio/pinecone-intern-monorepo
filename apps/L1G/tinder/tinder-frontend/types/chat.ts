@@ -4,6 +4,10 @@ export type Message = {
   sender: 'me' | 'them';
   timestamp: string;
   seen?: boolean;
+  delivered: boolean;
+  sending: boolean;
+  failed: boolean;
+  retrying: boolean;
 };
 
 export type ChatUser = {
@@ -33,4 +37,6 @@ export type UserData = {
 };
 export interface ChatUserWithLastMessage extends ChatUser {
   lastMessage?: Message;
+  lastActivity: Date;
+  hasUnreadMessages: boolean;
 }

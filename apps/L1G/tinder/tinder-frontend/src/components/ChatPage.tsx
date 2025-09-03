@@ -1,14 +1,80 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import ChatPerson from '@/components/ChatPerson';
 import ChatWindow from '@/components/ChatWindow';
 import Matches from '@/components/Matches';
 import { useGetChatWithUserLazyQuery, useGetMeQuery } from '@/generated';
 import Loading from './Loading';
-import type { Message } from 'types/chat';
+import type { ChatUser, Message } from 'types/chat';
 import { useMessageSending } from 'hooks/useMessageSending';
 import { useSocketConnection } from 'hooks/useSocketConnection';
 import { useUserManagement } from 'hooks/useUserManagement';
 import { useMarkMessagesAsSeen } from 'hooks/useMarkMessagesAsSeen';
+
+// Notification component
+interface NotificationProps {
+  notification: {
+    type: string;
+    title: string;
+    message: string;
+    timestamp: string;
+  };
+  onClose: () => void;
+}
+
+const NotificationToast: React.FC<NotificationProps> = ({ notification, onClose }) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onClose();
+    }, 5000); // Auto-close after 5 seconds
+
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
+  const getNotificationIcon = (type: string) => {
+    switch (type) {
+      case 'match':
+        return '💕';
+      case 'message':
+        return '💬';
+      case 'unmatch':
+        return '💔';
+      default:
+        return '🔔';
+    }
+  };
+
+  const getNotificationColor = (type: string) => {
+    switch (type) {
+      case 'match':
+        return 'from-pink-500 to-red-500';
+      case 'message':
+        return 'from-blue-500 to-purple-500';
+      case 'unmatch':
+        return 'from-gray-500 to-gray-600';
+      default:
+        return 'from-green-500 to-blue-500';
+    }
+  };
+
+  return (
+    <div className="fixed top-4 right-4 z-50 animate-slide-in-right">
+      <div className={`bg-gradient-to-r ${getNotificationColor(notification.type)} text-white p-4 rounded-lg shadow-lg max-w-sm`}>
+        <div className="flex items-start justify-between">
+          <div className="flex items-start space-x-3">
+            <span className="text-2xl">{getNotificationIcon(notification.type)}</span>
+            <div>
+              <h4 className="font-semibold">{notification.title}</h4>
+              <p className="text-sm opacity-90">{notification.message}</p>
+            </div>
+          </div>
+          <button onClick={onClose} className="ml-4 text-white/70 hover:text-white transition-colors">
+            ✕
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const ChatPage: React.FC = () => {
   const { data, loading, error, refetch } = useGetMeQuery();
@@ -19,18 +85,70 @@ const ChatPage: React.FC = () => {
   const [showChatOnMobile, setShowChatOnMobile] = useState(false);
   const [chatLoading, setChatLoading] = useState<Record<string, boolean>>({});
   const [isMobile, setIsMobile] = useState(false);
+  const [notifications, setNotifications] = useState<
+    Array<{
+      id: string;
+      type: string;
+      title: string;
+      message: string;
+      timestamp: string;
+    }>
+  >([]);
+  const [typingUsers, setTypingUsers] = useState<Record<string, boolean>>({});
+  const [userStatuses, setUserStatuses] = useState<
+    Record<
+      string,
+      {
+        status: 'online' | 'away' | 'offline';
+        lastSeen: string;
+      }
+    >
+  >({});
 
-  const { selectedUser, topRowUsers, bottomUsers, chattedUsers, handleUserSelect, moveUserToBottom, setChattedUsers } = useUserManagement(data, conversations);
+  const notificationIdRef = useRef(0);
+  const currentPageRef = useRef('chat');
 
+  const { selectedUser, topRowUsers, bottomUsers, chattedUsers, handleUserSelect, moveUserToBottom, setChattedUsers, addNewMatch, removeMatch } = useUserManagement(data, conversations);
+
+  // Track if component is mounted and page visibility
   useEffect(() => {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
 
     checkIsMobile();
-
     window.addEventListener('resize', checkIsMobile);
     return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
+
+  // Handle page visibility changes
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        refetch();
+        // Clear notifications when user comes back to the page
+        setNotifications([]);
+      }
+    };
+
+    const handleFocus = () => {
+      refetch();
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, [refetch]);
+
+  // Cleanup conversations on unmount
+  useEffect(() => {
+    return () => {
+      setConversations({});
+    };
   }, []);
 
   const messages = useMemo(() => {
@@ -38,71 +156,89 @@ const ChatPage: React.FC = () => {
     return conversations[selectedUser.id] || [];
   }, [selectedUser, conversations]);
 
-  const markMessagesAsSeen = useMarkMessagesAsSeen(selectedUser, setConversations);
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        refetch();
-      }
-    };
+  const { markMessagesAsSeen, autoMarkNewMessagesAsSeen } = useMarkMessagesAsSeen(selectedUser, conversations, setConversations);
 
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, [refetch]);
-  useEffect(() => {
-    return () => {
-      setConversations({});
-    };
-  }, []);
-
+  // Auto-mark messages as seen based on mobile/desktop and chat visibility
   useEffect(() => {
     if (!selectedUser) return;
 
     if (!isMobile) {
       // Desktop: mark as seen immediately
-      markMessagesAsSeen();
+      const timeoutId = setTimeout(() => {
+        markMessagesAsSeen();
+      }, 500);
+      return () => clearTimeout(timeoutId);
     } else {
       // Mobile: only mark as seen if chat window is visible
       if (showChatOnMobile) {
-        markMessagesAsSeen();
+        const timeoutId = setTimeout(() => {
+          markMessagesAsSeen();
+        }, 500);
+        return () => clearTimeout(timeoutId);
       }
     }
   }, [selectedUser, showChatOnMobile, isMobile, markMessagesAsSeen]);
 
+  // Load initial conversations
   useEffect(() => {
     if (!data?.getMe?.id || !data.getMe.matchIds) return;
+    const loadConversations = async () => {
+      const userId = data?.getMe?.id;
 
-    data.getMe.matchIds.forEach(async (match: any) => {
-      const userId = data.getMe.id;
-      const participantId = match.matchedUser?.id;
-      if (!participantId) return;
+      if (!userId || !Array.isArray(data?.getMe?.matchIds)) return;
 
-      const result = await fetchChat({ variables: { userId, participantId } });
-      if (result.data?.getChatWithUser) {
-        const serverMessages = result.data.getChatWithUser.messages.map((msg: any) => ({
-          id: msg.id,
-          text: msg.content,
-          sender: msg.senderId === userId ? 'me' : 'them',
-          timestamp: new Date(msg.createdAt).toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false,
-          }),
-          seen: msg.seen,
-        }));
-        console.log(`Fetched messages for match ${match.id}:`, serverMessages);
+      const matches = data.getMe.matchIds.filter((match): match is NonNullable<typeof match> => !!match);
 
-        setConversations((prev) => ({
-          ...prev,
-          [match.id]: serverMessages.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()),
-        }));
+      for (const match of matches) {
+        const participantId = match.matchedUser?.id;
+        if (!participantId) continue;
+
+        try {
+          setChatLoading((prev) => ({ ...prev, [match.id]: true }));
+
+          const result = await fetchChat({
+            variables: { userId, participantId },
+            fetchPolicy: 'cache-and-network',
+          });
+
+          if (result.data?.getChatWithUser) {
+            const serverMessages: Message[] = result.data.getChatWithUser.messages.map(
+              (msg: any): Message => ({
+                id: msg.id,
+                text: msg.content,
+                sender: msg.senderId === userId ? 'me' : 'them',
+                timestamp: new Date(msg.createdAt).toLocaleTimeString('en-US', {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  hour12: false,
+                }),
+                seen: msg.seen,
+                delivered: true,
+
+                // These are required by your Message type
+                sending: false,
+                failed: false,
+                retrying: false,
+              })
+            );
+
+            setConversations((prev) => ({
+              ...prev,
+              [match.id]: serverMessages.sort((a, b) => new Date(`2000-01-01 ${a.timestamp}`).getTime() - new Date(`2000-01-01 ${b.timestamp}`).getTime()),
+            }));
+          }
+        } catch (error) {
+          console.error(`Failed to load conversation for match ${match.id}:`, error);
+        } finally {
+          setChatLoading((prev) => ({ ...prev, [match.id]: false }));
+        }
       }
-    });
-  }, [data?.getMe?.id, data?.getMe?.matchIds]);
+    };
 
+    loadConversations();
+  }, [data?.getMe?.id, data?.getMe?.matchIds, fetchChat]);
+
+  // Load specific chat when user is selected
   useEffect(() => {
     if (!selectedUser || !data?.getMe?.id) return;
 
@@ -112,7 +248,11 @@ const ChatPage: React.FC = () => {
     if (!participantId) return;
 
     setChatLoading((prev) => ({ ...prev, [matchId]: true }));
-    fetchChat({ variables: { userId, participantId } }).finally(() => {
+
+    fetchChat({
+      variables: { userId, participantId },
+      fetchPolicy: 'cache-first',
+    }).finally(() => {
       setChatLoading((prev) => ({ ...prev, [matchId]: false }));
     });
   }, [selectedUser, data, fetchChat]);
@@ -123,25 +263,64 @@ const ChatPage: React.FC = () => {
     return seenMessages[seenMessages.length - 1].id;
   }, [messages]);
 
-  const { handleSend, sending } = useMessageSending({
+  // Handle new match callback
+  const handleNewMatch = useCallback(
+    (matchData: any) => {
+      addNewMatch(matchData);
+      refetch(); // Refresh user data to get updated match list
+    },
+    [addNewMatch, refetch]
+  );
+
+  // Handle notification callback
+  const handleNotification = useCallback(
+    (notificationData: any) => {
+      const notification = {
+        id: `notif_${++notificationIdRef.current}`,
+        ...notificationData,
+      };
+
+      setNotifications((prev) => [...prev, notification]);
+
+      // Auto-mark new messages as seen if appropriate
+      if (notificationData.type === 'message' && notificationData.matchId) {
+        autoMarkNewMessagesAsSeen(notificationData.matchId);
+      }
+    },
+    [autoMarkNewMessagesAsSeen]
+  );
+
+  // Handle unmatch callback
+  const handleUnmatched = useCallback(
+    (matchId: string) => {
+      removeMatch(matchId);
+      setConversations((prev) => {
+        const newConversations = { ...prev };
+        delete newConversations[matchId];
+        return newConversations;
+      });
+
+      // If currently viewing the unmatched conversation, clear selection
+      if (selectedUser?.id === matchId) {
+        handleUserSelect(null);
+      }
+
+      refetch();
+    },
+    [removeMatch, selectedUser, handleUserSelect, refetch]
+  );
+
+  const { handleSend, sending, retryFailedMessage, handleInputChange } = useMessageSending({
     selectedUser,
     data,
     setConversations,
     setChattedUsers,
-    moveUserToBottom,
+    moveUserToBottom: moveUserToBottom as (user: ChatUser) => void,
     setSocketError,
     refetch,
   });
-  const handleUnmatched = useCallback(() => {
-    if (!selectedUser) return;
-    refetch();
-    setConversations((prev) => {
-      const newConversations = { ...prev };
-      delete newConversations[selectedUser.id];
-      return newConversations;
-    });
-  }, [selectedUser, refetch]);
 
+  // Enhanced socket connection with all callbacks
   useSocketConnection({
     selectedUser,
     data,
@@ -149,13 +328,16 @@ const ChatPage: React.FC = () => {
     setSocketError,
     markMessagesAsSeen,
     handleUnmatched,
+    onNewMatch: handleNewMatch,
+    onNotification: handleNotification,
+    currentPage: currentPageRef.current,
   });
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter' && !e.shiftKey && !e.ctrlKey && !e.altKey) {
         e.preventDefault();
-        if (!sending) {
+        if (!sending && inputValue.trim()) {
           handleSend(inputValue, setInputValue);
         }
       }
@@ -163,13 +345,20 @@ const ChatPage: React.FC = () => {
     [handleSend, sending, inputValue]
   );
 
-  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  }, []);
+  const handleInputChangeWithTyping = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setInputValue(value);
+      handleInputChange(value);
+    },
+    [handleInputChange]
+  );
 
   const handleSendClick = useCallback(() => {
-    handleSend(inputValue, setInputValue);
-  }, [handleSend, inputValue]);
+    if (!sending && inputValue.trim()) {
+      handleSend(inputValue, setInputValue);
+    }
+  }, [handleSend, inputValue, sending]);
 
   const handleUserSelectWithErrorReset = useCallback(
     (user: any) => {
@@ -184,12 +373,42 @@ const ChatPage: React.FC = () => {
     setShowChatOnMobile(false);
   }, []);
 
+  const handleRetryMessage = useCallback(
+    (messageId: string | number) => {
+      retryFailedMessage(messageId);
+    },
+    [retryFailedMessage]
+  );
+
+  const dismissNotification = useCallback((notificationId: string) => {
+    setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
+  }, []);
+
   if (loading) return <Loading msg="Please Wait..." />;
   if (error) return <div>Error loading chat: {error.message}</div>;
+  console.log('Selected user:', selectedUser);
+  console.log('User status:', selectedUser ? userStatuses[selectedUser.id] : undefined);
 
   return (
-    <div className="flex flex-col items-center justify-center w-screen bg-white">
-      {socketError && <div className="error-message text-red-500 p-2 text-center bg-gray-800 border-b border-gray-100">{socketError}</div>}
+    <div className="flex flex-col items-center justify-center w-screen bg-white relative">
+      {/* Notifications */}
+      <div className="fixed top-0 right-0 z-50 space-y-2 p-4">
+        {notifications.map((notification) => (
+          <NotificationToast key={notification.id} notification={notification} onClose={() => dismissNotification(notification.id)} />
+        ))}
+      </div>
+
+      {/* Socket Error */}
+      {socketError && (
+        <div className="w-full bg-red-500 text-white p-2 text-center text-sm">
+          {socketError}
+          {socketError.includes('retry') && (
+            <button className="ml-2 underline hover:no-underline" onClick={() => setSocketError(null)}>
+              Dismiss
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Matches: show always on desktop, and on mobile only if NOT viewing ChatWindow */}
       {(!showChatOnMobile || !isMobile) && (
@@ -201,24 +420,27 @@ const ChatPage: React.FC = () => {
       <div className="flex w-full h-[calc(100vh-120px)] md:h-[calc(100vh-140px)] max-w-[1330px]">
         {/* On mobile: show ChatPerson only if chat window NOT visible */}
         <div className={`${showChatOnMobile ? 'hidden' : 'flex'} md:flex w-full md:w-[350px]`}>
-          <ChatPerson selectedUser={selectedUser} onUserSelect={handleUserSelectWithErrorReset} bottomUsers={bottomUsers} chattedUsers={chattedUsers} className="" />
+          <ChatPerson selectedUser={selectedUser} onUserSelect={handleUserSelectWithErrorReset} bottomUsers={bottomUsers} userStatuses={userStatuses} className="" />
         </div>
 
         {/* On mobile: show ChatWindow only if chat window visible */}
         <div className={`${showChatOnMobile ? 'flex' : 'hidden'} w-full md:flex md:flex-1`}>
           <ChatWindow
             loading={selectedUser ? chatLoading[selectedUser.id] || false : false}
-            onUnmatched={handleUnmatched}
+            onUnmatched={() => selectedUser && handleUnmatched(selectedUser.id)}
             matchId={selectedUser?.id}
             lastSeenMessageId={lastSeenMessageId}
             sending={sending}
             selectedUser={selectedUser}
             messages={messages}
             inputValue={inputValue}
-            onInputChange={handleInputChange}
+            onInputChange={handleInputChangeWithTyping}
             onKeyDown={handleKeyDown}
             onSend={handleSendClick}
             onBack={handleBackToMessages}
+            onRetryMessage={handleRetryMessage}
+            typingUsers={typingUsers}
+            userStatus={selectedUser ? userStatuses[selectedUser.id] : undefined}
           />
         </div>
       </div>
