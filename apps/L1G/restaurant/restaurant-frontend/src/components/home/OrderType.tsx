@@ -19,30 +19,33 @@ const OrderType = ({ currentCart }: Props) => {
   };
 
   return (
-    isClicked && (
-      <Dialog>
-        <DialogContent className="sm:max-w-[420px]">
-          <DialogHeader>
-            <DialogTitle>Захиалгаа хаана сууж эсэх</DialogTitle>
-            <DialogDescription>Доорх нэгийг сонгоод баталгаажуулна уу.</DialogDescription>
-          </DialogHeader>
-          <RadioGroup>
-            <div className="flex items-center space-x-3">
-              <RadioGroupItem id="dinein" value="dine_in" />
-              <Label htmlFor="dinein">Эндээ идэх</Label>
-            </div>
-            <div className="flex items-center space-x-3 mt-2">
-              <RadioGroupItem id="takeaway" value="takeaway" />
-              <Label htmlFor="takeaway">Аваад явах</Label>
-            </div>
-          </RadioGroup>
-          <DialogFooter>
-            <Button variant="secondary">Болих</Button>
-            <Button>Батлах</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    )
+    <Dialog open={isOpen}>
+      <DialogTrigger className="w-full bg-amber-800 hover:bg-amber-900 text-white py-4 text-lg font-medium rounded-lg">Захиалах</DialogTrigger>
+      <DialogContent className="sm:max-w-[420px] border-[2px] border-white rounded-xl">
+        <DialogHeader>
+          <DialogTitle className="text-[18px]">
+            <DialogClose className="flex w-full justify-between">
+              <p>Зааланд суух эсэх</p>
+              <X className="h-5 w-5 -right-4 -top-4" />
+            </DialogClose>
+          </DialogTitle>
+        </DialogHeader>
+        <RadioGroup onValueChange={handlePick} className="flex items-center w-full justify-around mt-4 mb-8">
+          <div className="flex items-center justify-center space-x-3">
+            <RadioGroupItem id="IN" value="IN" />
+            <Label className="text-[14px]" htmlFor="IN">
+              Эндээ идэх
+            </Label>
+          </div>
+          <div className="flex items-center justify-center space-x-3">
+            <RadioGroupItem id="GO" value="GO" />
+            <Label className="text-[14px]" htmlFor="GO">
+              Аваад явах
+            </Label>
+          </div>
+        </RadioGroup>
+      </DialogContent>
+    </Dialog>
   );
 };
 
