@@ -31,9 +31,11 @@ const UserSchema = new Schema<User>(
     },
     profile: {
       type: String,
+      default: '',
     },
     phoneNumber: {
       type: String,
+      default: '',
     },
     bonusPoints: {
       type: Number,
