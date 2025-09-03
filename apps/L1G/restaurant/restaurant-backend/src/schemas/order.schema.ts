@@ -21,6 +21,8 @@ export const orderTypeDefs = gql`
     user: User!
     table: Table!
     foodOrder: [FoodOrderItem!]!
+    createdAt: String
+    updatedAt: String
   }
 
   input FoodOrderItemInput {
