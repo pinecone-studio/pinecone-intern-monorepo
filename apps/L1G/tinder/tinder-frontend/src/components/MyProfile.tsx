@@ -1,7 +1,8 @@
+/* eslint max-lines: "off" */
 'use client';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { Menu, Router, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { MyProfileForm } from './MyProfileForm';
 import { MyImages } from './MyImages';
@@ -141,8 +142,6 @@ export const MenuContent = ({ menu, user, images, setImages }: { menu: MenuType;
       return <MyProfileForm user={user} images={images} />;
     case 'images':
       return <MyImages user={{ images }} onImagesChange={setImages} />;
-    // case 'logout':
-    //   return <LogoutBtn />;
     case 'notifications':
       return <div data-testid="notification-settings">Notification Settings</div>;
     default:
