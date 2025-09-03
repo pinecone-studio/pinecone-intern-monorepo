@@ -69,7 +69,7 @@ const HomePage = () => {
 
       if (didMatch) {
         setIsMatched(true);
-        setMatchedusersid((prev) => [...prev, currentUser.id, profileId]);
+        setMatchedusersid([currentUser.id, profileId]);
       } else {
         goToNextProfile();
       }
