@@ -68,6 +68,23 @@ io.on('connection', (socket) => {
       });
     });
 
+    // ✅ Send statuses of all matched users to the authenticated user
+    const matchStatuses: Record<string, { status: string; lastSeen: Date }> = {};
+
+    for (const [otherUserId, userData] of connectedUsers.entries()) {
+      if (otherUserId !== userId) {
+        const sharedMatch = userData.matchIds.find((id) => matchIds.includes(id));
+        if (sharedMatch) {
+          matchStatuses[otherUserId] = {
+            status: userData.status,
+            lastSeen: userData.lastSeen,
+          };
+        }
+      }
+    }
+
+    socket.emit('userStatuses', matchStatuses);
+
     console.log(`✅ User ${userId} authenticated and joined ${matchIds.length} rooms`);
   });
 
