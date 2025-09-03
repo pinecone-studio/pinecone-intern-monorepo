@@ -1,137 +1,134 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
+import Image from 'next/image';
 import jwt from 'jsonwebtoken';
 import { OrderData, OrderTypeValue } from '@/types/order';
 import { useCreateFoodOrderMutation } from '@/generated';
-import { set } from 'cypress/types/lodash';
-import { array } from 'zod';
 
-type foodOrderProps = {
+// Fix: Change the type to match your GraphQL schema
+type FoodOrderItemInput = {
   foodId: string;
-  quantity: string;
+  quantity: number;
 };
-type OrderProps = {
-  foodOrder: foodOrderProps[];
-  userId: string;
-  table: string;
-  totalPrice: number;
-};
+
 export default function PaymentSelection() {
+  const orderData = typeof window !== 'undefined' ? localStorage.getItem('orderData') : null;
+  const [order, setOrder] = useState<OrderData>();
+  const [baseOrderAmount, setBaseOrderAmount] = useState(0);
   const [selectedPayment, setSelectedPayment] = useState<string>('');
-  const [deliveryOption, setDeliveryOption] = useState('takeaway');
+  const [deliveryOption, setDeliveryOption] = useState<OrderTypeValue | undefined>(undefined);
   const [isWalletDrawerOpen, setIsWalletDrawerOpen] = useState(false);
   const [targetAmount, setTargetAmount] = useState('');
   const [walletUsed, setWalletUsed] = useState(false);
   const [walletDeduction, setWalletDeduction] = useState(0);
+  // Fix: Change the state type to match GraphQL input
+  const [orderFood, setOrderFood] = useState<FoodOrderItemInput[]>([]);
+  const [createOrder] = useCreateFoodOrderMutation();
+
+  useEffect(() => {
+    if (orderData) setOrder(JSON.parse(orderData));
+  }, [orderData]);
+
+  useEffect(() => {
+    if (order) {
+      const total = order.items.reduce((sum, v) => sum + Number(v.price) * v.selectCount, 0);
+      setBaseOrderAmount(total);
+      setDeliveryOption(order.orderType);
+    }
+  }, [order]);
+
+  useEffect(() => {
+    if (order?.items) {
+      // Fix: Map to the correct property name
+      setOrderFood(
+        order.items.map((v) => ({
+          foodId: String(v.id),
+          quantity: Number(v.selectCount),
+        }))
+      );
+    }
+  }, [order?.items]);
 
   const baseOrderAmount = 53000;
   const deliveryFee = 4000;
   const totalBeforeWallet = baseOrderAmount + deliveryFee;
+  const finalAmount = Math.max(0, totalBeforeWallet - walletDeduction);
 
-  const paymentMethods = [
-    {
-      id: 'qpay',
-      name: 'Qpay',
-      icon: (
-        <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center">
-          <span className="text-white font-bold text-lg">Q</span>
-        </div>
-      ),
-    },
-    {
-      id: 'socialpay',
-      name: 'Social Pay',
-      icon: (
-        <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
-          <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-            <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-          </div>
-        </div>
-      ),
-    },
-    ...(!walletUsed
-      ? [
-          {
-            id: 'wallet',
-            name: 'Хэтэвч',
-            icon: (
-              <div className="w-12 h-12 bg-orange-400 rounded-full flex items-center justify-center">
-                <div className="w-8 h-6 bg-orange-600 rounded-sm relative">
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 w-4 h-2 bg-orange-600 rounded-t"></div>
-                </div>
-              </div>
-            ),
-          },
-        ]
-      : []),
-  ];
+  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  const decoded: any = token ? jwt.decode(token) : null;
+  const userId = String(decoded?.id || decoded?._id || decoded?.userId || '');
 
-  const handlePaymentSelect = (methodId: string) => {
-    setSelectedPayment(methodId);
-    if (methodId === 'wallet') {
-      setIsWalletDrawerOpen(true);
-    }
-  };
+  const lsTableId = typeof window !== 'undefined' ? localStorage.getItem('tableId') : null;
+  const lsTableName = typeof window !== 'undefined' ? localStorage.getItem('tableName') : null;
+  const table = lsTableId ? String(JSON.parse(lsTableId)) : String(lsTableName ? JSON.parse(lsTableName) : '');
+  console.log(orderFood, 'qq');
+
+  const paymentMethods = useMemo(
+    () => [
+      { id: 'qpay', name: 'Qpay', icon: '/qpay.png' },
+      { id: 'socialpay', name: 'Social Pay', icon: '/socialpay.png' },
+      ...(!walletUsed ? [{ id: 'wallet', name: 'Хэтэвч', icon: '/log2.png' }] : []),
+    ],
+    [walletUsed]
+  );
 
   const handleWalletOrder = () => {
-    const deductionAmount = Number.parseInt(targetAmount) || 0;
+    const deductionAmount = Math.max(0, Math.min(Number.parseInt(targetAmount) || 0, totalBeforeWallet));
     setWalletDeduction(deductionAmount);
     setWalletUsed(true);
-    setSelectedPayment(''); // Reset selected payment
+    setSelectedPayment('');
     setIsWalletDrawerOpen(false);
     setTargetAmount('');
   };
 
-  const CheckoutButton = ({ foodOrder, userId, table, totalPrice }: OrderProps) => {
-    const [createOrder] = useCreateFoodOrderMutation();
-    const order = createOrder({ variables: { input: { user: userId, table: table, totalPrice: totalPrice, FoodOrderItem: foodOrder } } });
-    console.log(order, 'zahialaga');
-  };
-  const finalAmount = totalBeforeWallet - walletDeduction;
-  const user = localStorage.getItem('token');
-  const userid = jwt.decode(user!);
-  const table = localStorage.getItem('tableName');
-  const tableName = JSON.parse(table!);
-  const [orderFood, setOrderFood] = useState<foodOrderProps[]>([]);
-  order?.items.forEach((val) => {
-    const foodName = val.id;
-    const quantity = val.selectCount;
-    setOrderFood((prevOrderFood) => [...prevOrderFood, foodName, quantity]);
-  });
-
-  const handlePaymentSelect = (methodId: string) => {
+  const handlePaymentSelect = async (methodId: string) => {
     setSelectedPayment(methodId);
     if (methodId === 'wallet') {
       setIsWalletDrawerOpen(true);
-    } else {
-      CheckoutButton({ orderFood, userid, tableName, finalAmount });
+      return;
+    }
+    try {
+      await createOrder({
+        variables: {
+          input: {
+            user: userId,
+            table,
+            totalPrice: Number(finalAmount),
+            // Fix: Use the correct property name that matches your GraphQL schema
+            FoodOrderItem: orderFood,
+          },
+        },
+      });
+    } catch (e) {
+      console.error('createOrder error', e);
     }
   };
+
   return (
     <div className="max-w-sm mx-auto bg-white min-h-screen">
       <div className="w-full h-fit flex justify-end">
-        <button className="flex  mt-[20px]">
-          <X className="w-6 h-6 text-gray-400" />
+        <button className="flex mt-[20px]">
+          <X className="w-6 h-6 text-black" />
         </button>
       </div>
 
-      <div className="flex items-center justify-between pt-[180px] ">
-        <div className="w-6"></div>
-        <h1 className="text-lg font-medium text-center flex-1">
+      <div className="flex items-center justify-between pt-[180px]">
+        <h1 className="text-[20px] font-medium text-center flex-1">
           Төлбөрийн хэрэгслээ
           <br />
           сонгоно уу
         </h1>
       </div>
-      <div className="p-4 space-y-6 pt-[100px]">
-        <Select value={deliveryOption} onValueChange={setDeliveryOption}>
+
+      <div className="flex flex-col p-4 gap-[40px] pt-[40px]">
+        <Select value={deliveryOption} onValueChange={(value) => setDeliveryOption(value as OrderTypeValue)}>
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Хүргэлтийн төрөл сонгоно уу" />
           </SelectTrigger>
@@ -141,30 +138,30 @@ export default function PaymentSelection() {
           </SelectContent>
         </Select>
 
-        {/* Payment Methods */}
-        <div className="flex justify-between  gap-4">
+        <div className="flex justify-between gap-4">
           {paymentMethods.map((method) => (
             <Card
               key={method.id}
               className={`p-4 w-full cursor-pointer transition-all ${selectedPayment === method.id ? 'ring-2 ring-blue-500 bg-blue-50' : 'hover:bg-gray-50'}`}
               onClick={() => handlePaymentSelect(method.id)}
             >
-              <div className="flex flex-col items-center space-y-2">
-                {method.icon}
+              <div className="flex flex-col justify-center items-center space-y-1">
+                <div className="flex flex-col w-[40px] h-[40px] relative">
+                  <Image src={method.icon} alt="icon" fill className="object-contain" />
+                </div>
                 <span className="text-sm font-medium text-gray-700">{method.name}</span>
               </div>
             </Card>
           ))}
         </div>
 
-        {/* Payment Summary */}
-        <div className="space-y-3 pt-8">
-          <div className="flex justify-between items-center border-b">
+        <div>
+          <div className="flex justify-between items-center border-b p-3">
             <span className="text-gray-600">Захиалгын нийт дүн:</span>
             <span className="font-medium">{baseOrderAmount.toLocaleString()}₮</span>
           </div>
-          <div className="flex justify-between items-center border-b">
-            <span className="text-gray-600">Хүргэлт сав:</span>
+          <div className="flex justify-between items-center border-b p-3">
+            <span className="text-gray-600">Хоолны сав:</span>
             <span className="font-medium">{deliveryFee.toLocaleString()}₮</span>
           </div>
           {walletUsed && (
@@ -173,7 +170,7 @@ export default function PaymentSelection() {
               <span className="font-medium">-{walletDeduction.toLocaleString()}₮</span>
             </div>
           )}
-          <div className="flex justify-between items-center pt-2 ">
+          <div className="flex justify-between items-center p-3">
             <span className="font-medium">Төлөх дүн:</span>
             <span className="font-bold text-lg">{finalAmount.toLocaleString()}₮</span>
           </div>
@@ -189,7 +186,15 @@ export default function PaymentSelection() {
 
           <div className="space-y-4">
             <div>
-              <Input placeholder="Зорилгын дүн" value={targetAmount} onChange={(e) => setTargetAmount(e.target.value)} className="w-full p-3 border border-gray-200 rounded-lg" type="number" />
+              <Input
+                placeholder="Зорилгын дүн"
+                value={targetAmount}
+                onChange={(e) => setTargetAmount(e.target.value)}
+                className="w-full p-3 border border-gray-200 rounded-lg"
+                type="number"
+                min={0}
+                max={totalBeforeWallet}
+              />
             </div>
 
             <Button className="w-full bg-amber-800 hover:bg-amber-900 text-white py-3 rounded-lg font-medium" onClick={handleWalletOrder}>
