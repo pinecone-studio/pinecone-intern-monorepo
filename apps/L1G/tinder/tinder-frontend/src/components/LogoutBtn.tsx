@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { LogOut } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -15,8 +16,9 @@ export const LogoutBtn = () => {
   };
 
   return (
-    <Button onClick={handleLogout} className="rounded-md w-fit py-2 px-4 bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] ">
-      Log out
+    // <Button onClick={handleLogout} className="rounded-md w-fit py-2 px-4 bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] ">
+    <Button onClick={handleLogout} className="text-black rounded-md w-full py-2 px-4 bg-[#F4F4F5] font-sans hover:bg-[#E11D48E5] ">
+      Log out <LogOut className='ml-2' size={16} strokeWidth={2.25} />
     </Button>
   );
 };
