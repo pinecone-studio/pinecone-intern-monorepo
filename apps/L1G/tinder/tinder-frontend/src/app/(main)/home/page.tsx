@@ -17,15 +17,22 @@ const handleKeyDown = (e: KeyboardEvent, isMatched: boolean, closeMatchDialog: (
 
 const getFilteredProfiles = (data: any, currentUserId: string) => {
   return (data?.getusers ?? [])
-    .filter((u: any): u is NonNullable<typeof u> => u && (typeof u.id === 'string' || typeof u.id === 'number'))
+    .filter((u: any): u is NonNullable<typeof u> =>
+      u && (typeof u.id === 'string' || typeof u.id === 'number')
+    )
     .filter((u: any) => u.id.toString() !== currentUserId)
-
+    .filter((u: any) => Array.isArray(u.images) && u.images.length > 0)
     .map((u: any) => ({
       id: u.id.toString(),
       name: u.name ?? 'Unknown',
       interests:
         u.interests
-          ?.filter((i: any) => i && (typeof i._id === 'string' || typeof i._id === 'number') && i.interestName)
+          ?.filter(
+            (i: any) =>
+              i &&
+              (typeof i._id === 'string' || typeof i._id === 'number') &&
+              i.interestName
+          )
           .map((i: any) => ({
             _id: i._id.toString(),
             interestName: i.interestName ?? '',
@@ -34,6 +41,7 @@ const getFilteredProfiles = (data: any, currentUserId: string) => {
       bio: u.bio,
     }));
 };
+
 /* eslint-disable-next-line complexity */
 const HomePage = () => {
   const { currentUser, loading: userLoading, error: userError } = useCurrentUser();
