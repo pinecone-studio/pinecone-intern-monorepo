@@ -1,7 +1,7 @@
 import { MutationResolvers } from 'src/generated';
 import { FoodOrderModel } from 'src/models/order.model';
 
-export const createFoodOrder: MutationResolvers['createFoodOrder'] = async (_, { input: { totalPrice, status, user, table, FoodOrderItem } }) => {
+export const createFoodOrder: MutationResolvers['createFoodOrder'] = async (_, { input: { totalPrice, status, user, table, FoodOrderItem, orderType } }) => {
   try {
     const foodOrderMapped = FoodOrderItem.map(({ foodId, quantity }) => ({
       food: foodId,
@@ -15,6 +15,7 @@ export const createFoodOrder: MutationResolvers['createFoodOrder'] = async (_, {
       user,
       table,
       foodOrder: foodOrderMapped,
+      orderType,
     });
     await newOrder.populate([{ path: 'user' }, { path: 'foodOrder.food' }, { path: 'table' }]);
     return newOrder;
