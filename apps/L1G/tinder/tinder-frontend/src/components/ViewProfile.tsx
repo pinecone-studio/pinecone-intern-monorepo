@@ -38,13 +38,7 @@ const ViewProfile = ({ user }: ViewProfileProps) => {
 
       <DialogContent className="p-0 bg-transparent border-none shadow-none max-w-[440px]">
         <div className="relative flex flex-col items-start">
-          <Image
-            src={user.images[currentIndex] || '/placeholder.svg'}
-            alt={`${user.name || 'User'} - profile image ${currentIndex + 1}`}
-            width={440}
-            height={660}
-            className="rounded-lg object-cover w-[440px] h-[660px]"
-          />
+          <Image src={user.images[currentIndex]} alt={`${user.name || 'User'} - profile image ${currentIndex + 1}`} width={440} height={660} className="rounded-lg object-cover w-[440px] h-[660px]" />
 
           <div className="absolute px-4 py-2 -translate-x-1/2 rounded-lg bottom-4 left-1/3 bg-white/80 text-start backdrop-blur-sm">
             <p className="text-base font-medium text-black">

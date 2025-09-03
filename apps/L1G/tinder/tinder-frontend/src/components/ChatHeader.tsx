@@ -39,28 +39,18 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ user, matchId, onUnmatched, onB
     setShowDropdown(false);
     console.log('Block user clicked');
   };
-
-  const handleReport = () => {
-    setShowDropdown(false);
-    console.log('Report user clicked');
-  };
   return (
     <>
       {/* Desktop Header */}
       <div className="hidden md:flex items-center mt-2 p-4 bg-white">
         <div className="flex items-center gap-3 flex-1">
-          <img src={user.images?.[0] || '/placeholder.svg'} alt={user.name} className="w-10 h-10 rounded-full object-cover" />
+          <img src={user.images?.[0] || '/profile.jpg'} alt={user.name} className="w-10 h-10 rounded-full object-cover" />
           <div>
-            <h3 className="font-semibold text-gray-900">{user.name}</h3>
-            <p className="text-sm text-gray-500">Active recently</p>
+            <h3 className="font-semibold text-gray-900 mr-20">{user.name}</h3>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-            <Video size={20} className="text-gray-600" />
-          </button>
-
           <div className="relative" ref={dropdownRefDesktop}>
             <button
               onClick={() => setShowDropdown(!showDropdown)}
@@ -76,11 +66,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ user, matchId, onUnmatched, onB
                   <button onClick={handleBlock} className="flex items-center gap-3 w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                     <Shield size={18} className="text-orange-500" />
                     <span className="font-medium">Block User</span>
-                  </button>
-
-                  <button onClick={handleReport} className="flex items-center gap-3 w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                    <Flag size={18} className="text-red-500" />
-                    <span className="font-medium">Report User</span>
                   </button>
 
                   {matchId && (
@@ -130,11 +115,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ user, matchId, onUnmatched, onB
                   <button onClick={handleBlock} className="flex items-center gap-3 w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                     <Shield size={18} className="text-orange-500" />
                     <span className="font-medium">Block User</span>
-                  </button>
-
-                  <button onClick={handleReport} className="flex items-center gap-3 w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors">
-                    <Flag size={18} className="text-red-500" />
-                    <span className="font-medium">Report User</span>
                   </button>
 
                   {matchId && (

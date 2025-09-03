@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback, useRef } from 'react';
 import { useGetChatWithUserLazyQuery, useGetMeQuery, useMarkMessagesAsSeenMutation } from '@/generated';
 import { Message } from 'types/chat';

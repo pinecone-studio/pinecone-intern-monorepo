@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback, useState, useRef } from 'react';
 import { socket } from 'utils/socket';
 import { useSendMessageMutation } from '@/generated';

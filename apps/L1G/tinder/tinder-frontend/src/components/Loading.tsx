@@ -1,14 +1,11 @@
 import { TinderLogo } from './TinderLogo';
 
 const Loading = ({ msg }: { msg: string }) => {
-  const nothing = () => {
-    return;
-  };
   return (
     <div data-testid="loading" className="flex flex-col items-center justify-center h-screen bg-white">
       <div className="flex flex-col items-center justify-center flex-1">
         <div className="flex items-center mb-8">
-          <TinderLogo handleTohome={nothing} />
+          <TinderLogo handleTohome={() => {}} />
         </div>
 
         <div className="relative mb-4">

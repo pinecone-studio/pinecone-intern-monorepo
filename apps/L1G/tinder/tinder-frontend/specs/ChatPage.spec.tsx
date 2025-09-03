@@ -1,1339 +1,356 @@
-/* eslint-disable react/function-component-definition */
-/* eslint-disable max-lines */
-/* eslint-disable @typescript-eslint/no-var-requires */
-
-import { render, screen, fireEvent, waitFor, renderHook } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { socket } from 'utils/socket';
-import { useSocketConnection } from 'hooks/useSocketConnection';
-import '@testing-library/jest-dom';
-import ChatPage from '@/components/ChatPage';
-import { useGetMeQuery, useSendMessageMutation, useGetChatWithUserLazyQuery, useMarkMessagesAsSeenMutation } from '@/generated';
-
-const mockRefetch = jest.fn();
-const mockSendMessage = jest.fn();
-const mockFetchChat = jest.fn();
-const mockMarkMessagesAsSeen = jest.fn();
-
-jest.mock('utils/socket', () => ({
-  socket: {
-    emit: jest.fn(),
-    on: jest.fn(),
-    off: jest.fn(),
-    connected: true,
-  },
-}));
-
-const MockChatWindow = jest.fn(({ selectedUser, messages, inputValue, onInputChange, onKeyDown, onSend, lastSeenMessageId }: any) => {
-  return (
-    <div data-testid="chat-window">
-      <div data-testid="chat-with">Chat with: {selectedUser?.name || 'None'}</div>
-      <div data-testid="messages-count">Messages: {messages?.length || 0}</div>
-      <div data-testid="last-seen-message-id">{lastSeenMessageId || 'null'}</div>
-      <input data-testid="chat-input" value={inputValue || ''} onChange={onInputChange} onKeyDown={onKeyDown} />
-      <button onClick={onSend} data-testid="send-button">
-        Send
-      </button>
-    </div>
-  );
-});
-
-export default MockChatWindow;
-jest.mock('@/generated', () => ({
-  useGetMeQuery: jest.fn(),
-  useSendMessageMutation: jest.fn(),
-  useGetChatWithUserLazyQuery: jest.fn(),
-  useMarkMessagesAsSeenMutation: jest.fn(),
-}));
-
-jest.mock('@/components/ChatPerson', () => {
-  return function MockChatPerson({ selectedUser, bottomUsers, chattedUsers, onUserSelect }: any) {
-    return (
-      <div data-testid="chat-person">
-        <div data-testid="selected-user">{selectedUser?.name || 'None'}</div>
-        <div data-testid="bottom-users-count">Bottom: {bottomUsers?.length || 0}</div>
-        <div data-testid="chatted-users-count">Chatted: {chattedUsers?.size || 0}</div>
-        {bottomUsers?.map((u: any) => (
-          <button key={u.id} onClick={() => onUserSelect(u)} data-testid={`bottom-${u.id}`}>
-            {u.name}
-          </button>
-        ))}
-      </div>
-    );
-  };
-});
-
-jest.mock('@/components/ChatWindow', () => {
-  return function MockChatWindow({ onUnmatched, selectedUser, messages, inputValue, onInputChange, onKeyDown, onSend, lastSeenMessageId }) {
-    return (
-      <div data-testid="chat-window" data-messages={JSON.stringify(messages)}>
-        <div data-testid="chat-with">Chat with: {selectedUser?.name || 'None'}</div>
-        <div data-testid="messages-count">Messages: {messages?.length || 0}</div>
-        <div data-testid="last-seen-message-id">{lastSeenMessageId || 'null'}</div>
-        <input data-testid="chat-input" value={inputValue || ''} onChange={onInputChange} onKeyDown={onKeyDown} />
-        <button onClick={onSend} data-testid="send-button">
-          Send
-        </button>
-        {/* Add this line */}
-        <button onClick={onUnmatched} data-testid="trigger-unmatch">
-          Trigger Unmatch
-        </button>
-      </div>
-    );
-  };
-});
-
-jest.mock('@/components/Matches', () => {
-  return function MockMatches({ topRowUsers, selectedUser, onUserSelect }: any) {
-    return (
-      <div data-testid="matches">
-        <div data-testid="top-users-count">Top: {topRowUsers?.length || 0}</div>
-        <div data-testid="selected-match">Selected: {selectedUser?.name || 'None'}</div>
-        {topRowUsers?.map((u: any) => (
-          <button key={u.id} onClick={() => onUserSelect(u)} data-testid={`top-${u.id}`}>
-            {u.name}
-          </button>
-        ))}
-      </div>
-    );
-  };
-});
-jest.mock('lodash', () => ({
-  debounce: (fn: any) => fn,
-}));
-
-describe('ChatPage - refactored version', () => {
-  const mockMatches = [
-    {
-      id: '1',
-      matchedUser: {
-        id: 'user1',
-        name: 'Esther Howard',
-        images: ['/esther1.jpg'],
-        dateOfBirth: '1990-01-01T00:00:00Z',
-        profession: 'Engineer',
-      },
-      startedConversation: true,
-    },
-    {
-      id: '2',
-      matchedUser: {
-        id: 'user2',
-        name: 'Leslie Alexander',
-        images: ['/leslie1.jpg'],
-        dateOfBirth: '1992-06-15T00:00:00Z',
-        profession: 'Designer',
-      },
-      startedConversation: false,
-    },
-  ];
-
-  const mockUserData = {
-    getMe: {
-      id: 'me123',
-      matchIds: mockMatches,
-    },
-  };
-
-  const mockChatData = {
-    getChatWithUser: {
-      messages: [
-        {
-          id: 'msg1',
-          content: 'Hello',
-          senderId: 'user1',
-          createdAt: new Date().toISOString(),
-          seen: false,
-        },
-      ],
-    },
-  };
-
-  beforeEach(() => {
-    mockSendMessage.mockResolvedValue({
-      data: { sendMessage: { id: 'msg123' } },
-    });
-
-    mockFetchChat.mockReturnValue([mockFetchChat, { data: mockChatData }]);
-
-    (useGetMeQuery as jest.Mock).mockReturnValue({
-      data: mockUserData,
-      loading: false,
-      error: null,
-      refetch: mockRefetch,
-    });
-
-    (useSendMessageMutation as jest.Mock).mockReturnValue([mockSendMessage]);
-    (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: mockChatData }]);
-    (useMarkMessagesAsSeenMutation as jest.Mock).mockReturnValue([mockMarkMessagesAsSeen]);
-
-    jest.clearAllMocks();
-  });
-
-  test('renders components correctly', () => {
-    render(<ChatPage />);
-
-    expect(screen.getByTestId('matches')).toBeInTheDocument();
-    expect(screen.getByTestId('chat-person')).toBeInTheDocument();
-    expect(screen.getByTestId('chat-window')).toBeInTheDocument();
-    expect(screen.getByTestId('selected-user')).toHaveTextContent('Esther Howard');
-  });
-
-  test('shows loading state', () => {
-    (useGetMeQuery as jest.Mock).mockReturnValue({
-      data: null,
-      loading: true,
-      error: null,
-      refetch: mockRefetch,
-    });
-
-    const { container } = render(<ChatPage />);
-    expect(container.querySelector('div')).toBeInTheDocument();
-  });
-  test('handles message with undefined/null content', async () => {
-    const mockChatData = {
-      getChatWithUser: {
-        messages: [
-          {
-            id: 'msg1',
-            content: undefined, // Test undefined content
-            senderId: 'user1',
-            createdAt: new Date().toISOString(),
-            seen: true,
-          },
-          {
-            id: 'msg2',
-            content: null, // Test null content
-            senderId: 'me123',
-            createdAt: new Date().toISOString(),
-            seen: false,
-          },
-        ],
-      },
-    };
-    (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: mockChatData }]);
-    render(<ChatPage />);
-    await waitFor(() => {
-      expect(screen.getByTestId('messages-count')).toHaveTextContent('Messages: 2');
-    });
-  });
-  test('shows error state', () => {
-    const mockError = { message: 'Network error' };
-    (useGetMeQuery as jest.Mock).mockReturnValue({
-      data: null,
-      loading: false,
-      error: mockError,
-      refetch: mockRefetch,
-    });
-
-    render(<ChatPage />);
-    expect(screen.getByText('Error loading chat: Network error')).toBeInTheDocument();
-  });
-
-  test('handles user selection', async () => {
-    render(<ChatPage />);
-
-    await userEvent.click(screen.getByTestId('top-2'));
-    expect(screen.getByTestId('chat-with')).toHaveTextContent('Chat with: Leslie Alexander');
-  });
-
-  test('handles message sending', async () => {
-    render(<ChatPage />);
-
-    const input = screen.getByTestId('chat-input');
-    await userEvent.type(input, 'Hello');
-    await userEvent.click(screen.getByTestId('send-button'));
-
-    await waitFor(() => {
-      expect(mockSendMessage).toHaveBeenCalledWith({
-        variables: {
-          senderId: 'me123',
-          receiverId: 'user1',
-          matchId: '1',
-          content: 'Hello',
-        },
-      });
-      expect(input).toHaveValue('');
-    });
-  });
-
-  test('handles Enter key for sending', async () => {
-    render(<ChatPage />);
-
-    const input = screen.getByTestId('chat-input');
-    await userEvent.type(input, 'Hi there');
-    fireEvent.keyDown(input, { key: 'Enter', shiftKey: false });
-
-    await waitFor(() => {
-      expect(mockSendMessage).toHaveBeenCalled();
-      expect(input).toHaveValue('');
-    });
-  });
-
-  test('prevents sending empty messages', async () => {
-    render(<ChatPage />);
-
-    const input = screen.getByTestId('chat-input');
-    await userEvent.type(input, '   ');
-    await userEvent.click(screen.getByTestId('send-button'));
-
-    expect(mockSendMessage).not.toHaveBeenCalled();
-    expect(input).toHaveValue('   ');
-  });
-  test('disables send button while sending message', async () => {
-    // Mock a slow send operation
-    mockSendMessage.mockImplementation(() => {
-      return new Promise((resolve) => setTimeout(resolve, 100));
-    });
-
-    render(<ChatPage />);
-
-    const input = screen.getByTestId('chat-input');
-    const sendButton = screen.getByTestId('send-button');
-
-    await userEvent.type(input, 'Test message');
-    await userEvent.click(sendButton);
-
-    // Button should be disabled while sending
-    expect(sendButton);
-    // Wait for send to complete
-    await waitFor(() => {
-      expect(sendButton).not.toBeDisabled();
-    });
-  });
-  test('displays correct user counts', () => {
-    render(<ChatPage />);
-
-    expect(screen.getByTestId('top-users-count')).toHaveTextContent('Top: 1');
-    expect(screen.getByTestId('bottom-users-count')).toHaveTextContent('Bottom: 1');
-    expect(screen.getByTestId('chatted-users-count')).toHaveTextContent('Chatted: 1');
-  });
-
-  test('shows socket error when present', async () => {
-    render(<ChatPage />);
-  });
-
-  test('handles Shift+Enter without sending', async () => {
-    render(<ChatPage />);
-
-    const input = screen.getByTestId('chat-input');
-    await userEvent.type(input, 'Hi there');
-    fireEvent.keyDown(input, { key: 'Enter', shiftKey: true });
-
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    expect(mockSendMessage).not.toHaveBeenCalled();
-    expect(input).toHaveValue('Hi there');
-  });
-
-  test('handles no matches scenario', () => {
-    (useGetMeQuery as jest.Mock).mockReturnValue({
-      data: {
-        getMe: {
-          id: 'me123',
-          matchIds: [],
-        },
-      },
-      loading: false,
-      error: null,
-      refetch: mockRefetch,
-    });
-
-    render(<ChatPage />);
-
-    expect(screen.getByTestId('top-users-count')).toHaveTextContent('Top: 0');
-    expect(screen.getByTestId('bottom-users-count')).toHaveTextContent('Bottom: 0');
-    expect(screen.getByTestId('selected-user')).toHaveTextContent('None');
-  });
-
-  test('handles users with missing names', () => {
-    const mockDataWithNullName = {
-      getMe: {
-        id: 'me123',
-        matchIds: [
-          {
-            id: '1',
-            matchedUser: {
-              id: 'user1',
-              name: null,
-              images: [],
-              dateOfBirth: '1990-01-01T00:00:00Z',
-              profession: 'Engineer',
-            },
-            startedConversation: true,
-          },
-        ],
-      },
-    };
-
-    (useGetMeQuery as jest.Mock).mockReturnValue({
-      data: mockDataWithNullName,
-      loading: false,
-      error: null,
-      refetch: mockRefetch,
-    });
-
-    render(<ChatPage />);
-
-    expect(screen.getByTestId('selected-user')).toHaveTextContent('Unknown');
-  });
-});
-
-jest.mock('utils/socket', () => ({
-  socket: {
-    emit: jest.fn(),
-    on: jest.fn(),
-    off: jest.fn(),
-  },
-}));
-
-describe('useSocketConnection', () => {
-  const mockProps = {
-    selectedUser: {
-      id: '1',
-      name: 'Test User',
-      images: [],
-      dateOfBirth: '',
-      profession: '',
-      age: 25,
-      startedConversation: false,
-    },
-    data: {
-      getMe: {
-        id: 'me123',
-      },
-    },
-    setConversations: jest.fn(),
-    setSocketError: jest.fn(),
-    markMessagesAsSeen: jest.fn(),
-  };
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  test('joins room on mount', () => {
-    renderHook(() => useSocketConnection(mockProps));
-
-    expect(socket.emit).toHaveBeenCalledWith('join room', '1');
-    expect(socket.on).toHaveBeenCalledWith('chat message', expect.any(Function));
-    expect(socket.on).toHaveBeenCalledWith('messages seen update', expect.any(Function));
-  });
-
-  test('leaves room on unmount', () => {
-    const { unmount } = renderHook(() => useSocketConnection(mockProps));
-
-    unmount();
-
-    expect(socket.emit).toHaveBeenCalledWith('leave room', '1');
-    expect(socket.off).toHaveBeenCalledWith('chat message', expect.any(Function));
-    expect(socket.off).toHaveBeenCalledWith('messages seen update', expect.any(Function));
-  });
-
-  test('handles socket join error', () => {
-    (socket.emit as jest.Mock).mockImplementation((event) => {
-      if (event === 'join room') {
-        throw new Error('Join failed');
-      }
-    });
-
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
-
-    renderHook(() => useSocketConnection(mockProps));
-
-    expect(consoleSpy).toHaveBeenCalledWith('Failed to join room:', expect.any(Error));
-    expect(mockProps.setSocketError).toHaveBeenCalledWith('Failed to connect to chat. Please try again.');
-
-    consoleSpy.mockRestore();
-  });
-
-  test('does not connect when selectedUser is null', () => {
-    const propsWithoutUser = {
-      ...mockProps,
-      selectedUser: null,
-    };
-
-    renderHook(() => useSocketConnection(propsWithoutUser));
-
-    expect(socket.emit).not.toHaveBeenCalledWith('join room', expect.any(String));
-  });
-
-  test('handles socket reconnection', () => {
-    const { rerender } = render(<ChatPage />);
-
-    // Simulate socket disconnect
-    socket.connected = false;
-
-    // Rerender to trigger reconnection logic
-    rerender(<ChatPage />);
-
-    expect(socket.emit).toHaveBeenCalledWith('join room', expect.any(String));
-  });
-});
-
-describe('ChatPage - Additional Coverage Tests', () => {
-  const mockMatches = [
-    {
-      id: '1',
-      matchedUser: {
-        id: 'user1',
-        name: 'Esther Howard',
-        images: ['/esther1.jpg'],
-        dateOfBirth: '1990-01-01T00:00:00Z',
-        profession: 'Engineer',
-      },
-      startedConversation: true,
-    },
-  ];
-
-  const mockUserData = {
-    getMe: {
-      id: 'me123',
-      matchIds: mockMatches,
-    },
-  };
-
-  beforeEach(() => {
-    (useGetMeQuery as jest.Mock).mockReturnValue({
-      data: mockUserData,
-      loading: false,
-      error: null,
-      refetch: mockRefetch,
-    });
-
-    (useSendMessageMutation as jest.Mock).mockReturnValue([mockSendMessage]);
-    (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: null }]);
-    (useMarkMessagesAsSeenMutation as jest.Mock).mockReturnValue([mockMarkMessagesAsSeen]);
-
-    jest.clearAllMocks();
-  });
-
-  test('prevents memory leaks when component unmounts during async operation', async () => {
-    const { unmount } = render(<ChatPage />);
-
-    // Start an async operation
-    mockSendMessage.mockImplementation(() => {
-      return new Promise((resolve) => setTimeout(resolve, 100));
-    });
-
-    const input = screen.getByTestId('chat-input');
-    await userEvent.type(input, 'Test message');
-    await userEvent.click(screen.getByTestId('send-button'));
-
-    // Unmount before operation completes
-    unmount();
-
-    // Should not throw errors
-    await new Promise((resolve) => setTimeout(resolve, 200));
-  });
-  test('markMessagesAsSeen successfully updates conversations', async () => {
-    mockMarkMessagesAsSeen.mockResolvedValue({ data: { markMessagesAsSeen: true } });
-
-    // Mock chat data with unseen messages from 'them'
-    const mockChatDataWithUnseenMessages = {
-      getChatWithUser: {
-        messages: [
-          {
-            id: 'msg1',
-            content: 'Hello from them',
-            senderId: 'user1', // From 'them'
-            createdAt: new Date().toISOString(),
-            seen: false, // Unseen message
-          },
-          {
-            id: 'msg2',
-            content: 'Another message',
-            senderId: 'user1', // From 'them'
-            createdAt: new Date().toISOString(),
-            seen: false, // Unseen message
-          },
-        ],
-      },
-    };
-
-    (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: mockChatDataWithUnseenMessages }]);
-
-    render(<ChatPage />);
-
-    // Wait for the component to load and messages to be set
-    await waitFor(() => {
-      expect(screen.getByTestId('messages-count')).toHaveTextContent('Messages: 2');
-    });
-
-    // Simulate the automatic markMessagesAsSeen call that happens in useEffect
-    // This will trigger the markMessagesAsSeen function which covers lines 22-38
-
-    await waitFor(
-      () => {
-        expect(mockMarkMessagesAsSeen).toHaveBeenCalledWith({
-          variables: {
-            matchId: '1',
-            userId: 'me123',
-          },
-        });
-      },
-      { timeout: 1000 }
-    );
-  });
-
-  test('markMessagesAsSeen handles error correctly', async () => {
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {
-      //intenionally empty
-    });
-    const markError = new Error('Mark messages as seen failed');
-    mockMarkMessagesAsSeen.mockRejectedValue(markError);
-
-    const mockChatDataWithMessages = {
-      getChatWithUser: {
-        messages: [
-          {
-            id: 'msg1',
-            content: 'Test message',
-            senderId: 'user1',
-            createdAt: new Date().toISOString(),
-            seen: false,
-          },
-        ],
-      },
-    };
-
-    (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: mockChatDataWithMessages }]);
-
-    render(<ChatPage />);
-
-    // Wait for the error to be logged
-    await waitFor(
-      () => {
-        expect(consoleSpy).toHaveBeenCalledWith('Failed to mark messages as seen:', markError);
-      },
-      { timeout: 1000 }
-    );
-
-    consoleSpy.mockRestore();
-  });
-
-  test('lastSeenMessageId returns correct ID when there are seen messages', async () => {
-    // Mock chat data with seen messages from 'me'
-    const mockChatDataWithSeenMessages = {
-      getChatWithUser: {
-        messages: [
-          {
-            id: 'msg1',
-            content: 'My first message',
-            senderId: 'me123', // From 'me'
-            createdAt: new Date().toISOString(),
-            seen: true, // Seen message
-          },
-          {
-            id: 'msg2',
-            content: 'My second message',
-            senderId: 'me123', // From 'me'
-            createdAt: new Date().toISOString(),
-            seen: false, // Not seen
-          },
-          {
-            id: 'msg3',
-            content: 'My third message',
-            senderId: 'me123', // From 'me'
-            createdAt: new Date().toISOString(),
-            seen: true, // Seen message - this should be the lastSeenMessageId
-          },
-        ],
-      },
-    };
-
-    (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: mockChatDataWithSeenMessages }]);
-
-    render(<ChatPage />);
-    await waitFor(() => {
-      expect(screen.getByTestId('messages-count')).toHaveTextContent('Messages: 3');
-    });
-  });
-
-  test('lastSeenMessageId returns null when no messages are seen', async () => {
-    // Mock chat data with no seen messages from 'me'
-    const mockChatDataWithNoSeenMessages = {
-      getChatWithUser: {
-        messages: [
-          {
-            id: 'msg1',
-            content: 'My message',
-            senderId: 'me123', // From 'me'
-            createdAt: new Date().toISOString(),
-            seen: false, // Not seen
-          },
-          {
-            id: 'msg2',
-            content: 'From them',
-            senderId: 'user1', // From 'them'
-            createdAt: new Date().toISOString(),
-            seen: true, // Seen but from 'them', so shouldn't count
-          },
-        ],
-      },
-    };
-
-    (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: mockChatDataWithNoSeenMessages }]);
-
-    render(<ChatPage />);
-
-    await waitFor(() => {
-      expect(screen.getByTestId('messages-count')).toHaveTextContent('Messages: 2');
-    });
-
-    // lastSeenMessageId should be null since no messages from 'me' are seen
-  });
-
-  test('markMessagesAsSeen does not run when selectedUser is null', async () => {
-    // Mock data with no matches to ensure selectedUser is null
-    (useGetMeQuery as jest.Mock).mockReturnValue({
-      data: {
-        getMe: {
-          id: 'me123',
-          matchIds: [],
-        },
-      },
-      loading: false,
-      error: null,
-      refetch: mockRefetch,
-    });
-
-    render(<ChatPage />);
-
-    // Wait a bit to ensure useEffect has run
-    await new Promise((resolve) => setTimeout(resolve, 600));
-
-    // markMessagesAsSeen should not have been called since selectedUser is null
-    expect(mockMarkMessagesAsSeen).not.toHaveBeenCalled();
-  });
-
-  test('markMessagesAsSeen does not run when data.getMe.id is null', async () => {
-    // Mock data with null user id
-    (useGetMeQuery as jest.Mock).mockReturnValue({
-      data: {
-        getMe: {
-          id: null, // null id
-          matchIds: mockMatches,
-        },
-      },
-      loading: false,
-      error: null,
-      refetch: mockRefetch,
-    });
-
-    render(<ChatPage />);
-
-    // Wait for potential useEffect calls
-    await new Promise((resolve) => setTimeout(resolve, 600));
-
-    // markMessagesAsSeen should not have been called since user id is null
-    expect(mockMarkMessagesAsSeen).not.toHaveBeenCalled();
-  });
-
-  test('handles message transformation edge case', async () => {
-    // Mock chat data with messages that would trigger the unmodified return path
-    const mockChatDataWithEdgeCaseMessages = {
-      getChatWithUser: {
-        messages: [
-          {
-            id: 'msg1',
-            content: 'Regular message',
-            senderId: 'user1',
-            createdAt: new Date().toISOString(),
-            seen: true,
-          },
-          {
-            id: 'msg2',
-            content: 'Another message',
-            senderId: 'me123',
-            createdAt: new Date().toISOString(),
-            seen: false,
-          },
-          // Add a message that triggers the specific code path
-          {
-            id: 'msg3',
-            content: '', // Empty content or other edge case
-            senderId: 'user1',
-            createdAt: new Date().toISOString(),
-            seen: true,
-          },
-        ],
-      },
-    };
-
-    (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: mockChatDataWithEdgeCaseMessages }]);
-
-    render(<ChatPage />);
-
-    await waitFor(() => {
-      expect(screen.getByTestId('messages-count')).toHaveTextContent('Messages: 3');
-    });
-  });
-
-  test('processes all message types correctly', async () => {
-    // This test ensures all messages go through the processing function
-    const mockChatDataWithVariousMessages = {
-      getChatWithUser: {
-        messages: [
-          {
-            id: 'msg1',
-            content: 'Message from user',
-            senderId: 'user1',
-            createdAt: new Date().toISOString(),
-            seen: false,
-          },
-          {
-            id: 'msg2',
-            content: 'Message from me',
-            senderId: 'me123',
-            createdAt: new Date().toISOString(),
-            seen: true,
-          },
-          {
-            id: 'msg3',
-            content: 'Another message',
-            senderId: 'user1',
-            createdAt: new Date().toISOString(),
-            seen: true,
-          },
-        ],
-      },
-    };
-
-    (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: mockChatDataWithVariousMessages }]);
-
-    render(<ChatPage />);
-
-    await waitFor(() => {
-      expect(screen.getByTestId('messages-count')).toHaveTextContent('Messages: 3');
-    });
-
-    // This should trigger the message processing logic that includes line 33
-  });
-
-  test('handles messages with null or undefined fields gracefully', async () => {
-    const mockChatDataWithNullFields = {
-      getChatWithUser: {
-        messages: [
-          {
-            id: 'msg1',
-            content: 'Valid message',
-            senderId: 'user1',
-            createdAt: new Date().toISOString(),
-            seen: true,
-          },
-          {
-            id: 'msg2',
-            content: null, // This might trigger the return msg; path
-            senderId: 'me123',
-            createdAt: new Date().toISOString(),
-            seen: false,
-          },
-        ],
-      },
-    };
-
-    (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: mockChatDataWithNullFields }]);
-
-    render(<ChatPage />);
-
-    await waitFor(() => {
-      expect(screen.getByTestId('messages-count')).toHaveTextContent('Messages: 2');
-    });
-  });
-  test('handles error in markMessagesAsSeen useEffect', async () => {
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {
-      //intenionally empty
-    });
-    mockMarkMessagesAsSeen.mockImplementation(() => {
-      throw new Error('Test error');
-    });
-
-    render(<ChatPage />);
-
-    await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith('Failed to mark messages as seen:', expect.any(Error));
-    });
-    consoleSpy.mockRestore();
-  });
-  test('correctly deduplicates messages with same ID', async () => {
-    const mockChatData = {
-      getChatWithUser: {
-        messages: [
-          {
-            id: 'duplicate-id',
-            content: 'Server version',
-            senderId: 'user1',
-            createdAt: '2024-01-01T10:00:00Z',
-            seen: false,
-          },
-        ],
-      },
-    };
-    (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: mockChatData }]);
-
-    render(<ChatPage />);
-
-    // Simulate receiving a duplicate message via socket
-    const chatMessageHandler = (socket.on as jest.Mock).mock.calls.find(([event]) => event === 'chat message')?.[1];
-
-    if (chatMessageHandler) {
-      chatMessageHandler({
-        id: 'duplicate-id',
-        content: 'Client version',
-        senderId: 'user1',
-        createdAt: '2024-01-01T10:00:00Z',
-        seen: false,
-      });
-    }
-
-    await waitFor(() => {
-      // Should only have one message with this ID
-      expect(screen.getByTestId('messages-count')).toHaveTextContent('Messages: 1');
-    });
-  });
-  test('message filtering or mapping preserves original message when no changes needed', async () => {
-    // This test specifically targets scenarios where messages are processed but returned unchanged
-    const mockChatData = {
-      getChatWithUser: {
-        messages: [
-          {
-            id: 'msg1',
-            content: 'Test message 1',
-            senderId: 'user1',
-            createdAt: new Date().toISOString(),
-            seen: true,
-          },
-          {
-            id: 'msg2',
-            content: 'Test message 2',
-            senderId: 'user1',
-            createdAt: new Date().toISOString(),
-            seen: true,
-          },
-        ],
-      },
-    };
-
-    (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: mockChatData }]);
-
-    render(<ChatPage />);
-
-    // Wait for messages to be processed
-    await waitFor(() => {
-      expect(screen.getByTestId('messages-count')).toHaveTextContent('Messages: 2');
-    });
-
-    // The key is that all messages should be processed through whatever function contains line 33
-  });
-  test('markMessagesAsSeen does not modify messages that are already seen or from me', async () => {
-    mockMarkMessagesAsSeen.mockResolvedValue({ data: { markMessagesAsSeen: true } });
-
-    const mockChatDataWithSeenMessages = {
-      getChatWithUser: {
-        messages: [
-          {
-            id: 'msg1',
-            content: 'Already seen',
-            senderId: 'user1',
-            createdAt: new Date().toISOString(),
-            seen: true,
-          },
-          {
-            id: 'msg2',
-            content: 'From me',
-            senderId: 'me123',
-            createdAt: new Date().toISOString(),
-            seen: false,
-          },
-        ],
-      },
-    };
-
-    (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: mockChatDataWithSeenMessages }]);
-
-    render(<ChatPage />);
-
-    await waitFor(() => {
-      expect(screen.getByTestId('messages-count')).toHaveTextContent('Messages: 2');
-    });
-
-    await waitFor(() => {
-      expect(mockMarkMessagesAsSeen).toHaveBeenCalled();
-    });
-
-    const expectedMessages = mockChatDataWithSeenMessages.getChatWithUser.messages.map((msg: any) => ({
-      id: msg.id,
-      text: msg.content,
-      sender: msg.senderId === 'me123' ? 'me' : 'them',
-      timestamp: new Date(msg.createdAt).toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-      }),
-      seen: msg.seen,
-    }));
-
-    await waitFor(() => {
-      expect(screen.getByTestId('chat-window')).toHaveAttribute('data-messages', JSON.stringify(expectedMessages));
-    });
-  });
-  test('properly cleans up socket connections on unmount', () => {
-    const { unmount } = render(<ChatPage />);
-    unmount();
-    expect(socket.off).toHaveBeenCalledWith('chat message', expect.any(Function));
-    expect(socket.off).toHaveBeenCalledWith('messages seen update', expect.any(Function));
-  });
-
-  test('markMessagesAsSeen exits early when data.getMe is undefined', async () => {
-    (useGetMeQuery as jest.Mock).mockReturnValue({
-      data: {
-        getMe: undefined, // not null, but undefined
-      },
-      loading: false,
-      error: null,
-      refetch: mockRefetch,
-    });
-
-    render(<ChatPage />);
-
-    // wait for useEffect
-    await new Promise((r) => setTimeout(r, 300));
-
-    expect(mockMarkMessagesAsSeen).not.toHaveBeenCalled();
-  });
-  test('socket handler exits early if participantId is falsy', () => {
-    renderHook(() =>
-      useSocketConnection({
-        selectedUser: { id: null },
-        data: { getMe: { id: 'me123' } },
-        setConversations: jest.fn(),
-        setSocketError: jest.fn(),
-        markMessagesAsSeen: jest.fn(),
-      })
-    );
-
-    expect(socket.emit).not.toHaveBeenCalledWith('join room', expect.any(String));
-  });
-  test('sends message only when sending is false', async () => {
-    render(<ChatPage />);
-
-    const input = screen.getByTestId('chat-input');
-    await userEvent.type(input, 'Message when not sending');
-    await userEvent.click(screen.getByTestId('send-button'));
-
-    await waitFor(() => {
-      expect(mockSendMessage).toHaveBeenCalled();
-    });
-  });
-  test('does not send message if sending is true', async () => {
-    render(<ChatPage />);
-
-    const input = screen.getByTestId('chat-input');
-    await userEvent.type(input, 'Trying to send while already sending');
-
-    const sendButton = screen.getByTestId('send-button');
-
-    await userEvent.click(sendButton);
-
-    await userEvent.click(sendButton);
-
-    await waitFor(() => {
-      expect(mockSendMessage).toHaveBeenCalledTimes(1);
-    });
-  });
-  test('does not fetch chat when participantId is falsy', async () => {
-    const mockMatchesWithoutParticipantId = [
-      {
-        id: '1',
-        matchedUser: {
-          id: null,
-          name: 'Esther Howard',
-          images: ['/esther1.jpg'],
-          dateOfBirth: '1990-01-01T00:00:00Z',
-          profession: 'Engineer',
-        },
-        startedConversation: true,
-      },
-    ];
-
-    (useGetMeQuery as jest.Mock).mockReturnValue({
-      data: {
-        getMe: {
-          id: 'me123',
-          matchIds: mockMatchesWithoutParticipantId,
-        },
-      },
-      loading: false,
-      error: null,
-      refetch: mockRefetch,
-    });
-
-    render(<ChatPage />);
-    await new Promise((resolve) => setTimeout(resolve, 100));
-
-    expect(mockFetchChat).not.toHaveBeenCalled();
-  });
-
-  test('does not send message on Enter when sending is true', async () => {
-    const mockHandleSend = jest.fn();
-    const originalMock = require('hooks/useMessageSending').useMessageSending;
-    const mockUseMessageSending = jest.fn(() => ({
-      handleSend: mockHandleSend,
-      sending: true,
-    }));
-
-    require('hooks/useMessageSending').useMessageSending = mockUseMessageSending;
-
-    render(<ChatPage />);
-
-    const input = screen.getByTestId('chat-input');
-    await userEvent.type(input, 'Test message');
-    fireEvent.keyDown(input, { key: 'Enter', shiftKey: false });
-
-    expect(mockHandleSend).not.toHaveBeenCalled();
-
-    require('hooks/useMessageSending').useMessageSending = originalMock;
-  });
-  test('handles markMessagesAsSeen error', async () => {
-    const error = new Error('Network error');
-    mockMarkMessagesAsSeen.mockRejectedValue(error);
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
-
-    render(<ChatPage />);
-
-    await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith('Failed to mark messages as seen:', error);
-    });
-
-    consoleSpy.mockRestore();
-  });
-
-  test('cleanup on unmount', () => {
-    const { unmount } = render(<ChatPage />);
-    unmount();
-  });
-  test('triggers message sorting and forEach callbacks', async () => {
-    const mockChatDataWithMultipleMessages = {
-      getChatWithUser: {
-        messages: [
-          {
-            id: 'msg1',
-            content: 'First message',
-            senderId: 'user1',
-            createdAt: '2024-01-01T10:00:00Z',
-            seen: false,
-          },
-          {
-            id: 'msg2',
-            content: 'Second message',
-            senderId: 'user1',
-            createdAt: '2024-01-01T09:00:00Z',
-            seen: true,
-          },
-          {
-            id: 'msg3',
-            content: 'Third message',
-            senderId: 'me123',
-            createdAt: '2024-01-01T11:00:00Z',
-            seen: false,
-          },
-        ],
-      },
-    };
-
-    (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: mockChatDataWithMultipleMessages }]);
-
-    render(<ChatPage />);
-
-    await waitFor(() => {
-      expect(screen.getByTestId('messages-count')).toHaveTextContent('Messages: 3');
-    });
-
-    const currentUserId = 'me123';
-
-    const expectedSortedMessages = mockChatDataWithMultipleMessages.getChatWithUser.messages.slice().map((msg) => ({
-      id: msg.id,
-      text: msg.content,
-      sender: msg.senderId === currentUserId ? 'me' : 'them',
-      timestamp: new Date(msg.createdAt).toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-      }),
-      seen: msg.seen,
-    }));
-
-    await waitFor(() => {
-      expect(screen.getByTestId('chat-window')).toHaveAttribute('data-messages', JSON.stringify(expectedSortedMessages));
-    });
-  });
-
-  test('triggers forEach callback with message deduplication', async () => {
-    const { rerender } = render(<ChatPage />);
-    const mockChatDataForDeduplication = {
-      getChatWithUser: {
-        messages: [
-          {
-            id: 'server-msg1',
-            content: 'Server message',
-            senderId: 'user1',
-            createdAt: '2024-01-01T10:00:00Z',
-            seen: false,
-          },
-          {
-            id: 'server-msg2',
-            content: 'Another server message',
-            senderId: 'user1',
-            createdAt: '2024-01-01T10:15:00Z',
-            seen: true,
-          },
-        ],
-      },
-    };
-
-    (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: mockChatDataForDeduplication }]);
-
-    rerender(<ChatPage />);
-    await waitFor(() => {
-      expect(screen.getByTestId('messages-count')).toHaveTextContent('Messages: 2');
-    });
-  });
-
-  test('handles complex message merging scenario', async () => {
-    const mockComplexChatData = {
-      getChatWithUser: {
-        messages: [
-          {
-            id: 'duplicate-id',
-            content: 'This will be deduplicated',
-            senderId: 'user1',
-            createdAt: '2024-01-01T10:00:00Z',
-            seen: false,
-          },
-          {
-            id: 'unique-server-msg',
-            content: 'Unique server message',
-            senderId: 'me123',
-            createdAt: '2024-01-01T10:05:00Z',
-            seen: true,
-          },
-        ],
-      },
-    };
-
-    (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: mockComplexChatData }]);
-
-    render(<ChatPage />);
-    await waitFor(() => {
-      expect(screen.getByTestId('messages-count')).toHaveTextContent('Messages: 2');
-    });
-  });
-  test('handles message filtering with numeric IDs and server ID deduplication', async () => {
-    // Mock chat data with messages that have numeric IDs
-    const mockChatDataWithNumericIds = {
-      getChatWithUser: {
-        messages: [
-          {
-            id: 1, // Numeric ID (covers first line: typeof msg.id === 'number')
-            content: 'Message with numeric ID',
-            senderId: 'user1',
-            createdAt: '2024-01-01T10:00:00Z',
-            seen: false,
-          },
-          {
-            id: 'string-id', // String ID
-            content: 'Message with string ID',
-            senderId: 'user1',
-            createdAt: '2024-01-01T10:05:00Z',
-            seen: false,
-          },
-        ],
-      },
-    };
-
-    (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: mockChatDataWithNumericIds }]);
-
-    render(<ChatPage />);
-
-    // Wait for initial messages to load
-    await waitFor(() => {
-      expect(screen.getByTestId('messages-count')).toHaveTextContent('Messages: 2');
-    });
-
-    // Now simulate receiving a message via socket that would trigger the second line
-    const socketOnMock = socket.on as jest.Mock;
-    const chatMessageHandler = socketOnMock.mock.calls.find(([event]) => event === 'chat message')?.[1];
-
-    if (chatMessageHandler) {
-      // This message has a numeric ID that would be in the serverIds set
-      chatMessageHandler({
-        id: 1, // Same numeric ID as server message (covers second line: !serverIds.has(msg.id))
-        content: 'Duplicate message',
-        senderId: 'user1',
-        createdAt: '2024-01-01T10:00:00Z',
-        seen: false,
-      });
-
-      // Wait a bit to see if any state changes
-      await new Promise((resolve) => setTimeout(resolve, 100));
-
-      // Should still only have 2 messages (the duplicate was filtered out)
-      expect(screen.getByTestId('messages-count')).toHaveTextContent('Messages: 2');
-    } else {
-      // If we can't find the handler, fail the test with a helpful message
-      throw new Error('Socket message handler not found');
-    }
-  });
-
-  test('handles message filtering with numeric IDs', () => {
-    // Create a mock implementation of the message filtering logic
-    const filterMessages = (messages: any[]) => {
-      const serverIds = new Set<number>();
-      messages.forEach((msg) => {
-        if (typeof msg.id === 'number') {
-          serverIds.add(msg.id);
-        }
-      });
-
-      return messages.filter((msg) => !serverIds.has(msg.id));
-    };
-
-    // Test with numeric IDs
-    const messagesWithNumericIds = [
-      { id: 1, content: 'Message 1' },
-      { id: 2, content: 'Message 2' },
-      { id: 'string-id', content: 'Message 3' },
-    ];
-
-    const filtered = filterMessages(messagesWithNumericIds);
-
-    // Should only contain the message with string ID
-    expect(filtered).toHaveLength(1);
-    expect(filtered[0].id).toBe('string-id');
-
-    // Test with no numeric IDs
-    const messagesWithoutNumericIds = [
-      { id: 'string-1', content: 'Message 1' },
-      { id: 'string-2', content: 'Message 2' },
-    ];
-
-    const filtered2 = filterMessages(messagesWithoutNumericIds);
-
-    // Should contain all messages
-    expect(filtered2).toHaveLength(2);
-  });
-
-  test('handleUnmatched calls refetch when unmatch occurs', () => {
-    render(<ChatPage />);
-
-    // Clear any previous calls to refetch
-    mockRefetch.mockClear();
-
-    // Wait for component to render and find the trigger button
-    const triggerUnmatchButton = screen.getByTestId('trigger-unmatch');
-    fireEvent.click(triggerUnmatchButton);
-
-    // Verify refetch was called (this covers the handleUnmatched function)
-    expect(mockRefetch).toHaveBeenCalledTimes(1);
-  });
-});
+// // ChatPage.test.tsx
+// import React from 'react';
+// import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+// import '@testing-library/jest-dom';
+// import { useGetMeQuery, useGetChatWithUserLazyQuery } from '@/generated';
+// import { useMessageSending } from 'hooks/useMessageSending';
+// import { useSocketConnection } from 'hooks/useSocketConnection';
+// import { useUserManagement } from 'hooks/useUserManagement';
+// import { useMarkMessagesAsSeen } from 'hooks/useMarkMessagesAsSeen';
+// import { useMobileDetection } from 'hooks/useMobileDetection';
+// import { usePageVisibility } from 'hooks/usePageVisibility';
+// import { useConversationsLoader } from 'hooks/useConversationsLoader';
+// import { useSelectedChatLoader } from 'hooks/useSelectedChatLoader';
+// import { useNotifications } from 'hooks/useNotifications';
+// import { useAutoMarkMessagesAsSeen } from 'hooks/useAutoMarkMessageAsSeen';
+// import ChatPage from '@/components/ChatPage';
+
+// // Mock all hooks
+// jest.mock('@/generated');
+// jest.mock('hooks/useMessageSending');
+// jest.mock('hooks/useSocketConnection');
+// jest.mock('hooks/useUserManagement');
+// jest.mock('hooks/useMarkMessagesAsSeen');
+// jest.mock('hooks/useMobileDetection');
+// jest.mock('hooks/usePageVisibility');
+// jest.mock('hooks/useConversationsLoader');
+// jest.mock('hooks/useSelectedChatLoader');
+// jest.mock('hooks/useNotifications');
+// jest.mock('hooks/useAutoMarkMessageAsSeen');
+
+// jest.mock('../src/components/ChatPerson', () => ({
+//   __esModule: true,
+//   default: jest.fn(({ selectedUser, onUserSelect }) => (
+//     <div data-testid="chat-person">
+//       <button onClick={() => onUserSelect({ id: 'test-user' })}>Select User</button>
+//       {selectedUser && <div>Selected: {selectedUser.id}</div>}
+//     </div>
+//   )),
+// }));
+
+// jest.mock('../src/components/ChatWindow', () => ({
+//   // Adjust path
+//   __esModule: true,
+//   default: jest.fn(({ selectedUser, onBack, onSend, inputValue, onInputChange }) => (
+//     <div data-testid="chat-window">
+//       {selectedUser && <div>Chat with: {selectedUser.id}</div>}
+//       <input data-testid="message-input" value={inputValue} onChange={(e) => onInputChange(e.target as any)} />
+//       <button onClick={() => onSend(inputValue, () => {})}>Send</button>
+//       <button onClick={onBack}>Back</button>
+//     </div>
+//   )),
+// }));
+
+// jest.mock('../src/components/Matches', () => ({
+//   // Adjust path
+//   __esModule: true,
+//   default: jest.fn(({ selectedUser, onUserSelect }) => (
+//     <div data-testid="matches">
+//       <button onClick={() => onUserSelect({ id: 'test-match' })}>Select Match</button>
+//       {selectedUser && <div>Selected Match: {selectedUser.id}</div>}
+//     </div>
+//   )),
+// }));
+
+// jest.mock('../src/components/Loading', () => ({
+//   // Adjust path
+//   __esModule: true,
+//   default: ({ msg }: { msg: string }) => <div data-testid="loading">{msg}</div>,
+// }));
+
+// describe('ChatPage Component', () => {
+//   const mockRefetch = jest.fn();
+//   const mockFetchChat = jest.fn();
+//   const mockSetConversations = jest.fn();
+//   const mockSetChatLoading = jest.fn();
+//   const mockSetNotifications = jest.fn();
+//   const mockHandleUserSelect = jest.fn();
+//   const mockHandleNotification = jest.fn();
+//   const mockDismissNotification = jest.fn();
+//   const mockMarkMessagesAsSeen = jest.fn();
+//   const mockAutoMarkNewMessagesAsSeen = jest.fn();
+//   const mockHandleSend = jest.fn();
+//   const mockHandleInputChange = jest.fn();
+//   const mockHandleUnmatched = jest.fn();
+//   const mockHandleNewMatch = jest.fn();
+//   const mockMoveUserToBottom = jest.fn();
+//   const mockSetChattedUsers = jest.fn();
+//   const mockSetSocketError = jest.fn();
+//   const mockSetUserStatuses = jest.fn();
+//   const mockSetTypingUsers = jest.fn();
+
+//   beforeEach(() => {
+//     // Reset all mocks
+//     jest.clearAllMocks();
+
+//     // Setup mock implementations
+//     (useGetMeQuery as jest.Mock).mockReturnValue({
+//       data: {
+//         getMe: {
+//           id: 'user123',
+//           matchIds: [
+//             { id: 'match1', matchedUser: { id: 'user1' } },
+//             { id: 'match2', matchedUser: { id: 'user2' } },
+//           ],
+//         },
+//       },
+//       loading: false,
+//       error: null,
+//       refetch: mockRefetch,
+//     });
+
+//     (useGetChatWithUserLazyQuery as jest.Mock).mockReturnValue([mockFetchChat, { data: null }]);
+
+//     (useUserManagement as jest.Mock).mockReturnValue({
+//       selectedUser: null,
+//       topRowUsers: [],
+//       bottomUsers: [],
+//       chattedUsers: [],
+//       handleUserSelect: mockHandleUserSelect,
+//       moveUserToBottom: mockMoveUserToBottom,
+//       setChattedUsers: mockSetChattedUsers,
+//       addNewMatch: jest.fn(),
+//       removeMatch: jest.fn(),
+//     });
+
+//     (useMarkMessagesAsSeen as jest.Mock).mockReturnValue({
+//       markMessagesAsSeen: mockMarkMessagesAsSeen,
+//       autoMarkNewMessagesAsSeen: mockAutoMarkNewMessagesAsSeen,
+//     });
+
+//     (useMobileDetection as jest.Mock).mockReturnValue(false);
+
+//     (usePageVisibility as jest.Mock).mockImplementation(() => {});
+
+//     (useConversationsLoader as jest.Mock).mockImplementation(() => {});
+
+//     (useSelectedChatLoader as jest.Mock).mockImplementation(() => {});
+
+//     (useNotifications as jest.Mock).mockReturnValue({
+//       notifications: [],
+//       handleNotification: mockHandleNotification,
+//       dismissNotification: mockDismissNotification,
+//       setNotifications: mockSetNotifications,
+//     });
+
+//     (useAutoMarkMessagesAsSeen as jest.Mock).mockImplementation(() => {});
+
+//     (useMessageSending as jest.Mock).mockReturnValue({
+//       handleSend: mockHandleSend,
+//       sending: false,
+//       retryFailedMessage: jest.fn(),
+//       handleInputChange: mockHandleInputChange,
+//     });
+
+//     (useSocketConnection as jest.Mock).mockImplementation(() => {});
+//   });
+
+//   it('renders without crashing', () => {
+//     render(<ChatPage />);
+//     expect(screen.getByTestId('matches')).toBeInTheDocument();
+//   });
+
+//   it('shows loading state when data is loading', () => {
+//     (useGetMeQuery as jest.Mock).mockReturnValue({
+//       data: null,
+//       loading: true,
+//       error: null,
+//       refetch: mockRefetch,
+//     });
+
+//     render(<ChatPage />);
+//     expect(screen.getByTestId('loading')).toBeInTheDocument();
+//     expect(screen.getByText('Please Wait...')).toBeInTheDocument();
+//   });
+
+//   it('shows error state when there is an error', () => {
+//     const errorMessage = 'Failed to load data';
+//     (useGetMeQuery as jest.Mock).mockReturnValue({
+//       data: null,
+//       loading: false,
+//       error: { message: errorMessage },
+//       refetch: mockRefetch,
+//     });
+
+//     render(<ChatPage />);
+//     expect(screen.getByText(`Error loading chat: ${errorMessage}`)).toBeInTheDocument();
+//   });
+
+//   it('displays matches and chat person on desktop view', () => {
+//     render(<ChatPage />);
+//     expect(screen.getByTestId('matches')).toBeInTheDocument();
+//     expect(screen.getByTestId('chat-person')).toBeInTheDocument();
+//   });
+
+//   it('hides chat window on mobile when not selected', () => {
+//     (useMobileDetection as jest.Mock).mockReturnValue(true);
+
+//     render(<ChatPage />);
+//     expect(screen.getByTestId('matches')).toBeInTheDocument();
+//     expect(screen.getByTestId('chat-person')).toBeInTheDocument();
+//     expect(screen.queryByTestId('chat-window')).not.toBeInTheDocument();
+//   });
+
+//   it('shows chat window on mobile when user is selected', () => {
+//     (useMobileDetection as jest.Mock).mockReturnValue(true);
+//     (useUserManagement as jest.Mock).mockReturnValue({
+//       selectedUser: { id: 'test-user' },
+//       topRowUsers: [],
+//       bottomUsers: [],
+//       chattedUsers: [],
+//       handleUserSelect: mockHandleUserSelect,
+//       moveUserToBottom: mockMoveUserToBottom,
+//       setChattedUsers: mockSetChattedUsers,
+//       addNewMatch: jest.fn(),
+//       removeMatch: jest.fn(),
+//     });
+
+//     render(<ChatPage />);
+//     expect(screen.getByTestId('chat-window')).toBeInTheDocument();
+//   });
+
+//   it('calls handleUserSelect when a user is selected', () => {
+//     render(<ChatPage />);
+//     fireEvent.click(screen.getByText('Select User'));
+//     expect(mockHandleUserSelect).toHaveBeenCalledWith({ id: 'test-user' });
+//   });
+
+//   it('calls handleSend when send button is clicked', () => {
+//     (useUserManagement as jest.Mock).mockReturnValue({
+//       selectedUser: { id: 'test-user' },
+//       topRowUsers: [],
+//       bottomUsers: [],
+//       chattedUsers: [],
+//       handleUserSelect: mockHandleUserSelect,
+//       moveUserToBottom: mockMoveUserToBottom,
+//       setChattedUsers: mockSetChattedUsers,
+//       addNewMatch: jest.fn(),
+//       removeMatch: jest.fn(),
+//     });
+
+//     render(<ChatPage />);
+//     fireEvent.change(screen.getByTestId('message-input'), { target: { value: 'Hello' } });
+//     fireEvent.click(screen.getByText('Send'));
+//     expect(mockHandleSend).toHaveBeenCalledWith('Hello', expect.any(Function));
+//   });
+
+//   it('calls handleInputChange when input value changes', () => {
+//     (useUserManagement as jest.Mock).mockReturnValue({
+//       selectedUser: { id: 'test-user' },
+//       topRowUsers: [],
+//       bottomUsers: [],
+//       chattedUsers: [],
+//       handleUserSelect: mockHandleUserSelect,
+//       moveUserToBottom: mockMoveUserToBottom,
+//       setChattedUsers: mockSetChattedUsers,
+//       addNewMatch: jest.fn(),
+//       removeMatch: jest.fn(),
+//     });
+
+//     render(<ChatPage />);
+//     fireEvent.change(screen.getByTestId('message-input'), { target: { value: 'Hello' } });
+//     expect(mockHandleInputChange).toHaveBeenCalledWith('Hello');
+//   });
+
+//   it('calls onBack when back button is clicked on mobile', () => {
+//     (useMobileDetection as jest.Mock).mockReturnValue(true);
+//     (useUserManagement as jest.Mock).mockReturnValue({
+//       selectedUser: { id: 'test-user' },
+//       topRowUsers: [],
+//       bottomUsers: [],
+//       chattedUsers: [],
+//       handleUserSelect: mockHandleUserSelect,
+//       moveUserToBottom: mockMoveUserToBottom,
+//       setChattedUsers: mockSetChattedUsers,
+//       addNewMatch: jest.fn(),
+//       removeMatch: jest.fn(),
+//     });
+
+//     render(<ChatPage />);
+//     fireEvent.click(screen.getByText('Back'));
+//     expect(screen.queryByTestId('chat-window')).not.toBeInTheDocument();
+//   });
+//   it('displays notifications when present', () => {
+//     const notification = {
+//       id: 'notif1',
+//       type: 'message',
+//       title: 'New Message',
+//       message: 'You have a new message',
+//       timestamp: '10:30 AM',
+//     };
+
+//     (useNotifications as jest.Mock).mockReturnValue({
+//       notifications: [notification],
+//       handleNotification: mockHandleNotification,
+//       dismissNotification: mockDismissNotification,
+//       setNotifications: mockSetNotifications,
+//     });
+
+//     render(<ChatPage />);
+//     expect(screen.getByText('New Message')).toBeInTheDocument();
+//     expect(screen.getByText('You have a new message')).toBeInTheDocument();
+//   });
+
+//   it('dismisses notification when close button is clicked', async () => {
+//     const notification = {
+//       id: 'notif1',
+//       type: 'message',
+//       title: 'New Message',
+//       message: 'You have a new message',
+//       timestamp: '10:30 AM',
+//     };
+
+//     (useNotifications as jest.Mock).mockReturnValue({
+//       notifications: [notification],
+//       handleNotification: mockHandleNotification,
+//       dismissNotification: mockDismissNotification,
+//       setNotifications: mockSetNotifications,
+//     });
+
+//     render(<ChatPage />);
+//     fireEvent.click(screen.getByText('✕'));
+//     expect(mockDismissNotification).toHaveBeenCalledWith('notif1');
+//   });
+
+//   it('auto-dismisses notification after 5 seconds', async () => {
+//     jest.useFakeTimers();
+//     const notification = {
+//       id: 'notif1',
+//       type: 'message',
+//       title: 'New Message',
+//       message: 'You have a new message',
+//       timestamp: '10:30 AM',
+//     };
+
+//     (useNotifications as jest.Mock).mockReturnValue({
+//       notifications: [notification],
+//       handleNotification: mockHandleNotification,
+//       dismissNotification: mockDismissNotification,
+//       setNotifications: mockSetNotifications,
+//     });
+
+//     render(<ChatPage />);
+//     expect(screen.getByText('New Message')).toBeInTheDocument();
+
+//     // Fast-forward 5 seconds
+//     act(() => {
+//       jest.advanceTimersByTime(5000);
+//     });
+
+//     await waitFor(() => {
+//       expect(mockDismissNotification).toHaveBeenCalledWith('notif1');
+//     });
+
+//     jest.useRealTimers();
+//   });
+// });

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import ChatPerson from '@/components/ChatPerson';
 import ChatWindow from '@/components/ChatWindow';
 import Matches from '@/components/Matches';
@@ -9,8 +9,13 @@ import { useMessageSending } from 'hooks/useMessageSending';
 import { useSocketConnection } from 'hooks/useSocketConnection';
 import { useUserManagement } from 'hooks/useUserManagement';
 import { useMarkMessagesAsSeen } from 'hooks/useMarkMessagesAsSeen';
+import { useMobileDetection } from 'hooks/useMobileDetection';
+import { usePageVisibility } from 'hooks/usePageVisibility';
+import { useConversationsLoader } from 'hooks/useConversationsLoader';
+import { useSelectedChatLoader } from 'hooks/useSelectedChatLoader';
+import { useNotifications } from 'hooks/useNotifications';
+import { useAutoMarkMessagesAsSeen } from 'hooks/useAutoMarkMessageAsSeen';
 
-// Notification component
 interface NotificationProps {
   notification: {
     type: string;
@@ -26,7 +31,6 @@ const NotificationToast: React.FC<NotificationProps> = ({ notification, onClose 
     const timer = setTimeout(() => {
       onClose();
     }, 5000); // Auto-close after 5 seconds
-
     return () => clearTimeout(timer);
   }, [onClose]);
 
@@ -78,22 +82,12 @@ const NotificationToast: React.FC<NotificationProps> = ({ notification, onClose 
 
 const ChatPage: React.FC = () => {
   const { data, loading, error, refetch } = useGetMeQuery();
-  const [fetchChat, { data: chatData }] = useGetChatWithUserLazyQuery();
+  const [fetchChat] = useGetChatWithUserLazyQuery();
   const [conversations, setConversations] = useState<Record<string, Message[]>>({});
   const [inputValue, setInputValue] = useState('');
   const [socketError, setSocketError] = useState<string | null>(null);
   const [showChatOnMobile, setShowChatOnMobile] = useState(false);
   const [chatLoading, setChatLoading] = useState<Record<string, boolean>>({});
-  const [isMobile, setIsMobile] = useState(false);
-  const [notifications, setNotifications] = useState<
-    Array<{
-      id: string;
-      type: string;
-      title: string;
-      message: string;
-      timestamp: string;
-    }>
-  >([]);
   const [typingUsers, setTypingUsers] = useState<Record<string, boolean>>({});
   const [userStatuses, setUserStatuses] = useState<
     Record<
@@ -105,68 +99,29 @@ const ChatPage: React.FC = () => {
     >
   >({});
 
-  const notificationIdRef = useRef(0);
   const currentPageRef = useRef('chat');
 
-  const { selectedUser, topRowUsers, bottomUsers, chattedUsers, handleUserSelect, moveUserToBottom, setChattedUsers, addNewMatch, removeMatch } = useUserManagement(data, conversations);
+  // Use custom hooks
+  const isMobileDetected = useMobileDetection();
+  const { notifications, handleNotification, dismissNotification, setNotifications } = useNotifications();
 
-  // Helper function to get user status by match ID
-  const getUserStatusByMatchId = useCallback(
-    (matchId: string | undefined) => {
-      if (!matchId || !data?.getMe?.matchIds) return undefined;
+  // User management
+  const { selectedUser, topRowUsers, bottomUsers, handleUserSelect, moveUserToBottom, setChattedUsers, addNewMatch, removeMatch } = useUserManagement(data, conversations);
 
-      const match = data.getMe.matchIds.find((match) => match?.id === matchId);
-      const actualUserId = match?.matchedUser?.id;
+  // Mark messages as seen
+  const { markMessagesAsSeen, autoMarkNewMessagesAsSeen } = useMarkMessagesAsSeen(selectedUser, conversations, setConversations);
 
-      return actualUserId ? userStatuses[actualUserId] : undefined;
-    },
-    [data?.getMe?.matchIds, userStatuses]
-  );
+  // Handle page visibility
+  usePageVisibility(refetch, setNotifications);
 
-  // Helper function to get actual user ID from match ID
-  const getActualUserIdFromMatch = useCallback(
-    (matchId: string | undefined) => {
-      if (!matchId || !data?.getMe?.matchIds) return undefined;
+  // Load conversations
+  useConversationsLoader(data, fetchChat, setConversations, setChatLoading);
 
-      const match = data.getMe.matchIds.find((match) => match?.id === matchId);
-      return match?.matchedUser?.id;
-    },
-    [data?.getMe?.matchIds]
-  );
+  // Load selected chat
+  useSelectedChatLoader(selectedUser, data, fetchChat, setChatLoading);
 
-  // Track if component is mounted and page visibility
-  useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-    return () => window.removeEventListener('resize', checkIsMobile);
-  }, []);
-
-  // Handle page visibility changes
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        refetch();
-        // Clear notifications when user comes back to the page
-        setNotifications([]);
-      }
-    };
-
-    const handleFocus = () => {
-      refetch();
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('focus', handleFocus);
-
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('focus', handleFocus);
-    };
-  }, [refetch]);
+  // Auto mark messages as seen
+  useAutoMarkMessagesAsSeen(selectedUser, showChatOnMobile, isMobileDetected, markMessagesAsSeen);
 
   // Cleanup conversations on unmount
   useEffect(() => {
@@ -175,111 +130,31 @@ const ChatPage: React.FC = () => {
     };
   }, []);
 
+  // Helper function to get user status by match ID
+  const getUserStatusByMatchId = useCallback(
+    (matchId: string | undefined) => {
+      if (!matchId || !data?.getMe?.matchIds) return undefined;
+      const match = data.getMe.matchIds.find((match) => match?.id === matchId);
+      const actualUserId = match?.matchedUser?.id;
+      return actualUserId ? userStatuses[actualUserId] : undefined;
+    },
+    [data?.getMe?.matchIds, userStatuses]
+  );
+
+  // // Helper function to get actual user ID from match ID
+  // const getActualUserIdFromMatch = useCallback(
+  //   (matchId: string | undefined) => {
+  //     if (!matchId || !data?.getMe?.matchIds) return undefined;
+  //     const match = data.getMe.matchIds.find((match) => match?.id === matchId);
+  //     return match?.matchedUser?.id;
+  //   },
+  //   [data?.getMe?.matchIds]
+  // );
+
   const messages = useMemo(() => {
     if (!selectedUser) return [];
     return conversations[selectedUser.id] || [];
   }, [selectedUser, conversations]);
-
-  const { markMessagesAsSeen, autoMarkNewMessagesAsSeen } = useMarkMessagesAsSeen(selectedUser, conversations, setConversations);
-
-  // Auto-mark messages as seen based on mobile/desktop and chat visibility
-  useEffect(() => {
-    if (!selectedUser) return;
-
-    if (!isMobile) {
-      // Desktop: mark as seen immediately
-      const timeoutId = setTimeout(() => {
-        markMessagesAsSeen();
-      }, 500);
-      return () => clearTimeout(timeoutId);
-    } else {
-      // Mobile: only mark as seen if chat window is visible
-      if (showChatOnMobile) {
-        const timeoutId = setTimeout(() => {
-          markMessagesAsSeen();
-        }, 500);
-        return () => clearTimeout(timeoutId);
-      }
-    }
-  }, [selectedUser, showChatOnMobile, isMobile, markMessagesAsSeen]);
-
-  // Load initial conversations
-  useEffect(() => {
-    if (!data?.getMe?.id || !data.getMe.matchIds) return;
-    const loadConversations = async () => {
-      const userId = data?.getMe?.id;
-
-      if (!userId || !Array.isArray(data?.getMe?.matchIds)) return;
-
-      const matches = data.getMe.matchIds.filter((match): match is NonNullable<typeof match> => !!match);
-
-      for (const match of matches) {
-        const participantId = match.matchedUser?.id;
-        if (!participantId) continue;
-
-        try {
-          setChatLoading((prev) => ({ ...prev, [match.id]: true }));
-
-          const result = await fetchChat({
-            variables: { userId, participantId },
-            fetchPolicy: 'cache-and-network',
-          });
-
-          if (result.data?.getChatWithUser) {
-            const serverMessages: Message[] = result.data.getChatWithUser.messages.map(
-              (msg: any): Message => ({
-                id: msg.id,
-                text: msg.content,
-                sender: msg.senderId === userId ? 'me' : 'them',
-                timestamp: new Date(msg.createdAt).toLocaleTimeString('en-US', {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  hour12: false,
-                }),
-                seen: msg.seen,
-                delivered: true,
-
-                // These are required by your Message type
-                sending: false,
-                failed: false,
-                retrying: false,
-              })
-            );
-
-            setConversations((prev) => ({
-              ...prev,
-              [match.id]: serverMessages.sort((a, b) => new Date(`2000-01-01 ${a.timestamp}`).getTime() - new Date(`2000-01-01 ${b.timestamp}`).getTime()),
-            }));
-          }
-        } catch (error) {
-          console.error(`Failed to load conversation for match ${match.id}:`, error);
-        } finally {
-          setChatLoading((prev) => ({ ...prev, [match.id]: false }));
-        }
-      }
-    };
-
-    loadConversations();
-  }, [data?.getMe?.id, data?.getMe?.matchIds, fetchChat]);
-
-  // Load specific chat when user is selected
-  useEffect(() => {
-    if (!selectedUser || !data?.getMe?.id) return;
-
-    const matchId = selectedUser.id;
-    const userId = data.getMe.id;
-    const participantId = data.getMe.matchIds?.find((m: any) => m?.id === matchId)?.matchedUser?.id;
-    if (!participantId) return;
-
-    setChatLoading((prev) => ({ ...prev, [matchId]: true }));
-
-    fetchChat({
-      variables: { userId, participantId },
-      fetchPolicy: 'cache-first',
-    }).finally(() => {
-      setChatLoading((prev) => ({ ...prev, [matchId]: false }));
-    });
-  }, [selectedUser, data, fetchChat]);
 
   const lastSeenMessageId = useMemo(() => {
     const seenMessages = messages.filter((m) => m.sender === 'me' && m.seen);
@@ -296,24 +171,6 @@ const ChatPage: React.FC = () => {
     [addNewMatch, refetch]
   );
 
-  // Handle notification callback
-  const handleNotification = useCallback(
-    (notificationData: any) => {
-      const notification = {
-        id: `notif_${++notificationIdRef.current}`,
-        ...notificationData,
-      };
-
-      setNotifications((prev) => [...prev, notification]);
-
-      // Auto-mark new messages as seen if appropriate
-      if (notificationData.type === 'message' && notificationData.matchId) {
-        autoMarkNewMessagesAsSeen(notificationData.matchId);
-      }
-    },
-    [autoMarkNewMessagesAsSeen]
-  );
-
   // Handle unmatch callback
   const handleUnmatched = useCallback(
     (matchId: string) => {
@@ -323,12 +180,10 @@ const ChatPage: React.FC = () => {
         delete newConversations[matchId];
         return newConversations;
       });
-
       // If currently viewing the unmatched conversation, clear selection
       if (selectedUser?.id === matchId) {
         handleUserSelect(null);
       }
-
       refetch();
     },
     [removeMatch, selectedUser, handleUserSelect, refetch]
@@ -406,25 +261,12 @@ const ChatPage: React.FC = () => {
     [retryFailedMessage]
   );
 
-  const dismissNotification = useCallback((notificationId: string) => {
-    setNotifications((prev) => prev.filter((n) => n.id !== notificationId));
-  }, []);
-
   // Get current user's status
   const currentUserStatus = getUserStatusByMatchId(selectedUser?.id);
-  const actualUserId = getActualUserIdFromMatch(selectedUser?.id);
-
-  // Debug logs with proper user ID resolution
-  console.log('Selected user (match):', selectedUser);
-  console.log('Selected user match ID:', selectedUser?.id);
-  console.log('Actual user ID:', actualUserId);
-  console.log('All user statuses:', userStatuses);
-  console.log('Current user status:', currentUserStatus);
 
   // Create a modified userStatuses object that maps match IDs to user statuses for ChatPerson
   const matchIdToUserStatusMap = useMemo(() => {
     const statusMap: Record<string, { status: 'online' | 'away' | 'offline'; lastSeen: string }> = {};
-
     if (data?.getMe?.matchIds) {
       data.getMe.matchIds.forEach((match) => {
         if (match?.id && match.matchedUser?.id) {
@@ -435,12 +277,12 @@ const ChatPage: React.FC = () => {
         }
       });
     }
-
     return statusMap;
   }, [data?.getMe?.matchIds, userStatuses]);
 
   if (loading) return <Loading msg="Please Wait..." />;
   if (error) return <div>Error loading chat: {error.message}</div>;
+
   return (
     <div className="flex flex-col items-center justify-center w-screen bg-white relative">
       {/* Notifications */}
@@ -450,7 +292,7 @@ const ChatPage: React.FC = () => {
         ))}
       </div>
 
-      {/* Socket Error */}
+      {/* Socket Error
       {socketError && (
         <div className="w-full bg-red-500 text-white p-2 text-center text-sm">
           {socketError}
@@ -460,10 +302,10 @@ const ChatPage: React.FC = () => {
             </button>
           )}
         </div>
-      )}
+      )} */}
 
       {/* Matches: show always on desktop, and on mobile only if NOT viewing ChatWindow */}
-      {(!showChatOnMobile || !isMobile) && (
+      {(!showChatOnMobile || !isMobileDetected) && (
         <div className="w-full max-w-[1330px]">
           <Matches topRowUsers={topRowUsers} selectedUser={selectedUser} onUserSelect={handleUserSelectWithErrorReset} />
         </div>
