@@ -47,8 +47,8 @@ export const LikeDislikeButtons = ({ onLike, onDislike }: { onLike: () => void; 
   </div>
 );
 
-const ProfileImageDisplay = ({ imageError, imageSrc, alt, handleImageError }: { imageError: boolean; imageSrc: string; alt: string; handleImageError: () => void }) => (
-  <Image width={400} height={600} src={imageError || !imageSrc ? '/gray.jpeg' : imageSrc} alt={alt} className="w-full h-full object-cover" unoptimized onError={handleImageError} />
+const ProfileImageDisplay = ({ imageSrc, alt, handleImageError }: { imageError: boolean; imageSrc: string; alt: string; handleImageError: () => void }) => (
+  <Image width={400} height={600} src={!imageSrc ? '/profile.jpg' : imageSrc} alt={alt} className="w-full h-full object-cover" unoptimized onError={handleImageError} />
 );
 
 const ProfileInfo = ({ profile, images, currentImageIndex }: { profile: UserProfile; images: string[]; currentImageIndex: number }) => {
