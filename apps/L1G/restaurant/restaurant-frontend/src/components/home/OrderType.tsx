@@ -40,14 +40,14 @@ const OrderType = ({ currentCart }: Props) => {
         </DialogHeader>
         <RadioGroup onValueChange={handlePick} className="flex items-center w-full justify-around mt-4 mb-8">
           <div className="flex items-center justify-center space-x-3">
-            <RadioGroupItem id="dinein" value="dine_in" />
-            <Label className="text-[14px]" htmlFor="dinein">
+            <RadioGroupItem id="IN" value="IN" />
+            <Label className="text-[14px]" htmlFor="IN">
               Эндээ идэх
             </Label>
           </div>
           <div className="flex items-center justify-center space-x-3">
-            <RadioGroupItem id="takeaway" value="takeaway" />
-            <Label className="text-[14px]" htmlFor="takeaway">
+            <RadioGroupItem id="GO" value="GO" />
+            <Label className="text-[14px]" htmlFor="GO">
               Аваад явах
             </Label>
           </div>
