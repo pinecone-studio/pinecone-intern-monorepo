@@ -1,0 +1,14 @@
+query GetOtherUsers($_id: ID!) {
+  getOtherUsers(_id: $_id) {
+    id
+    name
+    email
+    images
+    bio
+    gender
+    interests {
+      _id
+      interestName
+    }
+  }
+}

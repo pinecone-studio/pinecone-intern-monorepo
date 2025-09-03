@@ -16,7 +16,7 @@ const handleKeyDown = (e: KeyboardEvent, isMatched: boolean, closeMatchDialog: (
 };
 
 const getFilteredProfiles = (data: any, currentUserId: string, gender?: string) => {
-  return (data?.getusers ?? [])
+  return (data?.getOtherUsers ?? [])
     .filter((u: any): u is NonNullable<typeof u> => u && (typeof u.id === 'string' || typeof u.id === 'number'))
     .filter((u: any) => u.id.toString() !== currentUserId)
     .filter((u: any) => !gender || u.gender === gender)
@@ -41,7 +41,15 @@ const getFilteredProfiles = (data: any, currentUserId: string, gender?: string) 
 const HomePage = () => {
   const { currentUser, loading: userLoading, error: userError } = useCurrentUser();
 
-  const { data, loading: profilesLoading, error: profilesError } = useGetusersQuery();
+  const {
+    data,
+    loading: profilesLoading,
+    error: profilesError,
+  } = useGetOtherUsersQuery({
+    variables: { _id: currentUser?.id }, // энд заавал дамжуулах хэрэгтэй
+    skip: !currentUser,
+  });
+
   console.log(currentUser, 'l');
 
   const [like] = useLikeUserMutation();
@@ -104,7 +112,7 @@ const HomePage = () => {
 
   if (profilesLoading || userLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex items-center justify-center h-screen">
         <Loading />
       </div>
     );
@@ -127,8 +135,8 @@ const HomePage = () => {
   const profiles: UserProfile[] = getFilteredProfiles(data, currentUser.id, currentUser.genderPreferences || undefined);
 
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center">
-      <div className="fixed top-0 left-0 w-full z-50 flex justify-start items-start">
+    <div className="flex flex-col items-center justify-center w-screen h-screen">
+      <div className="fixed top-0 left-0 z-50 flex items-start justify-start w-full">
         <Header />
       </div>
 
