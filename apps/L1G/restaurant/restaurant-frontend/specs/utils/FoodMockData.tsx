@@ -31,6 +31,13 @@ const getFoodsMock: MockedResponse = {
             categoryId: '1',
             categoryName: 'Dessert',
           },
+          discount: {
+            discountId: '1',
+            discountName: 'Test',
+            discountRate: 20,
+            startDate: new Date('').toLocaleString(),
+            endDate: new Date('').toLocaleString(),
+          },
         },
         {
           foodId: '2',
@@ -41,6 +48,13 @@ const getFoodsMock: MockedResponse = {
           category: {
             categoryId: '2',
             categoryName: 'Main dish',
+          },
+          discount: {
+            discountId: '2',
+            discountName: 'Test2',
+            discountRate: 20,
+            startDate: new Date('').toLocaleString(),
+            endDate: new Date('').toLocaleString(),
           },
         },
       ],
@@ -384,24 +398,35 @@ const getCategoriesMock: MockedResponse = {
         {
           categoryId: '1',
           categoryName: 'Dessert',
-          food: {
-            foodId: '1',
-            foodName: 'Test1',
-            price: '20000',
-            foodStatus: 'Идэвхитэй',
-            image: 'https://example.com/foodimage.jpg',
-          },
+          food: [
+            {
+              foodId: '1',
+              foodName: 'Test1',
+              price: '20000',
+              foodStatus: 'Идэвхитэй',
+              image: 'https://example.com/foodimage.jpg',
+            },
+            {
+              foodId: '2',
+              foodName: 'Test2',
+              price: '20000',
+              foodStatus: 'Идэвхитэй',
+              image: 'https://example.com/foodimage.jpg',
+            },
+          ],
         },
         {
           categoryId: '2',
           categoryName: 'Main',
-          food: {
-            foodId: '2',
-            foodName: 'Test2',
-            price: '20000',
-            foodStatus: 'Идэвхитэй',
-            image: 'https://example.com/foodimage.jpg',
-          },
+          food: [
+            {
+              foodId: '3',
+              foodName: 'Test3',
+              price: '20000',
+              foodStatus: 'Идэвхитэй',
+              image: 'https://example.com/foodimage.jpg',
+            },
+          ],
         },
       ],
     },
@@ -424,31 +449,42 @@ const getDiscountsMock: MockedResponse = {
       getDiscounts: [
         {
           discountId: '1',
-          discountName: 'Test',
+          discountName: 'New',
           discountRate: 20,
           startDate: new Date('').toLocaleString(),
           endDate: new Date('').toLocaleString(),
-          food: {
-            foodId: '1',
-            foodName: 'Test1',
-            price: '20000',
-            foodStatus: 'Идэвхитэй',
-            image: 'https://example.com/foodimage.jpg',
-          },
+          food: [
+            {
+              foodId: '1',
+              foodName: 'Taco',
+              price: '20000',
+              foodStatus: 'Идэвхитэй',
+              image: 'https://example.com/foodimage.jpg',
+            },
+            {
+              foodId: '2',
+              foodName: 'Tapa',
+              price: '20000',
+              foodStatus: 'Идэвхитэй',
+              image: 'https://example.com/foodimage.jpg',
+            },
+          ],
         },
         {
           discountId: '2',
-          discountName: 'Test2',
+          discountName: 'Seasonal',
           discountRate: 20,
           startDate: new Date('').toLocaleString(),
           endDate: new Date('').toLocaleString(),
-          food: {
-            foodId: '2',
-            foodName: 'Test2',
-            price: '20000',
-            foodStatus: 'Идэвхитэй',
-            image: 'https://example.com/foodimage.jpg',
-          },
+          food: [
+            {
+              foodId: '3',
+              foodName: 'Salad',
+              price: '20000',
+              foodStatus: 'Идэвхитэй',
+              image: 'https://example.com/foodimage.jpg',
+            },
+          ],
         },
       ],
     },
@@ -582,6 +618,54 @@ const getDiscountsAfterDeleteMock: MockedResponse = {
   },
 };
 
+const getFoodsWithShortPriceMock: MockedResponse = {
+  request: {
+    query: GetFoodsDocument,
+  },
+  result: {
+    data: {
+      getFoods: [
+        {
+          foodId: '1',
+          foodName: 'Test',
+          price: '200',
+          foodStatus: 'Идэвхитэй',
+          image: 'https://example.com/foodimage.jpg',
+          category: {
+            categoryId: '1',
+            categoryName: 'Dessert',
+          },
+          discount: {
+            discountId: '1',
+            discountName: 'Test',
+            discountRate: 20,
+            startDate: new Date('').toLocaleString(),
+            endDate: new Date('').toLocaleString(),
+          },
+        },
+        {
+          foodId: '2',
+          foodName: 'Test1',
+          price: '500',
+          foodStatus: 'Идэвхитэй',
+          image: 'https://example.com/foodimage.jpg',
+          category: {
+            categoryId: '2',
+            categoryName: 'Main dish',
+          },
+          discount: {
+            discountId: '2',
+            discountName: 'Test2',
+            discountRate: 20,
+            startDate: new Date('').toLocaleString(),
+            endDate: new Date('').toLocaleString(),
+          },
+        },
+      ],
+    },
+  },
+};
+
 export {
   getFoodsMock,
   deleteFoodByIdMock,
@@ -611,4 +695,5 @@ export {
   deleteDiscountByIdMock,
   deleteCategoryErrorMock,
   deleteDiscountErrorMock,
+  getFoodsWithShortPriceMock,
 };

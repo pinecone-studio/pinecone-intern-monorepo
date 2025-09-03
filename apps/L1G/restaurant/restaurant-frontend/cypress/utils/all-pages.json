@@ -1,1 +1,15 @@
-["/","/food","/menu","/order","/table","/reset-password","/reset-password/verify-password","/reset-password/verify-password/update-password","/sign-in","/sign-up","/about-us","/navigate"]
+[
+  "/",
+  "/food",
+  "/menu",
+  "/order",
+  "/table",
+  "/reset-password",
+  "/reset-password/verify-password",
+  "/reset-password/verify-password/update-password",
+  "/sign-in",
+  "/sign-up",
+  "/403",
+  "/about-us",
+  "/camera"
+]
