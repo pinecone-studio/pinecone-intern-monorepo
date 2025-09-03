@@ -2,7 +2,7 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { Menu, X } from 'lucide-react';
+import { LogOut, Menu, X } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { MyProfileForm } from './MyProfileForm';
 import { MyImages } from './MyImages';
@@ -87,11 +87,12 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
         <Button
           onClick={() => handleLogout()}
           className={clsx(
-            'rounded-md py-2 px-4 text-sm font-sans font-medium justify-start transition-colors',
+            'rounded-md py-2 px-4 text-sm font-sans font-medium justify-start transition-colors flex',
             menu === 'logout' ? 'bg-[#F4F4F5] hover:bg-[#E4E4E7] text-[#E11D48E5]' : 'bg-transparent hover:bg-[#F4F4F5] text-[#E11D48E5]'
           )}
         >
-          Log out
+          Log out 
+          <LogOut className='ml-2' size={16} strokeWidth={2.25} />
         </Button>
 
         {/* <LogoutBtn /> */}
@@ -115,21 +116,27 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
               <X size={24} />
             </Button>
           </div>
-          <div className="flex flex-col gap-3" data-testid="mobile-menu-items">
-            {items.map(({ label, value }) => (
-              <Button
-                key={value}
-                data-testid={`mobile-menu-button-${value}`}
-                onClick={() => handleSelect(value)}
-                className={clsx(
-                  'rounded-lg py-3 px-4 text-base font-sans font-medium text-[#09090B] justify-start transition-colors',
-                  menu === value ? 'bg-[#F4F4F5] hover:bg-[#E4E4E7]' : 'bg-transparent hover:bg-[#F4F4F5]'
-                )}
-              >
-                {label}
-              </Button>
-            ))}
-            <LogoutBtn />
+          <div className="flex flex-col justify-between h-full">
+            <div>
+              <div className="flex flex-col gap-3" data-testid="mobile-menu-items">
+                {items.map(({ label, value }) => (
+                  <Button
+                    key={value}
+                    data-testid={`mobile-menu-button-${value}`}
+                    onClick={() => handleSelect(value)}
+                    className={clsx(
+                      'rounded-lg py-3 px-4 text-base font-sans font-medium text-[#09090B] justify-start transition-colors',
+                      menu === value ? 'bg-[#F4F4F5] hover:bg-[#E4E4E7]' : 'bg-transparent hover:bg-[#F4F4F5]'
+                    )}
+                  >
+                    {label}
+                  </Button>
+                ))}
+              </div>
+            </div>
+            {/* <div className="w-full flex justify-center"> */}
+              <LogoutBtn />
+            {/* </div> */}
           </div>
         </div>
       </div>
@@ -139,7 +146,7 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
 export const MenuContent = ({ menu, user, images, setImages }: { menu: MenuType; user?: any; images: string[]; setImages: (_imgs: string[]) => void }) => {
   switch (menu) {
     case 'profile':
-      return <MyProfileForm user={user} images={images} />;
+      return <MyProfileForm user={user} images={images} disableUpdate={images.length === 0}/>;
     case 'images':
       return <MyImages user={{ images }} onImagesChange={setImages} />;
     case 'notifications':
