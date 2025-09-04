@@ -288,4 +288,23 @@ describe('ChatHeader', () => {
       expect(dropdown).toHaveClass('z-50');
     });
   });
+  it('does not close dropdown when clicking inside dropdown (covers false branch)', async () => {
+    render(<ChatHeader user={mockUser} matchId={matchId} />);
+
+    // Open the dropdown
+    const moreButtons = screen.getAllByTestId('more-horizontal').map((icon) => icon.closest('button'));
+    fireEvent.click(moreButtons[0]!);
+
+    // Dropdown should now be visible
+    const dropdownButton = screen.getAllByTestId('view-profile-button')[0];
+    expect(dropdownButton).toBeInTheDocument();
+
+    // Click inside the dropdown
+    fireEvent.mouseDown(dropdownButton); // simulate internal click
+
+    // Wait to ensure dropdown doesn't close
+    await waitFor(() => {
+      expect(screen.getAllByTestId('view-profile-button')[0]).toBeInTheDocument();
+    });
+  });
 });

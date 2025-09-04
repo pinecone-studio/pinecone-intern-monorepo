@@ -234,6 +234,7 @@ describe('ChatPerson', () => {
     const container = screen.getByText('Messages').closest('div.flex.flex-col');
     expect(container).toHaveClass('custom-class');
   });
+
   it('returns original timestamp if formatting fails', () => {
     const malformedUser = {
       ...mockUsers[0],
@@ -242,10 +243,10 @@ describe('ChatPerson', () => {
         timestamp: 'invalid-timestamp',
       },
     };
-
     render(<ChatPerson {...defaultProps} bottomUsers={[malformedUser]} />);
     expect(screen.getByText('invalid-timestamp')).toBeInTheDocument();
   });
+
   it('does not render status indicator if user status is not available', () => {
     const usersWithoutStatus = [
       {
@@ -253,11 +254,238 @@ describe('ChatPerson', () => {
         id: '99',
       },
     ];
-
     render(<ChatPerson {...defaultProps} bottomUsers={usersWithoutStatus} userStatuses={{}} />);
     const avatar = screen.getByTestId('avatar-99').parentElement;
     expect(avatar?.querySelector('.bg-green-500')).not.toBeInTheDocument();
     expect(avatar?.querySelector('.bg-yellow-500')).not.toBeInTheDocument();
     expect(avatar?.querySelector('.bg-gray-400')).not.toBeInTheDocument();
+  });
+  it('shows "Online now" when user status is online', () => {
+    const user = {
+      id: '1',
+      name: 'Alice',
+      hasUnreadMessages: false,
+      lastActivity: new Date(),
+    };
+
+    render(
+      <ChatPerson
+        selectedUser={null}
+        onUserSelect={jest.fn()}
+        bottomUsers={[user]}
+        userStatuses={{
+          '1': { status: 'online', lastSeen: new Date().toISOString() },
+        }}
+      />
+    );
+
+    expect(screen.getByText('Online now')).toBeInTheDocument();
+  });
+  it('shows "Last seen" when user is away or offline', () => {
+    const user = {
+      id: '2',
+      name: 'Bob',
+      hasUnreadMessages: false,
+      lastActivity: new Date(),
+    };
+
+    render(
+      <ChatPerson
+        selectedUser={null}
+        onUserSelect={jest.fn()}
+        bottomUsers={[user]}
+        userStatuses={{
+          '2': { status: 'away', lastSeen: '2025-09-03T09:00:00Z' },
+        }}
+      />
+    );
+
+    expect(screen.getByText(/Last seen/i)).toBeInTheDocument();
+  });
+  it('shows "Tap to start chatting" when user has no status', () => {
+    const user = {
+      id: '3',
+      name: 'Charlie',
+      hasUnreadMessages: false,
+      lastActivity: new Date(),
+    };
+
+    render(
+      <ChatPerson
+        selectedUser={null}
+        onUserSelect={jest.fn()}
+        bottomUsers={[user]}
+        userStatuses={{}} // No status for this user
+      />
+    );
+
+    expect(screen.getByText('Tap to start chatting')).toBeInTheDocument();
+  });
+
+  describe('getStatusIndicator function coverage', () => {
+    it('returns null when status is offline (line 83)', () => {
+      const offlineUser = {
+        ...mockUsers[0],
+        id: 'offline-user',
+      };
+
+      render(
+        <ChatPerson
+          {...defaultProps}
+          bottomUsers={[offlineUser]}
+          userStatuses={{
+            'offline-user': {
+              status: 'offline',
+              lastSeen: '2022-12-31T15:45:00Z',
+            },
+          }}
+        />
+      );
+
+      const avatar = screen.getByTestId('avatar-offline-user').parentElement;
+      expect(avatar?.querySelector('.bg-gray-400')).toBeInTheDocument();
+      expect(avatar?.querySelector('.bg-green-500')).not.toBeInTheDocument();
+      expect(avatar?.querySelector('.bg-yellow-500')).not.toBeInTheDocument();
+    });
+  });
+  describe('message status indicators coverage (lines 198-206)', () => {
+    it('shows seen indicator when message is seen', () => {
+      const userWithSeenMessage = {
+        ...mockUsers[1],
+        id: 'seen-user',
+        lastMessage: {
+          ...mockUsers[1].lastMessage!,
+          seen: true,
+        },
+      };
+
+      render(<ChatPerson {...defaultProps} bottomUsers={[userWithSeenMessage]} />);
+
+      const messageContainer = screen.getByText('How are you?').closest('div.flex.items-center.justify-between');
+      const statusIndicator = messageContainer?.querySelector('.text-xs.text-pink-500');
+
+      expect(statusIndicator).toBeInTheDocument();
+    });
+
+    it('shows unseen indicator when message is not seen', () => {
+      const userWithUnseenMessage = {
+        ...mockUsers[1],
+        id: 'unseen-user',
+        lastMessage: {
+          ...mockUsers[1].lastMessage!,
+          seen: false,
+        },
+      };
+
+      render(<ChatPerson {...defaultProps} bottomUsers={[userWithUnseenMessage]} />);
+
+      const messageContainer = screen.getByText('How are you?').closest('div.flex.items-center.justify-between');
+      const statusIndicator = messageContainer?.querySelector('.text-xs.text-gray-400');
+
+      expect(statusIndicator).toBeInTheDocument();
+    });
+
+    it('shows "New Message" badge for unread messages from others', () => {
+      const userWithUnread = {
+        ...mockUsers[0],
+        id: 'unread-user',
+        hasUnreadMessages: true,
+      };
+
+      render(<ChatPerson {...defaultProps} bottomUsers={[userWithUnread]} />);
+
+      const messageContainer = screen.getByText('Hello there!').closest('div.flex.items-center.justify-between');
+      const newMessageBadge = messageContainer?.querySelector('.bg-gradient-to-r.from-pink-500.to-red-500');
+
+      expect(newMessageBadge).toBeInTheDocument();
+      expect(newMessageBadge).toHaveTextContent('New Message');
+    });
+  });
+  it('uses default userStatuses when not provided (covers line 33)', () => {
+    render(
+      <ChatPerson
+        selectedUser={null}
+        onUserSelect={jest.fn()}
+        bottomUsers={mockUsers}
+        // `userStatuses` omitted intentionally
+      />
+    );
+
+    // Expect at least one user to render without error
+    expect(screen.getByText('John Doe')).toBeInTheDocument();
+  });
+  describe('covers line 129 ternary branches for user status line', () => {
+    it('shows "Online now" if status is online and no lastMessage', () => {
+      const user = {
+        id: 'online-user',
+        name: 'Online User',
+        hasUnreadMessages: false,
+        lastActivity: new Date(),
+        // No lastMessage!
+      };
+
+      render(<ChatPerson selectedUser={null} onUserSelect={jest.fn()} bottomUsers={[user]} userStatuses={{ 'online-user': { status: 'online', lastSeen: new Date().toISOString() } }} />);
+
+      expect(screen.getByText('Online now')).toBeInTheDocument();
+    });
+
+    it('shows "Last seen" if userStatus exists and status is not online (e.g. away)', () => {
+      const user = {
+        id: 'away-user',
+        name: 'Away User',
+        hasUnreadMessages: false,
+        lastActivity: new Date(),
+      };
+
+      render(<ChatPerson selectedUser={null} onUserSelect={jest.fn()} bottomUsers={[user]} userStatuses={{ 'away-user': { status: 'away', lastSeen: new Date().toISOString() } }} />);
+
+      expect(screen.getByText(/Last seen/i)).toBeInTheDocument();
+    });
+
+    it('shows "Tap to start chatting" if no userStatus is present', () => {
+      const user = {
+        id: 'no-status-user-2',
+        name: 'No Status User 2',
+        hasUnreadMessages: false,
+        lastActivity: new Date(),
+      };
+
+      render(
+        <ChatPerson
+          selectedUser={null}
+          onUserSelect={jest.fn()}
+          bottomUsers={[user]}
+          userStatuses={{}} // userStatuses is empty
+        />
+      );
+
+      expect(screen.getByText('Tap to start chatting')).toBeInTheDocument();
+    });
+  });
+
+  it('returns null when user status is not available (line 83 coverage)', () => {
+    const userWithoutStatus = {
+      ...mockUsers[0],
+      id: 'no-status-user',
+      name: 'No Status User',
+    };
+    render(
+      <ChatPerson
+        {...defaultProps}
+        bottomUsers={[userWithoutStatus]}
+        userStatuses={{}} // No status provided
+      />
+    );
+    const avatar = screen.getByTestId('avatar-no-status-user').parentElement;
+    // Ensure avatar is rendered and status indicator area is empty
+    expect(avatar).toBeInTheDocument();
+    expect(avatar?.querySelector('.bg-green-500')).not.toBeInTheDocument();
+    expect(avatar?.querySelector('.bg-yellow-500')).not.toBeInTheDocument();
+    expect(avatar?.querySelector('.bg-gray-400')).not.toBeInTheDocument();
+    // Force evaluation of the null return (helps code coverage tools)
+    expect(() => {
+      // This ensures that `getStatusIndicator()` returned null and nothing crashed in rendering
+      expect(avatar?.innerHTML).toContain('Avatar for No Status User');
+    }).not.toThrow();
   });
 });

@@ -44,7 +44,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ user, matchId, onUnmatched, onB
       {/* Desktop Header */}
       <div className="hidden md:flex items-center mt-2 p-4 bg-white">
         <div className="flex items-center gap-3 flex-1">
-          <img src={user.images?.[0] || '/profile.jpg'} alt={user.name} className="w-10 h-10 rounded-full object-cover" />
+          <img src={user.images?.[0]} alt={user.name} className="w-10 h-10 rounded-full object-cover" />
           <div>
             <h3 className="font-semibold text-gray-900 mr-20">{user.name}</h3>
           </div>
@@ -91,7 +91,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ user, matchId, onUnmatched, onB
         </div>
 
         <div className="absolute left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1">
-          <img src={user.images?.[0] || '/placeholder.svg'} alt={user.name} className="w-10 h-10 rounded-full object-cover" />
+          <img src={user.images?.[0]} alt={user.name} className="w-10 h-10 rounded-full object-cover" />
           <h3 className="font-semibold text-gray-900 text-sm">{user.name}</h3>
         </div>
 

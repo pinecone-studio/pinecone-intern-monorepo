@@ -1,3 +1,5 @@
+import { UserStatus } from 'utils/chatUtils';
+
 export type Message = {
   id: any;
   text: string;
@@ -39,4 +41,22 @@ export interface ChatUserWithLastMessage extends ChatUser {
   lastMessage?: Message;
   lastActivity: Date;
   hasUnreadMessages: boolean;
+}
+export interface ChatWindowProps {
+  selectedUser: ChatUser | null;
+  messages: Message[];
+  inputValue: string;
+  onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onSend: () => void;
+  sending: boolean;
+  lastSeenMessageId: string | null;
+  matchId: string | undefined;
+  onUnmatched?: () => void;
+  onBack?: () => void;
+  onRetryMessage?: (messageId: string | number) => void;
+  className?: string;
+  loading: boolean;
+  typingUsers?: Record<string, boolean>;
+  userStatus?: UserStatus;
 }
