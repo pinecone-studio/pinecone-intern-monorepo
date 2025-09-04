@@ -76,7 +76,7 @@ jest.mock('@/components/Matches', () => {
   };
 });
 
-jest.mock('utils/notificationToast', () => {
+jest.mock('utils/notification-toast', () => {
   return function MockNotificationToast({ notification, onClose }: any) {
     return (
       <div data-testid={`notification-${notification.id}`}>
@@ -144,7 +144,7 @@ jest.mock('hooks/useSocketConnection', () => ({
 }));
 
 // Mock utility functions
-jest.mock('utils/statusUtils', () => ({
+jest.mock('utils/status-utils', () => ({
   createMatchIdToUserStatusMap: jest.fn(),
   getLastSeenMessageId: jest.fn(),
   getUserStatusByMatchId: jest.fn(),
