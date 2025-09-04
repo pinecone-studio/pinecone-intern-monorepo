@@ -17,7 +17,6 @@ const handleKeyDown = (e: KeyboardEvent, isMatched: boolean, closeMatchDialog: (
 };
 
 const getFilteredProfiles = (data: any, currentUserId: string, gender?: string) => {
-  console.log(data?.getusers, 'getUseres');
   return (data?.getusers ?? [])
     .filter((u: any): u is NonNullable<typeof u> => u && (typeof u.id === 'string' || typeof u.id === 'number'))
     .filter((u: any) => u.id.toString() !== currentUserId)
