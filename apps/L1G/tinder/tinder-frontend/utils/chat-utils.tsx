@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/filename-case */
+
 import React from 'react';
 import { Wifi, WifiOff, Clock } from 'lucide-react';
 

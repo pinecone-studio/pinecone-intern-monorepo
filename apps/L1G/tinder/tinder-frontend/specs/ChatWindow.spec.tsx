@@ -1,7 +1,9 @@
 /* eslint-disable max-lines */
 /* eslint-disable react/function-component-definition */
+/* eslint-disable no-unused-vars */
+
 import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ChatWindow from '../src/components/ChatWindow';
 
@@ -475,7 +477,6 @@ describe('ChatWindow', () => {
     });
 
     it('should return null for unknown status', () => {
-      // @ts-ignore - testing unknown status
       render(<ChatWindow {...defaultProps} userStatus={{ status: 'unknown', lastSeen: '' }} />);
 
       expect(screen.queryByTestId('wifi-icon')).not.toBeInTheDocument();

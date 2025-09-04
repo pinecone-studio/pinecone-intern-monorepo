@@ -25,12 +25,11 @@ const UnmatchButton: React.FC<UnmatchButtonProps> = ({ matchId, onUnmatched }) =
         onUnmatched?.();
         router.push('/chat');
       } else {
-        alert(data.unmatch?.message);
+        console.error(data.unmatch?.message);
       }
     },
     onError: (error) => {
       console.error('Unmatch error:', error);
-      alert('Something went wrong. Please try again.');
     },
   });
 
@@ -39,7 +38,7 @@ const UnmatchButton: React.FC<UnmatchButtonProps> = ({ matchId, onUnmatched }) =
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button className="flex items-center gap-3 w-full px-4 py-3 text-left text-sm text-red-600 hover:bg-red-50 transition-colors">
+        <button data-testid="unmatch-dialog-trigger" className="flex items-center gap-3 w-full px-4 py-3 text-left text-sm text-red-600 hover:bg-red-50 transition-colors">
           <UserX size={18} className="text-red-500" />
           <span className="font-medium">Unmatch</span>
         </button>
@@ -56,7 +55,7 @@ const UnmatchButton: React.FC<UnmatchButtonProps> = ({ matchId, onUnmatched }) =
             Keep match
           </Button>
 
-          <Button variant="destructive" className="rounded-full" onClick={() => unmatch()} disabled={loading}>
+          <Button data-testid="unmatch-trigger" variant="destructive" className="rounded-full" onClick={() => unmatch()} disabled={loading}>
             {loading ? 'Unmatching...' : 'Unmatch'}
           </Button>
         </DialogFooter>

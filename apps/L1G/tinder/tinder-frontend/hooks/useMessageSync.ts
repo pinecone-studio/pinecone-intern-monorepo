@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 'use client';
 import { useCallback } from 'react';
 import { useGetChatWithUserLazyQuery } from '@/generated';
 import { Message } from 'types/chat';
-import { mergeMessages } from 'utils/messageUtils';
+import { mergeMessages } from 'utils/message-utils';
 
 export const useMessageSync = () => {
   const [fetchChat] = useGetChatWithUserLazyQuery();

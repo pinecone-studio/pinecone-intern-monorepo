@@ -1,4 +1,6 @@
-import { UserStatus } from 'utils/chatUtils';
+/* eslint-disable no-unused-vars */
+
+import { UserStatus } from 'utils/chat-utils';
 
 export type Message = {
   id: any;

@@ -6,7 +6,7 @@ export function useChatScroll(messagesLength: number) {
   const [isNearBottom, setIsNearBottom] = useState(true);
   const [showScrollToBottom, setShowScrollToBottom] = useState(false);
 
-  // Auto-scroll logic
+  // eslint-disable-next-line complexity
   useEffect(() => {
     if (!bottomRef.current || !messagesContainerRef.current) return;
 

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Match, useGetChatWithUserLazyQuery } from '@/generated';
+import { Match } from '@/generated';
 import type { Message } from 'types/chat';
 
 export const useConversationsLoader = (
@@ -10,7 +10,7 @@ export const useConversationsLoader = (
 ) => {
   useEffect(() => {
     if (!data?.getMe?.id || !data.getMe.matchIds) return;
-
+    // eslint-disable-next-line complexity
     const loadConversations = async () => {
       const userId = data?.getMe?.id;
       if (!userId || !Array.isArray(data?.getMe?.matchIds)) return;

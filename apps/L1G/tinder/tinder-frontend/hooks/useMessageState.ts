@@ -5,7 +5,7 @@ import { Message } from 'types/chat';
 export const useMessageState = () => {
   const [conversations, setConversations] = useState<Record<string, Message[]>>({});
 
-  const updateMessages = useCallback((matchId: string, updater: (messages: Message[]) => Message[]) => {
+  const updateMessages = useCallback((matchId: string, updater: (_messages: Message[]) => Message[]) => {
     setConversations((prev) => ({
       ...prev,
       [matchId]: updater(prev[matchId] || []),

@@ -1,4 +1,7 @@
-// utils/chatHelpers.ts
+/* eslint-disable complexity */
+/* eslint-disable unicorn/filename-case */
+/* eslint-disable max-lines */
+
 import React from 'react';
 import { Clock } from 'lucide-react';
 

@@ -1,4 +1,4 @@
-// utils/messageUtils.ts
+/* eslint-disable complexity */
 import { Message } from 'types/chat';
 
 export const mergeMessages = (localMessages: Message[], serverMessages: Message[]): Message[] => {

@@ -1,4 +1,6 @@
 /* eslint-disable react/function-component-definition */
+/* eslint-disable max-lines */
+
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ChatPerson from '@/components/ChatPerson';

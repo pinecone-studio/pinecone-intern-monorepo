@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-export const useAutoMarkMessagesAsSeen = (selectedUser: any, showChatOnMobile: boolean, isMobile: boolean, markMessagesAsSeen: () => void) => {
+export const useAutoMarkMessageAsSeen = (selectedUser: any, showChatOnMobile: boolean, isMobile: boolean, markMessagesAsSeen: () => void) => {
   useEffect(() => {
     if (!selectedUser) return;
 

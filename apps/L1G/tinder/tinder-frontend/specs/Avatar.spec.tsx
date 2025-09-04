@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+
 import Avatar from '@/components/Avatar';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';

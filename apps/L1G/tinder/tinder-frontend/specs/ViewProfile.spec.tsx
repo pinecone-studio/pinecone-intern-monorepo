@@ -1,3 +1,6 @@
+/* eslint-disable max-lines */
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 import ViewProfile from '@/components/ViewProfile';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -14,7 +17,12 @@ jest.mock('@/components/ui/dialog', () => {
   const React = require('react');
   const { useState, useContext, createContext } = React;
 
-  const DialogContext = createContext({ open: false, setOpen: () => {} });
+  const DialogContext = createContext({
+    open: false,
+    setOpen: () => {
+      //intenionally empty
+    },
+  });
 
   const Dialog = ({ children }) => {
     const [open, setOpen] = useState(false);

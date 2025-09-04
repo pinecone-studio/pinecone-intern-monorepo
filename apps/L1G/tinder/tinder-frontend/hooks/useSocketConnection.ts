@@ -1,3 +1,7 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable complexity */
+/* eslint-disable max-lines */
+
 import { useEffect, useCallback, useRef } from 'react';
 import { ChatUser, Message } from 'types/chat';
 import { socket } from 'utils/socket';
@@ -30,18 +34,7 @@ export const useSocketConnection = ({
 }: UseSocketConnectionProps) => {
   const reconnectAttempts = useRef(0);
   const maxReconnectAttempts = 5;
-  const messageBufferRef = useRef<Message[]>([]);
   const isAuthenticatedRef = useRef(false);
-
-  const generateTimestamp = useCallback(
-    (): string =>
-      new Date().toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-      }),
-    []
-  );
 
   // Smooth message animation helper
   const addMessageWithAnimation = useCallback(

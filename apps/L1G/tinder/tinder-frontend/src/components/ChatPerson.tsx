@@ -1,9 +1,13 @@
+/* eslint-disable complexity */
+/* eslint-disable max-lines */
+/* eslint-disable no-unused-vars */
+
 import React from 'react';
 import type { ChatUser } from 'types/chat';
 import clsx from 'clsx';
 import Avatar from './Avatar';
 import { Reply } from 'lucide-react';
-import { formatLastSeen, formatTime, getStatusIndicator, getUnreadBadge, sortChatUsers } from 'utils/chatHelpers';
+import { formatLastSeen, formatTime, getStatusIndicator, getUnreadBadge, sortChatUsers } from 'utils/Helpers';
 
 interface LastMessage {
   text: string;

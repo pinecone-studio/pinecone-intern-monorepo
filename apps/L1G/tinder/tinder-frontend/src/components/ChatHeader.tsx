@@ -1,8 +1,10 @@
+/* eslint-disable complexity */
+
 'use client';
 
 import type React from 'react';
 import { useState, useRef, useEffect } from 'react';
-import { ArrowLeft, MoreHorizontal, Video, Shield, Flag } from 'lucide-react';
+import { ArrowLeft, MoreHorizontal, Video, Shield } from 'lucide-react';
 import type { ChatUser } from 'types/chat';
 import ViewProfile from './ViewProfile';
 import UnmatchButton from './UnmatchButton';

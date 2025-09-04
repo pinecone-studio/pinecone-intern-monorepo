@@ -1,9 +1,12 @@
+/* eslint-disable max-lines */
+/* eslint-disable complexity */
+
 import React from 'react';
 import { MessageSquare, Send, MessageSquareDashedIcon, ArrowLeft, RefreshCw } from 'lucide-react';
 import ChatHeader from './ChatHeader';
 import type { ChatWindowProps } from 'types/chat';
 import Loading from './Loading';
-import { formatLastSeen, getStatusIndicator } from 'utils/chatUtils';
+import { formatLastSeen, getStatusIndicator } from 'utils/chat-utils';
 import { useChatScroll } from 'hooks/useChatScroll';
 const ChatWindow: React.FC<ChatWindowProps> = ({
   matchId,

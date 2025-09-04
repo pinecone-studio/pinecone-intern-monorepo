@@ -1,3 +1,6 @@
+/* eslint-disable complexity */
+/* eslint-disable max-lines */
+/* eslint-disable no-unused-vars */
 import { io, Socket } from 'socket.io-client';
 
 const SOCKET_URL = 'https://socket-server-58v2.onrender.com';
@@ -124,7 +127,7 @@ export const isSocketConnected = (): boolean => {
 };
 
 // Enhanced emit with connection check and retry
-export const emitWithRetry = async (event: string, data: any, timeout: number = 5000): Promise<any> => {
+export const emitWithRetry = async (event: string, data: any, timeout = 5000): Promise<any> => {
   // Ensure connection
   if (!isSocketConnected()) {
     try {
@@ -164,18 +167,18 @@ export const emitWithRetry = async (event: string, data: any, timeout: number = 
 };
 
 // Enhanced event listener management
-const eventListeners = new Map<string, Function[]>();
+const eventListeners = new Map<string, ((...args: any[]) => void)[]>();
 
-export const addSocketListener = (event: string, callback: Function): void => {
+export const addSocketListener = (event: string, callback: (...args: any[]) => void): void => {
   if (!eventListeners.has(event)) {
     eventListeners.set(event, []);
   }
 
-  eventListeners.get(event)!.push(callback);
-  socket.on(event, callback as any);
+  eventListeners.get(event)?.push(callback);
+  socket.on(event, callback);
 };
 
-export const removeSocketListener = (event: string, callback: Function): void => {
+export const removeSocketListener = (event: string, callback: (...args: any[]) => void): void => {
   const listeners = eventListeners.get(event);
   if (listeners) {
     const index = listeners.indexOf(callback);
@@ -184,7 +187,7 @@ export const removeSocketListener = (event: string, callback: Function): void =>
     }
   }
 
-  socket.off(event, callback as any);
+  socket.off(event, callback);
 };
 
 export const removeAllSocketListeners = (event?: string): void => {
@@ -261,8 +264,5 @@ if (process.env.NODE_ENV === 'development') {
     console.error('❌ Socket reconnection failed - max attempts reached');
   });
 }
-
-// Auto-connect on app start (optional)
-// connectSocket().catch(console.error);
 
 export default socket;
