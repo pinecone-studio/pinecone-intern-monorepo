@@ -1,6 +1,5 @@
 import { Usermodel } from 'src/models/user';
 import { IInterestLean, IMatchLean, IUserLean } from 'src/types';
-import { dislike } from '../mutations';
 
 export const mapSimpleUser = (user: IUserLean) => ({
   id: user._id!.toString(),
@@ -33,6 +32,7 @@ export const mapMatchedUsers = (matched: IUserLean[] | null = []) => (Array.isAr
 export const mapLikedByUsers = (likedBy: IUserLean[] | null = []) => (Array.isArray(likedBy) ? likedBy.map(mapSimpleUser) : []);
 
 export const mapLikedToUsers = (likedTo: IUserLean[] | null = []) => (Array.isArray(likedTo) ? likedTo.map(mapSimpleUser) : []);
+
 export const mapDislikedToUsers = (dislikedTo: IUserLean[] | null = []) => (Array.isArray(dislikedTo) ? dislikedTo.map(mapSimpleUser) : []);
 /* eslint-disable-next-line complexity */
 const mapMatch = (match: IMatchLean, currentUserId: string) => {

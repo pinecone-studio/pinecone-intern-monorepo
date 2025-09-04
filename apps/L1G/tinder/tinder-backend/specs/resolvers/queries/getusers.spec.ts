@@ -1,8 +1,9 @@
 /* eslint-disable max-lines */
-import { getusers, mapMatchedUsers } from 'src/resolvers/queries/getusers';
+import { getusers, mapMatchedUsers, mapDislikedToUsers } from 'src/resolvers/queries/getusers';
 import { Usermodel } from 'src/models/user';
 import mongoose from 'mongoose';
 import { IUserLean } from 'src/types';
+// Add mapDislikedToUsers to your import
 
 jest.mock('src/models/user');
 
@@ -209,35 +210,34 @@ describe('getusers resolver', () => {
     expect(result).toEqual([]);
   });
 
-  it('maps matched users when input is an array', () => {
-    const input = [
-      {
-        _id: '123',
-        email: 'test@test.com',
-        name: 'Test User',
-        dateOfBirth: '1990-01-01',
-        genderPreferences: 'Any',
-        gender: 'Male',
-        bio: 'test bio',
-        interests: [],
-        profession: 'Engineer',
-        schoolWork: 'MIT',
-        images: [],
-      },
-    ];
-    const result = mapMatchedUsers(input as any);
-    expect(result).toHaveLength(1);
-    expect(result[0].email).toBe('test@test.com');
-  });
+it('maps matched users when input is an array', () => {
+  const input = [
+    {
+      _id: '123',
+      email: 'test@test.com',
+      name: 'Test User',
+      dateOfBirth: '1990-01-01',
+      genderPreferences: 'Any',
+      gender: 'Male',
+      bio: 'test bio',
+      interests: [],
+      profession: 'Engineer',
+      schoolWork: 'MIT',
+      images: [],
+    } as IUserLean,
+  ];
+  const result = mapMatchedUsers(input);
+  expect(result).toHaveLength(1);
+  expect(result[0].email).toBe('test@test.com');
+});
   it('returns empty array when matched is null', () => {
     const result = mapMatchedUsers(null);
     expect(result).toEqual([]);
   });
-  it('returns empty array when matched is not an array', () => {
-    const result = mapMatchedUsers('not-an-array' as any);
-    expect(result).toEqual([]);
-  });
-
+ it('returns empty array when matched is not an array', () => {
+  const result = mapMatchedUsers('not-an-array' as unknown as IUserLean[]);
+  expect(result).toEqual([]);
+});
   it('handles match with null startedConversation', async () => {
     const users = [
       {
@@ -479,5 +479,48 @@ describe('getusers resolver', () => {
     const res = await getusers();
 
     expect(res[0].matchIds[0].matchedUser!.interests).toBeNull();
+  });
+});
+describe('mapDislikedToUsers', () => {
+  it('returns empty array when dislikedTo is null', () => {
+    const result = mapDislikedToUsers(null);
+    expect(result).toEqual([]);
+  });
+
+  it('returns empty array when dislikedTo is undefined', () => {
+    const result = mapDislikedToUsers(undefined);
+    expect(result).toEqual([]);
+  });
+
+  it('returns empty array when dislikedTo is not an array', () => {
+    const result = mapDislikedToUsers('not-an-array' as unknown as IUserLean[]);
+    expect(result).toEqual([]);
+  });
+
+  it('maps dislikedTo users when input is an array', () => {
+    const input = [
+      {
+        _id: '123',
+        email: 'test@test.com',
+        name: 'Test User',
+        dateOfBirth: '1990-01-01',
+        genderPreferences: 'Any',
+        gender: 'Male',
+        bio: 'test bio',
+        interests: [],
+        profession: 'Engineer',
+        schoolWork: 'MIT',
+        images: [],
+      } as IUserLean,
+    ];
+    const result = mapDislikedToUsers(input);
+    expect(result).toHaveLength(1);
+    expect(result[0].email).toBe('test@test.com');
+    expect(result[0].id).toBe('123');
+  });
+
+  it('returns empty array for empty dislikedTo array', () => {
+    const result = mapDislikedToUsers([]);
+    expect(result).toEqual([]);
   });
 });
