@@ -21,43 +21,40 @@ type CreateAccountProps = {
   onSuccess: () => void;
   userData: UserData;
   updateUserData: (_: Partial<UserData>) => void;
+  initialLoading?: boolean;
 };
 
-export const CreateAccount = ({ onSuccess, userData, updateUserData }: CreateAccountProps) => {
+export const CreateAccount = ({ onSuccess, userData, updateUserData, initialLoading = false }: CreateAccountProps) => {
   const router = useRouter();
   const [step, setStep] = useState<'email' | 'otp'>('email');
   const [message, setMessage] = useState<string | null>(null);
 
-  const [requestSignup, { error }] = useRequestSignupMutation();
+  const [requestSignup, { loading: requestLoading, error }] = useRequestSignupMutation();
+
+  const loading = initialLoading || requestLoading;
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: '',
-    },
+    defaultValues: { email: '' },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setMessage(null);
-      await requestSignup({
-        variables: { email: values.email, otpType: OtpType.Create },
-      });
-      setMessage('OTP resent successfully.');
+      await requestSignup({ variables: { email: values.email, otpType: OtpType.Create } });
       updateUserData({ email: values.email });
       setStep('otp');
-    } catch (e) {
+      setMessage('OTP sent successfully.');
+    } catch {
       setMessage('Failed to resend OTP, please try again.');
     }
-  }
-
-  const handleOtpSuccess = () => {
-    onSuccess();
   };
 
-  if (step === 'otp' && userData.email) return <ConfirmEmail email={userData.email} onSuccess={handleOtpSuccess} updateUserData={updateUserData} otpType={OtpType.Create} />;
+  const handleOtpSuccess = () => onSuccess();
 
-  return (
+  const renderOtpStep = () => (userData.email ? <ConfirmEmail email={userData.email} onSuccess={handleOtpSuccess} updateUserData={updateUserData} otpType={OtpType.Create} /> : null);
+
+  const renderEmailStep = () => (
     <div className="w-full flex flex-col gap-4 justify-center items-center">
       <div className="items-center flex flex-col text-center">
         <h1 className="font-semibold text-[24px] font-sans">Create an account</h1>
@@ -67,31 +64,32 @@ export const CreateAccount = ({ onSuccess, userData, updateUserData }: CreateAcc
       <div className="flex flex-col gap-4">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2">
-            <div className="flex flex-col gap-6">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="flex">Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="name@example.com" {...field} className="rounded-md" />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <Button type="submit" className="rounded-full bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
-              Continue
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="name@example.com" {...field} className="rounded-md" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <Button data-testid="submit-btn" type="submit" disabled={loading} className="rounded-full bg-[#E11D48E5] bg-opacity-90 font-sans hover:bg-[#E11D48E5] hover:bg-opacity-100">
+              {loading ? 'Please wait...' : 'Continue'}
             </Button>
+
             {error && <p className="text-[14px] text-red-500 mt-2">{error.message}</p>}
             {message && <p className="text-[14px] text-red-500 mt-2">{message}</p>}
           </form>
         </Form>
+
         <div className="w-full flex justify-between items-center gap-[10px] py-4">
           <Separator className="w-[156px]" />
-          <p className=" font-[400] text-[12px] text-[#71717A]">OR</p>
+          <p className="font-[400] text-[12px] text-[#71717A]">OR</p>
           <Separator className="w-[156px]" />
         </div>
 
@@ -105,4 +103,6 @@ export const CreateAccount = ({ onSuccess, userData, updateUserData }: CreateAcc
       </p>
     </div>
   );
+
+  return step === 'otp' ? renderOtpStep() : renderEmailStep();
 };
