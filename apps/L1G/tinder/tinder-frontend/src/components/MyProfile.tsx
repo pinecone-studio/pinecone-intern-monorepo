@@ -27,7 +27,7 @@ export const MyProfile = () => {
   if (loading)
     return (
       <div>
-        <Loading />
+        <Loading msg='Please wait...'/>
       </div>
     );
   if (error) return <div>Error loading profile. {error.message};</div>;
