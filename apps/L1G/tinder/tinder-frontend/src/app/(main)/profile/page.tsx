@@ -3,12 +3,23 @@ import { Header } from '@/components/Header';
 import { MyProfile } from '@/components/MyProfile';
 import { WhiteTinderLogo } from '@/components/TinderLogo';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const Profile = () => {
-  const token = localStorage.getItem('token');
+  const [token, setToken] = useState<string | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    if (!storedToken) {
+      router.push('/');
+    } else {
+      setToken(storedToken);
+    }
+  }, [router]);
+
   if (!token) {
-    router.push('/');
+    return null;
   }
 
   return (

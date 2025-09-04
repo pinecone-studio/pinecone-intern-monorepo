@@ -44,10 +44,20 @@ const HomePage = () => {
 
   const { data, loading: profilesLoading, error: profilesError } = useGetusersQuery();
 
-  const token = localStorage.getItem('token');
+  const [token, setToken] = useState<string | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    if (!storedToken) {
+      router.push('/');
+    } else {
+      setToken(storedToken);
+    }
+  }, [router]);
+
   if (!token) {
-    router.push('/');
+    return null;
   }
 
   const [like] = useLikeUserMutation();
