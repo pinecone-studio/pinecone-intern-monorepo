@@ -33,11 +33,11 @@ export const MyProfile = () => {
   if (error) return <div>Error loading profile. {error.message};</div>;
   const user = data?.getMe;
   return (
-    <div data-testid="my-profile" className="w-full h-screen px-3 flex flex-col gap-6">
+    <div data-testid="my-profile" className="w-full h-full px-3 flex flex-col gap-6 overflow-y-auto ">
       <MyProfileHeader isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
       <div className="flex w-full flex-1 flex-col md:flex-row justify-start items-start gap-6 lg:gap-12 px-4 sm:px-6 md:px-10 pb-6 md:overflow-hidden">
         <SidebarMenu menu={menu} setMenu={setMenu} isOpen={isOpen} setIsOpen={setIsOpen} />
-        <div data-testid="menu-content" className="w-full flex-1" style={{ maxHeight: 'calc(100vh - 4rem)' }}>
+        <div data-testid="menu-content" className="w-full h-fit flex">
           <MenuContent menu={menu} user={user} images={images} setImages={setImages} />
         </div>
       </div>
@@ -91,8 +91,8 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
             menu === 'logout' ? 'bg-[#F4F4F5] hover:bg-[#E4E4E7] text-[#E11D48E5]' : 'bg-transparent hover:bg-[#F4F4F5] text-[#E11D48E5]'
           )}
         >
-          Log out 
-          <LogOut className='ml-2' size={16} strokeWidth={2.25} />
+          Log out
+          <LogOut className="ml-2" size={16} strokeWidth={2.25} />
         </Button>
 
         {/* <LogoutBtn /> */}
@@ -106,7 +106,7 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
         <div
           data-testid="mobile-drawer"
           className={clsx(
-            'fixed top-0 left-0 w-[50%] h-screen overflow-y-auto bg-white shadow-xl z-50 flex flex-col p-6 transform transition-transform duration-300',
+            'fixed top-0 left-0 w-[50%] h-[400px] overflow-y-auto bg-white shadow-xl z-50 flex flex-col p-6 transform transition-transform duration-300',
             isOpen ? 'translate-x-0' : '-translate-x-full'
           )}
         >
@@ -135,7 +135,7 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
               </div>
             </div>
             {/* <div className="w-full flex justify-center"> */}
-              <LogoutBtn />
+            <LogoutBtn />
             {/* </div> */}
           </div>
         </div>
@@ -146,7 +146,7 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
 export const MenuContent = ({ menu, user, images, setImages }: { menu: MenuType; user?: any; images: string[]; setImages: (_imgs: string[]) => void }) => {
   switch (menu) {
     case 'profile':
-      return <MyProfileForm user={user} images={images} disableUpdate={images.length === 0}/>;
+      return <MyProfileForm user={user} images={images} disableUpdate={images.length === 0} />;
     case 'images':
       return <MyImages user={{ images }} onImagesChange={setImages} />;
     case 'notifications':
@@ -158,7 +158,7 @@ export const MenuContent = ({ menu, user, images, setImages }: { menu: MenuType;
 
 export const MyProfileHeader = ({ setIsOpen, user }: { isOpen: boolean; setIsOpen: (_open: boolean) => void; user?: any }) => {
   return (
-    <div className="w-full sticky top-0 z-40 bg-white shadow-sm">
+    <div className="w-full top-0 z-40 bg-white shadow-sm">
       <div className="flex items-center justify-start gap-3 px-4 sm:px-6 py-4 h-16">
         <div className="md:hidden">
           <Button variant="ghost" data-testid="open-mobile-menu" onClick={() => setIsOpen(true)} className="p-2" aria-label="Open mobile menu">
