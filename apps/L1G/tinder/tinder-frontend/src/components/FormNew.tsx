@@ -101,7 +101,7 @@ export const ProfileForm = ({ onSuccess, onBack, userData, updateUserData }: Pro
       <form
         data-testid="profile-form"
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-4 w-full max-w-[400px] mx-auto h-[500px] min-h-[380px] max-h-fit sm:h-[400px] md:h-fit overflow-scroll"
+        className="space-y-4 w-full max-w-[400px] mx-auto h-[400px] min-h-[380px] max-h-fit sm:h-[400px] md:h-fit overflow-y-auto"
       >
         <ProfileInputField control={form.control} name="name" label="Name" placeholder="Enter your name" testId="profile-name-input" />
         <ProfileInputField control={form.control} name="bio" label="Bio" placeholder="Tell us about yourself" testId="profile-bio-input" />
