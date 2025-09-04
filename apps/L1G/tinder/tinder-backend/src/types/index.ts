@@ -78,3 +78,12 @@ export interface IUnmatchResponse {
   success: boolean;
   message: string;
 }
+
+export type DeleteUserArgs = {
+  id: string;
+};
+
+export interface IDeleteUserResponse {
+  success: boolean;
+  message: string;
+}
