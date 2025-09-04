@@ -1,4 +1,4 @@
-import OrdersHistory from '@/components/History';
+import OrdersHistory from '@/components/OrderHistory';
 import React from 'react';
 
 const Historybudge = () => {
