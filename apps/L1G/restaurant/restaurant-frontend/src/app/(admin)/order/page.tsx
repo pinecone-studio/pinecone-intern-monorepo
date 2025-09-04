@@ -1,5 +1,5 @@
-import React from 'react';
+import { OrderContainer } from '@/components/admin/order/OrderContainer';
 
 export default function page() {
-  return <div>order</div>;
+  return <OrderContainer />;
 }
