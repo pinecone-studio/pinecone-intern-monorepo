@@ -2,8 +2,15 @@
 import { Header } from '@/components/Header';
 import { MyProfile } from '@/components/MyProfile';
 import { WhiteTinderLogo } from '@/components/TinderLogo';
+import { useRouter } from 'next/navigation';
 
 const Profile = () => {
+  const token = localStorage.getItem('token');
+  const router = useRouter();
+  if (!token) {
+    router.push('/');
+  }
+
   return (
     <div className="w-screen min-h-screen flex overflow-y-auto flex-col">
       <div className="flex-shrink-0">
