@@ -84,7 +84,7 @@ jest.mock('@/components/payment/PaymentCard', () => {
       },
       method.name || method.id
     );
-  return { __esModule: true, default: PaymentCard };
+  };
 });
 
 // ---------- next/image mock ----------
