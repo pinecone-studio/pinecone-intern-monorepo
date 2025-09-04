@@ -11,6 +11,15 @@ jest.mock('next/image', () => ({
   },
 }));
 
+const baseProps: Props = {
+  id: 'f-1',
+  image: '/img.png',
+  foodName: 'Taco',
+  price: '15000',
+  count: 0,
+  onRemove: () => jest.fn,
+  discount: null,
+};
 const base: Props = {
   id: 'f1',
   image: 'https://via.placeholder.com/150',
@@ -70,5 +79,54 @@ describe('<MenuCard />', () => {
     render(<MenuCard {...exactThousand} />);
 
     expect(screen.getByText('1k')).toBeInTheDocument();
+  });
+});
+describe('<MenuCard /> — discount logic', () => {
+  const FIXED_NOW = new Date('2025-09-04T00:00:00.000Z').getTime();
+
+  beforeAll(() => {
+    // Одоогийн цагийг тогтмол болгоно
+    jest.spyOn(Date, 'now').mockReturnValue(FIXED_NOW);
+  });
+
+  afterAll(() => {
+    (Date.now as jest.Mock).mockRestore?.();
+  });
+
+  test('discount байхгүй үед % badge харагдахгүй', () => {
+    render(<MenuCard {...baseProps} discount={null} />);
+    // "%"-тэй text байх ёсгүй
+    expect(screen.queryByText(/%$/)).not.toBeInTheDocument();
+  });
+
+  test('discount.rate байгаа, endDate ирээдүйд байвал badge гарна', () => {
+    // endDate = FIXED_NOW + 1 өдөр
+    const futureMs = String(FIXED_NOW + 24 * 60 * 60 * 1000);
+    const discount = { discountRate: 20, endDate: futureMs };
+
+    render(<MenuCard {...baseProps} discount={discount} />);
+
+    // "20%" гэсэн badge харагдна
+    expect(screen.getByText('20%')).toBeInTheDocument();
+  });
+
+  test('discount.rate байгаа ч endDate өнгөрсөн бол badge ГАРАХГҮЙ', () => {
+    // endDate = FIXED_NOW - 1 минут
+    const pastMs = String(FIXED_NOW - 60 * 1000);
+    const discount = { discountRate: 35, endDate: pastMs };
+
+    render(<MenuCard {...baseProps} discount={discount} />);
+
+    // "35%" badge байх ёсгүй
+    expect(screen.queryByText('35%')).not.toBeInTheDocument();
+  });
+
+  test('discountRate = 0 байвал (зөвшөөрөгдөх тохиолдолд) 0% гэж гарна', () => {
+    const futureMs = String(FIXED_NOW + 5 * 60 * 1000);
+    const discount = { discountRate: 0, endDate: futureMs };
+
+    render(<MenuCard {...baseProps} discount={discount} />);
+
+    expect(screen.getByText('0%')).toBeInTheDocument();
   });
 });

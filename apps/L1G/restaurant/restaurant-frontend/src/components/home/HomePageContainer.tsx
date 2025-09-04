@@ -35,7 +35,6 @@ export function removeOneReducer(prev: CartItem[], id: string): CartItem[] {
 
 const HomePageContainer = () => {
   const { data: categoriesData } = useGetCategoriesQuery();
-
   const [activeCategory, setActiveCategory] = useState<string | undefined>(undefined);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -66,37 +65,52 @@ const HomePageContainer = () => {
   };
   const removeOne = (id: string) => setCart((prev) => removeOneReducer(prev, id));
   const removeItem = (id: string) => setCart((prev) => removeItemReducer(prev, id));
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white px-4 py-6 text-center border-b">
-        <h1 className="text-2xl font-bold text-gray-800">Хоолны цэс</h1>
-      </div>
+      <div className="flex flex-col w-full h-fit sticky top-[55px] z-10">
+        <div className="bg-white px-4 py-6 text-center border-b">
+          <h1 className="text-2xl font-bold text-gray-800">Хоолны цэс</h1>
+        </div>
 
-      <div className="bg-white px-4 py-4 border-b">
-        <div className="flex space-x-6 overflow-x-auto">
-          {categoriesData?.getCategories.map((category) => (
-            <button
-              data-testid={`homepage-container-filter-button-${category?.categoryName || 'empty'}`}
-              key={category?.categoryId}
-              onClick={() => {
-                const name = category?.categoryName?.trim();
-                if (name) setActiveCategory(name);
-              }}
-              className={`whitespace-nowrap text-sm font-medium pb-2 border-b-2 transition-colors ${
-                activeCategory === category?.categoryName ? 'text-orange-600 border-orange-600' : 'text-gray-500 border-transparent hover:text-gray-700'
-              }`}
-            >
-              {category?.categoryName}
-            </button>
-          ))}
+        <div className="bg-white px-4 py-4 border-b">
+          <div className="flex space-x-6 overflow-x-auto">
+            {categoriesData?.getCategories.map((category) => (
+              <button
+                data-testid={`homepage-container-filter-button-${category?.categoryName || 'empty'}`}
+                key={category?.categoryId}
+                onClick={() => {
+                  const name = category?.categoryName?.trim();
+                  if (name) setActiveCategory(name);
+                }}
+                className={`whitespace-nowrap text-sm font-medium pb-2 border-b-2 transition-colors ${
+                  activeCategory === category?.categoryName ? 'text-orange-600 border-orange-600' : 'text-gray-500 border-transparent hover:text-gray-700'
+                }`}
+              >
+                {category?.categoryName}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="p-4">
-        <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto">
+      <div className="p-4  pb-[93px]">
+        <div className="grid grid-cols-2 gap-4 max-w-2xl mx-auto overflow-scroll h-fit ">
           {filteredItems.map((value) => {
             const count = cart.find((c) => c.id === value?.foodId)?.selectCount ?? 0;
-            return <MenuCard key={value?.foodId} image={value!.image} foodName={value!.foodName} price={value!.price} id={value!.foodId} onAdd={addToCart} count={count} onRemove={removeItem} />;
+            return (
+              <MenuCard
+                key={value?.foodId}
+                image={value!.image}
+                foodName={value!.foodName}
+                price={value!.price}
+                id={value!.foodId}
+                onAdd={addToCart}
+                count={count}
+                onRemove={removeItem}
+                discount={value?.discount}
+              />
+            );
           })}
         </div>
       </div>
