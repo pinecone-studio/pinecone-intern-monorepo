@@ -1,6 +1,6 @@
 'use client';
 import HomePageContainer from '@/components/home/HomePageContainer';
-import { Navbar } from '@/components/sheets/Navbar';
+import { Navbar } from '@/components/Navbar';
 
 const Home = () => {
   return (

@@ -14,7 +14,10 @@ type Props = {
 const OrderList = ({ image, foodName, price, count, onAdd, onRemove, id, removeItem }: Props) => {
   return (
     <div className="flex w-full h-fit px-2 py-2 gap-4">
-      <Image alt={foodName} src={image} width={90} height={90} className="rounded-xl object-cover" />
+      <div className="w-[90px] h-[90px] relative ">
+        <Image alt={foodName} src={image} fill sizes="auto" className="rounded-xl object-cover" />
+      </div>
+
       <div className="flex flex-col justify-between flex-1 min-w-0">
         <div className="flex flex-col min-w-0">
           <p className="text-[14px] truncate" title={foodName}>

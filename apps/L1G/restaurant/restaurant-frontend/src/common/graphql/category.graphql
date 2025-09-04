@@ -8,6 +8,13 @@ query getCategories {
       foodStatus
       price
       image
+      discount {
+        discountId
+        discountName
+        discountRate
+        startDate
+        endDate
+      }
     }
   }
 }

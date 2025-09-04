@@ -70,7 +70,7 @@ export const MenuGroupCard = () => {
         </TabsList>
         <TabsContent value="Бүгд">
           <CardContent data-testid="menu-group-card" className="gap-6">
-            {categoriesData?.getCategories.map((category, i) => (
+            {(categoriesData?.getCategories ?? []).map((category, i) => (
               <div data-testid={`menu-category-list-${i}`} key={category?.categoryId} className="gap-4 items-start">
                 <div className="flex justify-between items-center p-2">
                   <p className="text-base leading-[20px] text-foreground">{category?.categoryName}</p>
