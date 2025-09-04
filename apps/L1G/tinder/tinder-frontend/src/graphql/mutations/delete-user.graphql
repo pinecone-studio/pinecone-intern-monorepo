@@ -1,0 +1,6 @@
+mutation DeleteUser($deleteUserId: ID!) {
+  deleteUser(id: $deleteUserId) {
+    message
+    success
+  }
+}
