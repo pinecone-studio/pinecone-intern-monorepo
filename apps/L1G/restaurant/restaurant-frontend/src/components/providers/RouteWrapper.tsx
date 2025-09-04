@@ -41,5 +41,5 @@ export const ProtectedRoute = ({ allowedRoles, children }: ProtectedRouteProps) 
   }, [router, allowedRoles]);
 
   if (!isVerified) return null;
-  return <>{children}</>;
+  return <div className="h-full">{children}</div>;
 };

@@ -5,7 +5,7 @@ import { ApolloWrapper } from '../components/providers/ApolloWrapper';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="mn">
+    <html className=" overflow-scroll m-0 h-full" lang="mn">
       <body>
         <AppRouterCacheProvider>
           <ApolloWrapper>{children}</ApolloWrapper>
