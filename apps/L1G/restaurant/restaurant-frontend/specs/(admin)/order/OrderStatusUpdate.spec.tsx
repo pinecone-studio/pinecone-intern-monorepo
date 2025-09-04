@@ -3,7 +3,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { UpdateFoodOrderStatusDocument } from '@/generated';
 
-import { toast, Toaster } from 'sonner';
+import { Toaster } from 'sonner';
 import { UpdateFoodOrderStatus } from '@/components/admin/order/UpdateFoodOrderStatus';
 
 // Mock toast

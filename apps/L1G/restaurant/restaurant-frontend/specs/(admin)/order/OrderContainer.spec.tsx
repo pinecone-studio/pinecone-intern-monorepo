@@ -1,4 +1,4 @@
-import { GetFoodOrdersDocument, GetTablesDocument } from '@/generated';
+import { GetFoodOrdersDocument } from '@/generated';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import { ErrorBoundary } from 'specs/utils/ErrorBoundary';
@@ -27,7 +27,7 @@ const getFoodOrdersMock: MockedResponse = {
               food: {
                 foodName: 'Tuna Tostada',
                 price: '21000',
-                image: 'https://res.cloudinary.com/dfdpirnv5/image/upload/v1756618783/l0aoe9nvtcbxnnrsllh0.webp',
+                image: 'test',
               },
               quantity: 2,
             },
@@ -35,7 +35,7 @@ const getFoodOrdersMock: MockedResponse = {
               food: {
                 foodName: 'Sweet Donut',
                 price: '4500',
-                image: 'https://res.cloudinary.com/dfdpirnv5/image/upload/v1756619254/qcme5nh2mphsqctjkj2y.jpg',
+                image: 'test',
               },
               quantity: 2,
             },

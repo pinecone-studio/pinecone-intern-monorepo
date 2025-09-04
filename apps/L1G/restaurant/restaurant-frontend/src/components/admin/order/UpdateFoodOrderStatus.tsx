@@ -9,9 +9,7 @@ import { FoodOrderStatus, GetFoodOrdersQuery, useUpdateFoodOrderStatusMutation }
 import { ApolloQueryResult } from '@apollo/client';
 
 const FormSchema = z.object({
-  status: z.string({
-    required_error: 'Төлөв өө сонгоно уу!',
-  }),
+  status: z.string(),
 });
 
 export const UpdateFoodOrderStatus = ({ orderId, orderStatus, refetch }: { orderId: string; orderStatus: string; refetch: () => Promise<ApolloQueryResult<GetFoodOrdersQuery>> }) => {
