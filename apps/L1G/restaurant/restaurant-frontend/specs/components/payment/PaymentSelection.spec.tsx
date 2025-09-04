@@ -82,7 +82,7 @@ jest.mock('@/components/payment/PaymentCard', () => {
         {method.name}
       </button>
     );
-  };
+  return { __esModule: true, default: PaymentCard };
 });
 
 // ===== Import the component under test =====
