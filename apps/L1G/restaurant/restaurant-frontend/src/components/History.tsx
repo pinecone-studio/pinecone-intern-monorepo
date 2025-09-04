@@ -2,11 +2,17 @@
 
 import { useGetFoodOrdersByUserQuery } from '@/generated';
 import { Logedinnav } from './sheets/Logedinnav';
+import jwt from 'jsonwebtoken';
+import { log } from 'node:console';
 
 const OrdersHistory = () => {
+  const token = localStorage.getItem('token');
+  const userData = token ? jwt.decode((token || '') as string) : null;
+  const user = userData as { user: { _id: string } } | null;
   const { data, error } = useGetFoodOrdersByUserQuery({
-    variables: { input: { userId: '68b03cf9a1b630c331183254' } },
+    variables: { input: { userId: String(user?.user._id) } },
   });
+  console.log(localStorage);
 
   if (error) return <p>{error.message}</p>; // ✅ Error-г JSX дээр харуулж байна
 

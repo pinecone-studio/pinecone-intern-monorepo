@@ -1,91 +1,81 @@
-import '@testing-library/jest-dom';
-import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { MockedProvider } from '@apollo/client/testing';
-import OrdersHistory from 'src/components/History';
+import OrdersHistory from '@/components/History';
+import jwt from 'jsonwebtoken';
+import '@testing-library/jest-dom';
 
-import { GetFoodOrdersByUserDocument } from '@/generated';
+// Apollo hook-ийг mock хийж байна
+jest.mock('@/generated', () => ({
+  useGetFoodOrdersByUserQuery: jest.fn(),
+}));
 
-const USER_ID = '68b03cf9a1b630c331183254';
+// jwt.decode-г mock хийж байна
+jest.mock('jsonwebtoken', () => ({
+  decode: jest.fn(),
+}));
 
-const mocksWithData = [
-  {
-    request: {
-      query: GetFoodOrdersByUserDocument, // ✅ hook.document биш
-      variables: { input: { userId: USER_ID } },
-    },
-    result: {
-      data: {
-        getFoodOrdersByUser: [
-          { orderId: '1', orderNumber: '1001', status: 'PENDING', totalPrice: 5000 },
-          { orderId: '2', orderNumber: '1002', status: 'DELIVERED', totalPrice: 7500 },
-        ],
+// Logedinnav-г жоохон dummy болгоё
+jest.mock('@/components/sheets/Logedinnav', () => ({
+  Logedinnav: () => <div>Mocked Navbar</div>,
+}));
+
+describe('OrdersHistory component', () => {
+  const mockUser = { user: { _id: 'user123' } };
+  const { useGetFoodOrdersByUserQuery } = require('@/generated');
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders error state', () => {
+    Storage.prototype.getItem = jest.fn(() => 'mockToken');
+    (jwt.decode as jest.Mock).mockReturnValue(mockUser);
+
+    (useGetFoodOrdersByUserQuery as jest.Mock).mockReturnValue({
+      data: undefined,
+      error: { message: 'Something went wrong' },
+    });
+
+    render(<OrdersHistory />);
+    expect(screen.getByText('Something went wrong')).toBeInTheDocument();
+  });
+
+  it('renders empty state when no orders', () => {
+    Storage.prototype.getItem = jest.fn(() => 'mockToken');
+    (jwt.decode as jest.Mock).mockReturnValue(mockUser);
+
+    (useGetFoodOrdersByUserQuery as jest.Mock).mockReturnValue({
+      data: { getFoodOrdersByUser: [] },
+      error: undefined,
+    });
+
+    render(<OrdersHistory />);
+    expect(screen.getByText('Захиалгаа олдсонгүй')).toBeInTheDocument();
+  });
+
+  it('renders orders list when data exists', () => {
+    Storage.prototype.getItem = jest.fn(() => 'mockToken');
+    (jwt.decode as jest.Mock).mockReturnValue(mockUser);
+
+    const fakeOrders = [
+      {
+        orderId: '1',
+        orderNumber: '31321',
+        status: 'Бэлтгэгдэж буй',
+        createdAt: new Date('2024-10-19T12:37:00Z').getTime(),
+        totalPrice: 15600,
       },
-    },
-  },
-];
+    ];
 
-const mocksEmptyData = [
-  {
-    request: {
-      query: GetFoodOrdersByUserDocument,
-      variables: { input: { userId: USER_ID } },
-    },
-    result: { data: { getFoodOrdersByUser: [] } },
-  },
-];
+    (useGetFoodOrdersByUserQuery as jest.Mock).mockReturnValue({
+      data: { getFoodOrdersByUser: fakeOrders },
+      error: undefined,
+    });
 
-const mocksWithError = [
-  {
-    request: {
-      query: GetFoodOrdersByUserDocument,
-      variables: { input: { userId: USER_ID } },
-    },
-    error: new Error('Network error'),
-  },
-];
+    render(<OrdersHistory />);
 
-describe('OrdersHistory Component', () => {
-  it('renders loading state initially', () => {
-    render(
-      <MockedProvider mocks={[]} addTypename={false}>
-        <OrdersHistory />
-      </MockedProvider>
-    );
-  });
-
-  it('renders order data correctly', async () => {
-    render(
-      <MockedProvider mocks={mocksWithData} addTypename={false}>
-        <OrdersHistory />
-      </MockedProvider>
-    );
-
-    expect(await screen.findByText('#1001')).toBeInTheDocument();
-    expect(await screen.findByText('#1002')).toBeInTheDocument();
-    expect(screen.getByText('PENDING')).toBeInTheDocument();
-    expect(screen.getByText('DELIVERED')).toBeInTheDocument();
-    expect(screen.getByText('5000₮')).toBeInTheDocument();
-    expect(screen.getByText('7500₮')).toBeInTheDocument();
-  });
-
-  it("renders 'no orders' when data is empty", async () => {
-    render(
-      <MockedProvider mocks={mocksEmptyData} addTypename={false}>
-        <OrdersHistory />
-      </MockedProvider>
-    );
-
-    expect(await screen.findByText('Захиалгаа олдсонгүй')).toBeInTheDocument();
-  });
-
-  it('renders error state gracefully', async () => {
-    render(
-      <MockedProvider mocks={mocksWithError} addTypename={false}>
-        <OrdersHistory />
-      </MockedProvider>
-    );
-
-    expect(await screen.findByText('Network error')).toBeInTheDocument();
+    expect(screen.getByText('#31321')).toBeInTheDocument();
+    expect(screen.getByText('Бэлтгэгдэж буй')).toBeInTheDocument();
+    expect(screen.getByText(/15600₮/)).toBeInTheDocument();
+    expect(screen.getByText(/19\/10\/24/)).toBeInTheDocument(); // formatted date
   });
 });
