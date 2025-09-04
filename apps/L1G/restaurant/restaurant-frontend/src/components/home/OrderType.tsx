@@ -5,9 +5,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose, DialogTr
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import type { CartItem } from '@/types/cart';
-import type { OrderTypeValue } from '@/types/order';
 import { X } from 'lucide-react';
 import { saveOrderData } from '@/utils/storage';
+import { useState } from 'react';
+import { FoodServeType } from '@/generated';
 
 type Props = {
   currentCart: CartItem[];
@@ -15,17 +16,18 @@ type Props = {
 
 const OrderType = ({ currentCart }: Props) => {
   const router = useRouter();
-
+  const [isOpen, setIsOpen] = useState<false | true>();
   const handlePick = (value: string) => {
-    const v = value as OrderTypeValue;
+    const v = value as FoodServeType;
     saveOrderData(currentCart, v);
+    setIsOpen(false);
     setTimeout(() => {
       router.push(`/orderPayment`);
     }, 0);
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen}>
       <DialogTrigger className="w-full bg-amber-800 hover:bg-amber-900 text-white py-4 text-lg font-medium rounded-lg">Захиалах</DialogTrigger>
       <DialogContent className="sm:max-w-[420px] border-[2px] border-white rounded-xl">
         <DialogHeader>
@@ -38,14 +40,14 @@ const OrderType = ({ currentCart }: Props) => {
         </DialogHeader>
         <RadioGroup onValueChange={handlePick} className="flex items-center w-full justify-around mt-4 mb-8">
           <div className="flex items-center justify-center space-x-3">
-            <RadioGroupItem id="dinein" value="dine_in" />
-            <Label className="text-[14px]" htmlFor="dinein">
+            <RadioGroupItem id="IN" value="IN" />
+            <Label className="text-[14px]" htmlFor="IN">
               Эндээ идэх
             </Label>
           </div>
           <div className="flex items-center justify-center space-x-3">
-            <RadioGroupItem id="takeaway" value="takeaway" />
-            <Label className="text-[14px]" htmlFor="takeaway">
+            <RadioGroupItem id="GO" value="GO" />
+            <Label className="text-[14px]" htmlFor="GO">
               Аваад явах
             </Label>
           </div>
