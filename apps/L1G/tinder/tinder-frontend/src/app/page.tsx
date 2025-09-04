@@ -23,7 +23,7 @@ const Home = () => {
   if (loading)
     return (
       <div>
-        <Loading />
+        <Loading msg='Please wait..'/>
       </div>
     );
 
