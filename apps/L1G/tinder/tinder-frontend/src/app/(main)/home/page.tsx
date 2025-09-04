@@ -8,6 +8,7 @@ import MatchDialogClose from '@/components/MatchDialogClose';
 import ProfileSwiper from '@/components/ProfileSwiper';
 import { useCurrentUser } from '@/app/contexts/CurrentUserContext';
 import Loading from '@/components/Loading';
+import { useRouter } from 'next/navigation';
 
 const handleKeyDown = (e: KeyboardEvent, isMatched: boolean, closeMatchDialog: () => void) => {
   if (e.key === 'Escape' && isMatched) {
@@ -42,7 +43,12 @@ const HomePage = () => {
   const { currentUser, loading: userLoading, error: userError } = useCurrentUser();
 
   const { data, loading: profilesLoading, error: profilesError } = useGetusersQuery();
-  console.log(currentUser, 'l');
+
+  const token = localStorage.getItem('token');
+  const router = useRouter();
+  if (!token) {
+    router.push('/');
+  }
 
   const [like] = useLikeUserMutation();
   const [dislike] = useDislikeMutation();
