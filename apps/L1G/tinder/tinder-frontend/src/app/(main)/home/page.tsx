@@ -34,6 +34,7 @@ const getFilteredProfiles = (data: any, currentUserId: string, gender?: string) 
           })) ?? [],
       images: u.images?.filter((img: any) => img != null) ?? [],
       bio: u.bio,
+      age: new Date().getFullYear() - u.dateOfBirth.split('-')[0],
       gender: u.gender ?? undefined,
     }));
 };
