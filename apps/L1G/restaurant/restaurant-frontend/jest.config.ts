@@ -17,4 +17,8 @@ export default {
     '!src/components/providers/ApolloWrapper.tsx',
     '!src/components/providers/RouteWrapper.tsx',
   ],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+  },
+  testEnvironment: 'jsdom',
 };
