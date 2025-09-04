@@ -57,7 +57,7 @@ export const HomeHeader = () => {
         <Button className="py-2 px-4 bg-transparent text-[#FAFAFA] font-sans font-[500] text-[14px] rounded-full" onClick={() => router.push('/signup')}>
           Create Account
         </Button>
-        <Button className="py-2 px-4 bg-white text-[#18181B] font-[500] font-sans text-[14px] rounded-full" onClick={() => router.push('/login')}>
+        <Button className="py-2 px-4 bg-white text-[#18181B] font-[500] font-sans text-[14px] rounded-full hover:text-white" onClick={() => router.push('/login')}>
           Log in
         </Button>
       </div>
