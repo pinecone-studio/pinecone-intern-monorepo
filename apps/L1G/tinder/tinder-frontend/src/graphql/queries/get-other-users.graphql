@@ -1,0 +1,30 @@
+query GetOtherUsers($id: ID!) {
+  getOtherUsers(_id: $id) {
+    id
+    email
+    genderPreferences
+    gender
+    dateOfBirth
+    name
+    bio
+    profession
+    schoolWork
+    images
+    likedBy {
+      id
+    }
+    likedTo {
+      id
+    }
+    matchIds {
+      id
+    }
+    interests {
+      _id
+      interestName
+    }
+    dislikedTo {
+      id
+    }
+  }
+}
