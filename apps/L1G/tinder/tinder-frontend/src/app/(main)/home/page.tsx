@@ -8,6 +8,7 @@ import MatchDialogClose from '@/components/MatchDialogClose';
 import ProfileSwiper from '@/components/ProfileSwiper';
 import { useCurrentUser } from '@/app/contexts/CurrentUserContext';
 import Loading from '@/components/Loading';
+import { useRouter } from 'next/navigation';
 
 const handleKeyDown = (e: KeyboardEvent, isMatched: boolean, closeMatchDialog: () => void) => {
   if (e.key === 'Escape' && isMatched) {
@@ -40,20 +41,34 @@ const getFilteredProfiles = (data: any, currentUserId: string, gender?: string) 
 /* eslint-disable-next-line complexity */
 const HomePage = () => {
   const { currentUser, loading: userLoading, error: userError } = useCurrentUser();
-
   const { data, loading: profilesLoading, error: profilesError } = useGetusersQuery();
-  console.log(currentUser, 'l');
-
   const [like] = useLikeUserMutation();
   const [dislike] = useDislikeMutation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMatched, setIsMatched] = useState(false);
   const [matchedusersid, setMatchedusersid] = useState<string[]>([]);
+
+  const [token, setToken] = useState<string | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    if (!storedToken) {
+      router.push('/');
+    } else {
+      setToken(storedToken);
+    }
+  }, [router]);
+
   useEffect(() => {
     const listener = (e: KeyboardEvent) => handleKeyDown(e, isMatched, closeMatchDialog);
     window.addEventListener('keydown', listener);
     return () => window.removeEventListener('keydown', listener);
   }, [isMatched]);
+
+  if (!token) {
+    return null;
+  }
 
   const handleLike = async (profileId: string) => {
     if (!currentUser) return;
