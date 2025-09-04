@@ -1,11 +1,10 @@
 /* eslint-disable max-lines */
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { GetMeDocument } from '@/generated';
-
 import { MenuContent, MyProfile, MyProfileHeader, SidebarMenu } from '@/components/MyProfile';
+import '@testing-library/jest-dom';
 
 // Mock the child components
 jest.mock('@/components/MyProfileForm', () => ({
@@ -102,7 +101,7 @@ describe('MyProfile Component', () => {
     expect(imagesButton).toHaveClass('bg-[#F4F4F5]');
   });
 
-  it('switches to Notifications view when Notifications menu is clicked', async () => {
+  it('switches to settings view when settings menu is clicked', async () => {
     render(
       <TestWrapper>
         <MyProfile />
@@ -113,9 +112,9 @@ describe('MyProfile Component', () => {
 
     const user = userEvent.setup();
 
-    const notificationsButton = screen.getByRole('button', { name: /Notifications/i });
-    await user.click(notificationsButton);
-    expect(screen.getByText('Notification Settings')).toBeInTheDocument();
+    const settingsButton = screen.getByRole('button', { name: /settings/i });
+    await user.click(settingsButton);
+    expect(screen.getByText('Delete Account')).toBeInTheDocument();
   });
 
   it('displays error message when query fails', async () => {
@@ -142,18 +141,11 @@ describe('SidebarMenu Component', () => {
     const mockSetMenu = jest.fn();
     const mockSetIsOpen = jest.fn();
 
-    render(
-      <SidebarMenu 
-        menu="profile" 
-        setMenu={mockSetMenu} 
-        isOpen={false} 
-        setIsOpen={mockSetIsOpen} 
-      />
-    );
+    render(<SidebarMenu menu="profile" setMenu={mockSetMenu} isOpen={false} setIsOpen={mockSetIsOpen} />);
 
     const user = userEvent.setup();
     const logoutButton = screen.getByRole('button', { name: /Log out/i });
-    
+
     await user.click(logoutButton);
 
     expect(mockRemoveItem).toHaveBeenCalledWith('token');
@@ -169,25 +161,18 @@ describe('SidebarMenu Component', () => {
     const mockSetMenu = jest.fn();
     const mockSetIsOpen = jest.fn();
 
-    render(
-      <SidebarMenu 
-        menu="profile" 
-        setMenu={mockSetMenu} 
-        isOpen={false} 
-        setIsOpen={mockSetIsOpen} 
-      />
-    );
+    render(<SidebarMenu menu="profile" setMenu={mockSetMenu} isOpen={false} setIsOpen={mockSetIsOpen} />);
 
     const user = userEvent.setup();
     const logoutButton = screen.getByRole('button', { name: /Log out/i });
-    
+
     await user.click(logoutButton);
 
     expect(consoleSpy).toHaveBeenCalledWith(expect.any(Error));
     // When localStorage.removeItem throws an error, router.push is never called
     // because it's in the same try block and execution stops
     expect(mockPush).not.toHaveBeenCalled();
-    
+
     consoleSpy.mockRestore();
   });
 
@@ -195,14 +180,7 @@ describe('SidebarMenu Component', () => {
     const mockSetMenu = jest.fn();
     const mockSetIsOpen = jest.fn();
 
-    render(
-      <SidebarMenu 
-        menu="profile" 
-        setMenu={mockSetMenu} 
-        isOpen={false} 
-        setIsOpen={mockSetIsOpen} 
-      />
-    );
+    render(<SidebarMenu menu="profile" setMenu={mockSetMenu} isOpen={false} setIsOpen={mockSetIsOpen} />);
 
     const logoutButton = screen.getByRole('button', { name: /Log out/i });
     expect(logoutButton).toHaveClass('bg-transparent');
@@ -214,14 +192,7 @@ describe('SidebarMenu Component', () => {
     const mockSetMenu = jest.fn();
     const mockSetIsOpen = jest.fn();
 
-    render(
-      <SidebarMenu 
-        menu="logout" 
-        setMenu={mockSetMenu} 
-        isOpen={false} 
-        setIsOpen={mockSetIsOpen} 
-      />
-    );
+    render(<SidebarMenu menu="logout" setMenu={mockSetMenu} isOpen={false} setIsOpen={mockSetIsOpen} />);
 
     const logoutButton = screen.getByRole('button', { name: /Log out/i });
     expect(logoutButton).toHaveClass('bg-[#F4F4F5]');
@@ -258,28 +229,15 @@ describe('MenuContent Component', () => {
     );
     expect(screen.getByText('MyImages Component')).toBeInTheDocument();
   });
-
-  it('renders notifications content when notifications menu is selected', () => {
-    render(
-      <MenuContent
-        menu="notifications"
-        user={{ name: 'Test User', email: 'test@example.com' }}
-        images={[]}
-        setImages={() => {
-          // intentionally empty
-        }}
-      />
-    );
-    expect(screen.getByText('Notification Settings')).toBeInTheDocument();
-  });
-
   it('renders fallback (null) when an invalid menu type is passed', () => {
     const { container } = render(
       <MenuContent
         menu={'invalid' as any}
-        user={{
-          // intentionally empty
-        }}
+        user={
+          {
+            // intentionally empty
+          }
+        }
         images={[]}
         setImages={() => {
           // intentionally empty
