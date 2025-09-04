@@ -2,11 +2,11 @@
 import { handleWalletOrder, handlePaymentSelect, type FoodOrderItemInput } from '@/utils/Payment-Logic';
 describe('payment-logic: handleWalletOrder', () => {
   const mkSetters = () => {
-    const setWalletDeduction = jest.fn<(v: number) => void>();
-    const setWalletUsed = jest.fn<(v: boolean) => void>();
-    const setSelectedPayment = jest.fn<(v: string) => void>();
-    const setIsWalletDrawerOpen = jest.fn<(v: boolean) => void>();
-    const setTargetAmount = jest.fn<(v: string) => void>();
+    const setWalletDeduction = jest.fn<(_v: number) => void>();
+    const setWalletUsed = jest.fn<(_v: boolean) => void>();
+    const setSelectedPayment = jest.fn<(_v: string) => void>();
+    const setIsWalletDrawerOpen = jest.fn<(_v: boolean) => void>();
+    const setTargetAmount = jest.fn<(_v: string) => void>();
     return { setWalletDeduction, setWalletUsed, setSelectedPayment, setIsWalletDrawerOpen, setTargetAmount };
   };
 
@@ -66,8 +66,8 @@ describe('payment-logic: handlePaymentSelect', () => {
       .fn<Promise<unknown>, [{ variables: { input: { user: string; table: string; totalPrice: number; FoodOrderItem: FoodOrderItemInput[] } } }]>()
       .mockResolvedValue({ data: { ok: true } });
 
-    const setSelectedPayment = jest.fn<(v: string) => void>();
-    const setIsWalletDrawerOpen = jest.fn<(v: boolean) => void>();
+    const setSelectedPayment = jest.fn<(_v: string) => void>();
+    const setIsWalletDrawerOpen = jest.fn<(_v: boolean) => void>();
 
     const args = {
       methodId: 'qpay',

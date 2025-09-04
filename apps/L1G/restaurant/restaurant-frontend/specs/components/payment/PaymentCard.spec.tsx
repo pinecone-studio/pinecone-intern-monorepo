@@ -1,4 +1,4 @@
-/* eslint max-lines: "off" */
+/* eslint-disable */
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import PaymentCard from '@/components/payment/PaymentCard';

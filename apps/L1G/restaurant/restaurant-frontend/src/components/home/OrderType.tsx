@@ -5,10 +5,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose, DialogTr
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import type { CartItem } from '@/types/cart';
-import type { OrderTypeValue } from '@/types/order';
 import { X } from 'lucide-react';
 import { saveOrderData } from '@/utils/storage';
 import { useState } from 'react';
+import { FoodServeType } from '@/generated';
 
 type Props = {
   currentCart: CartItem[];
@@ -18,7 +18,7 @@ const OrderType = ({ currentCart }: Props) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState<false | true>();
   const handlePick = (value: string) => {
-    const v = value as OrderTypeValue;
+    const v = value as FoodServeType;
     saveOrderData(currentCart, v);
     setIsOpen(false);
     setTimeout(() => {

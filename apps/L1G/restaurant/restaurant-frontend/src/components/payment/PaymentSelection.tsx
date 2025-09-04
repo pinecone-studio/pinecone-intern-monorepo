@@ -5,13 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import jwt from 'jsonwebtoken';
-import { OrderData, OrderTypeValue } from '@/types/order';
+import { OrderData } from '@/types/order';
 import { FoodServeType, useCreateFoodOrderMutation } from '@/generated';
 import PaymentCard from './PaymentCard';
 import { handleWalletOrder as doHandleWalletOrder, handlePaymentSelect as doHandlePaymentSelect, type FoodOrderItemInput } from '../../utils/Payment-Logic';
 import { useRouter } from 'next/navigation';
-export type DecodedProps = { user?: { _id?: string } };
+import { loadOrderData, getUserIdFromToken, getTableId } from '@/utils/storage';
 const DELIVERY_FEE = 4000;
 const PaymentSelection = () => {
   const router = useRouter();
@@ -23,17 +22,14 @@ const PaymentSelection = () => {
   const [targetAmount, setTargetAmount] = useState('');
   const [wallet, setWallet] = useState<{ used: boolean; deduction: number }>({ used: false, deduction: 0 });
   useEffect(() => {
-    const raw = typeof window !== 'undefined' ? localStorage.getItem('orderData') : null;
-    if (raw) setOrder(JSON.parse(raw));
+    const data = loadOrderData();
+    if (data) setOrder(data);
   }, []);
   const { userId, table } = useMemo(() => {
-    if (typeof window === 'undefined') {
-      return { userId: '', table: '' };
-    }
-    const token = localStorage.getItem('token');
-    const decoded = (token ? jwt.decode(token) : null) as DecodedProps | null;
-    const tableRaw = localStorage.getItem('tableId');
-    return { userId: decoded?.user?._id ?? '', table: tableRaw ? String(tableRaw) : '' };
+    return {
+      userId: getUserIdFromToken(),
+      table: getTableId(),
+    };
   }, []);
   const baseOrderAmount = useMemo(() => (order?.items ?? []).reduce((sum, v) => sum + Number(v.price) * v.selectCount, 0), [order?.items]);
   const orderFood: FoodOrderItemInput[] = useMemo(() => (order?.items ?? []).map((v) => ({ foodId: String(v.id), quantity: Number(v.selectCount) })), [order?.items]);
@@ -109,7 +105,7 @@ const PaymentSelection = () => {
           ].map((row, i) => (
             <div key={i} className="flex justify-between items-center border-b p-3">
               <span className="text-gray-600">{row.label}</span>
-              <span className={`font-medium ${row.value < 0 ? '' : ''}`}>
+              <span className="font-medium">
                 {row.value < 0 ? '-' : ''}
                 {Math.abs(row.value).toLocaleString()}₮
               </span>

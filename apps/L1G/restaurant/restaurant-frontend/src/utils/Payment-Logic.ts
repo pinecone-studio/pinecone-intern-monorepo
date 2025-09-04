@@ -1,14 +1,16 @@
+/* eslint-disable unicorn/filename-case */
+
 import { FoodServeType } from '@/generated';
 
 export type FoodOrderItemInput = { foodId: string; quantity: number };
 export type HandleWalletOrderArgs = {
   targetAmount: string;
   totalBeforeWallet: number;
-  setWalletDeduction: (v: number) => void;
-  setWalletUsed: (v: boolean) => void;
-  setSelectedPayment: (v: string) => void;
-  setIsWalletDrawerOpen: (v: boolean) => void;
-  setTargetAmount: (v: string) => void;
+  setWalletDeduction: (_v: number) => void;
+  setWalletUsed: (_v: boolean) => void;
+  setSelectedPayment: (_v: string) => void;
+  setIsWalletDrawerOpen: (_v: boolean) => void;
+  setTargetAmount: (_v: string) => void;
 };
 
 export const handleWalletOrder = ({ targetAmount, totalBeforeWallet, setWalletDeduction, setWalletUsed, setSelectedPayment, setIsWalletDrawerOpen, setTargetAmount }: HandleWalletOrderArgs): void => {
@@ -22,9 +24,9 @@ export const handleWalletOrder = ({ targetAmount, totalBeforeWallet, setWalletDe
 
 export type HandlePaymentSelectArgs = {
   methodId: string;
-  setSelectedPayment: (v: string) => void;
-  setIsWalletDrawerOpen: (v: boolean) => void;
-  createOrder: (args: { variables: { input: { user: string; table: string; totalPrice: number; FoodOrderItem: FoodOrderItemInput[]; orderType: FoodServeType } } }) => Promise<unknown>;
+  setSelectedPayment: (_v: string) => void;
+  setIsWalletDrawerOpen: (_v: boolean) => void;
+  createOrder: (_args: { variables: { input: { user: string; table: string; totalPrice: number; FoodOrderItem: FoodOrderItemInput[]; orderType: FoodServeType } } }) => Promise<unknown>;
   userId: string;
   table: string;
   finalAmount: number;
