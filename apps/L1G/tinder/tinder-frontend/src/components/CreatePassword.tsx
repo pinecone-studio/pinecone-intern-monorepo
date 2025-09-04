@@ -6,8 +6,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { useSignupUserMutation } from '@/generated';
 import { UserData } from 'types/chat';
+import { useSignupUserMutation } from '@/generated';
 
 const formSchema = z
   .object({
