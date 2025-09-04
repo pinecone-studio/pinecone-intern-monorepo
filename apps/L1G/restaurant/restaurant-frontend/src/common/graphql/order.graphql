@@ -7,7 +7,27 @@ query GetFoodOrdersByUser($input: getFoodOrdersByUserInput!) {
     createdAt
   }
 }
-
+mutation CreateFoodOrder($input: CreateFoodOrderInput!) {
+  createFoodOrder(input: $input) {
+    orderId
+    orderNumber
+    status
+    totalPrice
+    user {
+      userId
+    }
+    table {
+      tableId
+    }
+    foodOrder {
+      food {
+        foodId
+      }
+      quantity
+    }
+    createdAt
+  }
+}
 query getFoodOrders {
   getFoodOrders {
     orderId

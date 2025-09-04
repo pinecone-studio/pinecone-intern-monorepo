@@ -77,6 +77,10 @@ export const UsertypeDefs = gql`
     success: Boolean!
     message: String!
   }
+  type DeleteUserResponse {
+    success: Boolean!
+    message: String!
+  }
   type UserLikedByResponse {
     id: ID!
     email: String!
@@ -90,6 +94,7 @@ export const UsertypeDefs = gql`
     getUserAllChatMessages(userId: ID!): [MatchChatMessages!]!
     getChatWithUser(userId: ID!, participantId: ID!): MatchChatMessages!
     getLikedByUsers(_id: ID!): UserLikedByResponse!
+    getOtherUsers(_id: ID!): [User!]!
   }
   type Mutation {
     forgotPassword(newPassword: String!, otpId: String!): ForgotPasswordPayload!
@@ -119,5 +124,6 @@ export const UsertypeDefs = gql`
     markMessagesAsSeen(matchId: ID!, userId: ID!): Boolean
 
     unmatch(matchId: ID!): UnmatchResponse!
+    deleteUser(id: ID!): DeleteUserResponse!
   }
 `;
