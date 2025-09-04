@@ -10,30 +10,13 @@ export interface OptionListProps {
   options: { label: string; value: string; icon?: React.ComponentType<{ className?: string }> }[];
   selectedValues: string[];
   toggleOption: (_value: string) => void;
-  toggleAll: () => void;
+  // Remove toggleAll since we're not using it anymore
 }
 
-const OptionList = ({ options, selectedValues, toggleOption, toggleAll }: OptionListProps) => {
+const OptionList = ({ options, selectedValues, toggleOption }: OptionListProps) => {
   return (
     <CommandList>
       <CommandGroup>
-        <CommandItem
-          key="all"
-          onSelect={() => {
-            toggleAll();
-          }}
-          className="cursor-pointer"
-        >
-          <div
-            className={
-              'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary ' +
-              (selectedValues.length === options.length ? 'bg-primary text-primary-foreground' : 'opacity-50 [&_svg]:invisible')
-            }
-          >
-            <CheckIcon className="h-4 w-4" />
-          </div>
-          <span>(Select All)</span>
-        </CommandItem>
         {options.map((option) => {
           const isSelected = selectedValues.includes(option.value);
           return (

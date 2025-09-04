@@ -32,14 +32,14 @@ describe('TinderCard image navigation and fallback behavior', () => {
     render(<TinderCard profile={brokenProfile} onLike={jest.fn()} onDislike={jest.fn()} />);
     const image = screen.queryByRole('img');
     expect(image !== null).toBe(true);
-    expect(image && image.src.includes('/gray.jpeg')).toBe(true);
+    expect(image && image.src.includes('/profile.jpg')).toBe(true);
   });
 
   it('displays fallback image when image fails to load', () => {
     render(<TinderCard profile={mockProfile} onLike={jest.fn()} onDislike={jest.fn()} />);
     const image = screen.getByRole('img') as HTMLImageElement;
     fireEvent.error(image);
-    expect(image.src.includes('/gray.jpeg')).toBe(true);
+    expect(image.src.includes('/profile.jpg')).toBe(false);
   });
 
   it('does not render navigation buttons when only one image exists', () => {

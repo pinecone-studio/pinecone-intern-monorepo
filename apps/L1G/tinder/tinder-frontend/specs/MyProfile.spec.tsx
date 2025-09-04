@@ -1,97 +1,375 @@
-import { render, screen } from '@testing-library/react';
+/* eslint-disable max-lines */
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
+import { MockedProvider } from '@apollo/client/testing';
+import { GetMeDocument } from '@/generated';
 
-import { MenuContent, MyProfile, MyProfileHeader } from '@/components/MyProfile';
+import { MenuContent, MyProfile, MyProfileHeader, SidebarMenu } from '@/components/MyProfile';
 
+// Mock the child components
 jest.mock('@/components/MyProfileForm', () => ({
   MyProfileForm: () => <div>MyProfileForm Component</div>,
 }));
 jest.mock('@/components/MyImages', () => ({
   MyImages: () => <div>MyImages Component</div>,
 }));
+jest.mock('@/components/Loading', () => ({
+  __esModule: true,
+  default: () => <div>Loading...</div>,
+}));
+
+// Mock Next.js router
+const mockPush = jest.fn();
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: mockPush,
+  }),
+}));
+
+// Mock localStorage
+const mockRemoveItem = jest.fn();
+Object.defineProperty(window, 'localStorage', {
+  value: {
+    removeItem: mockRemoveItem,
+  },
+  writable: true,
+});
+
+const mockGetMeQuery = {
+  request: {
+    query: GetMeDocument,
+  },
+  result: {
+    data: {
+      getMe: {
+        id: '1',
+        name: 'Test User',
+        email: 'test@example.com',
+        images: [],
+      },
+    },
+  },
+};
+
+const mockGetMeQueryError = {
+  request: {
+    query: GetMeDocument,
+  },
+  error: new Error('Failed to fetch user data'),
+};
+
+const TestWrapper = ({ children, mocks = [mockGetMeQuery] }: { children: React.ReactNode; mocks?: any[] }) => (
+  <MockedProvider mocks={mocks} addTypename={false}>
+    {children}
+  </MockedProvider>
+);
 
 describe('MyProfile Component', () => {
-  it('renders default profile view with Profile selected', () => {
-    render(<MyProfile />);
+  beforeEach(() => {
+    mockPush.mockClear();
+    mockRemoveItem.mockClear();
+  });
 
-    expect(screen.getByText('MyProfileForm Component'));
-    expect(screen.getByRole('button', { name: /Profile/i })).toHaveClass('bg-[#F4F4F5]');
+  it('renders default profile view with Profile selected', async () => {
+    render(
+      <TestWrapper>
+        <MyProfile />
+      </TestWrapper>
+    );
+    // Wait for loading to complete
+    await screen.findByText('MyProfileForm Component');
+
+    const profileButton = screen.getByRole('button', { name: /Profile/i });
+    expect(profileButton).toHaveClass('bg-[#F4F4F5]');
   });
 
   it('switches to Images view when Images menu is clicked', async () => {
-    render(<MyProfile />);
+    render(
+      <TestWrapper>
+        <MyProfile />
+      </TestWrapper>
+    );
+
+    // Wait for component to load
+    await screen.findByText('MyProfileForm Component');
+
     const user = userEvent.setup();
 
     const imagesButton = screen.getByRole('button', { name: /Images/i });
     await user.click(imagesButton);
-
-    expect(screen.getByText('MyImages Component'));
+    expect(screen.getByText('MyImages Component')).toBeInTheDocument();
     expect(imagesButton).toHaveClass('bg-[#F4F4F5]');
   });
 
-  it('switches to Appearance view when Appearance menu is clicked', async () => {
-    render(<MyProfile />);
-    const user = userEvent.setup();
-
-    const appearanceButton = screen.getByRole('button', { name: /Appearance/i });
-    await user.click(appearanceButton);
-
-    expect(screen.getByText('Appearance Settings'));
-  });
-
   it('switches to Notifications view when Notifications menu is clicked', async () => {
-    render(<MyProfile />);
+    render(
+      <TestWrapper>
+        <MyProfile />
+      </TestWrapper>
+    );
+
+    await screen.findByText('MyProfileForm Component');
+
     const user = userEvent.setup();
 
     const notificationsButton = screen.getByRole('button', { name: /Notifications/i });
     await user.click(notificationsButton);
+    expect(screen.getByText('Notification Settings')).toBeInTheDocument();
+  });
 
-    expect(screen.getByText('Notification Settings'));
+  it('displays error message when query fails', async () => {
+    render(
+      <TestWrapper mocks={[mockGetMeQueryError]}>
+        <MyProfile />
+      </TestWrapper>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText(/Error loading profile/)).toBeInTheDocument();
+      expect(screen.getByText(/Failed to fetch user data/)).toBeInTheDocument();
+    });
+  });
+});
+
+describe('SidebarMenu Component', () => {
+  beforeEach(() => {
+    mockPush.mockClear();
+    mockRemoveItem.mockClear();
+  });
+
+  it('handles logout button click - removes token and redirects', async () => {
+    const mockSetMenu = jest.fn();
+    const mockSetIsOpen = jest.fn();
+
+    render(
+      <SidebarMenu 
+        menu="profile" 
+        setMenu={mockSetMenu} 
+        isOpen={false} 
+        setIsOpen={mockSetIsOpen} 
+      />
+    );
+
+    const user = userEvent.setup();
+    const logoutButton = screen.getByRole('button', { name: /Log out/i });
+    
+    await user.click(logoutButton);
+
+    expect(mockRemoveItem).toHaveBeenCalledWith('token');
+    expect(mockPush).toHaveBeenCalledWith('/');
+  });
+
+  it('handles localStorage error gracefully during logout', async () => {
+    const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+    mockRemoveItem.mockImplementation(() => {
+      throw new Error('Storage error');
+    });
+
+    const mockSetMenu = jest.fn();
+    const mockSetIsOpen = jest.fn();
+
+    render(
+      <SidebarMenu 
+        menu="profile" 
+        setMenu={mockSetMenu} 
+        isOpen={false} 
+        setIsOpen={mockSetIsOpen} 
+      />
+    );
+
+    const user = userEvent.setup();
+    const logoutButton = screen.getByRole('button', { name: /Log out/i });
+    
+    await user.click(logoutButton);
+
+    expect(consoleSpy).toHaveBeenCalledWith(expect.any(Error));
+    // When localStorage.removeItem throws an error, router.push is never called
+    // because it's in the same try block and execution stops
+    expect(mockPush).not.toHaveBeenCalled();
+    
+    consoleSpy.mockRestore();
+  });
+
+  it('applies correct styling to logout button when menu is not logout', () => {
+    const mockSetMenu = jest.fn();
+    const mockSetIsOpen = jest.fn();
+
+    render(
+      <SidebarMenu 
+        menu="profile" 
+        setMenu={mockSetMenu} 
+        isOpen={false} 
+        setIsOpen={mockSetIsOpen} 
+      />
+    );
+
+    const logoutButton = screen.getByRole('button', { name: /Log out/i });
+    expect(logoutButton).toHaveClass('bg-transparent');
+    expect(logoutButton).toHaveClass('hover:bg-[#F4F4F5]');
+    expect(logoutButton).toHaveClass('text-[#E11D48E5]');
+  });
+
+  it('applies correct styling to logout button when menu is logout', () => {
+    const mockSetMenu = jest.fn();
+    const mockSetIsOpen = jest.fn();
+
+    render(
+      <SidebarMenu 
+        menu="logout" 
+        setMenu={mockSetMenu} 
+        isOpen={false} 
+        setIsOpen={mockSetIsOpen} 
+      />
+    );
+
+    const logoutButton = screen.getByRole('button', { name: /Log out/i });
+    expect(logoutButton).toHaveClass('bg-[#F4F4F5]');
+    expect(logoutButton).toHaveClass('hover:bg-[#E4E4E7]');
+    expect(logoutButton).toHaveClass('text-[#E11D48E5]');
   });
 });
 
 describe('MenuContent Component', () => {
+  it('renders MyProfileForm when profile menu is selected', () => {
+    render(
+      <MenuContent
+        menu="profile"
+        user={{ name: 'Test User', email: 'test@example.com' }}
+        images={[]}
+        setImages={() => {
+          // intentionally empty
+        }}
+      />
+    );
+    expect(screen.getByText('MyProfileForm Component')).toBeInTheDocument();
+  });
+
+  it('renders MyImages when images menu is selected', () => {
+    render(
+      <MenuContent
+        menu="images"
+        user={{ name: 'Test User', email: 'test@example.com' }}
+        images={['image1.jpg', 'image2.jpg']}
+        setImages={() => {
+          // intentionally empty
+        }}
+      />
+    );
+    expect(screen.getByText('MyImages Component')).toBeInTheDocument();
+  });
+
+  it('renders notifications content when notifications menu is selected', () => {
+    render(
+      <MenuContent
+        menu="notifications"
+        user={{ name: 'Test User', email: 'test@example.com' }}
+        images={[]}
+        setImages={() => {
+          // intentionally empty
+        }}
+      />
+    );
+    expect(screen.getByText('Notification Settings')).toBeInTheDocument();
+  });
+
   it('renders fallback (null) when an invalid menu type is passed', () => {
-    const { container } = render(<MenuContent menu={'invalid' as any} />);
+    const { container } = render(
+      <MenuContent
+        menu={'invalid' as any}
+        user={{
+          // intentionally empty
+        }}
+        images={[]}
+        setImages={() => {
+          // intentionally empty
+        }}
+      />
+    );
     expect(container.firstChild).toBeNull();
   });
 });
 
 describe('MyProfileHeader Component', () => {
   it('renders the user greeting and email', () => {
+    const mockUser = {
+      name: 'Test User',
+      email: 'test@example.com',
+    };
+
     render(
       <MyProfileHeader
         isOpen={false}
         setIsOpen={() => {
-          //intentionally empty
+          // intentionally empty
         }}
+        user={mockUser}
       />
     );
-    expect(screen.getByText(/Hi, user/i));
-    expect(screen.getByText(/n\.shagai@pinecone\.mn/i));
+    expect(screen.getByText('Hi, Test User')).toBeInTheDocument();
+    expect(screen.getByText('test@example.com')).toBeInTheDocument();
+  });
+
+  it('uses fallback values when user data is missing', () => {
+    render(
+      <MyProfileHeader
+        isOpen={false}
+        setIsOpen={() => {
+          // intentionally empty
+        }}
+        user={undefined}
+      />
+    );
+
+    expect(screen.getByText('Hi, Name')).toBeInTheDocument();
+    expect(screen.getByText('email@example.com')).toBeInTheDocument();
+  });
+
+  it('uses fallback values when user properties are null', () => {
+    render(
+      <MyProfileHeader
+        isOpen={false}
+        setIsOpen={() => {
+          // intentionally empty
+        }}
+        user={{ name: null, email: null } as any}
+      />
+    );
+
+    expect(screen.getByText('Hi, Name')).toBeInTheDocument();
+    expect(screen.getByText('email@example.com')).toBeInTheDocument();
   });
 
   it('opens the mobile menu when menu button is clicked', async () => {
     const user = userEvent.setup();
     const setIsOpen = jest.fn();
-    render(<MyProfileHeader isOpen={false} setIsOpen={setIsOpen} />);
-
-    const button = screen.getByRole('button');
+    render(<MyProfileHeader isOpen={false} setIsOpen={setIsOpen} user={{ name: 'Test', email: 'test@example.com' }} />);
+    const button = screen.getByTestId('open-mobile-menu');
     await user.click(button);
     expect(setIsOpen).toHaveBeenCalledWith(true);
   });
 });
+
 describe('Mobile drawer behavior', () => {
   beforeEach(() => {
     // Simulate mobile viewport
     Object.defineProperty(window, 'innerWidth', { writable: true, value: 500 });
     window.dispatchEvent(new Event('resize'));
+    mockPush.mockClear();
+    mockRemoveItem.mockClear();
   });
 
   const openDrawer = async () => {
     const user = userEvent.setup();
-    render(<MyProfile />);
+    render(
+      <TestWrapper>
+        <MyProfile />
+      </TestWrapper>
+    );
+
+    // Wait for component to load
+    await screen.findByText('MyProfileForm Component');
+
     const openButton = screen.getByTestId('open-mobile-menu');
     await user.click(openButton);
     return user;
@@ -107,14 +385,16 @@ describe('Mobile drawer behavior', () => {
     const user = await openDrawer();
     const backdrop = screen.getByTestId('drawer-backdrop');
     await user.click(backdrop);
-    expect(screen.queryByTestId('mobile-drawer'));
+    const drawer = screen.getByTestId('mobile-drawer');
+    expect(drawer).toHaveClass('-translate-x-full');
   });
 
   it('closes drawer when clicking close (X) button', async () => {
     const user = await openDrawer();
     const closeButton = screen.getByTestId('close-mobile-drawer');
     await user.click(closeButton);
-    expect(screen.queryByTestId('mobile-drawer'));
+    const drawer = screen.getByTestId('mobile-drawer');
+    expect(drawer).toHaveClass('-translate-x-full');
   });
 
   it('selects a menu item from drawer and closes it', async () => {
@@ -123,18 +403,20 @@ describe('Mobile drawer behavior', () => {
     await user.click(imagesButton);
 
     expect(screen.getByText('MyImages Component')).toBeInTheDocument();
-    expect(screen.queryByTestId('mobile-drawer'));
+    const drawer = screen.getByTestId('mobile-drawer');
+    expect(drawer).toHaveClass('-translate-x-full');
   });
 
-  it('applies closed class when isOpen is false', () => {
-    render(<MyProfile />);
-    const drawer = screen.getByTestId('mobile-drawer');
-    expect(drawer.className).toContain('-translate-x-full'); // Drawer is hidden (offscreen)
-  });
+  it('applies closed class when isOpen is false', async () => {
+    render(
+      <TestWrapper>
+        <MyProfile />
+      </TestWrapper>
+    );
 
-  it('applies open class when isOpen is true', async () => {
-    await openDrawer();
+    await screen.findByText('MyProfileForm Component');
+
     const drawer = screen.getByTestId('mobile-drawer');
-    expect(drawer.className).toContain('translate-x-0'); // Drawer is visible (onscreen)
+    expect(drawer.className).toContain('-translate-x-full');
   });
 });

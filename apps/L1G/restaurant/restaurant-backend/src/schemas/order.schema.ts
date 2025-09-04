@@ -8,19 +8,27 @@ export const orderTypeDefs = gql`
     PENDING
   }
 
+  enum FoodServeType {
+    IN
+    GO
+  }
+
   type FoodOrderItem {
-    food: Food!
+    food: Food
     quantity: Int!
   }
 
   type FoodOrder {
     orderId: ID!
     orderNumber: Int!
+    orderType: FoodServeType!
     status: FoodOrderStatus!
     totalPrice: Int!
-    user: User!
-    table: Table!
+    user: User
+    table: Table
     foodOrder: [FoodOrderItem!]!
+    createdAt: String
+    updatedAt: String
   }
 
   input FoodOrderItemInput {
@@ -34,6 +42,7 @@ export const orderTypeDefs = gql`
     user: ID!
     table: ID!
     FoodOrderItem: [FoodOrderItemInput!]!
+    orderType: FoodServeType!
   }
 
   input UpdateFoodOrderStatusInput {
