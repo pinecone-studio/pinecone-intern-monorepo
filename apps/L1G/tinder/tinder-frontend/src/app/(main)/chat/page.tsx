@@ -1,14 +1,26 @@
 'use client';
 import ChatPage from '@/components/ChatPage';
 import { Header } from '@/components/Header';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const Chat = () => {
-  const token = localStorage.getItem('token');
+  const [token, setToken] = useState<string | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    if (!storedToken) {
+      router.push('/');
+    } else {
+      setToken(storedToken);
+    }
+  }, [router]);
+
   if (!token) {
-    router.push('/');
+    return null;
   }
+
   return (
     <div>
       <Header />
