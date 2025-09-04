@@ -2,8 +2,26 @@
 import { Header } from '@/components/Header';
 import { MyProfile } from '@/components/MyProfile';
 import { WhiteTinderLogo } from '@/components/TinderLogo';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const Profile = () => {
+  const [token, setToken] = useState<string | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    if (!storedToken) {
+      router.push('/');
+    } else {
+      setToken(storedToken);
+    }
+  }, [router]);
+
+  if (!token) {
+    return null;
+  }
+
   return (
     <div className="w-screen min-h-screen flex overflow-y-auto flex-col">
       <div className="flex-shrink-0">

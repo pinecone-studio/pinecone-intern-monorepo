@@ -24,5 +24,6 @@ mutation CreateFoodOrder($input: CreateFoodOrderInput!) {
       }
       quantity
     }
+    createdAt
   }
 }

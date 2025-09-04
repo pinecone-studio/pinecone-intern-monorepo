@@ -70,10 +70,7 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
 
     const clearExtraOptions = () => onValueChange?.(value.slice(0, maxCount));
 
-    const toggleAll = () => {
-      const allSelected = value.length === options.length;
-      onValueChange?.(allSelected ? [] : options.map((o) => o.value));
-    };
+    // Remove toggleAll function since we're not using Select All anymore
 
     return (
       <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen} modal={modalPopover}>
@@ -104,7 +101,7 @@ export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>
                 <CommandEmpty>No results found.</CommandEmpty>
               ) : (
                 <>
-                  <OptionList options={options} selectedValues={value} toggleOption={toggleOption} toggleAll={toggleAll} />
+                  <OptionList options={options} selectedValues={value} toggleOption={toggleOption} />
 
                   <CommandSeparator />
 
