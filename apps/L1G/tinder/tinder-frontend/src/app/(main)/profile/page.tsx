@@ -36,7 +36,7 @@ const Profile = () => {
 
       <div className="flex-shrink-0 w-full max-w-[1552px] mx-auto h-[64px] flex flex-col sm:flex-row justify-between items-center px-4 py-4 gap-2 sm:gap-4">
         <WhiteTinderLogo color="#71717A" />
-        <p className="text-[#71717A] font-sans text-sm">© Copyright 2024</p>
+        <p className="text-[#71717A] font-sans text-sm">© Copyright 2025</p>
       </div>
     </div>
   );
