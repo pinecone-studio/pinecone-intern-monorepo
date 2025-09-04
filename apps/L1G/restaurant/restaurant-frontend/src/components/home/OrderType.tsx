@@ -2,7 +2,12 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
+import type { CartItem } from '@/types/cart';
+import { X } from 'lucide-react';
+import { saveOrderData } from '@/utils/storage';
+import { useState } from 'react';
+import { FoodServeType } from '@/generated';
+
 type Props = {
   isClicked: boolean;
 };
@@ -11,7 +16,7 @@ const OrderType = ({ currentCart }: Props) => {
   const router = useRouter();
 
   const handlePick = (value: string) => {
-    const v = value as OrderTypeValue;
+    const v = value as FoodServeType;
     saveOrderData(currentCart, v);
     setTimeout(() => {
       router.push(`/orderPayment`);
