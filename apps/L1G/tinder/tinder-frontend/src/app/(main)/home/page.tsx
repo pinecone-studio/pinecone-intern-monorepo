@@ -121,7 +121,7 @@ const HomePage = () => {
   if (profilesLoading || userLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <Loading />
+        <Loading msg='Please wait...'/>
       </div>
     );
   }

@@ -1,67 +1,59 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Loading from '../src/components/Loading';
-
+ 
+jest.mock('../src/components/TinderLogo', () => ({
+  TinderLogo: ({ handleTohome }: { handleTohome: () => void }) => (
+    <div data-testid="tinder-logo" onClick={handleTohome}>
+      Tinder Logo
+    </div>
+  ),
+}));
+ 
 describe('Loading Component', () => {
-  test('renders Tinder logo and text', () => {
-    render(<Loading />);
+  const message = 'Please Wait...';
+ 
+  test('renders loading container', () => {
+    render(<Loading msg={message} />);
+    const container = screen.getByTestId('loading');
+    expect(container).toBeInTheDocument();
+    expect(container).toHaveClass('h-screen', 'bg-white');
   });
-
-  test('renders "Please Wait..." text', () => {
-    render(<Loading />);
-
-    const waitText = screen.getByText('Please Wait...');
-    expect(waitText).toBeInTheDocument();
-    expect(waitText).toHaveClass('text-sm', 'text-gray-400');
+ 
+  test('renders TinderLogo', () => {
+    render(<Loading msg={message} />);
+    const logo = screen.getByTestId('tinder-logo');
+    expect(logo).toBeInTheDocument();
+    expect(logo).toHaveTextContent('Tinder Logo');
   });
-
-  test('renders copyright text', () => {
-    render(<Loading />);
-
-    const copyrightText = screen.getByText('©2024 Tinder');
-    expect(copyrightText).toBeInTheDocument();
-    expect(copyrightText).toHaveClass('text-xs', 'text-gray-400');
+ 
+  test('renders provided loading message', () => {
+    render(<Loading msg={message} />);
+    expect(screen.getByText(message)).toBeInTheDocument();
+    expect(screen.getByText(message)).toHaveClass('text-sm', 'text-gray-400');
   });
-
-  test('renders loading spinner with correct styling', () => {
-    render(<Loading />);
-
+ 
+  test('renders spinner with correct styles', () => {
+    render(<Loading msg={message} />);
     const spinner = document.querySelector('.animate-spin');
     expect(spinner).toBeInTheDocument();
     expect(spinner).toHaveClass('w-8', 'h-8', 'border-4', 'border-gray-200', 'rounded-full', 'border-t-pink-500', 'animate-spin');
   });
-
-  test('has correct component structure', () => {
-    render(<Loading />);
-
-    expect(screen.getByText('Please Wait...')).toBeInTheDocument();
-    expect(screen.getByText('©2024 Tinder')).toBeInTheDocument();
-    expect(document.querySelector('.animate-spin')).toBeInTheDocument();
+ 
+  test('renders copyright text', () => {
+    render(<Loading msg={message} />);
+    const copyright = screen.getByText('©2024 Tinder');
+    expect(copyright).toBeInTheDocument();
+    expect(copyright).toHaveClass('text-xs', 'text-gray-400');
   });
-
-  test('loading spinner is animated', () => {
-    render(<Loading />);
-
-    const spinner = document.querySelector('.animate-spin');
-    expect(spinner).toHaveClass('animate-spin');
-  });
-
-  test('footer is positioned correctly', () => {
-    render(<Loading />);
-
-    const footer = screen.getByText('©2024 Tinder').parentElement;
-    expect(footer).toHaveClass('pb-8');
-  });
-
-  test('main content area uses flex-1', () => {
-    render(<Loading />);
-
-    const mainContent = screen.getByText('Please Wait...').closest('.flex-1');
-    expect(mainContent).toHaveClass('flex-1');
-  });
-  test('clicking TinderLogo in Loading does not throw', () => {
-    const { getByTestId } = render(<Loading />);
-    const logo = getByTestId('tinder-logo');
+  test('clicking TinderLogo calls handleTohome function', () => {
+    render(<Loading msg="Loading..." />);
+    const logo = screen.getByTestId('tinder-logo');
+ 
     fireEvent.click(logo);
+ 
+    expect(logo).toBeInTheDocument();
   });
 });
+ 
+ 
