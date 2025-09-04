@@ -1,4 +1,3 @@
-// src/utils/storage.ts
 import { FoodServeType } from '@/generated';
 import type { CartItem } from '@/types/cart';
 import type { OrderData } from '@/types/order';
@@ -74,21 +73,20 @@ export function loadOrderData(): OrderData | null {
 }
 
 export function setOrderData(payload: OrderData) {
-  safeSetItem(ORDER_KEY, JSON.stringify(payload)); // SSR үед noop
+  safeSetItem(ORDER_KEY, JSON.stringify(payload));
 }
 
 // ─────────────────────────────
 // Token / User
 // ─────────────────────────────
 export function getToken(): string | null {
-  return safeGetItem(TOKEN_KEY); // SSR үед null
+  return safeGetItem(TOKEN_KEY);
 }
 
 export type DecodedProps = { user?: { _id?: string } };
 
-// JWT-ээс userId гаргаж авах (decode only)
 export function getUserIdFromToken(): string {
-  const token = getToken(); // SSR үед null
+  const token = getToken();
   const decoded = (token ? jwt.decode(token) : null) as DecodedProps | null;
   return decoded?.user?._id ?? '';
 }
@@ -97,10 +95,10 @@ export function getUserIdFromToken(): string {
 // Table
 // ─────────────────────────────
 export function getTableId(): string {
-  const raw = safeGetItem(TABLE_KEY); // SSR үед null
+  const raw = safeGetItem(TABLE_KEY);
   return raw ? String(raw) : '';
 }
 
 export function setTableId(id: string) {
-  safeSetItem(TABLE_KEY, String(id)); // SSR үед noop
+  safeSetItem(TABLE_KEY, String(id));
 }
