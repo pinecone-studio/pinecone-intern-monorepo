@@ -29,7 +29,7 @@ export const MyProfile = () => {
   if (loading)
     return (
       <div>
-        <Loading msg="Please wait..." />
+        <Loading msg='Please wait...'/>
       </div>
     );
 

@@ -1,33 +1,24 @@
 import { getusers, mapSimpleUser, mapLikedByUsers, mapLikedToUsers, mapMatchedUsers } from 'src/resolvers/queries/getusers';
 import { Usermodel } from 'src/models/user';
+import { IUserLean } from 'src/types'; // Add this import
 
 jest.mock('src/models/user', () => ({
   Usermodel: { find: jest.fn() },
 }));
 
-interface MockUser {
-  _id: string;
-  email: string;
-  name: string;
-  likedBy?: unknown;
-  [key: string]: unknown;
-}
-
 interface MockError {
   foo: string;
 }
 
-function mockChain(result: MockUser[] | Error | MockError, reject = false) {
+function mockChain(result: IUserLean[] | Error | MockError, reject = false) {
   const lean = reject ? jest.fn().mockRejectedValue(result) : jest.fn().mockResolvedValue(result);
-  (Usermodel.find as jest.Mock).mockReturnValue({
-    populate: jest.fn().mockReturnValue({
-      populate: jest.fn().mockReturnValue({
-        populate: jest.fn().mockReturnValue({
-          populate: jest.fn().mockReturnValue({ lean }),
-        }),
-      }),
-    }),
-  });
+  
+  const mockObj = {
+    populate: jest.fn().mockReturnThis(),
+    lean,
+  };
+  
+  (Usermodel.find as jest.Mock).mockReturnValue(mockObj);
 }
 
 describe('getusers resolver - errors & edge', () => {
@@ -115,4 +106,15 @@ describe('getusers resolver - errors & edge', () => {
     expect(mapLikedToUsers(123 as never)).toEqual([]);
     expect(mapMatchedUsers(true as never)).toEqual([]);
   });
+  it('handles error thrown during find operation setup', async () => {
+  const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+  
+  (Usermodel.find as jest.Mock).mockImplementation(() => {
+    throw new Error('Find operation failed');
+  });
+
+  await expect(getusers()).rejects.toThrow('Find operation failed');
+  expect(consoleSpy).toHaveBeenCalled();
+  consoleSpy.mockRestore();
+});
 });

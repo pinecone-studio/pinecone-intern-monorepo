@@ -23,6 +23,7 @@ export const mapSimpleUser = (user: IUserLean) => ({
   images: user.images ?? [],
   likedBy: [],
   likedTo: [],
+  dislikedTo: [],
   matchIds: [],
 });
 
@@ -31,6 +32,8 @@ export const mapMatchedUsers = (matched: IUserLean[] | null = []) => (Array.isAr
 export const mapLikedByUsers = (likedBy: IUserLean[] | null = []) => (Array.isArray(likedBy) ? likedBy.map(mapSimpleUser) : []);
 
 export const mapLikedToUsers = (likedTo: IUserLean[] | null = []) => (Array.isArray(likedTo) ? likedTo.map(mapSimpleUser) : []);
+
+export const mapDislikedToUsers = (dislikedTo: IUserLean[] | null = []) => (Array.isArray(dislikedTo) ? dislikedTo.map(mapSimpleUser) : []);
 /* eslint-disable-next-line complexity */
 const mapMatch = (match: IMatchLean, currentUserId: string) => {
   const matchedUser = Array.isArray(match.users) ? match.users.find((user) => user._id.toString() !== currentUserId) : null;
@@ -91,6 +94,7 @@ const transformUser = (user: IUserLean & { matchIds?: IMatchLean[] | null }) => 
   matchIds: user.matchIds ? user.matchIds.map((m) => mapMatch(m, user._id!.toString())) : [],
   likedBy: mapLikedByUsers(user.likedBy),
   likedTo: mapLikedToUsers(user.likedTo),
+  dislikedTo: mapDislikedToUsers(user.dislikedTo),
 });
 
 export const getusers = async () => {
@@ -98,6 +102,7 @@ export const getusers = async () => {
     const users = await Usermodel.find()
       .populate('likedBy')
       .populate('likedTo')
+      .populate('dislikedTo')
       .populate({
         path: 'matchIds',
         populate: {

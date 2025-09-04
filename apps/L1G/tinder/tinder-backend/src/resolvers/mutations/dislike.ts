@@ -15,7 +15,7 @@ export const dislike = async (_: unknown, args: DislikeArgs): Promise<DislikeRes
     const dislikedByUserId = new mongoose.Types.ObjectId(dislikedByUser);
     const dislikeReceiverId = new mongoose.Types.ObjectId(dislikeReceiver);
 
-    // likedTo / likedBy устгах
+    // likedTo / likedBy-оос заавал устгана (байхгүй байсан ч алдаа өгөхгүй)
     await Usermodel.findByIdAndUpdate(dislikedByUserId, {
       $pull: { likedTo: dislikeReceiverId },
     });
@@ -23,17 +23,20 @@ export const dislike = async (_: unknown, args: DislikeArgs): Promise<DislikeRes
       $pull: { likedBy: dislikedByUserId },
     });
 
-    // Хэрэв match байгаа бол
+    // dislikedTo-д хадгалах (давхардахгүйгээр push)
+    await Usermodel.findByIdAndUpdate(dislikedByUserId, {
+      $addToSet: { dislikedTo: dislikeReceiverId },
+    });
+
+    // Match байгаа бол устгана
     const match = await MatchModel.findOne({
       users: { $all: [dislikedByUserId, dislikeReceiverId] },
       unmatched: false,
     });
 
     if (match) {
-      // Match-ийг устгах
       await MatchModel.deleteOne({ _id: match._id });
 
-      // Хэрэглэгчдийн matchIds массивнаас устгах
       await Usermodel.updateMany(
         { _id: { $in: [dislikedByUserId, dislikeReceiverId] } },
         { $pull: { matchIds: match._id } }
@@ -42,7 +45,7 @@ export const dislike = async (_: unknown, args: DislikeArgs): Promise<DislikeRes
 
     return {
       isMatch: false,
-      message: 'Successfully unmatched and removed match',
+      message: 'Successfully disliked user',
     };
   } catch (error) {
     console.warn('Dislike mutation failed:', (error as Error).message);

@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
   likedBy: { type: [mongoose.Schema.Types.ObjectId], ref: 'User', default: [] },
   likedTo: { type: [mongoose.Schema.Types.ObjectId], ref: 'User', default: [] },
   matchIds: { type: [mongoose.Schema.Types.ObjectId], ref: 'Match', default: [] },
+  dislikedTo: { type: [mongoose.Schema.Types.ObjectId], ref: 'User', default: [] },
 });
 
 export const Usermodel = mongoose.models.User || mongoose.model('User', userSchema);
