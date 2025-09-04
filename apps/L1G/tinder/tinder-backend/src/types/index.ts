@@ -35,6 +35,7 @@ export interface IUserLean {
   likedBy?: IUserLean[] | null;
   likedTo?: IUserLean[] | null;
   matchIds?: IMatchLean[] | null;
+  dislikedTo?: IUserLean[] | null;
 }
 
 export interface IMatchLean {

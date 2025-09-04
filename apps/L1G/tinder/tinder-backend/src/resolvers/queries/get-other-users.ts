@@ -3,6 +3,7 @@ import { QueryResolvers } from 'src/generated';
 import { MatchModel } from 'src/models/match';
 import { Types } from 'mongoose';
 import { Usermodel } from 'src/models/user';
+import { dislike } from '../mutations';
 
 // getUsers.ts-ээс helper function-уудыг импорт хийх, эсвэл энд дахин тодорхойлох
 const transformUser = (user: any, currentUserId?: string) => ({
@@ -28,6 +29,7 @@ const transformUser = (user: any, currentUserId?: string) => ({
   // Жинхэнэ өгөгдлийг populate хийж авах
   likedBy: user.likedBy ? user.likedBy.map((u: any) => ({ id: u._id.toString() })) : [],
   likedTo: user.likedTo ? user.likedTo.map((u: any) => ({ id: u._id.toString() })) : [],
+  dislikedTo: user.dislikedTo ? user.dislikedTo.map((u: any) => ({ id: u._id.toString() })) : [],
   matchIds: user.matchIds ? user.matchIds.map((match: any) => {
     // Match дотрх хэрэглэгчийн мэдээлэл авах
     const matchedUser = Array.isArray(match.users) 
@@ -76,6 +78,7 @@ export const getOtherUsers: QueryResolvers['getOtherUsers'] = async (_, { _id })
   const otherUsers = await Usermodel.find({ _id: { $nin: Array.from(excludedIds) } })
     .populate('likedBy')
     .populate('likedTo')
+    .populate('dislikedTo')
     .populate({
       path: 'matchIds',
       populate: {
