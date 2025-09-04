@@ -41,8 +41,12 @@ const getFilteredProfiles = (data: any, currentUserId: string, gender?: string) 
 /* eslint-disable-next-line complexity */
 const HomePage = () => {
   const { currentUser, loading: userLoading, error: userError } = useCurrentUser();
-
   const { data, loading: profilesLoading, error: profilesError } = useGetusersQuery();
+  const [like] = useLikeUserMutation();
+  const [dislike] = useDislikeMutation();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMatched, setIsMatched] = useState(false);
+  const [matchedusersid, setMatchedusersid] = useState<string[]>([]);
 
   const [token, setToken] = useState<string | null>(null);
   const router = useRouter();
@@ -56,20 +60,15 @@ const HomePage = () => {
     }
   }, [router]);
 
-  if (!token) {
-    return null;
-  }
-
-  const [like] = useLikeUserMutation();
-  const [dislike] = useDislikeMutation();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isMatched, setIsMatched] = useState(false);
-  const [matchedusersid, setMatchedusersid] = useState<string[]>([]);
   useEffect(() => {
     const listener = (e: KeyboardEvent) => handleKeyDown(e, isMatched, closeMatchDialog);
     window.addEventListener('keydown', listener);
     return () => window.removeEventListener('keydown', listener);
   }, [isMatched]);
+
+  if (!token) {
+    return null;
+  }
 
   const handleLike = async (profileId: string) => {
     if (!currentUser) return;
