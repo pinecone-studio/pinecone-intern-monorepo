@@ -11,14 +11,16 @@ import { useGetMeQuery } from '@/generated';
 import Loading from './Loading';
 import { LogoutBtn } from './LogoutBtn';
 import { useRouter } from 'next/navigation';
+import { DeleteAccBtn } from './DeleteAccBtn';
 
-type MenuType = 'profile' | 'images' | 'notifications' | 'logout';
+type MenuType = 'profile' | 'images' | 'settings' | 'logout';
 
 export const MyProfile = () => {
   const [menu, setMenu] = useState<MenuType>('profile');
   const [isOpen, setIsOpen] = useState(false);
   const { data, loading, error } = useGetMeQuery();
   const [images, setImages] = useState<string[]>([]);
+
   useEffect(() => {
     if (data?.getMe?.images) {
       setImages(data.getMe.images);
@@ -30,8 +32,10 @@ export const MyProfile = () => {
         <Loading />
       </div>
     );
+
   if (error) return <div>Error loading profile. {error.message};</div>;
   const user = data?.getMe;
+
   return (
     <div data-testid="my-profile" className="w-full h-full px-3 flex flex-col gap-6 overflow-y-auto ">
       <MyProfileHeader isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
@@ -49,7 +53,7 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
   const items: { label: string; value: MenuType }[] = [
     { label: 'Profile', value: 'profile' },
     { label: 'Images', value: 'images' },
-    { label: 'Notifications', value: 'notifications' },
+    { label: 'Settings', value: 'settings' },
   ];
 
   const handleSelect = (value: MenuType) => {
@@ -149,8 +153,13 @@ export const MenuContent = ({ menu, user, images, setImages }: { menu: MenuType;
       return <MyProfileForm user={user} images={images} disableUpdate={images.length === 0} />;
     case 'images':
       return <MyImages user={{ images }} onImagesChange={setImages} />;
-    case 'notifications':
-      return <div data-testid="notification-settings">Notification Settings</div>;
+    case 'settings':
+      return (
+        <div data-testid="settings" className="flex flex-col justify-start items-start gap-4">
+          Settings
+          <DeleteAccBtn user={user} />
+        </div>
+      );
     default:
       return null;
   }
