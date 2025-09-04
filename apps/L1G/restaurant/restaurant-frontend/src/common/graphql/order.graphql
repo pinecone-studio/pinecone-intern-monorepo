@@ -4,6 +4,7 @@ query GetFoodOrdersByUser($input: getFoodOrdersByUserInput!) {
     orderNumber
     status
     totalPrice
+    createdAt
   }
 }
 mutation CreateFoodOrder($input: CreateFoodOrderInput!) {
