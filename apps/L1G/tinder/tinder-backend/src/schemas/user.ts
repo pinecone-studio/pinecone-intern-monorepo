@@ -77,6 +77,10 @@ export const UsertypeDefs = gql`
     success: Boolean!
     message: String!
   }
+  type DeleteUserResponse {
+    success: Boolean!
+    message: String!
+  }
   type UserLikedByResponse {
     id: ID!
     email: String!
@@ -120,5 +124,6 @@ export const UsertypeDefs = gql`
     markMessagesAsSeen(matchId: ID!, userId: ID!): Boolean
 
     unmatch(matchId: ID!): UnmatchResponse!
+    deleteUser(id: ID!): DeleteUserResponse!
   }
 `;
