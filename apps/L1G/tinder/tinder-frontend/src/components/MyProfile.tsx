@@ -110,7 +110,7 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
         <div
           data-testid="mobile-drawer"
           className={clsx(
-            'fixed top-0 left-0 w-[50%] h-[400px] overflow-y-auto bg-white shadow-xl z-50 flex flex-col p-6 transform transition-transform duration-300',
+            'fixed top-0 left-0 w-[50%] h-screen overflow-y-auto bg-white shadow-xl z-50 flex flex-col p-6 transform transition-transform duration-300',
             isOpen ? 'translate-x-0' : '-translate-x-full'
           )}
         >
