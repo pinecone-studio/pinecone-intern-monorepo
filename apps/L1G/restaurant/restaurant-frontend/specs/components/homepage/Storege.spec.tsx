@@ -3,7 +3,6 @@
 import { __test__ } from '@/utils/storage';
 import '@testing-library/jest-dom';
 
-// ✅ jwt.decode-г storage импортоос ӨМНӨ mock-лоно (important!)
 jest.mock('jsonwebtoken', () => ({
   __esModule: true,
   default: { decode: jest.fn() },
@@ -148,18 +147,12 @@ describe('utils/storage', () => {
     });
   });
 
-  // ─────────────────────────────
-  // SSR (window байхгүй) — hasWindow() = false
-  // ─────────────────────────────
   describe('SSR / hasWindow() = false', () => {
     let originalWindow: any;
     let savedLocalStorage: Storage;
 
     beforeEach(() => {
-      // 1) jsdom localStorage-ийн тогтвортой reference
       savedLocalStorage = (global as any).localStorage as Storage;
-
-      // 2) Тест бүрийн өмнө seed-лэнэ (глобал beforeEach clear хийдэг тул)
       savedLocalStorage.setItem(
         'orderData',
         JSON.stringify({
@@ -171,9 +164,7 @@ describe('utils/storage', () => {
       savedLocalStorage.setItem('token', 'seed.token.value');
       savedLocalStorage.setItem('tableId', 'T-OLD');
 
-      // 3) window-г устгаж hasWindow() → false болгоно
       originalWindow = (global as any).window;
-      // @ts-expect-error — санаатайгаар window-г арилгаж байна
       delete (global as any).window;
     });
 

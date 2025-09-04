@@ -5,10 +5,18 @@ import '@testing-library/jest-dom';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-// ===== Mocks for deps used by the component =====
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
+
+beforeEach(() => {
+  jest.clearAllMocks();
+
+  (useRouter as unknown as jest.Mock).mockReturnValue({
+    push: jest.fn(),
+  });
+});
+
 import { useRouter } from 'next/navigation';
 
 const mockCreateOrder = jest.fn();
@@ -16,7 +24,17 @@ jest.mock('@/generated', () => ({
   useCreateFoodOrderMutation: () => [mockCreateOrder],
 }));
 
-// storage utils (new)
+beforeEach(() => {
+  jest.clearAllMocks();
+  (useRouter as unknown as jest.Mock).mockReturnValue({ push: jest.fn() });
+
+  mockHandlePaymentSelect.mockImplementation(({ methodId, setIsWalletDrawerOpen }) => {
+    if (methodId === 'wallet') setIsWalletDrawerOpen(true);
+  });
+
+  seedDefaultStorage();
+});
+
 const mockLoadOrderData = jest.fn();
 const mockGetUserIdFromToken = jest.fn();
 const mockGetTableId = jest.fn();
@@ -26,7 +44,6 @@ jest.mock('@/utils/storage', () => ({
   getTableId: (...args: any[]) => mockGetTableId(...args),
 }));
 
-// Payment logic helpers
 const mockHandleWalletOrder = jest.fn();
 const mockHandlePaymentSelect = jest.fn();
 jest.mock('@/utils/Payment-Logic', () => ({
@@ -34,7 +51,6 @@ jest.mock('@/utils/Payment-Logic', () => ({
   handlePaymentSelect: (...a: any[]) => mockHandlePaymentSelect(...(a as any)),
 }));
 
-// ✅ Select mock — DOM nesting warning арилгана (зөвхөн <select> рендерлэнэ)
 jest.mock('@/components/ui/select', () => ({
   Select: ({ value, onValueChange }: any) => (
     <select data-testid="delivery-select" value={value ?? ''} onChange={(e) => onValueChange?.(e.target.value)}>
@@ -42,7 +58,6 @@ jest.mock('@/components/ui/select', () => ({
       <option value="IN">Эндээ идэх</option>
     </select>
   ),
-  // доорх бүрдлүүдийг render хийх шаардлагагүй — null буцаая
   SelectTrigger: () => null,
   SelectValue: () => null,
   SelectContent: () => null,
@@ -85,10 +100,8 @@ jest.mock('@/components/payment/PaymentCard', () => {
   };
 });
 
-// ===== Import the component under test =====
 import PaymentSelection from '@/components/payment/PaymentSelection';
 
-// ===== Helpers for default mock data =====
 const seedDefaultStorage = () => {
   mockLoadOrderData.mockReturnValue({
     items: [
@@ -119,9 +132,9 @@ describe('PaymentSelection', () => {
 
     it('shows calculated totals: base, fee, final', () => {
       render(<PaymentSelection />);
-      expect(screen.getByText('13,000₮')).toBeInTheDocument(); // base
-      expect(screen.getByText('4,000₮')).toBeInTheDocument(); // fee
-      expect(screen.getByText('17,000₮')).toBeInTheDocument(); // total
+      expect(screen.getByText('13,000₮')).toBeInTheDocument();
+      expect(screen.getByText('4,000₮')).toBeInTheDocument();
+      expect(screen.getByText('17,000₮')).toBeInTheDocument();
     });
 
     it('shows 0 base when no order data', () => {
@@ -134,7 +147,6 @@ describe('PaymentSelection', () => {
 
   describe('Delivery option', () => {
     it('sets delivery option from order data', async () => {
-      // ⬇️ Зөвхөн энэ тестэнд orderType=IN болгоё
       mockLoadOrderData.mockReturnValueOnce({
         items: [{ id: 'x', price: 1000, selectCount: 1 }],
         orderType: 'IN',
@@ -143,7 +155,6 @@ describe('PaymentSelection', () => {
       render(<PaymentSelection />);
       const select = screen.getByTestId('delivery-select') as HTMLSelectElement;
 
-      // state useEffect-ээр тавигддаг тул waitFor хэрэгтэй
       await waitFor(() => expect(select).toHaveValue('IN'));
     });
 
@@ -152,7 +163,6 @@ describe('PaymentSelection', () => {
       const user = userEvent.setup();
       const select = screen.getByTestId('delivery-select') as HTMLSelectElement;
 
-      // default нь GO (seedDefaultStorage) — өөрчилж шалгая
       await user.selectOptions(select, 'GO');
       await waitFor(() => expect(select).toHaveValue('GO'));
     });
@@ -165,20 +175,60 @@ describe('PaymentSelection', () => {
 
       await user.click(screen.getByTestId('payment-card-qpay'));
 
-      expect(mockHandlePaymentSelect).toHaveBeenCalledWith({
-        methodId: 'qpay',
-        setSelectedPayment: expect.any(Function),
-        setIsWalletDrawerOpen: expect.any(Function),
-        createOrder: mockCreateOrder,
-        userId: 'user123',
-        table: 'T-5',
-        finalAmount: 17000,
-        orderFood: [
-          { foodId: 'food1', quantity: 2 },
-          { foodId: 'food2', quantity: 1 },
-        ],
-        orderType: 'GO',
-      });
+      expect(mockHandlePaymentSelect).toHaveBeenCalledWith(
+        expect.objectContaining({
+          methodId: 'qpay',
+          setSelectedPayment: expect.any(Function),
+          setIsWalletDrawerOpen: expect.any(Function),
+          createOrder: mockCreateOrder,
+          userId: 'user123',
+          table: 'T-5',
+          finalAmount: 17000,
+          orderFood: [
+            { foodId: 'food1', quantity: 2 },
+            { foodId: 'food2', quantity: 1 },
+          ],
+          orderType: 'GO',
+          navigate: expect.any(Function),
+        })
+      );
+    });
+    it('wallet: opens drawer then passes amount to handleWalletOrder', async () => {
+      render(<PaymentSelection />);
+      const user = userEvent.setup();
+
+      await user.click(screen.getByTestId('payment-card-wallet'));
+      await waitFor(() => expect(screen.getByTestId('wallet-sheet')).toBeVisible());
+
+      const input = screen.getByTestId('wallet-amount-input') as HTMLInputElement;
+      await user.clear(input);
+      await user.type(input, '5000');
+      expect(input).toHaveValue(5000);
+
+      await user.click(screen.getByText('Захиалах'));
+
+      expect(mockHandleWalletOrder).toHaveBeenCalledWith(
+        expect.objectContaining({
+          targetAmount: '5000',
+          totalBeforeWallet: 17000,
+          setWalletDeduction: expect.any(Function),
+          setWalletUsed: expect.any(Function),
+          setSelectedPayment: expect.any(Function),
+          setIsWalletDrawerOpen: expect.any(Function),
+          setTargetAmount: expect.any(Function),
+        })
+      );
+    });
+
+    it('closes wallet drawer via close button', async () => {
+      render(<PaymentSelection />);
+      const user = userEvent.setup();
+
+      await user.click(screen.getByTestId('payment-card-wallet'));
+      await waitFor(() => expect(screen.getByTestId('wallet-sheet')).toBeVisible());
+
+      await user.click(screen.getByTestId('close-sheet'));
+      await waitFor(() => expect(screen.getByTestId('wallet-sheet')).not.toBeVisible());
     });
 
     it('wallet: opens drawer then passes amount to handleWalletOrder', async () => {
@@ -239,10 +289,7 @@ describe('PaymentSelection', () => {
     });
   });
   describe('Payment flows', () => {
-    // ... чиний байгаа тестүүд ...
-
     it('wallet callbacks → setWalletUsed / setWalletDeduction нь UI-г шинэчилнэ', async () => {
-      // wallet товч дарж drawer нээнэ
       mockHandlePaymentSelect.mockImplementation(({ setIsWalletDrawerOpen }) => {
         setIsWalletDrawerOpen(true);
       });
@@ -253,7 +300,6 @@ describe('PaymentSelection', () => {
       await user.click(screen.getByTestId('payment-card-wallet'));
       await waitFor(() => expect(screen.getByTestId('wallet-sheet')).toBeVisible());
 
-      // дүн оруулаад "Захиалах" дарж doHandleWalletOrder дуудагдуулах
       const input = screen.getByTestId('wallet-amount-input') as HTMLInputElement;
       await user.clear(input);
       await user.type(input, '5000');
@@ -261,33 +307,19 @@ describe('PaymentSelection', () => {
 
       await user.click(screen.getByText('Захиалах'));
 
-      // mock-д дамжсан setter-үүдийг авч, гараар дуудадлаа
       expect(mockHandleWalletOrder).toHaveBeenCalledTimes(1);
       const args = mockHandleWalletOrder.mock.calls[0][0];
 
-      // setter-үүдийг дуудна
       args.setWalletUsed(true);
       args.setWalletDeduction(5000);
-
-      // drawer-ийг хаая
       args.setIsWalletDrawerOpen(false);
-
-      // target amount-г reset хийе
       args.setTargetAmount('');
 
-      // UI шинэчлэлтүүдийг шалгана
       await waitFor(() => {
-        // drawer хаагдсан
         expect(screen.getByTestId('wallet-sheet')).not.toBeVisible();
-
-        // wallet option алга болсон (wallet.used === true үед нууж байгаа)
         expect(screen.queryByTestId('payment-card-wallet')).not.toBeInTheDocument();
-
-        // wallet deduction мөр гарч ирсэн, мөн дүн -5,000₮
         expect(screen.getByText('Хэтэвчээс хасагдсан дүн:')).toBeInTheDocument();
         expect(screen.getByText('-5,000₮')).toBeInTheDocument();
-
-        // эцсийн төлөх дүн = 17,000 - 5,000 = 12,000₮
         expect(screen.getByText('12,000₮')).toBeInTheDocument();
       });
     });

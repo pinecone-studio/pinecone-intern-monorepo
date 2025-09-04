@@ -104,7 +104,7 @@ describe('payment-logic: handlePaymentSelect', () => {
     expect(a.setIsWalletDrawerOpen).not.toHaveBeenCalled();
 
     expect(a.createOrder).toHaveBeenCalledTimes(1);
-    const call = a.createOrder.mock.calls[0][0]; // { variables: { input: {...} } }
+    const call = a.createOrder.mock.calls[0][0];
     expect(call.variables.input.user).toBe('user-123');
     expect(call.variables.input.table).toBe('T-01');
     expect(call.variables.input.totalPrice).toBe(30000);
@@ -120,5 +120,70 @@ describe('payment-logic: handlePaymentSelect', () => {
 
     const { totalPrice } = a.createOrder.mock.calls[0][0].variables.input;
     expect(totalPrice).toBe(25000);
+  });
+});
+describe('utils/Payment-Logic → handlePaymentSelect', () => {
+  it('non-wallet үед createOrder дуудагдаж дууссаны дараа navigate("/PaymentSuccess") дуудна', async () => {
+    const createOrder = jest.fn().mockResolvedValue(undefined);
+    const navigate = jest.fn();
+
+    const setSelectedPayment = jest.fn();
+    const setIsWalletDrawerOpen = jest.fn();
+
+    const orderFood: FoodOrderItemInput[] = [{ foodId: 'food1', quantity: 2 }];
+
+    await handlePaymentSelect({
+      methodId: 'qpay',
+      setSelectedPayment,
+      setIsWalletDrawerOpen,
+      createOrder,
+      userId: 'user-1',
+      table: 'T-7',
+      finalAmount: 17000,
+      orderFood,
+      orderType: 'GO' as any,
+      navigate,
+    });
+
+    expect(setSelectedPayment).toHaveBeenCalledWith('qpay');
+
+    expect(createOrder).toHaveBeenCalledWith({
+      variables: {
+        input: {
+          user: 'user-1',
+          table: 'T-7',
+          totalPrice: 17000,
+          FoodOrderItem: orderFood,
+          orderType: 'GO',
+        },
+      },
+    });
+    expect(navigate).toHaveBeenCalledWith('/PaymentSuccess');
+    expect(setIsWalletDrawerOpen).not.toHaveBeenCalled();
+  });
+
+  it('wallet үед зөвхөн drawer нээгээд, createOrder / navigate дууддаггүй', async () => {
+    const createOrder = jest.fn();
+    const navigate = jest.fn();
+    const setSelectedPayment = jest.fn();
+    const setIsWalletDrawerOpen = jest.fn();
+
+    await handlePaymentSelect({
+      methodId: 'wallet',
+      setSelectedPayment,
+      setIsWalletDrawerOpen,
+      createOrder,
+      userId: 'user-1',
+      table: 'T-7',
+      finalAmount: 1000,
+      orderFood: [],
+      orderType: 'IN' as any,
+      navigate,
+    });
+
+    expect(setSelectedPayment).toHaveBeenCalledWith('wallet');
+    expect(setIsWalletDrawerOpen).toHaveBeenCalledWith(true);
+    expect(createOrder).not.toHaveBeenCalled();
+    expect(navigate).not.toHaveBeenCalled();
   });
 });
