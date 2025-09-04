@@ -26,13 +26,15 @@ describe('OrderType handlePick (lines 20-23)', () => {
 
   const cart: CartItem[] = [{ id: '1', image: '/i.png', foodName: 'Taco', price: '12000', selectCount: 2 }];
 
-  it('saves orderData and navigates to /orderPayment when selecting dine_in', async () => {
+
+  it('saves orderData and navigates to /orderPayment when selecting IN', async () => {
     render(<OrderType currentCart={cart} />);
 
     fireEvent.click(screen.getByText('Захиалах'));
     fireEvent.click(screen.getByLabelText('Эндээ идэх'));
     await waitFor(() => {
-      expect(mockSaveOrderData).toHaveBeenCalledWith(cart, 'dine_in');
+
+      expect(mockSaveOrderData).toHaveBeenCalledWith(cart, 'IN');
     });
 
     jest.runAllTimers();
@@ -47,7 +49,8 @@ describe('OrderType handlePick (lines 20-23)', () => {
     fireEvent.click(screen.getByLabelText('Аваад явах'));
 
     await waitFor(() => {
-      expect(mockSaveOrderData).toHaveBeenCalledWith(cart, 'takeaway');
+
+      expect(mockSaveOrderData).toHaveBeenCalledWith(cart, 'GO');
     });
 
     jest.runAllTimers();

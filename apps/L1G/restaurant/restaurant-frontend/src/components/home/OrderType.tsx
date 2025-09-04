@@ -1,5 +1,8 @@
 'use client';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+
+
+import { useRouter } from 'next/navigation';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose, DialogTrigger } from '@/components/ui/dialog';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import type { CartItem } from '@/types/cart';
@@ -9,15 +12,17 @@ import { useState } from 'react';
 import { FoodServeType } from '@/generated';
 
 type Props = {
-  isClicked: boolean;
+
+  currentCart: CartItem[];
 };
 
 const OrderType = ({ currentCart }: Props) => {
   const router = useRouter();
-
+  const [isOpen, setIsOpen] = useState<false | true>();
   const handlePick = (value: string) => {
-    const v = value as OrderTypeValue;
+    const v = value as FoodServeType;
     saveOrderData(currentCart, v);
+    setIsOpen(false);
     setTimeout(() => {
       router.push(`/orderPayment`);
     }, 0);

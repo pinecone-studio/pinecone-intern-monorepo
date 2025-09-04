@@ -5,7 +5,7 @@ import MenuCard, { Props } from '@/components/home/MenuCard';
 
 jest.mock('next/image', () => ({
   __esModule: true,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   default: (props: any) => {
     const { src, alt, ...rest } = props;
     return <img src={src} alt={alt} {...rest} />;
@@ -25,7 +25,7 @@ describe('<MenuCard />', () => {
     render(<MenuCard {...base} />);
 
     expect(screen.getByText('Taco')).toBeInTheDocument();
-    // component нь parseInt('15.6') → 15, shortPrice(15) → "15"
+
     expect(screen.getByText('15')).toBeInTheDocument();
   });
 
@@ -58,18 +58,19 @@ describe('<MenuCard />', () => {
     expect(handleRemove).toHaveBeenCalledWith('f1');
   });
 
-  // ⬇️ 16-р мөрийн тест: 1000-аас их/тэнцүү үнэ "k" форматаар гарна
+
   it('formats price >= 1000 with "k" (line 16)', () => {
     const bigPrice: Props = {
       ...base,
       id: 'f2',
-      price: '12500', // parseInt → 12500 → 12.500 → "12.5k"
+
+      price: '12500',
     };
     render(<MenuCard {...bigPrice} />);
 
     expect(screen.getByText('12.5k')).toBeInTheDocument();
 
-    // Бас яг 1000 дээр "1k" болж буйг давхар шалгая
+
     const exactThousand: Props = { ...base, id: 'f3', price: '1000' };
     render(<MenuCard {...exactThousand} />);
 
