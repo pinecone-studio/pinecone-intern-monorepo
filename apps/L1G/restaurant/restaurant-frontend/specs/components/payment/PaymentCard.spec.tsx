@@ -4,13 +4,11 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import PaymentCard from '@/components/payment/PaymentCard';
 
 // --- Mocks ---
-// next/image: fill prop-оос болж DOM warning гарахаас сэргийлж fill-ийг хаяна
 jest.mock('next/image', () => {
   const React = require('react');
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (props: any) => {
     const { src, alt, ...rest } = props;
-    // 'fill' prop-ийг DOM-д дамжуулахгүй
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { fill, ...pass } = rest;
     return React.createElement('img', { src, alt, ...pass });
@@ -32,7 +30,6 @@ describe('PaymentCard', () => {
   it('нэрийг болон icon img-ийг рэндэрлэнэ', () => {
     render(<PaymentCard selectedPayment="" method={method} handlePaymentSelect={() => {}} />);
     expect(screen.getByText('Qpay')).toBeInTheDocument();
-    // img alt="icon" байгаа эсэх
     const img = screen.getByRole('img', { name: 'icon' });
     expect(img).toBeInTheDocument();
   });
@@ -40,7 +37,6 @@ describe('PaymentCard', () => {
   it('дархад handlePaymentSelect(method.id) дуудна', () => {
     const onSelect = jest.fn();
     render(<PaymentCard selectedPayment="" method={method} handlePaymentSelect={onSelect} />);
-
     fireEvent.click(screen.getByTestId('card'));
     expect(onSelect).toHaveBeenCalledTimes(1);
     expect(onSelect).toHaveBeenCalledWith('qpay');
@@ -50,11 +46,9 @@ describe('PaymentCard', () => {
     const { rerender } = render(<PaymentCard selectedPayment="" method={method} handlePaymentSelect={() => {}} />);
     const card = screen.getByTestId('card');
 
-    // not selected
     expect(card).toHaveClass('hover:bg-gray-50');
     expect(card).not.toHaveClass('ring-2', 'ring-blue-500', 'bg-blue-50');
 
-    // selected
     rerender(<PaymentCard selectedPayment="qpay" method={method} handlePaymentSelect={() => {}} />);
     expect(card).toHaveClass('ring-2', 'ring-blue-500', 'bg-blue-50');
     expect(card).not.toHaveClass('hover:bg-gray-50');

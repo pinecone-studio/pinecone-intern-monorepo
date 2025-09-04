@@ -67,6 +67,7 @@ const PaymentSelection = () => {
       finalAmount,
       orderFood,
       orderType: deliveryOption,
+      navigate: router.push,
     });
   return (
     <div className="max-w-sm mx-auto bg-white min-h-screen">
