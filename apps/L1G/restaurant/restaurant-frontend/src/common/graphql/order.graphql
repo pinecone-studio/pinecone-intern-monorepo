@@ -5,8 +5,29 @@ query GetFoodOrdersByUser($input: getFoodOrdersByUserInput!) {
     status
     totalPrice
     createdAt
+    updatedAt
+    orderType
+    user {
+      userId
+      username
+      bonusPoints
+    }
+    table {
+      tableId
+      tableName
+    }
+    foodOrder {
+      food {
+        foodId
+        foodName
+        price
+        image
+      }
+      quantity
+    }
   }
 }
+
 mutation CreateFoodOrder($input: CreateFoodOrderInput!) {
   createFoodOrder(input: $input) {
     orderId
@@ -25,6 +46,38 @@ mutation CreateFoodOrder($input: CreateFoodOrderInput!) {
       }
       quantity
     }
+    createdAt
+  }
+}
+
+query getFoodOrders {
+  getFoodOrders {
+    orderId
+    orderNumber
+    orderType
+    status
+    totalPrice
+    createdAt
+    table {
+      tableName
+    }
+    foodOrder {
+      food {
+        foodName
+        price
+        image
+      }
+      quantity
+    }
+    status
+  }
+}
+mutation UpdateFoodOrderStatus($input: UpdateFoodOrderStatusInput!) {
+  updateFoodOrderStatus(input: $input) {
+    orderId
+    orderNumber
+    status
+    totalPrice
     createdAt
   }
 }
