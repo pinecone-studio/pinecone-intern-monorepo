@@ -3,7 +3,6 @@
 import { useGetFoodOrdersByUserQuery } from '@/generated';
 import { Logedinnav } from './sheets/Logedinnav';
 import jwt from 'jsonwebtoken';
-import { log } from 'node:console';
 
 const OrdersHistory = () => {
   const token = localStorage.getItem('token');
