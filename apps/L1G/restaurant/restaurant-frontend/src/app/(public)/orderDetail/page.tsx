@@ -1,6 +1,6 @@
 import OrderDetail from '@/components/home/OrderDetail';
+import { Navbar } from '@/components/Navbar';
 import React from 'react';
-import { Navbar } from '@/components/sheets/Navbar';
 
 const page = () => {
   return (
