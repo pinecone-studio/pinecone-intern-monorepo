@@ -1,15 +1,14 @@
 'use client';
-import { Navbar } from '@/components/Navbar';
+
 import React from 'react';
 import { ArrowUp } from 'lucide-react';
 import { ArrowDown } from 'lucide-react';
-import { Loginnavbar } from '@/components/sheets/Loginnavbar';
-import { Logedinnav } from '@/components/sheets/Logedinnav';
+import { Navbar } from '@/components/sheets/Navbar';
 
 const wallet = () => {
   return (
     <div>
-      <Logedinnav />
+      <Navbar />
       <div className="w-full h-[170px] bg-muted flex flex-col items-center justify-center">
         <p className="text-[20px] text-[#441500] font-medium">Хэтэвч</p>
         <p className="text-[32px]">18,864</p>

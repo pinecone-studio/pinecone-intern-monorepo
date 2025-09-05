@@ -1,7 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import OrdersHistory from '@/components/History';
+
 import jwt from 'jsonwebtoken';
 import '@testing-library/jest-dom';
+import { OrderHistory } from '@/components/OrderHistory';
+import { useGetFoodOrdersByUserQuery } from '@/generated';
 
 // Apollo hook-ийг mock хийж байна
 jest.mock('@/generated', () => ({
@@ -14,16 +16,29 @@ jest.mock('jsonwebtoken', () => ({
 }));
 
 // Logedinnav-г жоохон dummy болгоё
-jest.mock('@/components/sheets/Logedinnav', () => ({
-  Logedinnav: () => <div>Mocked Navbar</div>,
+jest.mock('@/components/sheets/Navbar', () => ({
+  Navbar: () => <div>Mocked Navbar</div>,
 }));
 
 describe('OrdersHistory component', () => {
   const mockUser = { user: { _id: 'user123' } };
-  const { useGetFoodOrdersByUserQuery } = require('@/generated');
+  useGetFoodOrdersByUserQuery as jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+  it('renders login prompt when token is null', () => {
+    (useGetFoodOrdersByUserQuery as jest.Mock).mockReturnValue({
+      data: undefined,
+      error: undefined,
+    });
+
+    render(<OrderHistory />);
+
+    // Гарчиг хэвээр үлдэнэ
+    expect(screen.getByText('Захиалгын түүх')).toBeInTheDocument();
+    // "Та нэвтрэнэ үү" текст гарч ирнэ
+    expect(screen.getByText('Та нэвтрэнэ үү')).toBeInTheDocument();
   });
 
   it('renders error state', () => {
@@ -35,7 +50,7 @@ describe('OrdersHistory component', () => {
       error: { message: 'Something went wrong' },
     });
 
-    render(<OrdersHistory />);
+    render(<OrderHistory />);
     expect(screen.getByText('Something went wrong')).toBeInTheDocument();
   });
 
@@ -48,7 +63,7 @@ describe('OrdersHistory component', () => {
       error: undefined,
     });
 
-    render(<OrdersHistory />);
+    render(<OrderHistory />);
     expect(screen.getByText('Захиалгаа олдсонгүй')).toBeInTheDocument();
   });
 
@@ -71,7 +86,7 @@ describe('OrdersHistory component', () => {
       error: undefined,
     });
 
-    render(<OrdersHistory />);
+    render(<OrderHistory />);
 
     expect(screen.getByText('#31321')).toBeInTheDocument();
     expect(screen.getByText('Бэлтгэгдэж буй')).toBeInTheDocument();

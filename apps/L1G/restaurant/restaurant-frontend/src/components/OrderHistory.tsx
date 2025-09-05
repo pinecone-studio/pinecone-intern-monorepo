@@ -1,23 +1,32 @@
 'use client';
-
+/* eslint-disable */
 import { useGetFoodOrdersByUserQuery } from '@/generated';
-import { Logedinnav } from './sheets/Logedinnav';
 import jwt from 'jsonwebtoken';
+import { Navbar } from './sheets/Navbar';
 
-const OrdersHistory = () => {
+export const OrderHistory = () => {
   const token = localStorage.getItem('token');
-  const userData = token ? jwt.decode((token || '') as string) : null;
+  const userData = jwt.decode(token as string);
   const user = userData as { user: { _id: string } } | null;
+  if (token === null)
+    return (
+      <div>
+        <Navbar />
+        <div className="text-center">
+          <p className="font-medium text-[#441500] pt-5 text-[20px]">Захиалгын түүх</p>
+          <div className="flex justify-center  pt-4">Та нэвтрэнэ үү</div>
+        </div>
+      </div>
+    );
   const { data, error } = useGetFoodOrdersByUserQuery({
     variables: { input: { userId: String(user?.user._id) } },
   });
-  console.log(localStorage);
 
   if (error) return <p>{error.message}</p>; // ✅ Error-г JSX дээр харуулж байна
 
   return (
     <div>
-      <Logedinnav />
+      <Navbar />
       <div className="text-center">
         <p className="font-medium text-[#441500] pt-5 text-[20px]">Захиалгын түүх</p>
         <div className="flex justify-center  pt-4">
@@ -58,4 +67,3 @@ const OrdersHistory = () => {
     </div>
   );
 };
-export default OrdersHistory;

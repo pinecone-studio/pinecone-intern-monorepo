@@ -1,12 +1,11 @@
 'use client';
 import HomePageContainer from '@/components/home/HomePageContainer';
-
-import { Logedinnav } from '@/components/sheets/Logedinnav';
+import { Navbar } from '@/components/sheets/Navbar';
 
 const Home = () => {
   return (
     <div>
-      <Logedinnav />
+      <Navbar />
       <HomePageContainer />
     </div>
   );
