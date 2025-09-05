@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { useGetTableByNameQuery, useSignInMutation } from '@/generated';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
+import { useAuth } from '@/app/context/AuthContext';
 
 export const SignInComponent = () => {
   const searchParams = useSearchParams();
@@ -64,6 +65,7 @@ export const SignInComponent = () => {
       });
 
       localStorage.setItem('token', data?.signIn.token || '');
+
       if (data?.signIn.user.role === 'admin') {
         router.push('/order');
       } else if (data?.signIn.user.role === 'user') {
