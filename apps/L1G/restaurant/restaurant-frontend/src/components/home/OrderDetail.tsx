@@ -3,7 +3,7 @@
 import { useGetFoodOrdersByUserQuery, FoodOrder } from '@/generated';
 import { decode } from 'jsonwebtoken';
 import { useEffect, useState } from 'react';
-import { OrderDetailCard } from './OrderDetailField';
+import { OrderDetailCard } from './OrderDetailCard';
 
 type UserJwtPayload = {
   user: {
