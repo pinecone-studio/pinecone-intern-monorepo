@@ -32,7 +32,9 @@ export const SheetMenu = () => {
             </div>
             <div className="flex gap-4 pl-3 items-center w-full h-[60px] border-b">
               <User size={12} />
-              <p className="font-[30px]">Хэрэглэгч</p>
+              <a href="/update-user" className="font-[30px]">
+                Хэрэглэгч
+              </a>
             </div>
             <a href="/history" className="flex gap-4 pl-3 items-center w-full h-[60px] border-b">
               <List size={12} />
