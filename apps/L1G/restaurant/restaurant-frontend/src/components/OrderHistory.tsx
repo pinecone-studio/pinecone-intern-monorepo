@@ -8,7 +8,7 @@ export const OrderHistory = () => {
   const token = typeof window !== 'undefined' && localStorage.getItem('token');
   const userData = jwt.decode(token as string);
   const user = userData as { user: { _id: string } } | null;
-  if (token === null)
+  if (!token)
     return (
       <div>
         <Navbar />
