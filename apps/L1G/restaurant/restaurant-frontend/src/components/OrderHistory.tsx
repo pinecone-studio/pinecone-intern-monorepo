@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import { Navbar } from './sheets/Navbar';
 
 export const OrderHistory = () => {
-  const token = localStorage.getItem('token');
+  const token = typeof window !== 'undefined' && localStorage.getItem('token');
   const userData = jwt.decode(token as string);
   const user = userData as { user: { _id: string } } | null;
   if (token === null)
