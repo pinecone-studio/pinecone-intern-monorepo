@@ -50,6 +50,6 @@ describe('<PaymentSuccess />', () => {
 
     const { push } = useRouter() as unknown as { push: jest.Mock };
     expect(push).toHaveBeenCalledTimes(1);
-    expect(push).toHaveBeenCalledWith('/');
+    expect(push).toHaveBeenCalledWith('/orderDetail');
   });
 });

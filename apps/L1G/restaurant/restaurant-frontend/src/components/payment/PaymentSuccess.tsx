@@ -20,7 +20,7 @@ const PaymentSuccess = () => {
       <div className="flex w-full h-[30px] justify-center items-center">
         <Button
           onClick={() => {
-            router.push('/');
+            router.push('/orderDetail');
           }}
           className="w-full bg-white hover:bg-[#F2F2F7] text-black py-4 text-lg font-medium rounded-lg border-[1px]"
         >
