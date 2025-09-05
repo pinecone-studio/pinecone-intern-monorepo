@@ -15,6 +15,5 @@
   "/camera",
   "/history",
   "/orderDetail",
-  "/orderPayment",
-  "/wallet"
+  "/orderPayment"
 ]
