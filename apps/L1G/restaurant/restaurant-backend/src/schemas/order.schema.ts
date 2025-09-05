@@ -43,6 +43,7 @@ export const orderTypeDefs = gql`
     table: ID!
     FoodOrderItem: [FoodOrderItemInput!]!
     orderType: FoodServeType!
+    bonusPointsToUse: Int
   }
 
   input UpdateFoodOrderStatusInput {

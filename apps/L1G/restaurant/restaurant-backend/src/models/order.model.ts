@@ -10,10 +10,11 @@ export type FoodOrder = {
   status: 'READY' | 'PREPARING' | 'DONE' | 'PENDING';
   totalPrice: number;
   orderNumber: number;
-  orderType: 'IN' | 'GO';
   user: Types.ObjectId;
   table: Types.ObjectId;
   foodOrder: FoodOrderItem[];
+  bonusPointsAwarded: boolean;
+  bonusPointsUsed?: number;
 };
 
 const FoodOrderItemSchema = new Schema<FoodOrderItem>(
@@ -60,11 +61,13 @@ const FoodOrderSchema = new Schema<FoodOrder>(
       default: 'PENDING',
       required: true,
     },
-    orderType: {
-      type: String,
-      enum: ['IN', 'GO'],
-      default: 'IN',
-      required: true,
+    bonusPointsAwarded: {
+      type: Boolean,
+      default: false,
+    },
+    bonusPointsUsed: {
+      type: Number,
+      default: 0,
     },
   },
   {
