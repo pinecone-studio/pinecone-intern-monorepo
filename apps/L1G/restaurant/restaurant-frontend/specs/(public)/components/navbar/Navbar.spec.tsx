@@ -1,8 +1,8 @@
-import { Navbar } from '@/components/Navbar';
+import { Navbar } from '@/components/sheets/Navbar';
 import { render } from '@testing-library/react';
 
-describe('aboutus page', () => {
-  it('should render the sheetMenu Component', () => {
+describe('Navbar', () => {
+  it('should render the Navbar', () => {
     render(<Navbar />);
   });
 });
