@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Header } from '@/components/Header';
 import { useDislikeMutation, useGetOtherUsersQuery, useLikeUserMutation } from '@/generated';
-import { UserProfile } from '@/app/page';
+import type { UserProfile } from '@/app/page';
 import MatchDialogClose from '@/components/MatchDialogClose';
 import ProfileSwiper from '@/components/ProfileSwiper';
 import { useCurrentUser } from '@/app/contexts/CurrentUserContext';
@@ -80,6 +80,7 @@ const HomePage = () => {
 
   const handleLike = async (profileId: string) => {
     if (!currentUser) return;
+
     try {
       const response = await like({
         variables: {
@@ -91,15 +92,18 @@ const HomePage = () => {
       if (didMatch) {
         setIsMatched(true);
         setMatchedusersid([currentUser.id, profileId]);
-      } else {
-        goToNextProfile();
       }
+      setTimeout(() => {
+        goToNextProfile();
+      }, 300);
     } catch (err) {
       console.error('Error liking user:', err);
     }
   };
+
   const handleDislike = async (profileId: string) => {
     if (!currentUser) return;
+
     try {
       await dislike({
         variables: {
@@ -107,18 +111,21 @@ const HomePage = () => {
           dislikeReceiver: profileId,
         },
       });
-      goToNextProfile();
+      setTimeout(() => {
+        goToNextProfile();
+      }, 300);
     } catch (err) {
       console.error('Error disliking user:', err);
     }
   };
+
   const goToNextProfile = () => {
     setCurrentIndex((prev) => prev + 1);
   };
   const closeMatchDialog = () => {
     setIsMatched(false);
-    goToNextProfile();
   };
+
   if (profilesLoading || userLoading) {
     return (
       <div className="flex justify-center items-center h-screen">

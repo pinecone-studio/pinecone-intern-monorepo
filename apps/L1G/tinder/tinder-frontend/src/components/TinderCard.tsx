@@ -1,8 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import TinderCardLib from 'react-tinder-card';
-import { UserProfile } from '@/app/page';
+import { useEffect, useState } from 'react';
+import type { UserProfile } from '@/app/page';
 import { TinderCardContent } from './TinderCardContent';
 
 interface TinderCardProps {
@@ -16,6 +15,11 @@ const TinderCard = ({ profile, onLike, onDislike }: TinderCardProps) => {
   const [imageError, setImageError] = useState(false);
 
   const images = Array.isArray(profile?.images) && profile.images.length > 0 ? profile.images : ['/profile.jpg'];
+
+  useEffect(() => {
+    setCurrentImageIndex(0);
+    setImageError(false);
+  }, [profile.id]);
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
@@ -33,20 +37,7 @@ const TinderCard = ({ profile, onLike, onDislike }: TinderCardProps) => {
 
   return (
     <div data-testid="tinder-card-wrapper" className="absolute w-screen h-full flex justify-center items-center">
-      <TinderCardLib
-        data-testid="tinder-card"
-        className="absolute w-full h-full flex justify-center items-center"
-        preventSwipe={['up', 'down']}
-        swipeRequirementType="position"
-        swipeThreshold={100}
-        onSwipe={(dir) => {
-          if (dir === 'right') {
-            onLike(profile.id);
-          } else if (dir === 'left') {
-            onDislike(profile.id);
-          }
-        }}
-      >
+      <div className="relative w-[90%] max-w-md h-[70%]">
         <TinderCardContent
           profile={profile}
           images={images}
@@ -57,9 +48,8 @@ const TinderCard = ({ profile, onLike, onDislike }: TinderCardProps) => {
           prevImage={prevImage}
           handleLike={() => onLike(profile.id)}
           handleDislike={() => onDislike(profile.id)}
-          direction={null}
         />
-      </TinderCardLib>
+      </div>
     </div>
   );
 };

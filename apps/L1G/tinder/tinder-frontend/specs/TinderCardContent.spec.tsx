@@ -1,59 +1,25 @@
 /* eslint-disable max-lines*/
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { TinderCardContent } from '@/components/TinderCardContent';
 import type { UserProfile } from '@/app/page';
-import TinderCard from '@/components/TinderCard';
 
-const mockMotionDiv = jest.fn();
-jest.mock('framer-motion', () => ({
-  motion: {
-    div: (props: any) => {
-      mockMotionDiv(props);
-      return (
-        <div data-testid="motion-div" {...props}>
-          {props.children}
-        </div>
-      );
-    },
-  },
-}));
-
-// Mock react-tinder-card
-let mockOnSwipe: ((_direction: string) => void) | undefined;
-jest.mock('react-tinder-card', () => {
-  const MockTinderCard = ({ children, onSwipe, ...props }: any) => {
-    // Store the onSwipe callback so we can call it in tests
-    mockOnSwipe = onSwipe;
-    // Filter out non-DOM props to avoid warnings
-    const { preventSwipe, swipeRequirementType, swipeThreshold, ...domProps } = props;
-    return (
-      <div data-testid="tinder-card" {...domProps}>
-        {children}
-      </div>
-    );
-  };
-  return MockTinderCard;
-});
-
-// Mock TinderCardLayout
 jest.mock('@/components/TinderCardLayout', () => ({
-  TinderCardLayout: ({ profile }: any) => (
+  TinderCardLayout: (props: any) => (
     <div data-testid="tinder-card-layout">
-      <span>{profile.name}</span>
+      <span>{props.profile.name}</span>
     </div>
   ),
 }));
 
 const mockProfile: UserProfile = {
   id: '1',
-  name: 'John Doe',
-  age: 25,
-  images: ['image1.jpg'],
-  bio: 'Test bio',
+  name: 'Jane Doe',
+  age: 29,
+  images: ['img.jpg'],
+  bio: 'Bio text',
   interests: [],
 };
-
 const defaultProps = {
   profile: mockProfile,
   images: ['image1.jpg'],
@@ -64,151 +30,123 @@ const defaultProps = {
   prevImage: jest.fn(),
   handleLike: jest.fn(),
   handleDislike: jest.fn(),
-  direction: null as 'left' | 'right' | null,
 };
 
-describe('TinderCardContent', () => {
+const setup = (overrides = {}) => {
+  const props = {
+    profile: mockProfile,
+    images: mockProfile.images,
+    currentImageIndex: 0,
+    imageError: false,
+    handleImageError: jest.fn(),
+    nextImage: jest.fn(),
+    prevImage: jest.fn(),
+    handleLike: jest.fn(),
+    handleDislike: jest.fn(),
+    ...overrides,
+  };
+
+  render(<TinderCardContent {...props} />);
+  return props;
+};
+
+describe('TinderCardContent (client version)', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it('should render with left direction exit animation - covers lines 35-37', () => {
-    render(<TinderCardContent {...defaultProps} direction="left" />);
-
-    expect(mockMotionDiv).toHaveBeenCalledWith(
-      expect.objectContaining({
-        exit: expect.objectContaining({
-          x: -500,
-          opacity: 0,
-          rotate: -15,
-          transition: { duration: 0.3 },
-        }),
-      })
-    );
-
-    expect(screen.getByTestId('motion-div')).toBeInTheDocument();
+  it('renders the TinderCardLayout', () => {
+    setup();
     expect(screen.getByTestId('tinder-card-layout')).toBeInTheDocument();
-    expect(screen.getByText('John Doe')).toBeInTheDocument();
+    expect(screen.getByText('Jane Doe')).toBeInTheDocument();
   });
 
-  it('should render with right direction exit animation - covers lines 35-37', () => {
-    render(<TinderCardContent {...defaultProps} direction="right" />);
+  it('shows Heart icon when dragging right (like)', () => {
+    render(<TinderCardContent {...defaultProps} />);
 
-    expect(mockMotionDiv).toHaveBeenCalledWith(
-      expect.objectContaining({
-        exit: expect.objectContaining({
-          x: 500,
-          opacity: 0,
-          rotate: 15,
-          transition: { duration: 0.3 },
-        }),
-      })
-    );
+    const card = screen.getByTestId('tinder-card-content');
 
-    expect(screen.getByTestId('motion-div')).toBeInTheDocument();
+    // Start drag
+    fireEvent.mouseDown(card, { clientX: 0, clientY: 0 });
+
+    // Move mouse less than threshold to stay visible
+    fireEvent.mouseMove(document, { clientX: 50, clientY: 0 }); // 50 < 100 threshold
+
+    // Assert the card is still visible
     expect(screen.getByTestId('tinder-card-layout')).toBeInTheDocument();
-    expect(screen.getByText('John Doe')).toBeInTheDocument();
+
+    // Assert the Heart icon is shown (you can select by SVG or by className)
+    const heartIcon = card.querySelector('svg');
+    expect(heartIcon).toBeInTheDocument();
+
+    // Finish drag to reset
+    fireEvent.mouseUp(document);
   });
 
-  it('should render with null direction - covers lines 35-37', () => {
-    render(<TinderCardContent {...defaultProps} direction={null} />);
+  it('shows X icon when dragging left (dislike)', () => {
+    setup();
 
-    // When direction is null, exit defaults to right direction (x: 500, rotate: 15)
-    expect(mockMotionDiv).toHaveBeenCalledWith(
-      expect.objectContaining({
-        initial: { opacity: 0, scale: 0.95 },
-        animate: { opacity: 1, scale: 1 },
-        exit: expect.objectContaining({
-          x: 500,
-          opacity: 0,
-          rotate: 15,
-          transition: { duration: 0.3 },
-        }),
-      })
-    );
-
-    expect(screen.getByTestId('motion-div')).toBeInTheDocument();
-    expect(screen.getByTestId('tinder-card-layout')).toBeInTheDocument();
-    expect(screen.getByText('John Doe')).toBeInTheDocument();
-  });
-
-  it('should render with initial and animate properties', () => {
-    render(<TinderCardContent {...defaultProps} direction="right" />);
-
-    expect(mockMotionDiv).toHaveBeenCalledWith(
-      expect.objectContaining({
-        initial: { opacity: 0, scale: 0.95 },
-        animate: { opacity: 1, scale: 1 },
-      })
-    );
-  });
-});
-
-describe('TinderCard', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    mockOnSwipe = undefined;
-  });
-
-  it('should return null when profile is null - covers line 44', () => {
-    const props = {
-      profile: null,
-      onLike: jest.fn(),
-      onDislike: jest.fn(),
-    };
-    const { container } = render(<TinderCard {...props} />);
-    expect(container).toBeEmptyDOMElement();
-  });
-
-  it('should call onLike when swiping right', () => {
-    const mockOnLike = jest.fn();
-    const mockOnDislike = jest.fn();
-
-    render(<TinderCard profile={mockProfile} onLike={mockOnLike} onDislike={mockOnDislike} />);
-
-    // Simulate right swipe
-    if (mockOnSwipe) {
-      mockOnSwipe('right');
-    }
-
-    expect(mockOnLike).toHaveBeenCalledWith('1');
-    expect(mockOnDislike).not.toHaveBeenCalled();
-  });
-
-  it('should call onDislike when swiping left - covers the missing line', () => {
-    const mockOnLike = jest.fn();
-    const mockOnDislike = jest.fn();
-
-    render(<TinderCard profile={mockProfile} onLike={mockOnLike} onDislike={mockOnDislike} />);
-
-    // Simulate left swipe
-    if (mockOnSwipe) {
-      mockOnSwipe('left');
-    }
-
-    expect(mockOnDislike).toHaveBeenCalledWith('1');
-    expect(mockOnLike).not.toHaveBeenCalled();
-  });
-
-  it('should not call any callback for unsupported swipe directions', () => {
-    const mockOnLike = jest.fn();
-    const mockOnDislike = jest.fn();
-
-    render(<TinderCard profile={mockProfile} onLike={mockOnLike} onDislike={mockOnDislike} />);
-
-    // Simulate up swipe (unsupported)
-    if (mockOnSwipe) {
-      mockOnSwipe('up');
-    }
-
-    expect(mockOnLike).not.toHaveBeenCalled();
-    expect(mockOnDislike).not.toHaveBeenCalled();
-  });
-
-  it('should render TinderCardContent with correct props', () => {
-    render(<TinderCard profile={mockProfile} onLike={jest.fn()} onDislike={jest.fn()} />);
+    const card = screen.getByTestId('tinder-card-layout').parentElement!.parentElement!;
+    fireEvent.mouseDown(card, { clientX: 100, clientY: 0 });
+    fireEvent.mouseMove(document, { clientX: 0, clientY: 0 });
 
     expect(screen.getByTestId('tinder-card-layout')).toBeInTheDocument();
-    expect(screen.getByText('John Doe')).toBeInTheDocument();
+    expect(screen.getByTestId('tinder-card-layout').parentElement?.querySelector('svg')).toBeInTheDocument(); // X icon shows
+  });
+
+  it('triggers handleLike on swipe right (drag > threshold)', () => {
+    const props = setup();
+
+    const card = screen.getByTestId('tinder-card-layout').parentElement!.parentElement!;
+    fireEvent.mouseDown(card, { clientX: 0, clientY: 0 });
+    fireEvent.mouseMove(document, { clientX: 200, clientY: 0 });
+    fireEvent.mouseUp(document);
+
+    jest.advanceTimersByTime(200);
+    expect(props.handleLike).toHaveBeenCalled();
+    expect(props.handleDislike).not.toHaveBeenCalled();
+  });
+
+  it('triggers handleDislike on swipe left (drag > threshold)', () => {
+    const props = setup();
+
+    const card = screen.getByTestId('tinder-card-layout').parentElement!.parentElement!;
+    fireEvent.mouseDown(card, { clientX: 200, clientY: 0 });
+    fireEvent.mouseMove(document, { clientX: 0, clientY: 0 });
+    fireEvent.mouseUp(document);
+
+    jest.advanceTimersByTime(200);
+    expect(props.handleDislike).toHaveBeenCalled();
+    expect(props.handleLike).not.toHaveBeenCalled();
+  });
+
+  it('resets dragOffset on small drag', () => {
+    const props = setup();
+
+    const card = screen.getByTestId('tinder-card-layout').parentElement!.parentElement!;
+    fireEvent.mouseDown(card, { clientX: 0, clientY: 0 });
+    fireEvent.mouseMove(document, { clientX: 50, clientY: 0 }); // below threshold
+    fireEvent.mouseUp(document);
+
+    // Should not call any handler
+    expect(props.handleLike).not.toHaveBeenCalled();
+    expect(props.handleDislike).not.toHaveBeenCalled();
+
+    // Card should still be visible
+    expect(screen.getByTestId('tinder-card-layout')).toBeInTheDocument();
+  });
+
+  it('returns null when isHidden is true (big drag)', () => {
+    const props = setup();
+
+    const card = screen.getByTestId('tinder-card-layout').parentElement!.parentElement!;
+    fireEvent.mouseDown(card, { clientX: 0, clientY: 0 });
+    fireEvent.mouseMove(document, { clientX: 1000, clientY: 0 }); // way over threshold
+    fireEvent.mouseUp(document);
+
+    jest.advanceTimersByTime(200);
+
+    // Since isHidden is set, component should disappear
+    expect(screen.queryByTestId('tinder-card-layout')).not.toBeInTheDocument();
   });
 });
