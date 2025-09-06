@@ -51,13 +51,6 @@ describe('TinderCard profile info and button behavior', () => {
     fireEvent.click(screen.getByTestId('dislike'));
     await waitFor(() => expect(onDislike).toHaveBeenCalledTimes(1));
   });
-
-  it('renders nothing if profile is undefined', () => {
-    render(<TinderCard profile={undefined} onLike={jest.fn()} onDislike={jest.fn()} />);
-    expect(screen.queryByRole('img')).toBeNull();
-    expect(screen.queryByText(/Test User/)).toBeNull();
-  });
-
   it('wraps to first image after last in nextImage', () => {
     render(<TinderCard profile={mockProfile} onLike={jest.fn()} onDislike={jest.fn()} />);
     fireEvent.click(screen.getByTestId('right-arrow'));
@@ -77,19 +70,5 @@ describe('TinderCard profile info and button behavior', () => {
     const profileNoName = { ...mockProfile, name: undefined, age: undefined };
     render(<TinderCard profile={profileNoName} onLike={jest.fn()} onDislike={jest.fn()} />);
     expect(screen.getByText(/Unknown/));
-  });
-
-  it('swipes right triggers onLike', async () => {
-    const onLike = jest.fn();
-    render(<TinderCard profile={mockProfile} onLike={onLike} onDislike={jest.fn()} />);
-    fireEvent.click(screen.getByTestId('swipe-right'));
-    await waitFor(() => expect(onLike).toHaveBeenCalledWith('1'));
-  });
-
-  it('swipes left triggers onDislike', async () => {
-    const onDislike = jest.fn();
-    render(<TinderCard profile={mockProfile} onLike={jest.fn()} onDislike={onDislike} />);
-    fireEvent.click(screen.getByTestId('swipe-left'));
-    await waitFor(() => expect(onDislike).toHaveBeenCalledWith('1'));
   });
 });

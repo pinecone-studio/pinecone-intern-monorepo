@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, X, Check, Heart } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, Heart } from 'lucide-react';
 import type { UserProfile } from '@/app/page';
 import { Interest } from './Interest';
 

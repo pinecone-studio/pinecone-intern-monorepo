@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { render, screen } from '@testing-library/react';
 import { CardWithImageAndInfo, LikeDislikeButtons } from '@/components/TinderCardParts';
 import '@testing-library/jest-dom';

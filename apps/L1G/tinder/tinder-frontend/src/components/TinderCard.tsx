@@ -33,8 +33,6 @@ const TinderCard = ({ profile, onLike, onDislike }: TinderCardProps) => {
     setImageError(true);
   };
 
-  if (!profile) return null;
-
   return (
     <div data-testid="tinder-card-wrapper" className="absolute w-screen h-full flex justify-center items-center">
       <div className="relative w-[90%] max-w-md h-[70%]">

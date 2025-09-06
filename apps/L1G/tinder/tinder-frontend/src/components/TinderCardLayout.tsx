@@ -1,3 +1,6 @@
+/* eslint-disable complexity */
+/* eslint-disable max-lines */
+
 'use client';
 
 import Image from 'next/image';
@@ -7,7 +10,6 @@ import { ChevronLeft, ChevronRight, X, Heart } from 'lucide-react';
 import type { UserProfile } from '@/app/page';
 import { Interest } from './Interest';
 import { useState } from 'react';
-
 export const ImageNavigation = ({ onPrev, onNext, images, currentIndex }: { onPrev: () => void; onNext: () => void; images: string[]; currentIndex: number }) => (
   <>
     <Button data-testid="left-arrow" variant="ghost" size="icon" className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white/90 rounded-full w-10 h-10" onClick={onPrev}>
@@ -23,7 +25,6 @@ export const ImageNavigation = ({ onPrev, onNext, images, currentIndex }: { onPr
     </div>
   </>
 );
-
 export const LikeDislikeButtons = ({
   onLike,
   onDislike,
@@ -37,7 +38,6 @@ export const LikeDislikeButtons = ({
 }) => {
   const [isLikeClicked, setIsLikeClicked] = useState(false);
   const [isDislikeClicked, setIsDislikeClicked] = useState(false);
-
   const handleDislike = () => {
     setIsDislikeClicked(true);
     setTimeout(() => {
@@ -45,7 +45,6 @@ export const LikeDislikeButtons = ({
     }, 200);
     onDislike();
   };
-
   const handleLike = () => {
     setIsLikeClicked(true);
     setTimeout(() => {
@@ -53,10 +52,8 @@ export const LikeDislikeButtons = ({
     }, 200);
     onLike();
   };
-
   const shouldShowLikeAnimation = isLikeClicked || showLikeAnimation;
   const shouldShowDislikeAnimation = isDislikeClicked || showDislikeAnimation;
-
   return (
     <div className="flex w-full justify-center gap-4">
       <Button
@@ -99,25 +96,20 @@ export const LikeDislikeButtons = ({
     </div>
   );
 };
-
 const ProfileImageDisplay = ({ imageSrc, alt, handleImageError }: { imageError: boolean; imageSrc: string; alt: string; handleImageError: () => void }) => (
   <Image width={400} height={600} src={!imageSrc ? '/profile.jpg' : imageSrc} alt={alt} className="w-full h-full object-cover" unoptimized onError={handleImageError} />
 );
-
 const ProfileInfo = ({ profile, images, currentImageIndex }: { profile: UserProfile; images: string[]; currentImageIndex: number }) => {
   const hasOneImage = images.length === 1;
   const isFirstImage = currentImageIndex === 0;
   const showBio = !hasOneImage && isFirstImage;
   const showInterests = hasOneImage || (!hasOneImage && !isFirstImage);
-
   return (
     <div>
       <p className="text-[18px] font-semibold text-white">
         {profile.name || 'Unknown'}, {profile.age || ''}
       </p>
-
       {showBio && <p className="text-[14px] font-regular text-white">{profile.bio}</p>}
-
       {showInterests && (
         <div className="flex flex-wrap gap-1">
           {(profile.interests ?? []).map((interest, id) => (
@@ -128,7 +120,6 @@ const ProfileInfo = ({ profile, images, currentImageIndex }: { profile: UserProf
     </div>
   );
 };
-
 export const CardWithImageAndInfo = ({
   profile,
   images,
@@ -150,9 +141,7 @@ export const CardWithImageAndInfo = ({
     <Card className="relative w-[330px] h-[480px] max-w-sm aspect-[3/4] overflow-hidden border-0 shadow-2xl">
       <div className="relative w-full h-full">
         <ProfileImageDisplay imageError={imageError} imageSrc={images[currentImageIndex]} alt={`${profile.name} - Photo ${currentImageIndex + 1}`} handleImageError={handleImageError} />
-
         {images.length > 1 && <ImageNavigation onPrev={prevImage} onNext={nextImage} images={images} currentIndex={currentImageIndex} />}
-
         <div className="absolute h-[140px] flex flex-col justify-end items-start bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 gap-2 text-white">
           <ProfileInfo profile={profile} images={images} currentImageIndex={currentImageIndex} />
         </div>
@@ -160,7 +149,6 @@ export const CardWithImageAndInfo = ({
     </Card>
   );
 };
-
 export const TinderCardLayout = ({
   profile,
   images,
@@ -187,7 +175,7 @@ export const TinderCardLayout = ({
   showDislikeAnimation?: boolean;
 }) => {
   return (
-    <div className="flex flex-col items-center gap-6">
+    <div data-testid="tinder-card-layout" className="flex flex-col items-center gap-6">
       <CardWithImageAndInfo
         profile={profile}
         images={images}

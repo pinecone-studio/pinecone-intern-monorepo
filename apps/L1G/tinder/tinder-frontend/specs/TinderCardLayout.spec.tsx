@@ -80,13 +80,31 @@ describe('TinderCardLayout Component', () => {
   it('resets like/dislike animation states after timeout', () => {
     jest.useFakeTimers();
 
-    const { rerender } = render(<LikeDislikeButtons onLike={() => {}} onDislike={() => {}} />);
+    const { rerender } = render(
+      <LikeDislikeButtons
+        onLike={() => {
+          //intenionally empty
+        }}
+        onDislike={() => {
+          //intenionally empty
+        }}
+      />
+    );
 
     fireEvent.click(screen.getByTestId('like'));
     fireEvent.click(screen.getByTestId('dislike'));
 
     jest.runAllTimers();
-    rerender(<LikeDislikeButtons onLike={() => {}} onDislike={() => {}} />);
+    rerender(
+      <LikeDislikeButtons
+        onLike={() => {
+          //intenionally empty
+        }}
+        onDislike={() => {
+          //intenionally empty
+        }}
+      />
+    );
     jest.useRealTimers();
   });
 

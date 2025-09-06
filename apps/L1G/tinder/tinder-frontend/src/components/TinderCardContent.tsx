@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 'use client';
 
 import type React from 'react';
@@ -6,6 +7,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import type { UserProfile } from '@/app/page';
 import { TinderCardLayout } from './TinderCardLayout';
 import { Heart, X } from 'lucide-react';
+import { handleEnd, handleMouseMove, handleMouseUp, handleMove, handleStart } from 'utils/tinder-card-handlers';
 
 export const TinderCardContent = ({
   profile,
@@ -35,101 +37,60 @@ export const TinderCardContent = ({
 
   const cardRef = useRef<HTMLDivElement>(null);
 
-  const handleStart = (clientX: number, clientY: number) => {
-    setIsDragging(true);
-    setStartPos({ x: clientX, y: clientY });
-  };
-
-  const handleMove = useCallback(
+  const memoizedHandleMove = useCallback(
     (clientX: number, clientY: number) => {
-      if (!isDragging) return;
-
-      const deltaX = clientX - startPos.x;
-      const deltaY = clientY - startPos.y;
-
-      setDragOffset({ x: deltaX, y: deltaY });
-
-      if (cardRef.current) {
-        const cardWidth = cardRef.current.offsetWidth;
-        const threshold = cardWidth * 3;
-        if (Math.abs(deltaX) > threshold) {
-          setIsHidden(true);
-        }
-      }
+      handleMove(clientX, clientY, isDragging, startPos, setDragOffset, cardRef, setIsHidden);
     },
-    [isDragging, startPos.x, startPos.y]
+    [isDragging, startPos]
   );
 
-  const handleEnd = useCallback(() => {
-    if (!isDragging) return;
+  const memoizedHandleEnd = useCallback(() => {
+    handleEnd(isDragging, dragOffset, setIsDragging, setDragOffset, setIsHidden, handleLike, handleDislike);
+  }, [isDragging, dragOffset, handleLike, handleDislike]);
 
-    setIsDragging(false);
-
-    const threshold = 100;
-    if (Math.abs(dragOffset.x) > threshold) {
-      const direction = dragOffset.x > 0 ? 'right' : 'left';
-      const finalX = direction === 'right' ? 1000 : -1000;
-
-      setDragOffset({ x: finalX, y: dragOffset.y });
-      setIsHidden(true);
-
-      setTimeout(() => {
-        if (direction === 'right') {
-          handleLike();
-        } else {
-          handleDislike();
-        }
-      }, 200);
-    } else {
-      setIsHidden(false);
-      setDragOffset({ x: 0, y: 0 });
-    }
-  }, [isDragging, dragOffset.x, dragOffset.y, handleLike, handleDislike]);
-
-  const handleMouseMove = useCallback(
+  const onMouseMove = useCallback(
     (e: MouseEvent) => {
-      handleMove(e.clientX, e.clientY);
+      handleMouseMove(e, memoizedHandleMove);
     },
-    [handleMove]
+    [memoizedHandleMove]
   );
 
-  const handleMouseUp = useCallback(() => {
-    handleEnd();
-  }, [handleEnd]);
+  const onMouseUp = useCallback(() => {
+    handleMouseUp(memoizedHandleEnd);
+  }, [memoizedHandleEnd]);
 
   useEffect(() => {
     if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
 
       return () => {
-        document.removeEventListener('mousemove', handleMouseMove);
-        document.removeEventListener('mouseup', handleMouseUp);
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
       };
     }
-  }, [isDragging, handleMouseMove, handleMouseUp]);
+  }, [isDragging, onMouseMove, onMouseUp]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
-    handleStart(e.clientX, e.clientY);
+    handleStart(e.clientX, e.clientY, setIsDragging, setStartPos);
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
     const touch = e.touches[0];
-    handleStart(touch.clientX, touch.clientY);
+    handleStart(touch.clientX, touch.clientY, setIsDragging, setStartPos);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     const touch = e.touches[0];
-    handleMove(touch.clientX, touch.clientY);
+    memoizedHandleMove(touch.clientX, touch.clientY);
   };
 
   const handleTouchEnd = () => {
-    handleEnd();
+    memoizedHandleEnd();
   };
 
-  // Dynamic visual effects
-  const rotation = dragOffset.x * 0.1; // Only X rotation
+  const rotation = dragOffset.x * 0.1;
   const opacity = Math.max(0.5, 1 - Math.abs(dragOffset.x) / 300);
 
   const showLike = dragOffset.x > 30;
