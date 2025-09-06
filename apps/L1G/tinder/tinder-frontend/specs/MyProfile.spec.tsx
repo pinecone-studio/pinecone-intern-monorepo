@@ -5,6 +5,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { GetMeDocument } from '@/generated';
 import { MenuContent, MyProfile, MyProfileHeader, SidebarMenu } from '@/components/MyProfile';
 import '@testing-library/jest-dom';
+import { initializeApollo } from 'utils/apollo-client';
 
 // Mock the child components
 jest.mock('@/components/MyProfileForm', () => ({
@@ -16,6 +17,9 @@ jest.mock('@/components/MyImages', () => ({
 jest.mock('@/components/Loading', () => ({
   __esModule: true,
   default: () => <div>Loading...</div>,
+}));
+jest.mock('../utils/apollo-client', () => ({
+  initializeApollo: jest.fn(),
 }));
 
 // Mock Next.js router
@@ -132,12 +136,20 @@ describe('MyProfile Component', () => {
 });
 
 describe('SidebarMenu Component', () => {
+  const mockClearStore = jest.fn();
+
   beforeEach(() => {
     mockPush.mockClear();
     mockRemoveItem.mockClear();
+    mockClearStore.mockClear();
+
+    // Make initializeApollo return an object with clearStore
+    (initializeApollo as jest.Mock).mockReturnValue({
+      clearStore: mockClearStore,
+    });
   });
 
-  it('handles logout button click - removes token and redirects', async () => {
+  it('handles logout button click - removes token, clears cache, and redirects', async () => {
     const mockSetMenu = jest.fn();
     const mockSetIsOpen = jest.fn();
 
@@ -148,59 +160,41 @@ describe('SidebarMenu Component', () => {
 
     await user.click(logoutButton);
 
+    // New assertions
+    expect(initializeApollo).toHaveBeenCalled();
+    expect(mockClearStore).toHaveBeenCalled();
+
+    // Existing assertions
     expect(mockRemoveItem).toHaveBeenCalledWith('token');
     expect(mockPush).toHaveBeenCalledWith('/');
   });
 
-  it('handles localStorage error gracefully during logout', async () => {
-    const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
-    mockRemoveItem.mockImplementation(() => {
-      throw new Error('Storage error');
-    });
-
+  it('handles clearStore failure gracefully', async () => {
     const mockSetMenu = jest.fn();
     const mockSetIsOpen = jest.fn();
+
+    // Simulate clearStore throwing an error
+    mockClearStore.mockRejectedValueOnce(new Error('Apollo cache error'));
 
     render(<SidebarMenu menu="profile" setMenu={mockSetMenu} isOpen={false} setIsOpen={mockSetIsOpen} />);
 
     const user = userEvent.setup();
     const logoutButton = screen.getByRole('button', { name: /Log out/i });
 
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+      //intenionally empty
+    });
+
     await user.click(logoutButton);
 
-    expect(consoleSpy).toHaveBeenCalledWith(expect.any(Error));
-    // When localStorage.removeItem throws an error, router.push is never called
-    // because it's in the same try block and execution stops
+    expect(initializeApollo).toHaveBeenCalled();
+    expect(mockClearStore).toHaveBeenCalled();
+    expect(mockRemoveItem).toHaveBeenCalledWith('token');
     expect(mockPush).not.toHaveBeenCalled();
 
     consoleSpy.mockRestore();
   });
-
-  it('applies correct styling to logout button when menu is not logout', () => {
-    const mockSetMenu = jest.fn();
-    const mockSetIsOpen = jest.fn();
-
-    render(<SidebarMenu menu="profile" setMenu={mockSetMenu} isOpen={false} setIsOpen={mockSetIsOpen} />);
-
-    const logoutButton = screen.getByRole('button', { name: /Log out/i });
-    expect(logoutButton).toHaveClass('bg-transparent');
-    expect(logoutButton).toHaveClass('hover:bg-[#F4F4F5]');
-    expect(logoutButton).toHaveClass('text-[#E11D48E5]');
-  });
-
-  it('applies correct styling to logout button when menu is logout', () => {
-    const mockSetMenu = jest.fn();
-    const mockSetIsOpen = jest.fn();
-
-    render(<SidebarMenu menu="logout" setMenu={mockSetMenu} isOpen={false} setIsOpen={mockSetIsOpen} />);
-
-    const logoutButton = screen.getByRole('button', { name: /Log out/i });
-    expect(logoutButton).toHaveClass('bg-[#F4F4F5]');
-    expect(logoutButton).toHaveClass('hover:bg-[#E4E4E7]');
-    expect(logoutButton).toHaveClass('text-[#E11D48E5]');
-  });
 });
-
 describe('MenuContent Component', () => {
   it('renders MyProfileForm when profile menu is selected', () => {
     render(
@@ -376,5 +370,24 @@ describe('Mobile drawer behavior', () => {
 
     const drawer = screen.getByTestId('mobile-drawer');
     expect(drawer.className).toContain('-translate-x-full');
+  });
+  describe('Logout button styling based on menu state', () => {
+    it('has transparent background when menu is not logout', () => {
+      render(<SidebarMenu menu="profile" setMenu={jest.fn()} isOpen={false} setIsOpen={jest.fn()} />);
+      const logoutButton = screen.getByRole('button', { name: /Log out/i });
+
+      expect(logoutButton).toHaveClass('bg-transparent');
+      expect(logoutButton).toHaveClass('hover:bg-[#F4F4F5]');
+      expect(logoutButton).toHaveClass('text-[#E11D48E5]');
+    });
+
+    it('has highlighted background when menu is logout', () => {
+      render(<SidebarMenu menu="logout" setMenu={jest.fn()} isOpen={false} setIsOpen={jest.fn()} />);
+      const logoutButton = screen.getByRole('button', { name: /Log out/i });
+
+      expect(logoutButton).toHaveClass('bg-[#F4F4F5]');
+      expect(logoutButton).toHaveClass('hover:bg-[#E4E4E7]');
+      expect(logoutButton).toHaveClass('text-[#E11D48E5]');
+    });
   });
 });
