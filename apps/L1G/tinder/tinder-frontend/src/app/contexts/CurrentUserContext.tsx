@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { useGetMeLazyQuery } from '@/generated';
 import socket, { connectSocket } from 'utils/socket';
 
@@ -57,72 +57,142 @@ type CurrentUserContextType = {
   currentUser: CurrentUser | null;
   loading: boolean;
   error: Error | null;
+  refetch: () => void;
 };
 
 const CurrentUserContext = createContext<CurrentUserContextType>({
   currentUser: null,
   loading: true,
   error: null,
+  refetch: () => {},
 });
 
 export const useCurrentUser = () => useContext(CurrentUserContext);
 
 export const CurrentUserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [getMe, { data, loading, error }] = useGetMeLazyQuery();
+  const [getMe, { data, loading, error, refetch }] = useGetMeLazyQuery({
+    fetchPolicy: 'cache-and-network',
+    errorPolicy: 'all',
+  });
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+
+  const handleRefetch = useCallback(() => {
+    if (refetch) {
+      refetch();
+    }
+  }, [refetch]);
 
   useEffect(() => {
     getMe();
   }, [getMe]);
+
+  // Socket setup effect
   useEffect(() => {
     let isMounted = true;
+    let eventCleanup: (() => void) | null = null;
 
-    const setupSocket = async () => {
+    const setupSocket = async (): Promise<void> => {
       try {
-        await connectSocket(); // ensures the socket is connected
+        await connectSocket();
 
-        // Listener: when a new match is created
-        const handleMatchCreated = (matchData: any) => {
-          console.log('[SOCKET] match_created received:', matchData);
-
-          if (!isMounted) return;
-          setCurrentUser((prev) => (prev ? { ...prev, matchIds: [...(prev.matchIds || []), matchData] } : prev));
-        };
-
-        // Listener: when a match is removed (unmatch)
-        const handleMatchRemoved = ({ matchId }: { matchId: string }) => {
-          console.log('[SOCKET] match_removed received:', matchId);
+        const handleMatchCreated = (rawMatchData: any) => {
+          console.log('[SOCKET] match_created received:', rawMatchData);
 
           if (!isMounted) return;
-          setCurrentUser((prev) =>
-            prev
-              ? {
-                  ...prev,
-                  matchIds: prev.matchIds?.filter((m) => m.id !== matchId),
-                }
-              : prev
-          );
+
+          const matchId = rawMatchData.matchId || rawMatchData.id;
+          const matchedUser = rawMatchData.matchedUser;
+
+          if (!matchId || !matchedUser) {
+            console.warn('Invalid match data received:', rawMatchData);
+            return;
+          }
+
+          const transformedMatch = {
+            id: matchId,
+            matchedAt: rawMatchData.timestamp || new Date().toISOString(),
+            unmatched: false,
+            startedConversation: false,
+            matchedUser: {
+              id: matchedUser.id,
+              name: matchedUser.name || null,
+              images: matchedUser.images || null,
+              dateOfBirth: matchedUser.dateOfBirth || null,
+              profession: matchedUser.profession || null,
+            },
+          };
+
+          setCurrentUser((prev) => {
+            if (!prev) return prev;
+
+            const existingMatchIndex = prev.matchIds?.findIndex((m) => m.id === matchId);
+
+            if (existingMatchIndex !== undefined && existingMatchIndex !== -1) {
+              console.log('Match already exists, skipping duplicate');
+              return prev;
+            }
+
+            return {
+              ...prev,
+              matchIds: [...(prev.matchIds || []), transformedMatch],
+            };
+          });
+
+          setTimeout(() => {
+            handleRefetch();
+          }, 1000);
         };
 
-        // Listener: profile updates (optional)
+        const handleMatchRemoved = (data: any) => {
+          console.log('[SOCKET] match_removed received:', data);
+
+          if (!isMounted) return;
+
+          const matchId = data.matchId || data.id;
+          if (!matchId) return;
+
+          setCurrentUser((prev) => {
+            if (!prev) return prev;
+            return {
+              ...prev,
+              matchIds: prev.matchIds?.filter((m) => m.id !== matchId) || null,
+            };
+          });
+
+          setTimeout(() => {
+            handleRefetch();
+          }, 1000);
+        };
+
         const handleProfileUpdated = (updatedData: any) => {
           console.log('[SOCKET] profile_updated received:', updatedData);
 
           if (!isMounted) return;
-          setCurrentUser((prev) => (prev ? { ...prev, ...updatedData } : prev));
+          setCurrentUser((prev) => {
+            if (!prev) return prev;
+            return { ...prev, ...updatedData };
+          });
+
+          handleRefetch();
+        };
+
+        const handleUserStatusChanged = (data: any) => {
+          console.log('[SOCKET] user_status_changed received:', data);
         };
 
         socket.on('match_created', handleMatchCreated);
         socket.on('match_removed', handleMatchRemoved);
         socket.on('profile_updated', handleProfileUpdated);
+        socket.on('user_status_changed', handleUserStatusChanged);
 
-        return () => {
+        eventCleanup = () => {
           socket.off('match_created', handleMatchCreated);
           socket.off('match_removed', handleMatchRemoved);
           socket.off('profile_updated', handleProfileUpdated);
+          socket.off('user_status_changed', handleUserStatusChanged);
         };
       } catch (err) {
-        console.error('❌ Error connecting socket in CurrentUserProvider:', err);
+        console.error('Error connecting socket in CurrentUserProvider:', err);
       }
     };
 
@@ -130,22 +200,46 @@ export const CurrentUserProvider = ({ children }: { children: React.ReactNode })
 
     return () => {
       isMounted = false;
-      socket.removeAllListeners();
+      if (eventCleanup) {
+        eventCleanup();
+      }
     };
-  }, []);
+  }, [handleRefetch]);
 
+  // Authentication effect
   useEffect(() => {
-    if (!currentUser) return;
+    if (!currentUser) {
+      return; // Explicitly return void when no cleanup needed
+    }
 
-    socket.emit('authenticate', {
-      userId: currentUser.id,
-      matchIds: currentUser.matchIds?.map((m) => m.id) || [],
-      currentPage: 'home',
-    });
+    const authenticateUser = (): void => {
+      const authData = {
+        userId: currentUser.id,
+        matchIds: currentUser.matchIds?.map((m) => m.id) || [],
+        currentPage: 'home',
+      };
 
-    console.log('🔐 Authenticated user via socket:', currentUser.id);
+      socket.emit('authenticate', authData);
+      console.log('Authenticated user via socket:', currentUser.id, authData);
+    };
+
+    if (socket.connected) {
+      authenticateUser();
+      return; // Explicitly return void
+    } else {
+      const handleConnect = (): void => {
+        authenticateUser();
+      };
+
+      socket.on('connect', handleConnect);
+
+      return (): void => {
+        socket.off('connect', handleConnect);
+      };
+    }
   }, [currentUser]);
 
+  // Data cleaning utility functions
   const cleanUserArray = (users: any[] | undefined) => {
     if (!users) return null;
     return users.filter(Boolean).map((u) => ({
@@ -176,6 +270,7 @@ export const CurrentUserProvider = ({ children }: { children: React.ReactNode })
     ...cleanPreferences(u),
     ...cleanExtras(u),
   });
+
   const cleanRelations = (u: any) => ({
     likedBy: cleanUserArray(u.likedBy),
     likedTo: cleanUserArray(u.likedTo),
@@ -189,11 +284,38 @@ export const CurrentUserProvider = ({ children }: { children: React.ReactNode })
     ...cleanRelations(u),
   });
 
+  // Data synchronization effect
   useEffect(() => {
     if (data?.getMe) {
-      setCurrentUser(cleanUserData(data.getMe));
+      const cleanedData = cleanUserData(data.getMe);
+      console.log('Updated current user from GraphQL:', cleanedData);
+      setCurrentUser(cleanedData);
     }
   }, [data]);
 
-  return <CurrentUserContext.Provider value={{ currentUser, loading, error: error as Error | null }}>{children}</CurrentUserContext.Provider>;
+  // Periodic refetch effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (document.visibilityState === 'visible') {
+        handleRefetch();
+      }
+    }, 30000);
+
+    return (): void => {
+      clearInterval(interval);
+    };
+  }, [handleRefetch]);
+
+  return (
+    <CurrentUserContext.Provider
+      value={{
+        currentUser,
+        loading,
+        error: error as Error | null,
+        refetch: handleRefetch,
+      }}
+    >
+      {children}
+    </CurrentUserContext.Provider>
+  );
 };

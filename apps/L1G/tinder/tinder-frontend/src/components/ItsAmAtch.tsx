@@ -7,6 +7,7 @@ import { imageVariantsLeft, imageVariantsRight, popupVariants } from 'utils/popu
 import { ChatUser, Message } from 'types/chat';
 import { useSendMessageMutation } from '@/generated';
 import { socket } from 'utils/socket';
+import { useCurrentUser } from '@/app/contexts/CurrentUserContext';
 
 type MatchPopupProps = {
   onClose: () => void;
@@ -22,6 +23,7 @@ const MatchPopup = ({ onClose, matchedUsers, data, setConversations, setChattedU
   const [socketError, setSocketError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
   const [sendMessageMutation] = useSendMessageMutation();
+  const { currentUser } = useCurrentUser();
 
   if (!matchedUsers || matchedUsers.length < 2) return null;
 
@@ -62,11 +64,9 @@ const MatchPopup = ({ onClose, matchedUsers, data, setConversations, setChattedU
     setSending(true);
     setSocketError(null);
 
-    const matchId = selectedUser.id;
+    const matchData = currentUser?.matchIds?.find((m) => m?.matchedUser?.id === selectedUser.id);
+    const matchId = matchData?.id;
     const senderId = data.getMe.id;
-
-    const matchData = data.getMe.matchIds?.find((m: any) => m?.id === matchId);
-    console.log(data.getMe, 'get');
 
     const receiverId = matchData?.matchedUser?.id;
 
