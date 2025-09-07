@@ -1,3 +1,6 @@
+/* eslint-disable complexity */
+/* eslint-disable max-lines */
+
 'use client';
 
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
@@ -64,7 +67,9 @@ const CurrentUserContext = createContext<CurrentUserContextType>({
   currentUser: null,
   loading: true,
   error: null,
-  refetch: () => {},
+  refetch: () => {
+    //intentionally empty
+  },
 });
 
 export const useCurrentUser = () => useContext(CurrentUserContext);

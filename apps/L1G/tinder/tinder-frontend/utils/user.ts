@@ -1,7 +1,6 @@
-import type { MatchedUser } from '@/app/(main)/home/page';
 import type { ChatUser } from 'types/chat';
 
-export const mapMatchedUserToChatUser = (user: MatchedUser): ChatUser => ({
+export const mapMatchedUserToChatUser = (user: any): ChatUser => ({
   id: user.id,
   name: user.name,
   images: user.images,

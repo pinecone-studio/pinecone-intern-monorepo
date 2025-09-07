@@ -1,153 +1,499 @@
+/* eslint-disable max-lines */
+
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import Match from '@/components/ItsAmAtch';
-import { GetUserDocument, GetUserQuery, GetUserQueryVariables } from '@/generated';
+import { SendMessageDocument, SendMessageMutation, SendMessageMutationVariables } from '@/generated';
+import { MatchedUser } from '@/app/(main)/home/page';
+import MatchPopup from '@/components/ItsAmAtch';
 
-interface User {
-  id: string;
-  name: string;
-  images: string[];
-}
+// Mock framer-motion
+jest.mock('framer-motion', () => ({
+  motion: {
+    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+    p: ({ children, ...props }: any) => <p {...props}>{children}</p>,
+    button: ({ children, ...props }: any) => <button {...props}>{children}</button>,
+  },
+}));
 
-const mockUser1: User = {
-  id: 'user1',
-  name: 'User One',
-  images: ['/path/to/image1.jpg'],
-};
+// Mock socket
+jest.mock('utils/socket', () => ({
+  socket: {
+    connected: true,
+    connect: jest.fn(),
+    emit: jest.fn(),
+  },
+}));
 
-const mockUser2: User = {
-  id: 'user2',
-  name: 'User Two',
-  images: ['/path/to/image2.jpg'],
-};
+// Create a mock function that can be changed per test
+const mockUseCurrentUser = jest.fn();
 
-const mocks: ReadonlyArray<MockedResponse<GetUserQuery>> = [
+// Mock useCurrentUser with the changeable function
+jest.mock('@/app/contexts/CurrentUserContext', () => ({
+  useCurrentUser: () => mockUseCurrentUser(),
+  CurrentUserProvider: ({ children }: any) => <div>{children}</div>,
+}));
+
+const mockMatchedUsers: MatchedUser[] = [
   {
-    request: {
-      query: GetUserDocument,
-      variables: { id: 'user1' } as GetUserQueryVariables,
-    },
-    result: {
-      data: {
-        getUser: mockUser1,
-      },
-    },
+    id: 'user1',
+    name: 'User One',
+    images: ['/path/to/image1.jpg'],
   },
   {
-    request: {
-      query: GetUserDocument,
-      variables: { id: 'user2' } as GetUserQueryVariables,
-    },
-    result: {
-      data: {
-        getUser: mockUser2,
-      },
-    },
+    id: 'user2',
+    name: 'User Two',
+    images: ['/path/to/image2.jpg'],
   },
 ];
 
-const errorMocks: ReadonlyArray<MockedResponse<GetUserQuery>> = [
-  {
-    request: {
-      query: GetUserDocument,
-      variables: { id: 'user1' } as GetUserQueryVariables,
-    },
-    error: new Error('An error occurred'),
+const mockData = {
+  getMe: {
+    id: 'current-user-id',
+    name: 'Current User',
   },
-  {
-    request: {
-      query: GetUserDocument,
-      variables: { id: 'user2' } as GetUserQueryVariables,
-    },
-    result: {
-      data: {
-        getUser: mockUser2,
+};
+
+const sendMessageMock: MockedResponse<SendMessageMutation> = {
+  request: {
+    query: SendMessageDocument,
+    variables: {
+      senderId: 'current-user-id',
+      receiverId: 'user2',
+      matchId: 'match-123',
+      content: 'Hello there!',
+    } as SendMessageMutationVariables,
+  },
+  result: {
+    data: {
+      sendMessage: {
+        id: 'message-123',
+        content: 'Hello there!',
+        senderId: 'current-user-id',
+        receiverId: 'user2',
+        matchId: 'match-123',
+        timestamp: '2023-01-01T00:00:00Z',
+        seen: false,
       },
     },
   },
-];
+};
 
-describe('Match Component', () => {
-  const onCloseMock = jest.fn<() => void, []>();
+const sendMessageErrorMock: MockedResponse<SendMessageMutation> = {
+  request: {
+    query: SendMessageDocument,
+    variables: {
+      senderId: 'current-user-id',
+      receiverId: 'user2',
+      matchId: 'match-123',
+      content: 'Hello there!',
+    } as SendMessageMutationVariables,
+  },
+  error: new Error('Failed to send message'),
+};
+
+describe('MatchPopup Component', () => {
+  const defaultProps = {
+    onClose: jest.fn(),
+    matchedUsers: mockMatchedUsers,
+    data: mockData,
+    setConversations: jest.fn(),
+    setChattedUsers: jest.fn(),
+    refetch: jest.fn(),
+  };
 
   beforeEach(() => {
-    onCloseMock.mockClear();
-  });
+    jest.clearAllMocks();
+    // Mock localStorage
+    Object.defineProperty(window, 'localStorage', {
+      value: {
+        getItem: jest.fn(),
+        setItem: jest.fn(),
+        removeItem: jest.fn(),
+      },
+      writable: true,
+    });
 
-  it('renders loading state initially', async () => {
-    render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <Match matchedusersid={['user1', 'user2']} onClose={onCloseMock} />
-      </MockedProvider>
-    );
-
-    expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
-
-    await waitFor(() => {
-      expect(screen.queryByText(/Loading.../i)).not.toBeInTheDocument();
+    // Set default mock implementation
+    mockUseCurrentUser.mockReturnValue({
+      currentUser: {
+        id: 'current-user-id',
+        name: 'Current User',
+        images: ['/current-user-image.jpg'],
+        matchIds: [
+          {
+            id: 'match-123',
+            matchedUser: {
+              id: 'user2',
+              name: 'User Two',
+            },
+          },
+        ],
+      },
     });
   });
 
-  it('renders error state when there is an error', async () => {
+  it('renders match popup with user information', () => {
     render(
-      <MockedProvider mocks={errorMocks} addTypename={false}>
-        <Match matchedusersid={['user1', 'user2']} onClose={onCloseMock} />
+      <MockedProvider mocks={[sendMessageMock]} addTypename={false}>
+        <MatchPopup {...defaultProps} />
       </MockedProvider>
     );
 
+    expect(screen.getByText("It's a Match")).toBeInTheDocument();
+    expect(screen.getByText('You matched with User Two')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Say something nice')).toBeInTheDocument();
+    expect(screen.getByTestId('Send')).toBeInTheDocument();
+  });
+
+  it('renders user profile images', () => {
+    render(
+      <MockedProvider mocks={[sendMessageMock]} addTypename={false}>
+        <MatchPopup {...defaultProps} />
+      </MockedProvider>
+    );
+
+    const images = screen.getAllByRole('img');
+    const profileImages = images.filter((img) => img.getAttribute('alt')?.includes('profile'));
+
+    expect(profileImages).toHaveLength(2);
+    expect(profileImages[0]).toHaveAttribute('src', '/path/to/image1.jpg');
+    expect(profileImages[0]).toHaveAttribute('alt', 'Your profile');
+    expect(profileImages[1]).toHaveAttribute('src', '/path/to/image2.jpg');
+    expect(profileImages[1]).toHaveAttribute('alt', "User Two's profile");
+  });
+
+  it('calls onClose when close button is clicked', () => {
+    const onCloseMock = jest.fn();
+
+    render(
+      <MockedProvider mocks={[sendMessageMock]} addTypename={false}>
+        <MatchPopup {...defaultProps} onClose={onCloseMock} />
+      </MockedProvider>
+    );
+
+    const closeButton = screen.getByLabelText('Close icon');
+    fireEvent.click(closeButton);
+
+    expect(onCloseMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('enables send button only when input has text', () => {
+    render(
+      <MockedProvider mocks={[sendMessageMock]} addTypename={false}>
+        <MatchPopup {...defaultProps} />
+      </MockedProvider>
+    );
+
+    const input = screen.getByPlaceholderText('Say something nice');
+    const sendButton = screen.getByRole('button', { name: /send/i });
+
+    // Initially disabled
+    expect(sendButton).toBeDisabled();
+
+    // Type something
+    fireEvent.change(input, { target: { value: 'Hello there!' } });
+    expect(sendButton).not.toBeDisabled();
+
+    // Clear input
+    fireEvent.change(input, { target: { value: '' } });
+    expect(sendButton).toBeDisabled();
+  });
+
+  it('sends message when send button is clicked', async () => {
+    const setConversationsMock = jest.fn();
+    const setChattedUsersMock = jest.fn();
+
+    render(
+      <MockedProvider mocks={[sendMessageMock]} addTypename={false}>
+        <MatchPopup {...defaultProps} setConversations={setConversationsMock} setChattedUsers={setChattedUsersMock} />
+      </MockedProvider>
+    );
+
+    const input = screen.getByPlaceholderText('Say something nice');
+    const sendButton = screen.getByRole('button', { name: /send/i });
+
+    // Type message
+    fireEvent.change(input, { target: { value: 'Hello there!' } });
+
+    // Click send
+    fireEvent.click(sendButton);
+
+    // Check if optimistic update was called
     await waitFor(() => {
-      expect(screen.getByText(/Error loading match/i)).toBeInTheDocument();
+      expect(setConversationsMock).toHaveBeenCalled();
+      expect(setChattedUsersMock).toHaveBeenCalled();
+    });
+
+    // Check if input is cleared after successful send
+    await waitFor(() => {
+      expect(input).toHaveValue('');
     });
   });
 
-  it('renders match content when data is loaded', async () => {
+  it('sends message when Enter key is pressed', async () => {
+    const setConversationsMock = jest.fn();
+
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <Match matchedusersid={['user1', 'user2']} onClose={onCloseMock} />
+      <MockedProvider mocks={[sendMessageMock]} addTypename={false}>
+        <MatchPopup {...defaultProps} setConversations={setConversationsMock} />
       </MockedProvider>
     );
 
-    await waitFor(() => {
-      expect(screen.getByText(/It's a Match/i)).toBeInTheDocument();
-      expect(screen.getByText(`You matched with ${mockUser2.name}`)).toBeInTheDocument();
-      expect(screen.getByPlaceholderText(/Say something nice/i)).toBeInTheDocument();
-      expect(screen.getByTestId('Send')).toBeInTheDocument();
-    });
+    const input = screen.getByPlaceholderText('Say something nice');
 
-    const images = screen.getAllByAltText(/profile/i);
-    expect(images).toHaveLength(2);
-    expect(images[0]).toHaveAttribute('src', mockUser1.images[0]);
-    expect(images[0]).toHaveAttribute('alt', 'Your profile');
-    expect(images[1]).toHaveAttribute('src', mockUser2.images[0]);
-    expect(images[1]).toHaveAttribute('alt', `${mockUser2.name}'s profile`);
-  });
+    // Type message
+    fireEvent.change(input, { target: { value: 'Hello there!' } });
 
-  it('calls onClose when close button is clicked', async () => {
-    render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <Match matchedusersid={['user1', 'user2']} onClose={onCloseMock} />
-      </MockedProvider>
-    );
+    // Press Enter
+    fireEvent.keyPress(input, { key: 'Enter', code: 'Enter', charCode: 13 });
 
     await waitFor(() => {
-      const closeButton = screen.getByRole('button', { name: /close/i });
-      fireEvent.click(closeButton);
-      expect(onCloseMock).toHaveBeenCalledTimes(1);
+      expect(setConversationsMock).toHaveBeenCalled();
     });
   });
 
-  it('does not render queries if matchedusersid is empty', async () => {
+  it('does not send message when Shift+Enter is pressed', () => {
+    const setConversationsMock = jest.fn();
+
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
-        <Match matchedusersid={[]} onClose={onCloseMock} />
+      <MockedProvider mocks={[sendMessageMock]} addTypename={false}>
+        <MatchPopup {...defaultProps} setConversations={setConversationsMock} />
       </MockedProvider>
     );
 
-    await waitFor(() => {
-      expect(screen.queryByText(/It's a Match/i)).not.toBeInTheDocument();
-      expect(screen.queryByText(/Loading.../i)).not.toBeInTheDocument();
-      expect(screen.queryByText(/Error loading match/i)).not.toBeInTheDocument();
+    const input = screen.getByPlaceholderText('Say something nice');
+
+    // Type message
+    fireEvent.change(input, { target: { value: 'Hello there!' } });
+
+    // Press Shift+Enter
+    fireEvent.keyPress(input, {
+      key: 'Enter',
+      code: 'Enter',
+      charCode: 13,
+      shiftKey: true,
     });
+
+    expect(setConversationsMock).not.toHaveBeenCalled();
+  });
+
+  it('shows error message when send fails', async () => {
+    render(
+      <MockedProvider mocks={[sendMessageErrorMock]} addTypename={false}>
+        <MatchPopup {...defaultProps} />
+      </MockedProvider>
+    );
+
+    const input = screen.getByPlaceholderText('Say something nice');
+    const sendButton = screen.getByRole('button', { name: /send/i });
+
+    // Type message and send
+    fireEvent.change(input, { target: { value: 'Hello there!' } });
+    fireEvent.click(sendButton);
+
+    // Wait for error to appear
+    await waitFor(() => {
+      expect(screen.getByText(/Failed to send message/)).toBeInTheDocument();
+    });
+  });
+
+  it('shows sending state when message is being sent', async () => {
+    render(
+      <MockedProvider mocks={[sendMessageMock]} addTypename={false}>
+        <MatchPopup {...defaultProps} />
+      </MockedProvider>
+    );
+
+    const input = screen.getByPlaceholderText('Say something nice');
+    const sendButton = screen.getByRole('button', { name: /send/i });
+
+    // Type message and send
+    fireEvent.change(input, { target: { value: 'Hello there!' } });
+    fireEvent.click(sendButton);
+
+    // Should show sending state briefly
+    expect(screen.getByText('Sending...')).toBeInTheDocument();
+    expect(sendButton).toBeDisabled();
+  });
+
+  it('does not render when matchedUsers is invalid', () => {
+    render(
+      <MockedProvider mocks={[sendMessageMock]} addTypename={false}>
+        <MatchPopup {...defaultProps} matchedUsers={[]} />
+      </MockedProvider>
+    );
+
+    expect(screen.queryByText("It's a Match")).not.toBeInTheDocument();
+  });
+
+  it('does not render when matchedUsers has less than 2 users', () => {
+    render(
+      <MockedProvider mocks={[sendMessageMock]} addTypename={false}>
+        <MatchPopup {...defaultProps} matchedUsers={[mockMatchedUsers[0]]} />
+      </MockedProvider>
+    );
+
+    expect(screen.queryByText("It's a Match")).not.toBeInTheDocument();
+  });
+
+  it('closes popup after successful message send', async () => {
+    const onCloseMock = jest.fn();
+
+    render(
+      <MockedProvider mocks={[sendMessageMock]} addTypename={false}>
+        <MatchPopup {...defaultProps} onClose={onCloseMock} />
+      </MockedProvider>
+    );
+
+    const input = screen.getByPlaceholderText('Say something nice');
+    const sendButton = screen.getByRole('button', { name: /send/i });
+
+    // Type message and send
+    fireEvent.change(input, { target: { value: 'Hello there!' } });
+    fireEvent.click(sendButton);
+
+    // Wait for popup to close (after 1 second timeout)
+    await waitFor(
+      () => {
+        expect(onCloseMock).toHaveBeenCalled();
+      },
+      { timeout: 2000 }
+    );
+  });
+
+  it('shows error when receiver ID is not found (lines 66-69)', async () => {
+    // Mock current user without matchIds to trigger receiver ID not found
+    mockUseCurrentUser.mockReturnValue({
+      currentUser: {
+        id: 'current-user-id',
+        name: 'Current User',
+        images: ['/current-user-image.jpg'],
+        matchIds: [],
+      },
+    });
+
+    render(
+      <MockedProvider mocks={[sendMessageMock]} addTypename={false}>
+        <MatchPopup {...defaultProps} />
+      </MockedProvider>
+    );
+
+    const input = screen.getByPlaceholderText('Say something nice');
+    const sendButton = screen.getByRole('button', { name: /send/i });
+
+    // Type message and send
+    fireEvent.change(input, { target: { value: 'Hello there!' } });
+    fireEvent.click(sendButton);
+
+    // Wait for error to appear
+    await waitFor(() => {
+      expect(screen.getByText(/Recipient not found. Please try again./)).toBeInTheDocument();
+    });
+  });
+  it('handles backend not returning message ID (line 173)', async () => {
+    const noMessageIdMock: MockedResponse<SendMessageMutation> = {
+      request: {
+        query: SendMessageDocument,
+        variables: {
+          senderId: 'current-user-id',
+          receiverId: 'user2',
+          matchId: 'match-123',
+          content: 'Hello there!',
+        } as SendMessageMutationVariables,
+      },
+      result: {
+        data: {
+          sendMessage: {
+            id: '', // Empty ID to trigger error
+            content: 'Hello there!',
+            senderId: 'current-user-id',
+            receiverId: 'user2',
+            matchId: 'match-123',
+            timestamp: '2023-01-01T00:00:00Z',
+            seen: false,
+          },
+        },
+      },
+    };
+
+    const setConversationsMock = jest.fn();
+
+    render(
+      <MockedProvider mocks={[noMessageIdMock]} addTypename={false}>
+        <MatchPopup {...defaultProps} setConversations={setConversationsMock} />
+      </MockedProvider>
+    );
+
+    const input = screen.getByPlaceholderText('Say something nice');
+    const sendButton = screen.getByRole('button', { name: /send/i });
+
+    // Type message and send
+    fireEvent.change(input, { target: { value: 'Hello there!' } });
+    fireEvent.click(sendButton);
+
+    // Should update conversation with failed message
+    await waitFor(() => {
+      expect(setConversationsMock).toHaveBeenCalledWith(expect.any(Function));
+    });
+
+    // Should show error
+    await waitFor(() => {
+      expect(screen.getByText(/Failed to send message: No message ID returned from backend/)).toBeInTheDocument();
+    });
+  });
+
+  it('updates failed message in conversation on error (lines 182, 122)', async () => {
+    const setConversationsMock = jest.fn();
+
+    render(
+      <MockedProvider mocks={[sendMessageErrorMock]} addTypename={false}>
+        <MatchPopup {...defaultProps} setConversations={setConversationsMock} />
+      </MockedProvider>
+    );
+
+    const input = screen.getByPlaceholderText('Say something nice');
+    const sendButton = screen.getByRole('button', { name: /send/i });
+
+    // Type message and send
+    fireEvent.change(input, { target: { value: 'Hello there!' } });
+    fireEvent.click(sendButton);
+
+    // Should call setConversations twice - once for optimistic update, once for error update
+    await waitFor(() => {
+      expect(setConversationsMock).toHaveBeenCalledTimes(2);
+    });
+
+    // Get the optimistic update call to see what temp ID was used
+    const optimisticUpdateCall = setConversationsMock.mock.calls[0][0];
+    const initialState = { user2: [] };
+    const stateAfterOptimistic = optimisticUpdateCall(initialState);
+    const tempId = stateAfterOptimistic.user2[0].id;
+
+    // Now simulate the error update call with the correct temp ID
+    const errorUpdateCall = setConversationsMock.mock.calls[1][0];
+    const mockPreviousState = {
+      user2: [
+        {
+          id: tempId, // Use the actual temp ID that was generated
+          text: 'Hello there!',
+          sender: 'me',
+          timestamp: stateAfterOptimistic.user2[0].timestamp,
+          seen: false,
+          delivered: false,
+          sending: true,
+          failed: false,
+          retrying: false,
+        },
+      ],
+    };
+
+    const updatedState = errorUpdateCall(mockPreviousState);
+
+    // Verify the message was updated correctly
+    const updatedMessage = updatedState.user2[0];
+    expect(updatedMessage.failed).toBe(true);
+    expect(updatedMessage.sending).toBe(false);
+    expect(updatedMessage.delivered).toBe(false);
   });
 });
