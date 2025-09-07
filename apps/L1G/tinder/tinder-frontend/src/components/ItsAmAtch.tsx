@@ -1,69 +1,114 @@
+/* eslint-disable react/function-component-definition */
 /* eslint-disable complexity */
+/* eslint-disable max-lines */
+/* eslint-disable no-secrets/no-secrets */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/rules-of-hooks */
+
+import { useState, useCallback } from 'react';
 import { X, Send } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { useGetUserQuery } from '@/generated';
 import { motion } from 'framer-motion';
-import type { Variants } from 'framer-motion';
-
-const popupVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.7 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      duration: 0.5,
-      type: 'spring' as const,
-      stiffness: 300,
-      damping: 20,
-    },
-  },
-  exit: { opacity: 0, scale: 0.8, transition: { duration: 0.2 } },
-};
-
-const imageVariantsLeft: Variants = {
-  hidden: { x: -100, opacity: 0 },
-  visible: {
-    x: 0,
-    opacity: 1,
-    transition: {
-      type: 'spring' as const,
-      stiffness: 120,
-      delay: 0.3,
-    },
-  },
-};
-
-const imageVariantsRight: Variants = {
-  hidden: { x: 100, opacity: 0 },
-  visible: {
-    x: 0,
-    opacity: 1,
-    transition: {
-      type: 'spring' as const,
-      stiffness: 120,
-      delay: 0.3,
-    },
-  },
-};
+import { MatchedUser } from '@/app/(main)/home/page';
+import { imageVariantsLeft, imageVariantsRight, popupVariants } from 'utils/popup';
+import { ChatUser, Message } from 'types/chat';
+import { useSendMessageMutation } from '@/generated';
+import { socket } from 'utils/socket';
+import { useCurrentUser } from '@/app/contexts/CurrentUserContext';
+import {
+  createOptimisticMessage,
+  generateTimestamp,
+  handleInputChangeLocal,
+  handleKeyPress,
+  markMessageAsFailed,
+  storeMessageInLocalStorage,
+  updateChattedUsers,
+  updateConversationsWithMessage,
+  updateMessageStatus,
+  handleSendMessage,
+} from 'utils/match-popup';
 
 type MatchPopupProps = {
   onClose: () => void;
-  matchedusersid: string[];
+  matchedUsers: MatchedUser[];
+  data?: any;
+  setConversations?: React.Dispatch<React.SetStateAction<Record<string, Message[]>>>;
+  setChattedUsers?: React.Dispatch<React.SetStateAction<Set<string>>>;
+  refetch?: () => void;
 };
 
-const MatchPopup = ({ onClose, matchedusersid }: MatchPopupProps) => {
-  if (!matchedusersid || matchedusersid.length < 2) return null;
-  const [id1, id2] = matchedusersid;
+const MatchPopup = ({ onClose, matchedUsers, data, setConversations, setChattedUsers, refetch }: MatchPopupProps) => {
+  const [inputValue, setInputValue] = useState('');
+  const [socketError, setSocketError] = useState<string | null>(null);
+  const [sending, setSending] = useState(false);
+  const [sendMessageMutation] = useSendMessageMutation();
+  const { currentUser } = useCurrentUser();
 
-  const { data: user1Data, loading: loading1, error: error1 } = useGetUserQuery({ variables: { id: id1 }, skip: !id1 });
-  const { data: user2Data, loading: loading2, error: error2 } = useGetUserQuery({ variables: { id: id2 }, skip: !id2 });
+  if (!matchedUsers || matchedUsers.length < 2) return null;
 
-  if (loading1 || loading2) return <div>Loading...</div>;
-  if (error1 || error2) return <div>Error loading match</div>;
+  const [user1, user2] = matchedUsers;
+  const selectedUser: ChatUser = user2 && {
+    id: user2.id,
+    name: user2.name,
+    images: user2.images,
+    dateOfBirth: '',
+    profession: '',
+    age: 0,
+    startedConversation: false,
+  };
 
-  const user1 = user1Data?.getUser;
-  const user2 = user2Data?.getUser;
+  const handleSendMessageCallback = useCallback(async () => {
+    await handleSendMessage({
+      inputValue,
+      sending,
+      setSending,
+      socketError,
+      setSocketError,
+      sendMessageMutation,
+      currentUser,
+      selectedUser,
+      data,
+      setConversations,
+      setChattedUsers,
+      onClose,
+      refetch,
+      setInputValue,
+      socket,
+      createOptimisticMessage,
+      generateTimestamp,
+      updateConversationsWithMessage,
+      updateChattedUsers,
+      updateMessageStatus,
+      markMessageAsFailed,
+      storeMessageInLocalStorage,
+    });
+  }, [
+    inputValue,
+    sending,
+    setSending,
+    socketError,
+    setSocketError,
+    sendMessageMutation,
+    currentUser,
+    selectedUser,
+    data,
+    setConversations,
+    setChattedUsers,
+    onClose,
+    refetch,
+    setInputValue,
+    socket,
+    createOptimisticMessage,
+    generateTimestamp,
+    updateConversationsWithMessage,
+    updateChattedUsers,
+    updateMessageStatus,
+    markMessageAsFailed,
+    storeMessageInLocalStorage,
+  ]);
+
+  const handleInputChange = handleInputChangeLocal(setInputValue);
+  const handleKeyPressCallback = handleKeyPress(handleSendMessageCallback);
 
   return (
     <motion.div variants={popupVariants} initial="hidden" animate="visible" exit="exit" className="bg-white rounded-3xl max-w-sm w-full mx-auto shadow-2xl border border-[#E4E4E7]">
@@ -73,7 +118,6 @@ const MatchPopup = ({ onClose, matchedusersid }: MatchPopupProps) => {
           <X size={24} aria-label="Close icon" role="img" />
         </button>
       </div>
-
       <div className="w-full flex flex-col justify-start items-center px-6 pb-6">
         <div className="w-full flex flex-col gap-6 items-center">
           <div className="flex justify-center items-center">
@@ -88,29 +132,40 @@ const MatchPopup = ({ onClose, matchedusersid }: MatchPopupProps) => {
               </div>
             </motion.div>
           </div>
-
           <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="text-[#09090B] text-[14px] font-normal font-sans">
             You matched with {user2?.name}
           </motion.p>
-
           <div className="w-full flex flex-col gap-4">
+            {socketError && (
+              <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-red-500 text-sm text-center">
+                {socketError}
+              </motion.div>
+            )}
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="flex justify-center items-center">
               <Input
                 type="text"
                 placeholder="Say something nice"
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent text-gray-700 placeholder-gray-400"
+                value={inputValue}
+                onChange={(e) => handleInputChange(e.target.value)}
+                onKeyPress={handleKeyPressCallback}
+                disabled={sending}
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent text-gray-700 placeholder-gray-400 disabled:opacity-50"
               />
             </motion.div>
-
             <motion.button
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
+              onClick={() => {
+                console.log('Send button clicked');
+                handleSendMessageCallback();
+              }}
+              disabled={sending || !inputValue.trim()}
               className="gap-2 w-full bg-gradient-to-r from-pink-500 to-red-500 text-white py-2 px-4 rounded-full font-semibold text-lg flex items-center justify-center hover:from-pink-600 hover:to-red-600 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
             >
-              <Send size={20} />
+              {sending ? <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div> : <Send size={20} />}
               <p data-testid="Send" className="text-[14px] font-sans font-medium">
-                Send
+                {sending ? 'Sending...' : 'Send'}
               </p>
             </motion.button>
           </div>

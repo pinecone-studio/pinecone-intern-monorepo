@@ -37,6 +37,7 @@ describe('like resolver', () => {
     expect(result).toEqual({
       isMatch: true,
       message: "It's a match! You can now chat!",
+      matchId: mockMatch._id.toString(),
     });
 
     expect(Usermodel.findById).toHaveBeenCalledWith(new mongoose.Types.ObjectId(likeReceiver));
@@ -61,10 +62,11 @@ describe('like resolver', () => {
     expect(result).toEqual({
       isMatch: false,
       message: 'Like successful, waiting for a match.',
+      matchId: '',
     });
   });
 
-  it('returns "Like successful, waiting for a match." if receiver user is not found', async () => {
+  it('returns message and empty matchId if receiver user is not found', async () => {
     (Usermodel.findByIdAndUpdate as jest.Mock).mockResolvedValue({});
 
     (Usermodel.findById as jest.Mock).mockReturnValue({
@@ -76,6 +78,7 @@ describe('like resolver', () => {
     expect(result).toEqual({
       isMatch: false,
       message: 'Like successful, waiting for a match.',
+      matchId: '',
     });
   });
 

@@ -73,6 +73,7 @@ export const UsertypeDefs = gql`
   type LikeResponse {
     isMatch: Boolean!
     message: String!
+    matchId: String!
   }
   type UnmatchResponse {
     success: Boolean!
