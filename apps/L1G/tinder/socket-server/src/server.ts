@@ -97,29 +97,44 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Handle new match creation
-  socket.on('new_match_created', (data: { matchId: string; user1Id: string; user2Id: string; matchData: any }) => {
-    const { matchId, user1Id, user2Id, matchData } = data;
+  socket.on('user_liked', (data: { likedBy: string; likedUserId: string }) => {
+    const { likedBy, likedUserId } = data;
+    console.log(`👍 User ${likedBy} liked User ${likedUserId}`);
 
-    // Join both users to the new match room
-    socket.join(matchId);
-
-    // Notify both users about the new match
-    io.to(`user_${user1Id}`).emit('match_created', {
-      matchId,
-      matchedUser: matchData.user2,
+    io.to(`user_${likedUserId}`).emit('liked_notification', {
+      fromUserId: likedBy,
       timestamp: new Date(),
     });
+  });
+  socket.on('user_disliked', (data: { dislikedBy: string; dislikedUserId: string }) => {
+    const { dislikedBy, dislikedUserId } = data;
+    console.log(`👎 User ${dislikedBy} disliked User ${dislikedUserId}`);
 
-    io.to(`user_${user2Id}`).emit('match_created', {
-      matchId,
-      matchedUser: matchData.user1,
+    io.to(`user_${dislikedUserId}`).emit('disliked_notification', {
+      fromUserId: dislikedBy,
       timestamp: new Date(),
     });
-
-    console.log(`💕 New match created: ${matchId} between ${user1Id} and ${user2Id}`);
   });
 
+  // Handle new match creation
+  socket.on('match_created', (data: { matchIds: string[]; matchedUsers: { id: string; name?: string }[] }) => {
+    const { matchIds, matchedUsers } = data;
+    console.log(`💕 Match created between users: ${matchIds.join(', ')}`);
+
+    // Join the socket to the new match room(s) if not already joined
+    matchIds.forEach((matchId) => {
+      socket.join(matchId);
+      console.log(`📥 Socket ${socket.id} joined match room ${matchId}`);
+    });
+
+    // Notify all matched users about the new match
+    matchedUsers.forEach((user) => {
+      io.to(`user_${user.id}`).emit('match_created', {
+        matchedUsers,
+        timestamp: new Date(),
+      });
+    });
+  });
   // Handle chat messages with enhanced features
   socket.on('chat_message', (data: { matchId: string; content: string; senderId: string; receiverId: string; messageId?: string; tempId?: string; timestamp: string }) => {
     const { matchId, content, senderId, receiverId, messageId, tempId, timestamp } = data;
