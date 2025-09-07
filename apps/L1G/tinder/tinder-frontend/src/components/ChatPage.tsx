@@ -23,10 +23,13 @@ import { useChatHandlers } from 'hooks/useChatHandlers';
 import { useSelectedChatLoader } from 'hooks/useSelectedChatLoader';
 import NotificationToast from 'utils/notification-toast';
 import { getLastSeenMessageId, createMatchIdToUserStatusMap, getUserStatusByMatchId, handleKeyDownForSending, shouldShowChatPersonOnMobile, shouldShowChatWindowOnMobile } from 'utils/status-utils';
+import { usePendingMessages } from 'hooks/usePendingMessages';
 
 const ChatPage: React.FC = () => {
   const { data, loading, error, refetch } = useGetMeQuery();
+
   const [fetchChat] = useGetChatWithUserLazyQuery();
+
   const [conversations, setConversations] = useState<Record<string, Message[]>>({});
   const [inputValue, setInputValue] = useState('');
   const [_socketError, setSocketError] = useState<string | null>(null);
@@ -51,6 +54,7 @@ const ChatPage: React.FC = () => {
 
   // User management
   const { selectedUser, topRowUsers, bottomUsers, handleUserSelect, moveUserToBottom, setChattedUsers, addNewMatch, removeMatch } = useUserManagement(data, conversations);
+  usePendingMessages({ data, setConversations, setChattedUsers });
 
   // Mark messages as seen
   const { markMessagesAsSeen } = useMarkMessagesAsSeen(selectedUser, conversations, setConversations);
@@ -225,4 +229,3 @@ const ChatPage: React.FC = () => {
 };
 
 export default ChatPage;
- 

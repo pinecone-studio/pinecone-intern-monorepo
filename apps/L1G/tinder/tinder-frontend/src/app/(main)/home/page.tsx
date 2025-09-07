@@ -9,6 +9,7 @@ import ProfileSwiper from '@/components/ProfileSwiper';
 import { useCurrentUser } from '@/app/contexts/CurrentUserContext';
 import Loading from '@/components/Loading';
 import { useRouter } from 'next/navigation';
+import socket from 'utils/socket';
 
 const handleKeyDown = (e: KeyboardEvent, isMatched: boolean, closeMatchDialog: () => void) => {
   if (e.key === 'Escape' && isMatched) {
@@ -40,6 +41,12 @@ const getFilteredProfiles = (data: any, currentUserId: string, gender?: string) 
       gender: u.gender ?? undefined,
     }));
 };
+export type MatchedUser = {
+  id: string;
+  name: string;
+  images: string[];
+};
+
 /* eslint-disable-next-line complexity */
 const HomePage = () => {
   const { currentUser, loading: userLoading, error: userError } = useCurrentUser();
@@ -55,9 +62,10 @@ const HomePage = () => {
   const [dislike] = useDislikeMutation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMatched, setIsMatched] = useState(false);
-  const [matchedusersid, setMatchedusersid] = useState<string[]>([]);
+  const [matchedUsers, setMatchedUsers] = useState<MatchedUser[]>([]);
   const [token, setToken] = useState<string | null>(null);
   const router = useRouter();
+  console.log(currentUser, 'current');
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -78,7 +86,7 @@ const HomePage = () => {
     return null;
   }
 
-  const handleLike = async (profileId: string) => {
+  const handleLike = async (profileId: string, profileData?: UserProfile) => {
     if (!currentUser) return;
 
     try {
@@ -91,8 +99,38 @@ const HomePage = () => {
       const didMatch = response?.data?.like?.isMatch ?? false;
       if (didMatch) {
         setIsMatched(true);
-        setMatchedusersid([currentUser.id, profileId]);
+        setMatchedUsers([
+          {
+            id: currentUser.id,
+            name: currentUser.name ?? 'Unknown',
+            images: (currentUser.images ?? []).filter((img): img is string => img !== null && img !== undefined),
+          },
+          {
+            id: profileId,
+            name: profileData?.name ?? 'Unknown',
+            images: profileData?.images || [],
+          },
+        ]);
+        socket.emit('match_created', {
+          matchIds: [currentUser.id, profileId],
+          matchedUsers: [
+            {
+              id: currentUser.id,
+              name: currentUser.name,
+            },
+            {
+              id: profileId,
+              name: profileData?.name,
+            },
+          ],
+        });
+      } else {
+        socket.emit('user_liked', {
+          likedBy: currentUser.id,
+          likedUserId: profileId,
+        });
       }
+
       setTimeout(() => {
         goToNextProfile();
       }, 300);
@@ -110,6 +148,10 @@ const HomePage = () => {
           dislikedByUser: currentUser.id,
           dislikeReceiver: profileId,
         },
+      });
+      socket.emit('user_disliked', {
+        dislikedBy: currentUser.id,
+        dislikedUserId: profileId,
       });
       setTimeout(() => {
         goToNextProfile();
@@ -151,7 +193,7 @@ const HomePage = () => {
         <Header />
       </div>
       <ProfileSwiper profiles={profiles} currentIndex={currentIndex} onLike={handleLike} onDislike={handleDislike} />
-      {isMatched && <MatchDialogClose matchedusersid={matchedusersid} onClose={closeMatchDialog} />}
+      {isMatched && <MatchDialogClose data={{ getMe: currentUser }} matchedUsers={matchedUsers} onClose={closeMatchDialog} />}
     </div>
   );
 };
