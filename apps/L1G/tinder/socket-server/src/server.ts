@@ -117,23 +117,43 @@ io.on('connection', (socket) => {
   });
 
   // Handle new match creation
-  socket.on('match_created', (data: { matchIds: string[]; matchedUsers: { id: string; name?: string }[] }) => {
-    const { matchIds, matchedUsers } = data;
-    console.log(`💕 Match created between users: ${matchIds.join(', ')}`);
-
-    // Join the socket to the new match room(s) if not already joined
-    matchIds.forEach((matchId) => {
-      socket.join(matchId);
-      console.log(`📥 Socket ${socket.id} joined match room ${matchId}`);
+  socket.on('new_match_created', (data) => {
+    const { matchId, user1Id, user2Id, matchData } = data;
+    console.log('🔄 Processing new match creation:', { matchId, user1Id, user2Id });
+    socket.join(matchId);
+    const user1Connection = connectedUsers.get(user1Id);
+    const user2Connection = connectedUsers.get(user2Id);
+    if (user1Connection) {
+      user1Connection.matchIds = [...user1Connection.matchIds, matchId];
+      connectedUsers.set(user1Id, user1Connection);
+    }
+    if (user2Connection) {
+      user2Connection.matchIds = [...user2Connection.matchIds, matchId];
+      connectedUsers.set(user2Id, user2Connection);
+    }
+    io.to(`user_${user1Id}`).emit('match_created', {
+      matchId,
+      timestamp: new Date().toISOString(),
+      matchedUser: {
+        id: user2Id,
+        name: matchData.user2?.name || 'Unknown',
+        images: matchData.user2?.images || [],
+        dateOfBirth: matchData.user2?.dateOfBirth || null,
+        profession: matchData.user2?.profession || null,
+      },
     });
-
-    // Notify all matched users about the new match
-    matchedUsers.forEach((user) => {
-      io.to(`user_${user.id}`).emit('match_created', {
-        matchedUsers,
-        timestamp: new Date(),
-      });
+    io.to(`user_${user2Id}`).emit('match_created', {
+      matchId,
+      timestamp: new Date().toISOString(),
+      matchedUser: {
+        id: user1Id,
+        name: matchData.user1?.name || 'Unknown',
+        images: matchData.user1?.images || [],
+        dateOfBirth: matchData.user1?.dateOfBirth || null,
+        profession: matchData.user1?.profession || null,
+      },
     });
+    console.log(`💕 New match created and emitted: ${matchId} between ${user1Id} and ${user2Id}`);
   });
   // Handle chat messages with enhanced features
   socket.on('chat_message', (data: { matchId: string; content: string; senderId: string; receiverId: string; messageId?: string; tempId?: string; timestamp: string }) => {
