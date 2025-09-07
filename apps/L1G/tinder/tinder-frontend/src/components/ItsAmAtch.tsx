@@ -50,14 +50,8 @@ const MatchPopup = ({ onClose, matchedUsers, data, setConversations, setChattedU
       }),
     []
   );
-  console.log('All matchIds:', data.getMe.matchIds);
 
   const handleSendMessage = async () => {
-    console.log('handleSendMessage called');
-    console.log('sending:', sending);
-    console.log('inputValue:', inputValue);
-    console.log('selectedUser:', selectedUser);
-    console.log('data?.getMe?.id:', data?.getMe?.id);
     const content = inputValue.trim();
     if (sending || !content || !selectedUser || !data?.getMe?.id) return;
 
@@ -67,9 +61,7 @@ const MatchPopup = ({ onClose, matchedUsers, data, setConversations, setChattedU
     const matchData = currentUser?.matchIds?.find((m) => m?.matchedUser?.id === selectedUser.id);
     const matchId = matchData?.id;
     const senderId = data.getMe.id;
-
     const receiverId = matchData?.matchedUser?.id;
-
     if (!receiverId) {
       console.error('Receiver ID not found for match:', matchId);
       setSending(false);
@@ -77,12 +69,16 @@ const MatchPopup = ({ onClose, matchedUsers, data, setConversations, setChattedU
       return;
     }
 
-    console.log('Sending message from MatchPopup:', { matchId, senderId, receiverId, content });
+    if (!matchId) {
+      console.error('Match ID not found for selected user:', selectedUser.id);
+      setSending(false);
+      setSocketError('Match information not found. Please try again.');
+      return;
+    }
 
     const tempId = `temp_${Date.now()}_${Math.random()}`;
     const timestamp = generateTimestamp();
 
-    // Create optimistic message
     const optimisticMessage: Message = {
       id: tempId,
       text: content,
@@ -95,7 +91,6 @@ const MatchPopup = ({ onClose, matchedUsers, data, setConversations, setChattedU
       retrying: false,
     };
 
-    // Add to conversations if setConversations is available (when called from chat page)
     if (setConversations) {
       setConversations((prev) => ({
         ...prev,
@@ -103,14 +98,13 @@ const MatchPopup = ({ onClose, matchedUsers, data, setConversations, setChattedU
       }));
     }
 
-    // Add to chatted users if available
     if (setChattedUsers) {
       setChattedUsers((prev) => new Set(prev).add(selectedUser.id));
     }
 
     try {
-      // Send to backend first
-      console.log('Sending to backend...');
+      console.log('Sending message with data:', { senderId, receiverId, matchId, content });
+
       const result = await sendMessageMutation({
         variables: { senderId, receiverId, matchId, content },
       });
@@ -137,15 +131,10 @@ const MatchPopup = ({ onClose, matchedUsers, data, setConversations, setChattedU
               ) || [],
           }));
         }
-
-        // Ensure socket is connected before emitting
         if (!socket.connected) {
           console.warn('Socket not connected, attempting to reconnect...');
           socket.connect();
         }
-
-        // Emit socket message with real ID
-        console.log('Emitting socket message...');
         socket.emit('chat_message', {
           matchId,
           content,
@@ -155,9 +144,6 @@ const MatchPopup = ({ onClose, matchedUsers, data, setConversations, setChattedU
           tempId,
           timestamp: new Date().toISOString(),
         });
-
-        // Store message in localStorage for cross-page persistence
-        // This ensures the message appears when user navigates to chat page
         const storageKey = `pending_message_${matchId}`;
         const pendingMessage = {
           id: createdMessageId,
@@ -177,16 +163,9 @@ const MatchPopup = ({ onClose, matchedUsers, data, setConversations, setChattedU
         } catch (e) {
           console.warn('Could not store message in localStorage:', e);
         }
-
-        // Clear input
         setInputValue('');
-
         console.log('Message sent successfully from MatchPopup');
-
-        // Close popup after short delay
         setTimeout(() => onClose(), 1000);
-
-        // Refetch data to update any counters or UI state
         if (refetch) {
           refetch();
         }
@@ -195,8 +174,6 @@ const MatchPopup = ({ onClose, matchedUsers, data, setConversations, setChattedU
       }
     } catch (error) {
       console.error('Send message failed from MatchPopup:', error);
-
-      // Mark message as failed if we have setConversations
       if (setConversations) {
         setConversations((prev) => ({
           ...prev,

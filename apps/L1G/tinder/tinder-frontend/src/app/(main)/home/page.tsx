@@ -16,6 +16,7 @@ const handleKeyDown = (e: KeyboardEvent, isMatched: boolean, closeMatchDialog: (
     closeMatchDialog();
   }
 };
+
 const getFilteredProfiles = (data: any, currentUserId: string, gender?: string) => {
   return (data?.getOtherUsers ?? [])
     .filter((u: any): u is NonNullable<typeof u> => u && (typeof u.id === 'string' || typeof u.id === 'number'))
@@ -41,6 +42,7 @@ const getFilteredProfiles = (data: any, currentUserId: string, gender?: string) 
       gender: u.gender ?? undefined,
     }));
 };
+
 export type MatchedUser = {
   id: string;
   name: string;
@@ -96,7 +98,23 @@ const HomePage = () => {
           likeReceiver: profileId,
         },
       });
+
       const didMatch = response?.data?.like?.isMatch ?? false;
+
+      // Handle both nullable and non-nullable matchId scenarios
+      let matchId: string;
+      try {
+        matchId = (response?.data?.like as any)?.matchId || `match_${currentUser.id}_${profileId}_${Date.now()}`;
+        // If matchId is empty string, generate one
+        if (!matchId || matchId.trim() === '') {
+          matchId = `match_${currentUser.id}_${profileId}_${Date.now()}`;
+        }
+      } catch (matchIdError) {
+        // Fallback if matchId access fails
+        matchId = `match_${currentUser.id}_${profileId}_${Date.now()}`;
+        console.warn('Failed to get matchId from response, using generated ID:', matchIdError);
+      }
+
       if (didMatch) {
         setIsMatched(true);
         setMatchedUsers([
@@ -111,19 +129,31 @@ const HomePage = () => {
             images: profileData?.images || [],
           },
         ]);
-        socket.emit('match_created', {
-          matchIds: [currentUser.id, profileId],
-          matchedUsers: [
-            {
+
+        // Emit socket event with proper data structure
+        socket.emit('new_match_created', {
+          matchId,
+          user1Id: currentUser.id,
+          user2Id: profileId,
+          matchData: {
+            user1: {
               id: currentUser.id,
               name: currentUser.name,
+              images: currentUser.images,
+              dateOfBirth: currentUser.dateOfBirth,
+              profession: currentUser.profession,
             },
-            {
+            user2: {
               id: profileId,
               name: profileData?.name,
+              images: profileData?.images,
+              dateOfBirth: profileData?.dateOfBirth || null,
+              profession: profileData?.profession || null,
             },
-          ],
+          },
         });
+
+        console.log('Match created and socket event emitted:', { matchId, currentUser: currentUser.id, profileId });
       } else {
         socket.emit('user_liked', {
           likedBy: currentUser.id,
@@ -136,6 +166,10 @@ const HomePage = () => {
       }, 300);
     } catch (err) {
       console.error('Error liking user:', err);
+      // Still proceed to next profile even if there's an error
+      setTimeout(() => {
+        goToNextProfile();
+      }, 300);
     }
   };
 
@@ -158,12 +192,17 @@ const HomePage = () => {
       }, 300);
     } catch (err) {
       console.error('Error disliking user:', err);
+      // Still proceed to next profile even if there's an error
+      setTimeout(() => {
+        goToNextProfile();
+      }, 300);
     }
   };
 
   const goToNextProfile = () => {
     setCurrentIndex((prev) => prev + 1);
   };
+
   const closeMatchDialog = () => {
     setIsMatched(false);
   };
@@ -175,18 +214,23 @@ const HomePage = () => {
       </div>
     );
   }
+
   if (userError) {
     console.error(userError);
     return <div>Error loading user info.</div>;
   }
+
   if (profilesError) {
     console.error(profilesError);
     return <div>Error loading profiles.</div>;
   }
+
   if (!currentUser) {
     return <div>User not found.</div>;
   }
+
   const profiles: UserProfile[] = getFilteredProfiles(data, currentUser.id, currentUser.genderPreferences || undefined);
+
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
       <div className="fixed top-0 left-0 w-full z-50 flex justify-start items-start">
@@ -197,4 +241,5 @@ const HomePage = () => {
     </div>
   );
 };
+
 export default HomePage;
