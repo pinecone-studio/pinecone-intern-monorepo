@@ -1,5 +1,12 @@
 /* eslint max-lines: "off" */
-import { handleWalletOrder, handlePaymentSelect, type FoodOrderItemInput } from '@/utils/Payment-Logic';
+import { handleWalletOrder, handlePaymentSelect, type FoodOrderItemInput } from '@/utils/PaymentLogic';
+import { toast } from 'sonner';
+
+// Mock toast.error so it doesn't actually render during tests
+jest.mock('sonner', () => ({
+  toast: { error: jest.fn() },
+}));
+
 describe('payment-logic: handleWalletOrder', () => {
   const mkSetters = () => {
     const setWalletDeduction = jest.fn<(_v: number) => void>();
@@ -121,15 +128,35 @@ describe('payment-logic: handlePaymentSelect', () => {
     const { totalPrice } = a.createOrder.mock.calls[0][0].variables.input;
     expect(totalPrice).toBe(25000);
   });
-});
-describe('utils/Payment-Logic → handlePaymentSelect', () => {
-  it('non-wallet үед createOrder дуудагдаж дууссаны дараа navigate("/PaymentSuccess") дуудна', async () => {
+
+  it('table байхгүй үед toast.error дуудна, createOrder дуудахгүй', async () => {
+    const createOrder = jest.fn();
+    const setSelectedPayment = jest.fn();
+    const setIsWalletDrawerOpen = jest.fn();
+
+    await handlePaymentSelect({
+      methodId: 'qpay',
+      setSelectedPayment,
+      setIsWalletDrawerOpen,
+      createOrder,
+      userId: 'user-1',
+      table: '', // ❌ хоосон ширээ
+      finalAmount: 10000,
+      orderFood: [],
+      orderType: 'IN' as any,
+    });
+
+    expect(setSelectedPayment).toHaveBeenCalledWith('qpay');
+    expect(toast.error).toHaveBeenCalledTimes(1); // ✅ toast дуудсан
+    expect(createOrder).not.toHaveBeenCalled(); // ✅ order хийгдээгүй
+  });
+
+  it('non-wallet үед createOrder дууссаны дараа navigate("/PaymentSuccess") дуудна', async () => {
     const createOrder = jest.fn().mockResolvedValue(undefined);
     const navigate = jest.fn();
 
     const setSelectedPayment = jest.fn();
     const setIsWalletDrawerOpen = jest.fn();
-
     const orderFood: FoodOrderItemInput[] = [{ foodId: 'food1', quantity: 2 }];
 
     await handlePaymentSelect({
@@ -146,7 +173,6 @@ describe('utils/Payment-Logic → handlePaymentSelect', () => {
     });
 
     expect(setSelectedPayment).toHaveBeenCalledWith('qpay');
-
     expect(createOrder).toHaveBeenCalledWith({
       variables: {
         input: {

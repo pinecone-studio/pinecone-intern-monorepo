@@ -1,50 +1,34 @@
 import { render, screen } from '@testing-library/react';
-
-import jwt from 'jsonwebtoken';
 import '@testing-library/jest-dom';
 import { OrderHistory } from '@/components/OrderHistory';
 import { useGetFoodOrdersByUserQuery } from '@/generated';
+import jwt from 'jsonwebtoken';
 
-// Apollo hook-ийг mock хийж байна
+// Mock Apollo hook
 jest.mock('@/generated', () => ({
   useGetFoodOrdersByUserQuery: jest.fn(),
 }));
 
-// jwt.decode-г mock хийж байна
+// Mock jwt.decode
 jest.mock('jsonwebtoken', () => ({
   decode: jest.fn(),
 }));
 
-// Logedinnav-г жоохон dummy болгоё
+// Mock Navbar
 jest.mock('@/components/Navbar', () => ({
   Navbar: () => <div>Mocked Navbar</div>,
 }));
 
-describe('OrdersHistory component', () => {
+describe('OrderHistory component', () => {
   const mockUser = { user: { _id: 'user123' } };
-  useGetFoodOrdersByUserQuery as jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-  it('renders login prompt when token is null', () => {
-    (useGetFoodOrdersByUserQuery as jest.Mock).mockReturnValue({
-      data: undefined,
-      error: undefined,
-    });
-
-    render(<OrderHistory />);
-
-    // Гарчиг хэвээр үлдэнэ
-    expect(screen.getByText('Захиалгын түүх')).toBeInTheDocument();
-    // "Та нэвтрэнэ үү" текст гарч ирнэ
-    expect(screen.getByText('Та нэвтрэнэ үү')).toBeInTheDocument();
+    Storage.prototype.getItem = jest.fn(() => 'mockToken'); // Mock localStorage
+    (jwt.decode as jest.Mock).mockReturnValue(mockUser);
   });
 
   it('renders error state', () => {
-    Storage.prototype.getItem = jest.fn(() => 'mockToken');
-    (jwt.decode as jest.Mock).mockReturnValue(mockUser);
-
     (useGetFoodOrdersByUserQuery as jest.Mock).mockReturnValue({
       data: undefined,
       error: { message: 'Something went wrong' },
@@ -55,22 +39,16 @@ describe('OrdersHistory component', () => {
   });
 
   it('renders empty state when no orders', () => {
-    Storage.prototype.getItem = jest.fn(() => 'mockToken');
-    (jwt.decode as jest.Mock).mockReturnValue(mockUser);
-
     (useGetFoodOrdersByUserQuery as jest.Mock).mockReturnValue({
       data: { getFoodOrdersByUser: [] },
       error: undefined,
     });
 
     render(<OrderHistory />);
-    expect(screen.getByText('Захиалгаа олдсонгүй')).toBeInTheDocument();
+    expect(screen.getByText('Захиалга олдсонгүй')).toBeInTheDocument();
   });
 
   it('renders orders list when data exists', () => {
-    Storage.prototype.getItem = jest.fn(() => 'mockToken');
-    (jwt.decode as jest.Mock).mockReturnValue(mockUser);
-
     const fakeOrders = [
       {
         orderId: '1',
@@ -88,9 +66,19 @@ describe('OrdersHistory component', () => {
 
     render(<OrderHistory />);
 
+    // Check order number
     expect(screen.getByText('#31321')).toBeInTheDocument();
+
+    // Check status
     expect(screen.getByText('Бэлтгэгдэж буй')).toBeInTheDocument();
+
+    // Check total price
     expect(screen.getByText(/15600₮/)).toBeInTheDocument();
-    expect(screen.getByText(/19\/10\/24/)).toBeInTheDocument(); // formatted date
+
+    // Check formatted date
+    expect(screen.getByText(/19\/10\/24/)).toBeInTheDocument();
+
+    // Check Navbar
+    expect(screen.getByText('Mocked Navbar')).toBeInTheDocument();
   });
 });

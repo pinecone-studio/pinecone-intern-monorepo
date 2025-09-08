@@ -20,8 +20,8 @@ export const WalletComponent = () => {
         </div>
         <p className="font-light text-[12px]">24.10.19 15:25</p>
       </div>
-      <div className="flex pt-3 pl-5">
-        <div className="w-[340px] flex h-[1px] border-[1px]  "></div>
+      <div className="flex pt-3 px-5">
+        <div className="w-full flex h-[1px] border-[1px]  "></div>
       </div>
       <div className="flex justify-between pt-4 items-center px-4 ">
         <div className="flex items-center gap-3">
@@ -32,8 +32,8 @@ export const WalletComponent = () => {
         </div>
         <p className="font-light text-[12px]">24.10.19 15:25</p>
       </div>
-      <div className="flex pt-3 pl-5">
-        <div className="w-[340px] flex h-[1px] border-[1px]  "></div>
+      <div className="flex pt-3 px-5">
+        <div className="w-full flex h-[1px] border-[1px]  "></div>
       </div>
       <div className="flex justify-between pt-4 items-center px-4 ">
         <div className="flex items-center gap-3">
@@ -44,8 +44,8 @@ export const WalletComponent = () => {
         </div>
         <p className="font-light text-[12px]">24.10.19 15:25</p>
       </div>
-      <div className="flex pt-3 pl-5">
-        <div className="w-[340px] flex h-[1px] border-[1px]  "></div>
+      <div className="flex pt-3 px-5">
+        <div className="w-full flex h-[1px] border-[1px]  "></div>
       </div>
       <div className="flex justify-between pt-4 items-center px-4 ">
         <div className="flex items-center gap-3">
@@ -56,8 +56,8 @@ export const WalletComponent = () => {
         </div>
         <p className="font-light text-[12px]">24.10.19 15:25</p>
       </div>
-      <div className="flex pt-3 pl-5">
-        <div className="w-[340px] flex h-[1px] border-[1px]s"></div>
+      <div className="flex pt-3 px-5">
+        <div className="w-full flex h-[1px] border-[1px]  "></div>
       </div>
     </div>
   );

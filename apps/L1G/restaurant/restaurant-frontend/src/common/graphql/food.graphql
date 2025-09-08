@@ -68,43 +68,11 @@ mutation UpdateFood($foodId: ID!, $input: UpdateFoodInput!) {
     price
     foodStatus
     image
-    category {
-      categoryId
-      categoryName
-    }
-    discount {
-      discountId
-      discountName
-      discountRate
-      startDate
-      endDate
-    }
   }
 }
 
 mutation DeleteFood($foodId: ID!) {
   deleteFood(foodId: $foodId) {
-    foodId
-    foodName
-    price
-    foodStatus
-    image
-    category {
-      categoryId
-      categoryName
-    }
-    discount {
-      discountId
-      discountName
-      discountRate
-      startDate
-      endDate
-    }
-  }
-}
-
-query getFoods {
-  getFoods {
     foodId
     foodName
     price
@@ -147,27 +115,6 @@ query GetFoodById($foodId: ID!) {
 
 mutation CreateFood($input: CreateFoodInput!) {
   createFood(input: $input) {
-    foodId
-    foodName
-    price
-    foodStatus
-    image
-    category {
-      categoryId
-      categoryName
-    }
-    discount {
-      discountId
-      discountName
-      discountRate
-      startDate
-      endDate
-    }
-  }
-}
-
-mutation UpdateFood($foodId: ID!, $input: UpdateFoodInput!) {
-  updateFood(foodId: $foodId, input: $input) {
     foodId
     foodName
     price
