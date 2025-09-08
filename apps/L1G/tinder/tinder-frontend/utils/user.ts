@@ -8,4 +8,5 @@ export const mapMatchedUserToChatUser = (user: any): ChatUser => ({
   profession: user.profession,
   age: user.age,
   startedConversation: user.startedConversation,
+  bio: user.bio || '',
 });

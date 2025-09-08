@@ -37,6 +37,8 @@ export const useUserManagement = (data: any, conversations: Record<string, Messa
           lastMessage,
           hasUnreadMessages,
           lastActivity: lastMessage ? new Date(`2000-01-01 ${lastMessage.timestamp}`) : new Date(match!.createdAt || Date.now()),
+          bio: user.bio || '',
+          interests: user.interests || [],
         };
       })
       .sort((a: any, b: any) => {
@@ -110,6 +112,7 @@ export const useUserManagement = (data: any, conversations: Record<string, Messa
       lastMessage: undefined,
       hasUnreadMessages: false,
       lastActivity: new Date(matchData.timestamp),
+      bio: matchData.matchedUser.bio || '',
     };
 
     // Add to top row users (new matches)
