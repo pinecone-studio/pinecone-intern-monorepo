@@ -42,21 +42,22 @@ export const MyProfileForm: React.FC<MyProfileFormProps> = ({ user, images }) =>
       profession: user?.profession,
       school: user?.schoolWork,
     },
+    shouldUnregister: false,
   });
   useEffect(() => {
-    if (user) {
-      form.reset({
-        name: user.name,
-        email: user.email,
-        birthDate: user.dateOfBirth ? new Date(user.dateOfBirth) : undefined,
-        genderPreference: user.genderPreferences ?? 'Female',
-        bio: user.bio,
-        interests: user.interests?.map((i) => i._id),
-        profession: user.profession,
-        school: user.schoolWork,
-      });
-    }
-  }, [user, form]);
+    if (!user?.id) return;
+    form.reset({
+      name: user.name,
+      email: user.email,
+      birthDate: user.dateOfBirth ? new Date(user.dateOfBirth) : undefined,
+      genderPreference: user.genderPreferences ?? 'Female',
+      bio: user.bio,
+      interests: user.interests?.map((i) => i._id),
+      profession: user.profession,
+      school: user.schoolWork,
+    });
+  }, [user?.id]);
+
   const [updateProfile, { loading }] = useMutation(UpdateProfileDocument);
   const formatDate = (date: Date) => {
     const year = date.getFullYear();

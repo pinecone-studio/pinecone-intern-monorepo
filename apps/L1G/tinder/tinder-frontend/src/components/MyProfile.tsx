@@ -38,11 +38,11 @@ export const MyProfile = () => {
   const user = data?.getMe;
 
   return (
-    <div data-testid="my-profile" className="w-full h-full px-3 flex flex-col gap-6 overflow-y-auto ">
+    <div data-testid="my-profile" className="flex flex-col w-full h-full gap-6 px-3 overflow-y-auto">
       <MyProfileHeader isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
-      <div className="flex w-full flex-1 flex-col md:flex-row justify-start items-start gap-6 lg:gap-12 px-4 sm:px-6 md:px-10 pb-6 md:overflow-hidden">
+      <div className="flex flex-col items-start justify-start flex-1 w-full gap-6 px-4 pb-6 md:flex-row lg:gap-12 sm:px-6 md:px-10 md:overflow-hidden">
         <SidebarMenu menu={menu} setMenu={setMenu} isOpen={isOpen} setIsOpen={setIsOpen} />
-        <div data-testid="menu-content" className="w-full h-fit flex">
+        <div data-testid="menu-content" className="flex w-full h-fit">
           <MenuContent menu={menu} user={user} images={images} setImages={setImages} />
         </div>
       </div>
@@ -113,7 +113,7 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
       {/* Mobile Drawer */}
       <div className={`fixed inset-0 md:invisible ${isOpen ? 'z-50' : 'z-[-20]'}`} aria-hidden={!isOpen}>
         {/* Backdrop */}
-        {isOpen && <div data-testid="drawer-backdrop" className="fixed inset-0 bg-black bg-opacity-40 transition-opacity duration-300" onClick={() => setIsOpen(false)} />}
+        {isOpen && <div data-testid="drawer-backdrop" className="fixed inset-0 transition-opacity duration-300 bg-black bg-opacity-40" onClick={() => setIsOpen(false)} />}
         {/* Drawer */}
         <div
           data-testid="mobile-drawer"
@@ -122,7 +122,7 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
             isOpen ? 'translate-x-0' : '-translate-x-full'
           )}
         >
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex items-center justify-between mb-6">
             <p className="font-semibold text-lg text-[#09090B]">Menu</p>
             <Button data-testid="close-mobile-drawer" aria-label="close" variant="ghost" onClick={() => setIsOpen(false)} className="p-2">
               <X size={24} />
@@ -146,7 +146,7 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
                 ))}
               </div>
             </div>
-            {/* <div className="w-full flex justify-center"> */}
+            {/* <div className="flex justify-center w-full"> */}
             <LogoutBtn />
             {/* </div> */}
           </div>
@@ -156,27 +156,28 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
   );
 };
 export const MenuContent = ({ menu, user, images, setImages }: { menu: MenuType; user?: any; images: string[]; setImages: (_imgs: string[]) => void }) => {
-  switch (menu) {
-    case 'profile':
-      return <MyProfileForm user={user} images={images} disableUpdate={images.length === 0} />;
-    case 'images':
-      return <MyImages user={{ images }} onImagesChange={setImages} />;
-    case 'settings':
-      return (
-        <div data-testid="settings" className="flex flex-col justify-start items-start gap-4">
+  return (
+    <div className="w-full">
+      <div hidden={menu !== 'profile'}>
+        <MyProfileForm user={user} images={images} disableUpdate={images.length === 0} />
+      </div>
+      <div hidden={menu !== 'images'}>
+        <MyImages user={{ images }} onImagesChange={setImages} />
+      </div>
+      <div hidden={menu !== 'settings'}>
+        <div data-testid="settings" className="flex flex-col items-start justify-start gap-4">
           Settings
           <DeleteAccBtn user={user} />
         </div>
-      );
-    default:
-      return null;
-  }
+      </div>
+    </div>
+  );
 };
 
 export const MyProfileHeader = ({ setIsOpen, user }: { isOpen: boolean; setIsOpen: (_open: boolean) => void; user?: any }) => {
   return (
-    <div className="w-full top-0 z-40 bg-white shadow-sm">
-      <div className="flex items-center justify-start gap-3 px-4 sm:px-6 py-4 h-16">
+    <div className="top-0 z-40 w-full bg-white shadow-sm">
+      <div className="flex items-center justify-start h-16 gap-3 px-4 py-4 sm:px-6">
         <div className="md:hidden">
           <Button variant="ghost" data-testid="open-mobile-menu" onClick={() => setIsOpen(true)} className="p-2" aria-label="Open mobile menu">
             <Menu size={24} />
@@ -186,7 +187,7 @@ export const MyProfileHeader = ({ setIsOpen, user }: { isOpen: boolean; setIsOpe
           <p className="text-2xl font-sans font-semibold text-[#09090B]">Hi, {user?.name || 'Name'}</p>
           <p className="text-sm font-sans font-normal text-[#71717A]">{user?.email || 'email@example.com'}</p>
         </div>
-        <div className="md:hidden w-10" />
+        <div className="w-10 md:hidden" />
       </div>
       <Separator />
     </div>
