@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 
+import { Interest } from "@/generated";
 import { UserStatus } from "utils/chat-utils";
 
 export type Message = {
@@ -22,6 +23,8 @@ export type ChatUser = {
   profession: string;
   age: number;
   startedConversation: boolean;
+  bio: string;
+  interests?: Interest[];
 };
 
 export type UserData = {
