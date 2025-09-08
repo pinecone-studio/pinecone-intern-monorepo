@@ -8,9 +8,10 @@ import { Input } from '@/components/ui/input';
 import { OrderData } from '@/types/order';
 import { FoodServeType, useCreateFoodOrderMutation } from '@/generated';
 import PaymentCard from './PaymentCard';
-import { handleWalletOrder as doHandleWalletOrder, handlePaymentSelect as doHandlePaymentSelect, type FoodOrderItemInput } from '../../utils/Payment-Logic';
+import { handleWalletOrder as doHandleWalletOrder, handlePaymentSelect as doHandlePaymentSelect, type FoodOrderItemInput } from '../../utils/PaymentLogic';
 import { useRouter } from 'next/navigation';
 import { loadOrderData, getUserIdFromToken, getTableId } from '@/utils/storage';
+import { Toaster } from 'sonner';
 const DELIVERY_FEE = 4000;
 const PaymentSelection = () => {
   const router = useRouter();
@@ -56,6 +57,7 @@ const PaymentSelection = () => {
       setIsWalletDrawerOpen,
       setTargetAmount,
     });
+
   const onPaymentSelect = (methodId: string) =>
     doHandlePaymentSelect({
       methodId,
@@ -71,6 +73,7 @@ const PaymentSelection = () => {
     });
   return (
     <div className="max-w-sm mx-auto bg-white min-h-screen">
+      <Toaster position="top-center" />
       <div className="w-full flex justify-end">
         <button onClick={() => router.push('/')} className="flex mt-5" aria-label="Back">
           <X className="w-6 h-6 text-black" />

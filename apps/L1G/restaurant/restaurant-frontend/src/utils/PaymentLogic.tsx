@@ -1,6 +1,9 @@
+'use client';
 /* eslint-disable unicorn/filename-case */
 
 import { FoodServeType } from '@/generated';
+import { AlertCircle } from 'lucide-react';
+import { toast } from 'sonner';
 
 export type FoodOrderItemInput = { foodId: string; quantity: number };
 
@@ -62,6 +65,18 @@ export const handlePaymentSelect = async ({
 
   if (methodId === 'wallet') {
     setIsWalletDrawerOpen(true);
+    return;
+  }
+  if (!table) {
+    toast.error(
+      <div className="flex items-center gap-2">
+        <AlertCircle className="h-5 w-5 text-red-500" />
+        <span>Хоол захиалахын тулд QR кодыг уншуулна уу.</span>
+        <a href="/camera" className="ml-2 text-blue-500 underline hover:text-blue-700">
+          Камер нээх
+        </a>
+      </div>
+    );
     return;
   }
 

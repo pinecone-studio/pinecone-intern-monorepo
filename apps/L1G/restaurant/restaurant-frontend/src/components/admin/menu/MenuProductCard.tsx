@@ -33,7 +33,7 @@ export const MenuProductCard = () => {
         </CardContent>
       ) : (
         <CardContent className="flex flex-col w-full gap-4 p-0">
-          <div data-testid="menu-title-list" className="flex">
+          <div data-testid="menu-title-list" className="flex overflow-x-scroll">
             {categoriesData?.getCategories.map((category) => (
               <button
                 data-testid={`category-button-${category?.categoryId}`}
@@ -42,7 +42,7 @@ export const MenuProductCard = () => {
                   setActiveMenu(category?.categoryId);
                   setActiveMenuType('category');
                 }}
-                className={`border-b px-4 py-2  text-sm leading-[20px] pb-[8px] font-medium text-[#09090B] justify-center items-center ${
+                className={`border-b px-4 py-2 text-sm leading-[20px] pb-[8px] font-medium text-[#09090B] justify-center items-center whitespace-nowrap ${
                   activeMenu === category?.categoryId ? 'border-b-[#09090B]' : 'border-b-[#E4E4E7]'
                 }`}
               >

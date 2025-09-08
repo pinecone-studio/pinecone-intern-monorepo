@@ -46,7 +46,7 @@ jest.mock('@/utils/storage', () => ({
 
 const mockHandleWalletOrder = jest.fn();
 const mockHandlePaymentSelect = jest.fn();
-jest.mock('@/utils/Payment-Logic', () => ({
+jest.mock('@/utils/PaymentLogic', () => ({
   handleWalletOrder: (...a: any[]) => mockHandleWalletOrder(...(a as any)),
   handlePaymentSelect: (...a: any[]) => mockHandlePaymentSelect(...(a as any)),
 }));
