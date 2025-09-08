@@ -136,9 +136,9 @@ describe('ViewProfile', () => {
   const singleUser = { ...mockUser, images: ['/single.jpg'] };
   const emptyUser = { ...mockUser, images: [] };
 
-  it('renders View Profile button and user icon', () => {
+  it('renders View Picture button and user icon', () => {
     render(<ViewProfile user={mockUser} />);
-    expect(screen.getByText('View Profile')).toBeInTheDocument();
+    expect(screen.getByText('View Picture')).toBeInTheDocument();
     expect(screen.getByTestId('user-icon')).toBeInTheDocument();
   });
 

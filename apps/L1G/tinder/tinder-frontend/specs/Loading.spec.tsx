@@ -42,7 +42,7 @@ describe('Loading Component', () => {
  
   test('renders copyright text', () => {
     render(<Loading msg={message} />);
-    const copyright = screen.getByText('©2024 Tinder');
+    const copyright = screen.getByText('©2025 Tinder');
     expect(copyright).toBeInTheDocument();
     expect(copyright).toHaveClass('text-xs', 'text-gray-400');
   });
