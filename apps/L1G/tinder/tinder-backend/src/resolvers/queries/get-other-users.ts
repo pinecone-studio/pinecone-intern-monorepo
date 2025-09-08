@@ -12,73 +12,56 @@ const transformUser = (user: any, currentUserId?: string) => ({
   genderPreferences: user.genderPreferences,
   gender: user.gender,
   bio: user.bio,
-  interests: user.interests && user.interests.length > 0
-    ? user.interests
-        .filter((interest: any) => !!interest && !!interest._id)
-        .map((interest: any) => ({
-          _id: interest._id.toString(),
-          interestName: interest.interestName,
-        }))
-        
-    : [],
+  interests:
+    user.interests && user.interests.length > 0
+      ? user.interests
+          .filter((interest: any) => !!interest && !!interest._id)
+          .map((interest: any) => ({
+            _id: interest._id.toString(),
+            interestName: interest.interestName,
+          }))
+      : [],
   profession: user.profession,
   schoolWork: user.schoolWork,
   images: user.images ?? [],
   likedBy: user.likedBy ? user.likedBy.map((u: any) => ({ id: u._id.toString() })) : [],
   likedTo: user.likedTo ? user.likedTo.map((u: any) => ({ id: u._id.toString() })) : [],
   dislikedTo: user.dislikedTo ? user.dislikedTo.map((u: any) => ({ id: u._id.toString() })) : [],
-  matchIds: user.matchIds ? user.matchIds.map((match: any) => {
-    const matchedUser = Array.isArray(match.users) 
-      ? match.users.find((u: any) => u._id.toString() !== currentUserId) 
-      : null;
-    
-    return {
-      id: match._id.toString(),
-      matchedAt: match.matchedAt,
-      unmatched: match.unmatched || false,
-      startedConversation: match.startedConversation || false,
-      matchedUser: matchedUser ? {
-        id: matchedUser._id.toString(),
-        name: matchedUser.name,
-        images: matchedUser.images ?? []
-      } : null
-    };
-  }) : []
+  matchIds: user.matchIds
+    ? user.matchIds.map((match: any) => {
+        const matchedUser = Array.isArray(match.users) ? match.users.find((u: any) => u._id.toString() !== currentUserId) : null;
+
+        return {
+          id: match._id.toString(),
+          matchedAt: match.matchedAt,
+          unmatched: match.unmatched || false,
+          startedConversation: match.startedConversation || false,
+          matchedUser: matchedUser
+            ? {
+                id: matchedUser._id.toString(),
+                name: matchedUser.name,
+                images: matchedUser.images ?? [],
+              }
+            : null,
+        };
+      })
+    : [],
 });
 
 export const getOtherUsers: QueryResolvers['getOtherUsers'] = async (_, { _id }) => {
-  const currentUser = await Usermodel.findById(_id)
-    .populate('likedBy')
-    .populate('likedTo')
-    .populate('dislikedTo')
-    .lean();
+  const currentUser = await Usermodel.findById(_id).populate('likedBy').populate('likedTo').populate('dislikedTo').lean();
 
   if (!currentUser) throw new Error('User not found');
 
   const currentUserObj: any = currentUser;
+  const likedToIds = new Set(currentUserObj.likedTo.map((u: any) => u._id.toString()));
 
-  const likedOrLikedByIds = new Set([
-    ...currentUserObj.likedBy.map((u: any) => u._id.toString()),
-    ...currentUserObj.likedTo.map((u: any) => u._id.toString()),
-    _id
-  ]);
-
-  const dislikedIds = new Set(
-    (currentUserObj.dislikedTo || []).map((u: any) => u._id.toString())
-  );
+  const dislikedIds = new Set((currentUserObj.dislikedTo || []).map((u: any) => u._id.toString()));
 
   const matches = await MatchModel.find({ users: _id, unmatched: false }).lean();
-  const matchedUserIds = new Set(
-    matches.flatMap((m) =>
-      (m.users as Types.ObjectId[]).map((uid: Types.ObjectId) => uid.toString())
-    ).filter((uid: string) => uid !== _id)
-  );
+  const matchedUserIds = new Set(matches.flatMap((m) => (m.users as Types.ObjectId[]).map((uid: Types.ObjectId) => uid.toString())).filter((uid: string) => uid !== _id));
 
-  const excludedIds = new Set([
-    ...likedOrLikedByIds,
-    ...matchedUserIds,
-    ...dislikedIds
-  ]);
+  const excludedIds = new Set([...likedToIds, ...matchedUserIds, ...dislikedIds]);
 
   const otherUsers = await Usermodel.find({ _id: { $nin: Array.from(excludedIds) } })
     .populate('likedBy')
@@ -89,12 +72,11 @@ export const getOtherUsers: QueryResolvers['getOtherUsers'] = async (_, { _id })
       populate: {
         path: 'users',
         model: 'User',
-        select:
-          'name email _id images profession dateOfBirth gender genderPreferences bio interests schoolWork',
+        select: 'name email _id images profession dateOfBirth gender genderPreferences bio interests schoolWork',
       },
     })
     .populate('interests')
     .lean();
 
-  return otherUsers.map(user => transformUser(user, _id));
+  return otherUsers.map((user) => transformUser(user, _id));
 };

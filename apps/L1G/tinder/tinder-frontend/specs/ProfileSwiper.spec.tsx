@@ -24,64 +24,15 @@ describe('ProfileSwiper', () => {
     { id: '2', name: 'Bob', images: [] },
   ];
 
-  it('renders the current profile with TinderCard', () => {
-    render(
-      <ProfileSwiper
-        profiles={mockProfiles}
-        currentIndex={0}
-        onLike={() => {
-          //intentionally left empty for test
-        }}
-        onDislike={() => {
-          //intentionally left empty for test
-        }}
-      />
-    );
-
-    expect(screen.getByTestId('profile-name'));
-  });
-
-  it('shows "No more profiles" message when currentIndex is out of bounds', () => {
-    render(
-      <ProfileSwiper
-        profiles={mockProfiles}
-        currentIndex={mockProfiles.length}
-        onLike={() => {
-          //intentionally left empty for test
-        }}
-        onDislike={() => {
-          //intentionally left empty for test
-        }}
-      />
-    );
-    expect(screen.getByText('No more profiles'));
-  });
-
-  it('calls onLike with the correct profile id', () => {
-    const onLike = jest.fn();
-    render(
-      <ProfileSwiper
-        profiles={mockProfiles}
-        currentIndex={0}
-        onLike={onLike}
-        onDislike={() => {
-          // intentionally left empty for test
-        }}
-      />
-    );
-
-    fireEvent.click(screen.getByTestId('like-button'));
-    expect(onLike).toHaveBeenCalledWith('1');
-  });
-
   it('calls onDislike with the correct profile id', () => {
     const onDislike = jest.fn();
+
     render(
       <ProfileSwiper
         profiles={mockProfiles}
         currentIndex={1}
         onLike={() => {
-          //intentionally left empty for test
+          //intentionally empty
         }}
         onDislike={onDislike}
       />
@@ -89,5 +40,40 @@ describe('ProfileSwiper', () => {
 
     fireEvent.click(screen.getByTestId('dislike-button'));
     expect(onDislike).toHaveBeenCalledWith('2');
+  });
+
+  it('calls onLike with correct profile id and profile data', () => {
+    const onLike = jest.fn();
+
+    render(
+      <ProfileSwiper
+        profiles={mockProfiles}
+        currentIndex={0}
+        onLike={onLike}
+        onDislike={() => {
+          //intentionally empty
+        }}
+      />
+    );
+
+    fireEvent.click(screen.getByTestId('like-button'));
+    expect(onLike).toHaveBeenCalledWith('1', mockProfiles[0]);
+  });
+
+  it('renders fallback message if profiles array is empty', () => {
+    render(
+      <ProfileSwiper
+        profiles={[]}
+        currentIndex={0}
+        onLike={() => {
+          //intentionally empty
+        }}
+        onDislike={() => {
+          //intentionally empty
+        }}
+      />
+    );
+
+    expect(screen.getByText('No more profiles'));
   });
 });

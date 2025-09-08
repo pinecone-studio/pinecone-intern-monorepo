@@ -1,7 +1,7 @@
-import OrdersHistory from '@/components/History';
+import { OrderHistory } from '@/components/OrderHistory';
 import React from 'react';
 
 const Historybudge = () => {
-  return <OrdersHistory />;
+  return <OrderHistory />;
 };
 export default Historybudge;

@@ -368,3 +368,4 @@ describe('Mobile drawer behavior', () => {
     expect(drawer.className).toContain('-translate-x-full');
   });
 });
+

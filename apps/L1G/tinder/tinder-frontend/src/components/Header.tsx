@@ -26,7 +26,7 @@ export const Header = () => {
   };
   return (
     <div className="w-full h-[64px] py-4 flex justify-center items-center border border-b-[#E4E4E7] px-4">
-      <div className="w-[1280px] max-w-[1280px] flex justify-between items-center">
+      <div className="w-full flex justify-between items-center">
         <TinderLogo handleTohome={handleTohome} />
 
         <div className="w-fit h-fit flex justify-center items-center gap-4">

@@ -7,6 +7,7 @@ import { GraphQLError } from 'graphql';
 interface LikeResponse {
   isMatch: boolean;
   message: string;
+  matchId?: string;
 }
 
 export const like = async (_: unknown, args: LikeArgs): Promise<LikeResponse> => {
@@ -34,12 +35,14 @@ export const like = async (_: unknown, args: LikeArgs): Promise<LikeResponse> =>
       return {
         isMatch: true,
         message: "It's a match! You can now chat!",
+        matchId: match._id.toString(),
       };
     }
 
     return {
       isMatch: false,
       message: 'Like successful, waiting for a match.',
+      matchId: '',
     };
   } catch (error) {
     console.error('Like failed:', (error as Error).message);

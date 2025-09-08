@@ -64,6 +64,7 @@ export const SignInComponent = () => {
       });
 
       localStorage.setItem('token', data?.signIn.token || '');
+
       if (data?.signIn.user.role === 'admin') {
         router.push('/order');
       } else if (data?.signIn.user.role === 'user') {

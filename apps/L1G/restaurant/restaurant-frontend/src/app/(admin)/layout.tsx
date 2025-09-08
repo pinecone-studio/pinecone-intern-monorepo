@@ -1,5 +1,6 @@
 import { ProtectedRoute } from '@/components/providers/RouteWrapper';
 import Image from 'next/image';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -8,7 +9,14 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="w-full flex-shrink-0 flex flex-col py-4 px-6 gap-3 border border-[#E4E4E7] border-solid bg-white">
           <div className="flex w-full justify-between items-center">
             <Image width={32} height={32} className="w-8 h-8 rounded-full" src="/mainLogo.png" alt="Mainlogo" />
-            <Image width={36} height={36} className="w-9 h-9 rounded-full" src="/userLogo.jpg" alt="Userlogo" />
+            <Popover>
+              <PopoverTrigger asChild>
+                <Image width={36} height={36} className="w-9 h-9 rounded-full" src="/userLogo.jpg" alt="Userlogo" />
+              </PopoverTrigger>
+              <PopoverContent className="w-fit">
+                <a href="/sign-in">Гарах</a>
+              </PopoverContent>
+            </Popover>
           </div>
           <div className="flex gap-4">
             <a className="text-sm" href="/order">
