@@ -27,7 +27,7 @@ const ViewProfile = ({ user }: ViewProfileProps) => {
       <DialogTrigger asChild>
         <button className="flex items-center gap-3 w-full px-4 py-3 text-left text-sm text-gray-700 hover:bg-gray-50 transition-colors">
           <User size={18} className="text-blue-500" />
-          <span className="font-medium">View Profile</span>
+          <span className="font-medium">View Picture</span>
         </button>
       </DialogTrigger>
 
