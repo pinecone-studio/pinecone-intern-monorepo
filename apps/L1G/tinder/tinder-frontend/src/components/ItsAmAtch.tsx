@@ -55,6 +55,7 @@ const MatchPopup = ({ onClose, matchedUsers, data, setConversations, setChattedU
     profession: '',
     age: 0,
     startedConversation: false,
+    bio: '',
   };
 
   const handleSendMessageCallback = useCallback(async () => {
