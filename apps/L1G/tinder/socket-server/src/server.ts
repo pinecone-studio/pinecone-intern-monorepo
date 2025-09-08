@@ -97,29 +97,64 @@ io.on('connection', (socket) => {
     }
   });
 
-  // Handle new match creation
-  socket.on('new_match_created', (data: { matchId: string; user1Id: string; user2Id: string; matchData: any }) => {
-    const { matchId, user1Id, user2Id, matchData } = data;
+  socket.on('user_liked', (data: { likedBy: string; likedUserId: string }) => {
+    const { likedBy, likedUserId } = data;
+    console.log(`👍 User ${likedBy} liked User ${likedUserId}`);
 
-    // Join both users to the new match room
-    socket.join(matchId);
-
-    // Notify both users about the new match
-    io.to(`user_${user1Id}`).emit('match_created', {
-      matchId,
-      matchedUser: matchData.user2,
+    io.to(`user_${likedUserId}`).emit('liked_notification', {
+      fromUserId: likedBy,
       timestamp: new Date(),
     });
+  });
+  socket.on('user_disliked', (data: { dislikedBy: string; dislikedUserId: string }) => {
+    const { dislikedBy, dislikedUserId } = data;
+    console.log(`👎 User ${dislikedBy} disliked User ${dislikedUserId}`);
 
-    io.to(`user_${user2Id}`).emit('match_created', {
-      matchId,
-      matchedUser: matchData.user1,
+    io.to(`user_${dislikedUserId}`).emit('disliked_notification', {
+      fromUserId: dislikedBy,
       timestamp: new Date(),
     });
-
-    console.log(`💕 New match created: ${matchId} between ${user1Id} and ${user2Id}`);
   });
 
+  // Handle new match creation
+  socket.on('new_match_created', (data) => {
+    const { matchId, user1Id, user2Id, matchData } = data;
+    console.log('🔄 Processing new match creation:', { matchId, user1Id, user2Id });
+    socket.join(matchId);
+    const user1Connection = connectedUsers.get(user1Id);
+    const user2Connection = connectedUsers.get(user2Id);
+    if (user1Connection) {
+      user1Connection.matchIds = [...user1Connection.matchIds, matchId];
+      connectedUsers.set(user1Id, user1Connection);
+    }
+    if (user2Connection) {
+      user2Connection.matchIds = [...user2Connection.matchIds, matchId];
+      connectedUsers.set(user2Id, user2Connection);
+    }
+    io.to(`user_${user1Id}`).emit('match_created', {
+      matchId,
+      timestamp: new Date().toISOString(),
+      matchedUser: {
+        id: user2Id,
+        name: matchData.user2?.name || 'Unknown',
+        images: matchData.user2?.images || [],
+        dateOfBirth: matchData.user2?.dateOfBirth || null,
+        profession: matchData.user2?.profession || null,
+      },
+    });
+    io.to(`user_${user2Id}`).emit('match_created', {
+      matchId,
+      timestamp: new Date().toISOString(),
+      matchedUser: {
+        id: user1Id,
+        name: matchData.user1?.name || 'Unknown',
+        images: matchData.user1?.images || [],
+        dateOfBirth: matchData.user1?.dateOfBirth || null,
+        profession: matchData.user1?.profession || null,
+      },
+    });
+    console.log(`💕 New match created and emitted: ${matchId} between ${user1Id} and ${user2Id}`);
+  });
   // Handle chat messages with enhanced features
   socket.on('chat_message', (data: { matchId: string; content: string; senderId: string; receiverId: string; messageId?: string; tempId?: string; timestamp: string }) => {
     const { matchId, content, senderId, receiverId, messageId, tempId, timestamp } = data;

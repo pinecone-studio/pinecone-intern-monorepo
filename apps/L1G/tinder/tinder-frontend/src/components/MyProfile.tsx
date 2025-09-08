@@ -12,6 +12,7 @@ import Loading from './Loading';
 import { LogoutBtn } from './LogoutBtn';
 import { useRouter } from 'next/navigation';
 import { DeleteAccBtn } from './DeleteAccBtn';
+import { initializeApollo } from 'utils/apollo-client';
 
 type MenuType = 'profile' | 'images' | 'settings' | 'logout';
 
@@ -29,7 +30,7 @@ export const MyProfile = () => {
   if (loading)
     return (
       <div>
-        <Loading msg='Please wait...'/>
+        <Loading msg="Please wait..." />
       </div>
     );
 
@@ -62,15 +63,22 @@ export const SidebarMenu = ({ menu, setMenu, isOpen, setIsOpen }: { menu: MenuTy
   };
 
   const router = useRouter();
-  const handleLogout = () => {
+  const handleLogout = async () => {
     try {
+      const client = initializeApollo();
+
+      // Clear auth token
       localStorage.removeItem('token');
+
+      // Clear Apollo cache
+      await client.clearStore();
+
+      // Redirect to home
       router.push('/');
     } catch (error) {
-      console.log(error);
+      console.error('Logout error:', error);
     }
   };
-
   return (
     <>
       {/* Sidebar for desktop */}

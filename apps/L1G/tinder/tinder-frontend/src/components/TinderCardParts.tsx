@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, X, Check } from 'lucide-react';
-import { UserProfile } from '@/app/page';
+import { ChevronLeft, ChevronRight, X, Heart } from 'lucide-react';
+import type { UserProfile } from '@/app/page';
 import { Interest } from './Interest';
 
 export const ImageNavigation = ({ onPrev, onNext, images, currentIndex }: { onPrev: () => void; onNext: () => void; images: string[]; currentIndex: number }) => (
@@ -26,24 +26,14 @@ export const ImageNavigation = ({ onPrev, onNext, images, currentIndex }: { onPr
 /* eslint-disable complexity*/
 export const LikeDislikeButtons = ({ onLike, onDislike }: { onLike: () => void; onDislike: () => void }) => (
   <div className="flex w-full justify-center gap-4">
-    <Button
-      data-testid="dislike"
-      variant="outline"
-      size="icon"
-      className="w-11 h-11 rounded-full border-2 shadow-md border-[#E11D48E5] hover:border-red-300 hover:bg-red-50 group bg-white"
-      onClick={onDislike}
-    >
-      <X size={20} className="w-6 h-6 text-[#E11D48] group-hover:text-red-600" />
-    </Button>
-    <Button
-      data-testid="like"
-      variant="outline"
-      size="icon"
-      className="w-11 h-11 rounded-full border-2 shadow-md border-[#18BA51] hover:border-green-300 hover:bg-green-50 group bg-white"
-      onClick={onLike}
-    >
-      <Check size={20} className="w-6 h-6 text-[#18BA51] group-hover:text-green-600 " />
-    </Button>
+    <div className="flex w-full justify-center gap-4">
+      <Button data-testid="dislike" variant="outline" size="icon" className="w-20 h-20 rounded-full border-[1px] border-gray-200 shadow-md group" onClick={onDislike}>
+        <X size={20} className="w-10 h-10 text-pink-400 group-hover:text-pink-300" />
+      </Button>
+      <Button data-testid="like" variant="outline" size="icon" className="w-20 h-20 rounded-full border-[1px] border-gray-200 shadow-md group" onClick={onLike}>
+        <Heart size={20} className="w-10 h-10 text-green-400 group-hover:text-green-300 fill-current" />
+      </Button>
+    </div>
   </div>
 );
 
@@ -99,7 +89,6 @@ export const CardWithImageAndInfo = ({
         <ProfileImageDisplay imageError={imageError} imageSrc={images[currentImageIndex]} alt={`${profile.name} - Photo ${currentImageIndex + 1}`} handleImageError={handleImageError} />
 
         {images.length > 1 && <ImageNavigation onPrev={prevImage} onNext={nextImage} images={images} currentIndex={currentImageIndex} />}
-
 
         <div className="absolute h-[140px] flex flex-col justify-end items-start bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 gap-2 text-white">
           <ProfileInfo profile={profile} images={images} currentImageIndex={currentImageIndex} />

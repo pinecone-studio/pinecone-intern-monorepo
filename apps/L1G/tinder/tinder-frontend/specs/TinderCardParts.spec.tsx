@@ -1,5 +1,6 @@
+/* eslint-disable max-lines */
 import { render, screen } from '@testing-library/react';
-import { CardWithImageAndInfo } from '@/components/TinderCardParts';
+import { CardWithImageAndInfo, LikeDislikeButtons } from '@/components/TinderCardParts';
 import '@testing-library/jest-dom';
 
 jest.mock('@/components/Interest', () => ({
@@ -112,5 +113,57 @@ describe('CardWithImageAndInfo Component - ProfileInfo', () => {
     expect(screen.getByText('Test User, 25')).toBeInTheDocument();
     expect(screen.queryByTestId('interest')).not.toBeInTheDocument();
     expect(screen.queryByText('my bio')).not.toBeInTheDocument();
+  });
+
+  it('renders ProfileImageDisplay with imageError true', () => {
+    render(<CardWithImageAndInfo {...defaultProps} imageError={true} />);
+
+    expect(screen.getByText('Test User, 25')).toBeInTheDocument();
+    expect(screen.getByAltText('Test User - Photo 1')).toBeInTheDocument();
+  });
+
+  it('renders ProfileImageDisplay with imageError false', () => {
+    render(<CardWithImageAndInfo {...defaultProps} imageError={false} />);
+
+    expect(screen.getByText('Test User, 25')).toBeInTheDocument();
+    expect(screen.getByAltText('Test User - Photo 1')).toBeInTheDocument();
+  });
+  it('renders default image when imageSrc is empty', () => {
+    const profileWithNoImage = {
+      ...mockProfile,
+      images: [''], // empty image string
+    };
+
+    render(<CardWithImageAndInfo {...defaultProps} profile={profileWithNoImage} images={['']} />);
+
+    const image = screen.getByRole('img'); // from mocked next/image
+    expect(image).toHaveAttribute('src', '/profile.jpg');
+  });
+});
+
+describe('LikeDislikeButtons Component', () => {
+  it('renders like and dislike buttons', () => {
+    const mockOnLike = jest.fn();
+    const mockOnDislike = jest.fn();
+
+    render(<LikeDislikeButtons onLike={mockOnLike} onDislike={mockOnDislike} />);
+
+    expect(screen.getByTestId('like')).toBeInTheDocument();
+    expect(screen.getByTestId('dislike')).toBeInTheDocument();
+  });
+  it('calls onLike and onDislike handlers when buttons are clicked', () => {
+    const mockOnLike = jest.fn();
+    const mockOnDislike = jest.fn();
+
+    render(<LikeDislikeButtons onLike={mockOnLike} onDislike={mockOnDislike} />);
+
+    const likeButton = screen.getByTestId('like');
+    const dislikeButton = screen.getByTestId('dislike');
+
+    likeButton.click();
+    dislikeButton.click();
+
+    expect(mockOnLike).toHaveBeenCalledTimes(1);
+    expect(mockOnDislike).toHaveBeenCalledTimes(1);
   });
 });

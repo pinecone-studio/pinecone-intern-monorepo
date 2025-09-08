@@ -10,11 +10,13 @@ type interest = {
 
 export interface UserProfile {
   id: string;
-  name: string | null | undefined;
+  name: string;
   age?: number;
   bio: string;
   interests: interest[];
   images: string[] | null;
+  dateOfBirth?: string;
+  profession?: string;
 }
 
 const Home = () => {
@@ -23,7 +25,7 @@ const Home = () => {
   if (loading)
     return (
       <div>
-        <Loading msg='Please wait..'/>
+        <Loading msg="Please wait.." />
       </div>
     );
 
