@@ -20,7 +20,7 @@ const Loading = ({ msg }: { msg: string }) => {
       </div>
 
       <div className="pb-8">
-        <p className="text-xs text-gray-400">©2024 Tinder</p>
+        <p className="text-xs text-gray-400">©2025 Tinder</p>
       </div>
     </div>
   );
