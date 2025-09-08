@@ -35,6 +35,14 @@ Object.defineProperty(window, 'localStorage', {
   writable: true,
 });
 
+// Mock apollo client - ЭНИЙГ ЭХЭНД ТАВИХ ШААРДЛАГАТАЙ
+const mockClearStore = jest.fn().mockResolvedValue(undefined);
+jest.mock('utils/apollo-client', () => ({
+  initializeApollo: () => ({
+    clearStore: mockClearStore,
+  }),
+}));
+
 // Apollo mocks
 const mockGetMeQuery: MockedResponse = {
   request: {
@@ -135,6 +143,7 @@ describe('SidebarMenu Component', () => {
   beforeEach(() => {
     mockPush.mockClear();
     mockRemoveItem.mockClear();
+    mockClearStore.mockClear();
   });
 
   it('handles logout button click - removes token and redirects', async () => {
@@ -143,7 +152,7 @@ describe('SidebarMenu Component', () => {
 
     render(
       <TestWrapper>
-        <SidebarMenu menu="logout" setMenu={mockSetMenu} isOpen={false} setIsOpen={mockSetIsOpen} />
+        <SidebarMenu menu="profile" setMenu={mockSetMenu} isOpen={false} setIsOpen={mockSetIsOpen} />
       </TestWrapper>
     );
 
@@ -152,14 +161,25 @@ describe('SidebarMenu Component', () => {
 
     await user.click(logoutButton);
 
-    expect(mockRemoveItem).toHaveBeenCalledWith('token');
-    expect(mockPush).toHaveBeenCalledWith('/');
+    // Wait for async operations to complete
+    await waitFor(() => {
+      expect(mockRemoveItem).toHaveBeenCalledWith('token');
+    });
+
+    await waitFor(() => {
+      expect(mockClearStore).toHaveBeenCalled();
+    });
+
+    await waitFor(() => {
+      expect(mockPush).toHaveBeenCalledWith('/');
+    });
   });
 
   it('handles localStorage error gracefully during logout', async () => {
-    const consoleSpy = jest.spyOn(console, 'log').mockImplementation(); // 👈 энд log гэж солих
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
 
-    mockRemoveItem.mockImplementation(() => {
+    // Mock localStorage to throw error
+    mockRemoveItem.mockImplementationOnce(() => {
       throw new Error('Storage error');
     });
 
@@ -168,15 +188,21 @@ describe('SidebarMenu Component', () => {
 
     render(
       <TestWrapper>
-        <SidebarMenu menu="logout" setMenu={mockSetMenu} isOpen={false} setIsOpen={mockSetIsOpen} />
+        <SidebarMenu menu="profile" setMenu={mockSetMenu} isOpen={false} setIsOpen={mockSetIsOpen} />
       </TestWrapper>
     );
 
     const user = userEvent.setup();
     const logoutButton = screen.getByRole('button', { name: /Log out/i });
+
     await user.click(logoutButton);
 
-    expect(consoleSpy).toHaveBeenCalledWith(expect.any(Error)); // 👈 log дээр spy хийсэн учраас ажиллана
+    // Wait for error to be logged
+    await waitFor(() => {
+      expect(consoleSpy).toHaveBeenCalledWith('Logout error:', expect.any(Error));
+    });
+
+    // Router push should not be called when there's an error
     expect(mockPush).not.toHaveBeenCalled();
 
     consoleSpy.mockRestore();
@@ -369,4 +395,3 @@ describe('Mobile drawer behavior', () => {
     expect(drawer.className).toContain('-translate-x-full');
   });
 });
-
