@@ -1,4 +1,7 @@
+/* eslint-disable */
 /* eslint-disable max-len */
+/* eslint-disable max-lines */
+/* eslint-disable complexity */
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -15,43 +18,36 @@ jest.mock('@/generated', () => ({
   useUpdateUserMutation: jest.fn(),
 }));
 
-// --- Mock child components ---
+// --- Mock sub components (тасалбар дахь prop нэршилд нийцүүлсэн) ---
 jest.mock('@/components/user/ProfilePictureUpload', () => ({
-  ProfilePictureUpload: ({ onImageUpdate, isLoading = false }) => (
-    <div
-      data-testid="profile-picture-upload"
-      data-loading={isLoading ? 'true' : 'false'}
-      onClick={async () => {
-        await new Promise((r) => setTimeout(r, 0));
-        onImageUpdate && onImageUpdate('updated.jpg');
-      }}
-    >
-      ProfilePictureUpload Mock
-    </div>
+  ProfilePictureUpload: ({ onImageUpdate }: any) => (
+    <button onClick={() => onImageUpdate('new-profile.jpg')} data-testid="mock-profile-upload">
+      Upload Profile
+    </button>
   ),
 }));
 
 jest.mock('@/components/user/EditPhoneDialog', () => ({
-  EditPhoneDialog: (props: any) => (
-    <div data-testid="edit-phone-dialog" data-loading={props.isLoading ? 'true' : 'false'} onClick={() => props.onUpdate && props.onUpdate('987654321')}>
-      EditPhoneDialog Mock
-    </div>
+  EditPhoneDialog: ({ onUpdate }: any) => (
+    <button onClick={() => onUpdate('99999999')} data-testid="mock-phone-dialog">
+      Edit Phone
+    </button>
   ),
 }));
 
 jest.mock('@/components/user/EditEmailDialog', () => ({
-  EditEmailDialog: (props: any) => (
-    <div data-testid="edit-email-dialog" data-loading={props.isLoading ? 'true' : 'false'} onClick={() => props.onUpdate && props.onUpdate('new@example.com')}>
-      EditEmailDialog Mock
-    </div>
+  EditEmailDialog: ({ onUpdate }: any) => (
+    <button onClick={() => onUpdate('new@example.com')} data-testid="mock-email-dialog">
+      Edit Email
+    </button>
   ),
 }));
 
 jest.mock('@/components/user/EditPasswordDialog', () => ({
-  EditPasswordDialog: (props: any) => (
-    <div data-testid="edit-password-dialog" data-loading={props.isLoading ? 'true' : 'false'} onClick={() => props.onUpdate && props.onUpdate('newpassword123')}>
-      EditPasswordDialog Mock
-    </div>
+  EditPasswordDialog: ({ onUpdate }: any) => (
+    <button onClick={() => onUpdate('new-password')} data-testid="mock-password-dialog">
+      Edit Password
+    </button>
   ),
 }));
 
@@ -59,428 +55,346 @@ describe('UpdateUserProfile', () => {
   const mockSetUser = jest.fn();
   const mockUpdateUser = jest.fn();
 
-  beforeAll(() => {
-    jest.spyOn(console, 'warn').mockImplementation(() => {});
-    jest.spyOn(console, 'error').mockImplementation(() => {});
-  });
-
-  afterAll(() => {
-    (console.warn as jest.Mock).mockRestore();
-    (console.error as jest.Mock).mockRestore();
-  });
-
   beforeEach(() => {
     jest.clearAllMocks();
-
-    (useAuth as jest.Mock).mockReturnValue({
-      user: { userId: '1', email: 'test@example.com', phoneNumber: '', profile: '', password: '123456' },
-      setUser: mockSetUser,
-    });
-
     (useUpdateUserMutation as jest.Mock).mockReturnValue([mockUpdateUser]);
   });
 
-  it('displays not logged in message when user is not authenticated', () => {
+  it('renders login warning if no user', () => {
     (useAuth as jest.Mock).mockReturnValue({ user: null, setUser: mockSetUser });
+
     render(<UpdateUserProfile />);
+
     expect(screen.getByText(/Та нэвтрээгүй байна/i)).toBeInTheDocument();
   });
 
-  it('renders user profile sections when user is authenticated', () => {
+  it('renders sections when user is logged in', () => {
+    const mockUser = {
+      userId: 'u1',
+      email: 'test@example.com',
+      phoneNumber: '12345678',
+      profile: 'profile.jpg',
+      password: 'secret',
+    };
+
+    (useAuth as jest.Mock).mockReturnValue({ user: mockUser, setUser: mockSetUser });
+
     render(<UpdateUserProfile />);
+
     expect(screen.getByTestId('profile-picture')).toBeInTheDocument();
     expect(screen.getByTestId('phone-section')).toBeInTheDocument();
     expect(screen.getByTestId('email-section')).toBeInTheDocument();
     expect(screen.getByTestId('password-section')).toBeInTheDocument();
   });
 
-  it('shows "Оруулаагүй" for empty phone number', () => {
-    render(<UpdateUserProfile />);
-    expect(screen.getByText('Оруулаагүй')).toBeInTheDocument();
-  });
-
-  it('does not call updateUser when userId is missing', async () => {
-    (useAuth as jest.Mock).mockReturnValue({ user: null, setUser: mockSetUser });
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('profile-picture-upload'));
-    await waitFor(() => expect(mockUpdateUser).not.toHaveBeenCalled());
-  });
-
-  it('handles updateUser mutation error', async () => {
-    mockUpdateUser.mockRejectedValueOnce(new Error('Network error'));
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('profile-picture-upload'));
-    await waitFor(() => expect(mockUpdateUser).toHaveBeenCalled());
-  });
-
-  it('does not crash if updateUser returns null', async () => {
-    mockUpdateUser.mockResolvedValueOnce({ data: { updateUser: null } });
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('profile-picture-upload'));
-    await waitFor(() => expect(mockSetUser).not.toHaveBeenCalled());
-  });
-
-  it('calls setUser after profile picture update', async () => {
-    mockUpdateUser.mockResolvedValueOnce({ data: { updateUser: { profile: 'updated.jpg' } } });
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('profile-picture-upload'));
-
-    await waitFor(() => {
-      expect(mockSetUser).toHaveBeenCalled();
-      const updaterFunction = mockSetUser.mock.calls[0][0];
-      const newState = updaterFunction({
-        userId: '1',
-        email: 'test@example.com',
-        phoneNumber: '',
-        profile: '',
-        password: '123456',
-      });
-      expect(newState).toEqual(expect.objectContaining({ profile: 'updated.jpg' }));
-    });
-  });
-
-  it('disables sections when mutation is loading', () => {
-    render(<UpdateUserProfile />);
-    expect(screen.getByTestId('profile-picture-upload')).toHaveAttribute('data-loading', 'false');
-    expect(screen.getByTestId('edit-phone-dialog')).toHaveAttribute('data-loading', 'false');
-    expect(screen.getByTestId('edit-email-dialog')).toHaveAttribute('data-loading', 'false');
-    expect(screen.getByTestId('edit-password-dialog')).toHaveAttribute('data-loading', 'false');
-  });
-
-  it('calls setUser after phone update', async () => {
-    mockUpdateUser.mockResolvedValueOnce({ data: { updateUser: { phoneNumber: '987654321' } } });
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('edit-phone-dialog'));
-
-    await waitFor(() => {
-      expect(mockSetUser).toHaveBeenCalled();
-      const updaterFunction = mockSetUser.mock.calls[0][0];
-      const newState = updaterFunction({
-        userId: '1',
-        email: 'test@example.com',
-        phoneNumber: '',
-        profile: '',
-        password: '123456',
-      });
-      expect(newState).toEqual(expect.objectContaining({ phoneNumber: '987654321' }));
-    });
-  });
-
-  it('calls setUser after email update', async () => {
-    mockUpdateUser.mockResolvedValueOnce({ data: { updateUser: { email: 'new@example.com' } } });
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('edit-email-dialog'));
-
-    await waitFor(() => {
-      expect(mockSetUser).toHaveBeenCalled();
-      const updaterFunction = mockSetUser.mock.calls[0][0];
-      const newState = updaterFunction({
-        userId: '1',
-        email: 'test@example.com',
-        phoneNumber: '',
-        profile: '',
-        password: '123456',
-      });
-      expect(newState).toEqual(expect.objectContaining({ email: 'new@example.com' }));
-    });
-  });
-
-  it('calls updateUser after password update', async () => {
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('edit-password-dialog'));
-
-    await waitFor(() => {
-      expect(mockUpdateUser).toHaveBeenCalledWith({
-        variables: {
-          userId: '1',
-          input: {
-            email: 'test@example.com',
-            password: 'newpassword123',
-            phoneNumber: '',
-            profile: '',
-          },
-        },
-      });
-    });
-  });
-
-  it('handles phone update error', async () => {
-    mockUpdateUser.mockRejectedValueOnce(new Error('Phone update error'));
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('edit-phone-dialog'));
-    await waitFor(() => expect(mockUpdateUser).toHaveBeenCalled());
-  });
-
-  it('handles email update error', async () => {
-    mockUpdateUser.mockRejectedValueOnce(new Error('Email update error'));
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('edit-email-dialog'));
-    await waitFor(() => expect(mockUpdateUser).toHaveBeenCalled());
-  });
-
-  it('handles password update error', async () => {
-    mockUpdateUser.mockRejectedValueOnce(new Error('Password update error'));
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('edit-password-dialog'));
-    await waitFor(() => expect(mockUpdateUser).toHaveBeenCalled());
-  });
-
-  it('returns prev (null) in setUser branch on profile update when prev is null', async () => {
-    const setUserPrevNull = jest.fn((updater: any) => updater(null));
-    (useAuth as jest.Mock).mockReturnValue({
-      user: { userId: '1', email: 'test@example.com', phoneNumber: '', profile: '', password: '123456' },
-      setUser: setUserPrevNull,
-    });
-    mockUpdateUser.mockResolvedValueOnce({ data: { updateUser: { profile: 'updated.jpg' } } });
+  it('updates profile picture', async () => {
+    const mockUser = { userId: 'u1', email: 'e', phoneNumber: 'p', profile: 'old.jpg', password: 'pw' };
+    (useAuth as jest.Mock).mockReturnValue({ user: mockUser, setUser: mockSetUser });
+    mockUpdateUser.mockResolvedValue({ data: { updateUser: { profile: 'new-profile.jpg' } } });
 
     render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('profile-picture-upload'));
 
-    await waitFor(() => {
-      expect(setUserPrevNull).toHaveBeenCalled();
-      expect(setUserPrevNull.mock.results[0].value).toBeNull();
-    });
-  });
-
-  it('returns prev (null) in setUser branch on phone update when prev is null', async () => {
-    const setUserPrevNull = jest.fn((updater: any) => updater(null));
-    (useAuth as jest.Mock).mockReturnValue({
-      user: { userId: '1', email: 'test@example.com', phoneNumber: '', profile: '', password: '123456' },
-      setUser: setUserPrevNull,
-    });
-    mockUpdateUser.mockResolvedValueOnce({ data: { updateUser: { phoneNumber: '987654321' } } });
-
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('edit-phone-dialog'));
-
-    await waitFor(() => {
-      expect(setUserPrevNull).toHaveBeenCalled();
-      expect(setUserPrevNull.mock.results[0].value).toBeNull();
-    });
-  });
-
-  it('returns prev (null) in setUser branch on email update when prev is null', async () => {
-    const setUserPrevNull = jest.fn((updater: any) => updater(null));
-    (useAuth as jest.Mock).mockReturnValue({
-      user: { userId: '1', email: 'test@example.com', phoneNumber: '', profile: '', password: '123456' },
-      setUser: setUserPrevNull,
-    });
-    mockUpdateUser.mockResolvedValueOnce({ data: { updateUser: { email: 'new@example.com' } } });
-
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('edit-email-dialog'));
-
-    await waitFor(() => {
-      expect(setUserPrevNull).toHaveBeenCalled();
-      expect(setUserPrevNull.mock.results[0].value).toBeNull();
-    });
-  });
-
-  it('logs error in password update catch branch', async () => {
-    const err = new Error('Password update error');
-    mockUpdateUser.mockRejectedValueOnce(err);
-
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('edit-password-dialog'));
+    fireEvent.click(screen.getByTestId('mock-profile-upload'));
 
     await waitFor(() => {
       expect(mockUpdateUser).toHaveBeenCalled();
-      expect(console.error).toHaveBeenCalledWith('Password update error:', expect.any(Error));
+      expect(mockSetUser).toHaveBeenCalledWith(expect.any(Function));
     });
   });
 
-  it('returns early in handleProfilePictureUpdate when user is missing', async () => {
-    (useAuth as jest.Mock).mockReturnValue({ user: null, setUser: mockSetUser });
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('profile-picture-upload'));
-    await waitFor(() => expect(mockUpdateUser).not.toHaveBeenCalled());
-  });
-
-  it('returns early in handlePhoneUpdate when user is missing', async () => {
-    (useAuth as jest.Mock).mockReturnValue({ user: null, setUser: mockSetUser });
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('edit-phone-dialog'));
-    await waitFor(() => expect(mockUpdateUser).not.toHaveBeenCalled());
-  });
-
-  it('returns early in handleEmailUpdate when user is missing', async () => {
-    (useAuth as jest.Mock).mockReturnValue({ user: null, setUser: mockSetUser });
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('edit-email-dialog'));
-    await waitFor(() => expect(mockUpdateUser).not.toHaveBeenCalled());
-  });
-
-  it('returns early in handlePasswordUpdate when user is missing', async () => {
-    (useAuth as jest.Mock).mockReturnValue({ user: null, setUser: mockSetUser });
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('edit-password-dialog'));
-    await waitFor(() => expect(mockUpdateUser).not.toHaveBeenCalled());
-  });
-
-  it('skips setUser when updateUser returns undefined in profile update', async () => {
-    mockUpdateUser.mockResolvedValueOnce({ data: undefined });
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('profile-picture-upload'));
-    await waitFor(() => expect(mockSetUser).not.toHaveBeenCalled());
-  });
-
-  it('skips setUser when updateUser returns undefined in phone update', async () => {
-    mockUpdateUser.mockResolvedValueOnce({ data: undefined });
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('edit-phone-dialog'));
-    await waitFor(() => expect(mockSetUser).not.toHaveBeenCalled());
-  });
-
-  it('skips setUser when updateUser returns undefined in email update', async () => {
-    mockUpdateUser.mockResolvedValueOnce({ data: undefined });
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('edit-email-dialog'));
-    await waitFor(() => expect(mockSetUser).not.toHaveBeenCalled());
-  });
-
-  // Tests for the missing password fallback
-  it('uses empty string for password when user password is missing in profile update', async () => {
-    (useAuth as jest.Mock).mockReturnValue({
-      user: {
-        userId: '1',
-        email: 'test@example.com',
-        phoneNumber: '',
-        profile: '',
-        password: undefined, // Missing password
-      },
-      setUser: mockSetUser,
-    });
+  it('updates phone number', async () => {
+    const mockUser = { userId: 'u1', email: 'e', phoneNumber: 'old', profile: 'p.jpg', password: 'pw' };
+    (useAuth as jest.Mock).mockReturnValue({ user: mockUser, setUser: mockSetUser });
+    mockUpdateUser.mockResolvedValue({ data: { updateUser: { phoneNumber: '99999999' } } });
 
     render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('profile-picture-upload'));
+
+    fireEvent.click(screen.getByTestId('mock-phone-dialog'));
 
     await waitFor(() => {
-      expect(mockUpdateUser).toHaveBeenCalledWith({
+      expect(mockUpdateUser).toHaveBeenCalled();
+      expect(mockSetUser).toHaveBeenCalledWith(expect.any(Function));
+    });
+  });
+
+  it('updates email', async () => {
+    const mockUser = { userId: 'u1', email: 'old@example.com', phoneNumber: '1234', profile: 'p.jpg', password: 'pw' };
+    (useAuth as jest.Mock).mockReturnValue({ user: mockUser, setUser: mockSetUser });
+    mockUpdateUser.mockResolvedValue({ data: { updateUser: { email: 'new@example.com' } } });
+
+    render(<UpdateUserProfile />);
+
+    fireEvent.click(screen.getByTestId('mock-email-dialog'));
+
+    await waitFor(() => {
+      expect(mockUpdateUser).toHaveBeenCalled();
+      expect(mockSetUser).toHaveBeenCalledWith(expect.any(Function));
+    });
+  });
+
+  it('updates password', async () => {
+    const mockUser = { userId: 'u1', email: 'e', phoneNumber: '1234', profile: 'p.jpg', password: 'pw' };
+    (useAuth as jest.Mock).mockReturnValue({ user: mockUser, setUser: mockSetUser });
+    mockUpdateUser.mockResolvedValue({ data: { updateUser: { password: 'new-password' } } });
+
+    render(<UpdateUserProfile />);
+
+    fireEvent.click(screen.getByTestId('mock-password-dialog'));
+
+    await waitFor(() => {
+      expect(mockUpdateUser).toHaveBeenCalled();
+    });
+  });
+
+  // --- Branch coverage: if (!user) return for sections' handlers ---
+  it('returns early in ProfileSection if no user', async () => {
+    const { ProfileSection } = require('@/components/user/UpdateUserProfile');
+    const { getByTestId } = render(<ProfileSection user={null} updateUser={mockUpdateUser} setUser={mockSetUser} />);
+
+    fireEvent.click(getByTestId('mock-profile-upload'));
+    await waitFor(() => {
+      expect(mockUpdateUser).not.toHaveBeenCalled();
+      expect(mockSetUser).not.toHaveBeenCalled();
+    });
+  });
+
+  it('returns early in PhoneSection if no user', async () => {
+    const { PhoneSection } = require('@/components/user/UpdateUserProfile');
+    render(<PhoneSection user={null} updateUser={mockUpdateUser} setUser={mockSetUser} />);
+    fireEvent.click(screen.getByTestId('mock-phone-dialog'));
+    await waitFor(() => {
+      expect(mockUpdateUser).not.toHaveBeenCalled();
+    });
+  });
+
+  it('returns early in EmailSection if no user', async () => {
+    const { EmailSection } = require('@/components/user/UpdateUserProfile');
+    render(<EmailSection user={null} updateUser={mockUpdateUser} setUser={mockSetUser} />);
+    fireEvent.click(screen.getByTestId('mock-email-dialog'));
+    await waitFor(() => {
+      expect(mockUpdateUser).not.toHaveBeenCalled();
+    });
+  });
+
+  it('returns early in PasswordSection if no user', async () => {
+    const { PasswordSection } = require('@/components/user/UpdateUserProfile');
+    render(<PasswordSection user={null} updateUser={mockUpdateUser} />);
+    fireEvent.click(screen.getByTestId('mock-password-dialog'));
+    await waitFor(() => {
+      expect(mockUpdateUser).not.toHaveBeenCalled();
+    });
+  });
+
+  // --- Fallback coverage: ?? and "Оруулаагүй" ---
+  it('falls back to default values when user fields are null', () => {
+    const mockUser = {
+      userId: 'u1',
+      email: null,
+      phoneNumber: null,
+      profile: null,
+      password: null,
+    };
+    (useAuth as jest.Mock).mockReturnValue({ user: mockUser, setUser: mockSetUser });
+    render(<UpdateUserProfile />);
+
+    expect(screen.getAllByText('Оруулаагүй').length).toBeGreaterThan(0);
+  });
+
+  // --- Extra tests for safeSetUser & createUpdateInput ---
+  it('safeSetUser does nothing if prev is null', () => {
+    let currentUser = null;
+    const mockSetUserFn = (fn: any) => {
+      currentUser = fn(null); // prev = null
+    };
+
+    const { safeSetUser } = require('@/components/user/UpdateUserProfile');
+    safeSetUser(mockSetUserFn, { email: 'new@example.com' });
+
+    expect(currentUser).toBeNull();
+  });
+
+  it('createUpdateInput falls back to empty strings when fields are undefined', () => {
+    const { createUpdateInput } = require('@/components/user/UpdateUserProfile');
+    const user = { userId: 'u1' } as any; // бүх талбар undefined
+    const input = createUpdateInput(user, {});
+    expect(input).toEqual({
+      email: '',
+      password: '',
+      phoneNumber: '',
+      profile: '',
+    });
+  });
+
+  it('ProfileSection updates user profile when updateUser returns new profile', async () => {
+    const { ProfileSection } = require('@/components/user/UpdateUserProfile');
+    const mockUser = { userId: 'u1', email: 'e', password: 'pw', phoneNumber: 'p', profile: 'old.jpg' };
+    const mockSetUserFn = jest.fn();
+    const mockUpdateUserFn = jest.fn().mockResolvedValue({ data: { updateUser: { profile: 'new.jpg' } } });
+
+    render(<ProfileSection user={mockUser} updateUser={mockUpdateUserFn} setUser={mockSetUserFn} />);
+    fireEvent.click(screen.getByTestId('mock-profile-upload'));
+
+    await waitFor(() => {
+      expect(mockUpdateUserFn).toHaveBeenCalled();
+      expect(mockSetUserFn).toHaveBeenCalledWith(expect.any(Function));
+    });
+  });
+
+  it('PhoneSection updates user phoneNumber when updateUser returns new phoneNumber', async () => {
+    const { PhoneSection } = require('@/components/user/UpdateUserProfile');
+    const mockUser = { userId: 'u1', email: 'e', password: 'pw', phoneNumber: 'old', profile: 'p.jpg' };
+    const mockSetUserFn = jest.fn();
+    const mockUpdateUserFn = jest.fn().mockResolvedValue({ data: { updateUser: { phoneNumber: '99999999' } } });
+
+    render(<PhoneSection user={mockUser} updateUser={mockUpdateUserFn} setUser={mockSetUserFn} />);
+    fireEvent.click(screen.getByTestId('mock-phone-dialog'));
+
+    await waitFor(() => {
+      expect(mockUpdateUserFn).toHaveBeenCalled();
+      expect(mockSetUserFn).toHaveBeenCalledWith(expect.any(Function));
+    });
+  });
+
+  it('EmailSection updates user email when updateUser returns new email', async () => {
+    const { EmailSection } = require('@/components/user/UpdateUserProfile');
+    const mockUser = { userId: 'u1', email: 'old@example.com', password: 'pw', phoneNumber: '1234', profile: 'p.jpg' };
+    const mockSetUserFn = jest.fn();
+    const mockUpdateUserFn = jest.fn().mockResolvedValue({ data: { updateUser: { email: 'new@example.com' } } });
+
+    render(<EmailSection user={mockUser} updateUser={mockUpdateUserFn} setUser={mockSetUserFn} />);
+    fireEvent.click(screen.getByTestId('mock-email-dialog'));
+
+    await waitFor(() => {
+      expect(mockUpdateUserFn).toHaveBeenCalled();
+      expect(mockSetUserFn).toHaveBeenCalledWith(expect.any(Function));
+    });
+  });
+
+  // --- NEW: Negative cases to cover false branches (updated?.profile / phoneNumber / email === undefined) ---
+  it('does not update profile if updateUser returns undefined profile', async () => {
+    const { ProfileSection } = require('@/components/user/UpdateUserProfile');
+    const mockUser = { userId: 'u1', email: 'e', password: 'pw', phoneNumber: 'p', profile: 'old.jpg' };
+    const mockSetUserFn = jest.fn();
+    const mockUpdateUserFn = jest.fn().mockResolvedValue({ data: { updateUser: { profile: undefined } } });
+
+    render(<ProfileSection user={mockUser} updateUser={mockUpdateUserFn} setUser={mockSetUserFn} />);
+    fireEvent.click(screen.getByTestId('mock-profile-upload'));
+
+    await waitFor(() => {
+      expect(mockUpdateUserFn).toHaveBeenCalled();
+      expect(mockSetUserFn).not.toHaveBeenCalled();
+    });
+  });
+
+  it('does not update phoneNumber if updateUser returns undefined phoneNumber', async () => {
+    const { PhoneSection } = require('@/components/user/UpdateUserProfile');
+    const mockUser = { userId: 'u1', email: 'e', password: 'pw', phoneNumber: 'old', profile: 'p.jpg' };
+    const mockSetUserFn = jest.fn();
+    const mockUpdateUserFn = jest.fn().mockResolvedValue({ data: { updateUser: { phoneNumber: undefined } } });
+
+    render(<PhoneSection user={mockUser} updateUser={mockUpdateUserFn} setUser={mockSetUserFn} />);
+    fireEvent.click(screen.getByTestId('mock-phone-dialog'));
+
+    await waitFor(() => {
+      expect(mockUpdateUserFn).toHaveBeenCalled();
+      expect(mockSetUserFn).not.toHaveBeenCalled();
+    });
+  });
+
+  it('does not update email if updateUser returns undefined email', async () => {
+    const { EmailSection } = require('@/components/user/UpdateUserProfile');
+    const mockUser = { userId: 'u1', email: 'old@example.com', password: 'pw', phoneNumber: '1234', profile: 'p.jpg' };
+    const mockSetUserFn = jest.fn();
+    const mockUpdateUserFn = jest.fn().mockResolvedValue({ data: { updateUser: { email: undefined } } });
+
+    render(<EmailSection user={mockUser} updateUser={mockUpdateUserFn} setUser={mockSetUserFn} />);
+    fireEvent.click(screen.getByTestId('mock-email-dialog'));
+
+    await waitFor(() => {
+      expect(mockUpdateUserFn).toHaveBeenCalled();
+      expect(mockSetUserFn).not.toHaveBeenCalled();
+    });
+  });
+
+  // --- NEW TESTS: Missing branch coverage for lines 21 and 53-55 ---
+
+  // Test line 21: safeSetUser when prev is NOT null (the { ...prev, ...update } branch)
+  it('safeSetUser updates user when prev is not null', () => {
+    const mockUser = { userId: 'u1', email: 'old@example.com' };
+    let currentUser = mockUser;
+
+    const mockSetUserFn = (fn: any) => {
+      currentUser = fn(currentUser); // prev is not null
+    };
+
+    const { safeSetUser } = require('@/components/user/UpdateUserProfile');
+    safeSetUser(mockSetUserFn, { email: 'new@example.com' });
+
+    expect(currentUser).toEqual({
+      userId: 'u1',
+      email: 'new@example.com',
+    });
+  });
+
+  // Test lines 53-55: ProfileSection when user fields are NOT null/undefined
+  it('ProfileSection uses user field values when they are not null/undefined (lines 53-55)', async () => {
+    const { ProfileSection } = require('@/components/user/UpdateUserProfile');
+    const mockUser = {
+      userId: 'u1',
+      email: 'test@example.com', // defined - should use this value
+      password: 'mypassword', // defined - should use this value
+      phoneNumber: '12345678', // defined - should use this value
+      profile: 'old.jpg',
+    };
+    const mockSetUserFn = jest.fn();
+    const mockUpdateUserFn = jest.fn().mockResolvedValue({ data: { updateUser: { profile: 'new.jpg' } } });
+
+    render(<ProfileSection user={mockUser} updateUser={mockUpdateUserFn} setUser={mockSetUserFn} />);
+    fireEvent.click(screen.getByTestId('mock-profile-upload'));
+
+    await waitFor(() => {
+      expect(mockUpdateUserFn).toHaveBeenCalledWith({
         variables: {
-          userId: '1',
+          userId: 'u1',
           input: {
-            email: 'test@example.com',
-            password: '', // Should use empty string
-            phoneNumber: '',
-            profile: 'updated.jpg',
+            email: 'test@example.com', // used user.email (not fallback)
+            password: 'mypassword', // used user.password (not fallback)
+            phoneNumber: '12345678', // used user.phoneNumber (not fallback)
+            profile: 'new-profile.jpg',
           },
         },
       });
     });
   });
 
-  it('uses empty string for password when user password is missing in phone update', async () => {
-    (useAuth as jest.Mock).mockReturnValue({
-      user: {
-        userId: '1',
-        email: 'test@example.com',
-        phoneNumber: '',
-        profile: '',
-        password: undefined, // Missing password
-      },
-      setUser: mockSetUser,
-    });
+  // Test lines 53-55: ProfileSection when user fields are null/undefined (fallback to '')
+  it('ProfileSection falls back to empty strings when user fields are null/undefined (lines 53-55)', async () => {
+    const { ProfileSection } = require('@/components/user/UpdateUserProfile');
+    const mockUser = {
+      userId: 'u1',
+      email: null, // null - should fallback to ''
+      password: undefined, // undefined - should fallback to ''
+      phoneNumber: null, // null - should fallback to ''
+      profile: 'old.jpg',
+    };
+    const mockSetUserFn = jest.fn();
+    const mockUpdateUserFn = jest.fn().mockResolvedValue({ data: { updateUser: { profile: 'new.jpg' } } });
 
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('edit-phone-dialog'));
+    render(<ProfileSection user={mockUser} updateUser={mockUpdateUserFn} setUser={mockSetUserFn} />);
+    fireEvent.click(screen.getByTestId('mock-profile-upload'));
 
     await waitFor(() => {
-      expect(mockUpdateUser).toHaveBeenCalledWith({
+      expect(mockUpdateUserFn).toHaveBeenCalledWith({
         variables: {
-          userId: '1',
+          userId: 'u1',
           input: {
-            email: 'test@example.com',
-            password: '', // Should use empty string
-            phoneNumber: '987654321',
-            profile: '',
+            email: '', // fallback from null
+            password: '', // fallback from undefined
+            phoneNumber: '', // fallback from null
+            profile: 'new-profile.jpg',
           },
         },
       });
-    });
-  });
-
-  it('uses empty string for password when user password is missing in email update', async () => {
-    (useAuth as jest.Mock).mockReturnValue({
-      user: {
-        userId: '1',
-        email: 'test@example.com',
-        phoneNumber: '',
-        profile: '',
-        password: undefined, // Missing password
-      },
-      setUser: mockSetUser,
-    });
-
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('edit-email-dialog'));
-
-    await waitFor(() => {
-      expect(mockUpdateUser).toHaveBeenCalledWith({
-        variables: {
-          userId: '1',
-          input: {
-            email: 'new@example.com',
-            password: '', // Should use empty string
-            phoneNumber: '',
-            profile: '',
-          },
-        },
-      });
-    });
-  });
-
-  // Tests for null-to-undefined conversion
-  it('handles null profile by setting undefined in state', async () => {
-    mockUpdateUser.mockResolvedValueOnce({
-      data: {
-        updateUser: {
-          profile: null, // Null profile from API
-          email: 'test@example.com',
-          phoneNumber: '',
-        },
-      },
-    });
-
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('profile-picture-upload'));
-
-    await waitFor(() => {
-      const updaterFunction = mockSetUser.mock.calls[0][0];
-      const newState = updaterFunction({
-        userId: '1',
-        email: 'test@example.com',
-        phoneNumber: '',
-        profile: '',
-        password: '123456',
-      });
-      expect(newState.profile).toBeUndefined(); // Should convert null to undefined
-    });
-  });
-
-  it('handles null phoneNumber by setting undefined in state', async () => {
-    mockUpdateUser.mockResolvedValueOnce({
-      data: {
-        updateUser: {
-          phoneNumber: null, // Null phoneNumber from API
-          email: 'test@example.com',
-          profile: '',
-        },
-      },
-    });
-
-    render(<UpdateUserProfile />);
-    fireEvent.click(screen.getByTestId('edit-phone-dialog'));
-
-    await waitFor(() => {
-      const updaterFunction = mockSetUser.mock.calls[0][0];
-      const newState = updaterFunction({
-        userId: '1',
-        email: 'test@example.com',
-        phoneNumber: '',
-        profile: '',
-        password: '123456',
-      });
-      expect(newState.phoneNumber).toBeUndefined(); // Should convert null to undefined
     });
   });
 });

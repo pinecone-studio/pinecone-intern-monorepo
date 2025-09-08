@@ -11,7 +11,7 @@ import { passwordSchema, type PasswordFormValues } from '@/utils/update-user-uti
 import { zodResolver } from '@hookform/resolvers/zod';
 
 interface EditPasswordDialogProps {
-  onUpdate: (newPassword: string) => Promise<void>;
+  onUpdate: (_newPassword: string) => Promise<void>;
   isLoading?: boolean;
 }
 
@@ -24,10 +24,10 @@ export const EditPasswordDialog = ({ onUpdate, isLoading = false }: EditPassword
     defaultValues: { currentPassword: '', newPassword: '', confirmPassword: '' },
   });
 
-  const onSubmit = async (data: PasswordFormValues) => {
+  const onSubmit = async (_data: PasswordFormValues) => {
     setUpdating(true);
     try {
-      await onUpdate(data.newPassword);
+      await onUpdate(_data.newPassword);
       setOpen(false);
       form.reset();
     } finally {

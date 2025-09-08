@@ -12,7 +12,7 @@ import { phoneSchema, type PhoneFormValues } from '@/utils/update-user-utils';
 
 interface EditPhoneDialogProps {
   phone: string;
-  onUpdate: (phone: string) => Promise<void>;
+  onUpdate: (_phone: string) => Promise<void>;
   isLoading?: boolean;
 }
 
@@ -25,12 +25,12 @@ export const EditPhoneDialog = ({ phone, onUpdate, isLoading = false }: EditPhon
     defaultValues: { phone },
   });
 
-  const onSubmit = async (data: PhoneFormValues) => {
+  const onSubmit = async (_data: PhoneFormValues) => {
     setUpdating(true);
     try {
-      await onUpdate(data.phone);
+      await onUpdate(_data.phone);
       setOpen(false);
-      form.reset({ phone: data.phone });
+      form.reset({ phone: _data.phone });
     } finally {
       setUpdating(false);
     }

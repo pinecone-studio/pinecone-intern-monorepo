@@ -54,7 +54,7 @@ describe('EditEmailDialog', () => {
   });
 
   it('shows updating state while submitting', async () => {
-    const mockOnUpdate = jest.fn(() => new Promise(() => {})); // never resolves
+    const mockOnUpdate = jest.fn(() => new Promise(() => undefined)); // never resolves
     render(<EditEmailDialog currentEmail="test@example.com" onUpdate={mockOnUpdate} />);
     const user = userEvent.setup();
 

@@ -10,7 +10,6 @@ import { Button } from '@/components/ui/button';
 import { useGetTableByNameQuery, useSignInMutation } from '@/generated';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
-import { useAuth } from '@/app/context/AuthContext';
 
 export const SignInComponent = () => {
   const searchParams = useSearchParams();

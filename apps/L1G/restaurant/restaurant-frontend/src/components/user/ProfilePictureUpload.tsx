@@ -8,13 +8,13 @@ import { UploadImage } from '@/utils/image-upload';
 
 interface ProfilePictureUploadProps {
   currentImage?: string;
-  onImageUpdate: (imageUrl: string) => void;
+  onImageUpdate: (_imageUrl: string) => void;
   isLoading?: boolean;
-  onError?: (message: string) => void;
-  onSuccess?: (message: string) => void;
+  onError?: (_message: string) => void;
+  onSuccess?: (_message: string) => void;
 }
 
-export const ProfilePictureUpload = ({ currentImage, onImageUpdate, isLoading = false, onError, onSuccess }: ProfilePictureUploadProps) => {
+export const ProfilePictureUpload = ({ currentImage, onImageUpdate: _onImageUpdate, isLoading = false, onError: _onError, onSuccess: _onSuccess }: ProfilePictureUploadProps) => {
   const [uploading, setUploading] = useState(false);
 
   const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,16 +22,16 @@ export const ProfilePictureUpload = ({ currentImage, onImageUpdate, isLoading = 
     if (!file) return;
 
     if (!file.type.startsWith('image/')) {
-      onError?.('Зөвхөн зураг файл сонгоно уу');
+      _onError?.('Зөвхөн зураг файл сонгоно уу');
       return;
     }
     setUploading(true);
     try {
       const imageUrl = await UploadImage(file);
-      onImageUpdate(imageUrl);
-      onSuccess?.('Профайл зураг шинэчлэгдлээ');
+      _onImageUpdate(imageUrl);
+      _onSuccess?.('Профайл зураг шинэчлэгдлээ');
     } catch {
-      onError?.('Зураг байршуулахад алдаа гарлаа');
+      _onError?.('Зураг байршуулахад алдаа гарлаа');
     } finally {
       setUploading(false);
     }

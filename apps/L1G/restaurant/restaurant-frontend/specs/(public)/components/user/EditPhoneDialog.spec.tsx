@@ -57,7 +57,7 @@ describe('EditPhoneDialog', () => {
   });
 
   it('shows updating state while submitting', async () => {
-    const mockOnUpdatePending = jest.fn(() => new Promise(() => {})); // never resolves
+    const mockOnUpdatePending = jest.fn(() => new Promise(() => undefined)); // never resolves
     render(<EditPhoneDialog phone={defaultPhone} onUpdate={mockOnUpdatePending} />);
     const user = userEvent.setup();
 

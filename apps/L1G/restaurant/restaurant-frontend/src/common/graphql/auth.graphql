@@ -38,5 +38,7 @@ query GetUser($input: GetUserInput!) {
     profile
     password
     email
+    role
+    username
   }
 }

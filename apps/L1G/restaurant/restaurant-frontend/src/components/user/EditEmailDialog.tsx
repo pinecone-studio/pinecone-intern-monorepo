@@ -12,7 +12,7 @@ import { emailSchema, type EmailFormValues } from '@/utils/update-user-utils';
 
 interface EditEmailDialogProps {
   currentEmail: string;
-  onUpdate: (email: string) => Promise<void>;
+  onUpdate: (_email: string) => Promise<void>; // prefixed with underscore to indicate intentionally unused in type definition
   isLoading?: boolean;
 }
 
