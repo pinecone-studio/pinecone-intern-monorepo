@@ -8,6 +8,8 @@ import OrderType from './OrderType';
 import { usePathname } from 'next/navigation';
 import { AddPayload, CartItem } from '@/types/cart';
 import { loadCart, saveCart } from '@/utils/storage';
+typeof window !== 'undefined' && localStorage.removeItem('foodData');
+
 export function removeItemReducer(prev: CartItem[], id: string): CartItem[] {
   const norm = (v: string) => String(v).trim();
   const target = norm(id);
