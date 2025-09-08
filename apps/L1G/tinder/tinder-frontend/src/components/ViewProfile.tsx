@@ -9,7 +9,6 @@ import { CardWithImageAndInfo } from './TinderCardLayout';
 interface ViewProfileProps {
   user: ChatUser;
 }
-
 const ViewProfile = ({ user }: ViewProfileProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [imageError, setImageError] = useState(false);
