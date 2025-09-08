@@ -143,7 +143,7 @@ describe('SidebarMenu Component', () => {
 
     render(
       <TestWrapper>
-        <SidebarMenu menu="profile" setMenu={mockSetMenu} isOpen={false} setIsOpen={mockSetIsOpen} />
+        <SidebarMenu menu="logout" setMenu={mockSetMenu} isOpen={false} setIsOpen={mockSetIsOpen} />
       </TestWrapper>
     );
 
@@ -157,7 +157,8 @@ describe('SidebarMenu Component', () => {
   });
 
   it('handles localStorage error gracefully during logout', async () => {
-    const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+    const consoleSpy = jest.spyOn(console, 'log').mockImplementation(); // 👈 энд log гэж солих
+
     mockRemoveItem.mockImplementation(() => {
       throw new Error('Storage error');
     });
@@ -167,7 +168,7 @@ describe('SidebarMenu Component', () => {
 
     render(
       <TestWrapper>
-        <SidebarMenu menu="profile" setMenu={mockSetMenu} isOpen={false} setIsOpen={mockSetIsOpen} />
+        <SidebarMenu menu="logout" setMenu={mockSetMenu} isOpen={false} setIsOpen={mockSetIsOpen} />
       </TestWrapper>
     );
 
@@ -175,7 +176,7 @@ describe('SidebarMenu Component', () => {
     const logoutButton = screen.getByRole('button', { name: /Log out/i });
     await user.click(logoutButton);
 
-    expect(consoleSpy).toHaveBeenCalledWith(expect.any(Error));
+    expect(consoleSpy).toHaveBeenCalledWith(expect.any(Error)); // 👈 log дээр spy хийсэн учраас ажиллана
     expect(mockPush).not.toHaveBeenCalled();
 
     consoleSpy.mockRestore();
