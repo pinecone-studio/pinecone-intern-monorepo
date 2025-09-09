@@ -82,7 +82,7 @@ export const HomeFooter = () => {
     <div className="max-w-[1552px] w-[1552px] h-[64px] flex justify-between items-center px-4 py-8 gap-4 opacity-50">
       <WhiteTinderLogo />
 
-      <p className="text-[#FAFAFA] font-sans text-sm ">© Copyright 2024</p>
+      <p className="text-[#FAFAFA] font-sans text-sm ">© Copyright 2025</p>
     </div>
   );
 };
