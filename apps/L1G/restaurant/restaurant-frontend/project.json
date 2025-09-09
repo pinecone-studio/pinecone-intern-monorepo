@@ -53,7 +53,7 @@
         "buildTarget": "restaurant-frontend:build:production"
       }
     },
-    
+
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],

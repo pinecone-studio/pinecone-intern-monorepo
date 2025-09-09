@@ -67,7 +67,7 @@ export const handlePaymentSelect = async ({
     setIsWalletDrawerOpen(true);
     return;
   }
-  if (!table) {
+  if (!table || !userId) {
     toast.error(
       <div className="flex items-center gap-2">
         <AlertCircle className="h-5 w-5 text-red-500" />
