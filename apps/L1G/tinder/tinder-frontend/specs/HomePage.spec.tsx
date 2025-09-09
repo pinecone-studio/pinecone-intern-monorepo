@@ -47,6 +47,6 @@ describe('Home page component', () => {
 
   it('renders footer section ', () => {
     render(<HomeFooter />);
-    expect(screen.getByText('© Copyright 2024')).toBeInTheDocument();
+    expect(screen.getByText('© Copyright 2025')).toBeInTheDocument();
   });
 });
