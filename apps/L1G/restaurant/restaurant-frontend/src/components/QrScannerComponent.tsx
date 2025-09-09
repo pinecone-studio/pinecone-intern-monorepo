@@ -55,6 +55,9 @@ export const QrScannerComponent = () => {
     <div className="flex flex-col h-screen justify-center items-center gap-3">
       <h1 className="text-[#09090B]">Ширээний QR код уншуулна уу</h1>
       <video ref={videoRef} className="w-[360px] h-[360px] rounded-3xl object-cover" autoPlay muted playsInline />
+      <a className=" underline text-blue-600" href="/">
+        Буцах
+      </a>
     </div>
   );
 };

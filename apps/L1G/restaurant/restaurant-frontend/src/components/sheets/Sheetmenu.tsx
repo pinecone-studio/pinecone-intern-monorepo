@@ -13,7 +13,7 @@ export const SheetMenu = () => {
         <Menu size={15} />
       </SheetTrigger>
       <SheetContent className="h-full">
-        <Menu className="absolute top-4" size={15} />
+        <Menu className="top-4" size={15} />
         <SheetHeader className="h-full flex flex-col">
           <SheetTitle className="border-b pt-5"></SheetTitle>
           <SheetDescription className="flex flex-col justify-between h-full">
