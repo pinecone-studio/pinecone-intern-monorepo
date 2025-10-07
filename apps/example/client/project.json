@@ -80,39 +80,6 @@
         }
       }
     },
-    "test:local": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "apps/example/client/jest.config.ts",
-        "codeCoverage": true,
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true
-        }
-      },
-      "dependsOn": [{ "target": "graphql-codegen" }]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "apps/example/client/jest.config.ts",
-        "codeCoverage": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true
-        }
-      },
-      "dependsOn": [
-        {
-          "target": "graphql-codegen"
-        }
-      ]
-    },
 
     "graphql-codegen": {
       "executor": "nx:run-commands",
