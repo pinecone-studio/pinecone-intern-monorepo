@@ -1,7 +1,0 @@
-{
-  "buildCommand": "npx nx build ticket-booking-backend",
-  "outputDirectory": "dist/apps/L1E/ticket-booking/ticket-booking-backend",
-  "framework": "nextjs",
-  "installCommand": "yarn install",
-  "devCommand": "npx nx serve ticket-booking-backend"
-}

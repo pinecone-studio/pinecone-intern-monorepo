@@ -44,7 +44,7 @@ describe('generateFederationEnvFile', () => {
 
     jest.spyOn(fs, 'readFile').mockRejectedValue(new Error('Read file error'));
 
-    await expect(federationProjectsAction.generateFederationEnvFile({ name: projectName, path: projectPath }, federationPreviewUrl)).rejects.toThrowError(
+    await expect(federationProjectsAction.generateFederationEnvFile({ name: projectName, path: projectPath }, federationPreviewUrl)).rejects.toThrow(
       /Failed to generate .env.preview file for project testProject/
     );
   });
@@ -84,7 +84,7 @@ describe('generatePreviewLinksForProjects', () => {
       throw new Error(errorMessage);
     });
 
-    await expect(federationProjectsAction.generatePreviewLinksForProjects(projects)).rejects.toThrowError(new RegExp(errorMessage));
+    await expect(federationProjectsAction.generatePreviewLinksForProjects(projects)).rejects.toThrow(new RegExp(errorMessage));
 
     expect(mockDeployProject).toHaveBeenCalledTimes(projects.length);
     projects.forEach((project) => {

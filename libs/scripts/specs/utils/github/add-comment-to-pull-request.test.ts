@@ -69,7 +69,7 @@ describe('getExistingComments', () => {
     (getOctokit as jest.Mock).mockReturnValue(octokitMock);
     const handleApiErrorSpy = jest.spyOn(handleError, 'handleApiError');
     octokitMock.rest.issues.listComments.mockRejectedValue(new Error('API error'));
-    await expect(addCommentToPullRequest.getExistingComments({ octokit: getOctokit('token'), context, pullRequestNumber })).rejects.toThrowError();
+    await expect(addCommentToPullRequest.getExistingComments({ octokit: getOctokit('token'), context, pullRequestNumber })).rejects.toThrow();
     expect(handleApiErrorSpy).toHaveBeenCalledWith('while getting existing comments', expect.any(Error));
   });
 });

@@ -1,7 +1,0 @@
-mutation LikeUser($likedByUser: ID!, $likeReceiver: ID!) {
-  like(likedByUser: $likedByUser, likeReceiver: $likeReceiver) {
-    isMatch
-    message
-    matchId
-  }
-}

@@ -52,7 +52,7 @@ describe('isCommandFailed', () => {
     const errorCode = 1;
     const errorMessage = `Command failed with exit code ${errorCode}`;
 
-    expect(() => runE2eAgainstPreviewLink.isCommandFailed(errorCode)).toThrowError(errorMessage);
+    expect(() => runE2eAgainstPreviewLink.isCommandFailed(errorCode)).toThrow(errorMessage);
   });
 
   it('should return true for zero exit code', () => {

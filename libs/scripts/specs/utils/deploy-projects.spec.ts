@@ -31,7 +31,7 @@ describe('extractDeployedURLFromCommandResult', () => {
     const app = 'yourApp';
     const deploymentCommandResult = 'Command output without the app URL';
     const deploymentCommand = 'test';
-    expect(() => deployProject.extractDeployedURLFromCommandResult({ app, deploymentCommandResult, deploymentCommand })).toThrowError(
+    expect(() => deployProject.extractDeployedURLFromCommandResult({ app, deploymentCommandResult, deploymentCommand })).toThrow(
       `${app} URL not found in the command output from this command result: ${deploymentCommandResult}`
     );
   });
@@ -97,12 +97,12 @@ describe('deployProject', () => {
 describe('handleError', () => {
   it('1. Should throw an error with stdout message if error has stderr', () => {
     const errorWithStderr = { stderr: 'Some error occurred', stdout: 'Some output' };
-    expect(() => deployProject.handleError(errorWithStderr)).toThrowError('Some output');
+    expect(() => deployProject.handleError(errorWithStderr)).toThrow('Some output');
   });
 
   it('2. Should throw the original error if it does not have stderr', () => {
     const errorWithoutStderr = new Error('Some generic error');
-    expect(() => deployProject.handleError(errorWithoutStderr)).toThrowError(errorWithoutStderr);
+    expect(() => deployProject.handleError(errorWithoutStderr)).toThrow(errorWithoutStderr);
   });
 });
 
