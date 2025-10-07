@@ -1,6 +1,0 @@
-query GetUser($id: ID!) {
-  getUser(_id: $id) {
-    images
-    name
-  }
-}
