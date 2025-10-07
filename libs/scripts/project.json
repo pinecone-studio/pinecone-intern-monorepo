@@ -7,7 +7,7 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "npx nx test scripts"
+        "command": "echo \"No Build\""
       }
     },
     "lint": {

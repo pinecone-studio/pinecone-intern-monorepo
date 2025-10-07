@@ -56,7 +56,7 @@ describe('getGithubOctokit', () => {
     githubUtils.getGithubOctokit();
 
     expect(mockGetGithubToken).toHaveBeenCalledTimes(1);
-    expect(getOctokit).toBeCalledTimes(1);
+    expect(getOctokit).toHaveBeenCalledTimes(1);
   });
 });
 

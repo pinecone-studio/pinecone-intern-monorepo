@@ -26,7 +26,7 @@ describe('checkFileExistence', () => {
 
   it('2. Should throw an error for a non-existing file', () => {
     const nonExistentFilePath = 'nonExistentFile.txt';
-    expect(() => federationUtils.checkFileExistence(nonExistentFilePath)).toThrowError(`Could not find any file on this path: ${nonExistentFilePath}`);
+    expect(() => federationUtils.checkFileExistence(nonExistentFilePath)).toThrow(`Could not find any file on this path: ${nonExistentFilePath}`);
   });
 });
 
@@ -43,7 +43,7 @@ describe('readFileIfExists', () => {
 
   it('2. Should throw an error for a non-existing file', () => {
     const nonExistentFilePath = 'nonExistentFile.txt';
-    expect(() => federationUtils.readFileIfExists(nonExistentFilePath)).toThrowError(`Could not find any file on this path: ${nonExistentFilePath}`);
+    expect(() => federationUtils.readFileIfExists(nonExistentFilePath)).toThrow(`Could not find any file on this path: ${nonExistentFilePath}`);
   });
 });
 

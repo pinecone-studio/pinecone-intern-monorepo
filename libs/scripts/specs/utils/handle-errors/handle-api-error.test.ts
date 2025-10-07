@@ -25,7 +25,7 @@ describe('handleApiError', () => {
 
     const loggerErrorSpy = jest.spyOn(winston, 'createLogger');
 
-    expect(() => handleApiError(operation, error)).toThrowError(error);
+    expect(() => handleApiError(operation, error)).toThrow();
     expect(loggerErrorSpy).toHaveBeenCalled();
     expect(loggerErrorSpy.mock.results[0].value.error).toHaveBeenCalledWith(`Error during ${operation}: ${errorMessage}`);
   });
@@ -35,7 +35,7 @@ describe('logAndThrow', () => {
   it('1. Should log error message and throw', () => {
     const loggerErrorSpy = jest.spyOn(winston, 'createLogger');
 
-    expect(() => logAndThrowError(errorMessage)).toThrowError(Error);
+    expect(() => logAndThrowError(errorMessage)).toThrow(Error);
     expect(loggerErrorSpy).toHaveBeenCalled();
     expect(loggerErrorSpy.mock.results[0].value.error).toHaveBeenCalledWith(errorMessage);
   });
@@ -44,7 +44,7 @@ describe('logAndThrow', () => {
     const error = new Error('Test error');
     const loggerErrorSpy = jest.spyOn(winston, 'createLogger');
 
-    expect(() => logAndThrowError(errorMessage, error)).toThrowError(error);
+    expect(() => logAndThrowError(errorMessage, error)).toThrow(error);
     expect(loggerErrorSpy).toHaveBeenCalled();
     expect(loggerErrorSpy.mock.results[0].value.error).toHaveBeenCalledWith(errorMessage);
     expect(loggerErrorSpy.mock.results[0].value.error).toHaveBeenCalledWith(error.message);

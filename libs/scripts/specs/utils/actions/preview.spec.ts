@@ -64,7 +64,7 @@ describe('handleAffectedFederationProjects', () => {
 
     const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
 
-    await expect(previewActionUtils.handleAffectedFederationProjects(affectedApps, federationPreviewUrl)).rejects.toThrowError(`Failed to handle affected federation projects: ${errorMock.stack}`);
+    await expect(previewActionUtils.handleAffectedFederationProjects(affectedApps, federationPreviewUrl)).rejects.toThrow(`Failed to handle affected federation projects: ${errorMock.stack}`);
 
     expect(federationUtils.getAffectedFederationProjects).toHaveBeenCalledWith(affectedApps);
     expect(generateFederationProjectsPreview.generateFederationProjectsPreview).toHaveBeenCalledWith([{ name: 'test', path: 'test/path' }], federationPreviewUrl);
@@ -98,7 +98,7 @@ describe('handleOtherProjects', () => {
     jest.spyOn(federationUtils, 'getAffectedFederationServices').mockReturnValueOnce(['test']);
     const consoleErrorMock = jest.spyOn(console, 'error').mockImplementation();
 
-    await expect(previewActionUtils.handleOtherProjects(affectedApps)).rejects.toThrowError(`Failed to handle other projects: ${errorMock.stack}`);
+    await expect(previewActionUtils.handleOtherProjects(affectedApps)).rejects.toThrow(`Failed to handle other projects: ${errorMock.stack}`);
 
     expect(consoleErrorMock).toHaveBeenCalledWith('Error handling other projects:', errorMock);
     consoleErrorMock.mockRestore();
