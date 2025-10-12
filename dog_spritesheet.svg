@@ -1,0 +1,330 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 96" width="720" height="768" shape-rendering="crispEdges">
+  <defs>
+    <style>
+      .o{fill:#f3a34c}
+      .o2{fill:#e0862f}
+      .w{fill:#ffffff}
+      .b{fill:#1a1a1a}
+      .n{fill:#2b2b2b}
+      .p{fill:#ff6e8a}
+      .c{fill:#7a3f1c}
+      .y{fill:#ffd84d}
+      .g{fill:#6bbf6b}
+      .g2{fill:#3c8f3c}
+      .lbl{fill:#0b0b0b}
+      text{font-family: monospace; font-size:4px; fill:#ffffff}
+    </style>
+
+    <!-- SIDE (RIGHT) torso only (no head, no legs, no tail) -->
+    <g id="torso_side">
+      <rect class="o" x="3" y="10" width="8" height="4"/>
+      <rect class="o" x="5" y="9" width="6" height="1"/>
+      <rect class="o2" x="4" y="11" width="2" height="1"/>
+      <rect class="w" x="6" y="12" width="4" height="2"/>
+      <rect class="w" x="9" y="12" width="2" height="2"/>
+    </g>
+
+    <!-- RIGHT-facing head variants -->
+    <g id="head_right_normal">
+      <rect class="o" x="10" y="5" width="5" height="5"/>
+      <rect class="o2" x="10" y="9" width="5" height="1"/>
+      <rect class="o2" x="13" y="5" width="2" height="1"/>
+      <rect class="o" x="13" y="3" width="2" height="2"/>
+      <rect class="w" x="12" y="8" width="3" height="2"/>
+      <rect class="b" x="12" y="7" width="1" height="1"/>
+      <rect class="n" x="14" y="9" width="1" height="1"/>
+      <rect class="p" x="13" y="10" width="1" height="1"/>
+      <rect class="c" x="10" y="10" width="5" height="1"/>
+      <rect class="y" x="12" y="11" width="2" height="1"/>
+    </g>
+    <g id="head_right_down1">
+      <rect class="o" x="11" y="7" width="5" height="5"/>
+      <rect class="o2" x="11" y="11" width="5" height="1"/>
+      <rect class="o" x="14" y="5" width="2" height="2"/>
+      <rect class="w" x="13" y="10" width="3" height="2"/>
+      <rect class="b" x="13" y="9" width="1" height="1"/>
+      <rect class="n" x="15" y="11" width="1" height="1"/>
+      <rect class="c" x="11" y="12" width="5" height="1"/>
+    </g>
+    <g id="head_right_down2">
+      <rect class="o" x="10" y="8" width="5" height="5"/>
+      <rect class="o2" x="10" y="12" width="5" height="1"/>
+      <rect class="o" x="13" y="6" width="2" height="2"/>
+      <rect class="w" x="12" y="12" width="3" height="2"/>
+      <rect class="b" x="12" y="11" width="1" height="1"/>
+      <rect class="n" x="14" y="13" width="1" height="1"/>
+      <rect class="p" x="13" y="13" width="1" height="1"/>
+      <rect class="c" x="10" y="13" width="5" height="1"/>
+    </g>
+
+    <!-- SIDE legs -->
+    <g id="legs_side_A">
+      <rect class="o" x="4" y="13" width="2" height="3"/>
+      <rect class="o" x="10" y="13" width="2" height="3"/>
+    </g>
+    <g id="legs_side_B">
+      <rect class="o" x="5" y="13" width="2" height="3"/>
+      <rect class="o" x="9" y="13" width="2" height="3"/>
+    </g>
+
+    <!-- SIDE tails -->
+    <g id="tail_side_up"><rect class="o" x="2" y="10" width="2" height="3"/></g>
+    <g id="tail_side_down"><rect class="o" x="2" y="12" width="2" height="2"/></g>
+
+    <!-- FRONT (DOWN) base without legs -->
+    <g id="front_body">
+      <rect class="o" x="4" y="4" width="9" height="6"/>
+      <rect class="o" x="4" y="3" width="2" height="2"/>
+      <rect class="o" x="11" y="3" width="2" height="2"/>
+      <rect class="w" x="5" y="8" width="7" height="3"/>
+      <rect class="b" x="6" y="6" width="1" height="1"/>
+      <rect class="b" x="10" y="6" width="1" height="1"/>
+      <rect class="n" x="8" y="9" width="1" height="1"/>
+      <rect class="p" x="8" y="10" width="1" height="1"/>
+      <rect class="c" x="5" y="10" width="7" height="1"/>
+      <rect class="o" x="3" y="10" width="11" height="4"/>
+      <rect class="w" x="5" y="12" width="7" height="2"/>
+    </g>
+
+    <!-- FRONT legs variants -->
+    <g id="legs_front_neutral">
+      <rect class="o" x="5" y="14" width="2" height="2"/>
+      <rect class="o" x="9" y="14" width="2" height="2"/>
+    </g>
+    <g id="legs_front_A">
+      <rect class="o" x="5" y="13" width="2" height="3"/>
+      <rect class="o" x="9" y="14" width="2" height="2"/>
+    </g>
+    <g id="legs_front_B">
+      <rect class="o" x="5" y="14" width="2" height="2"/>
+      <rect class="o" x="9" y="13" width="2" height="3"/>
+    </g>
+
+    <!-- BACK (UP) base without legs/tail -->
+    <g id="back_body">
+      <rect class="o" x="4" y="4" width="9" height="6"/>
+      <rect class="o" x="4" y="3" width="2" height="2"/>
+      <rect class="o" x="11" y="3" width="2" height="2"/>
+      <rect class="o" x="3" y="10" width="11" height="4"/>
+      <rect class="o2" x="5" y="12" width="7" height="1"/>
+    </g>
+    <g id="legs_back_A">
+      <rect class="o" x="5" y="13" width="2" height="3"/>
+      <rect class="o" x="9" y="14" width="2" height="2"/>
+    </g>
+    <g id="legs_back_B">
+      <rect class="o" x="5" y="14" width="2" height="2"/>
+      <rect class="o" x="9" y="13" width="2" height="3"/>
+    </g>
+    <g id="tail_back_up"><rect class="o" x="8" y="9" width="2" height="3"/></g>
+    <g id="tail_back_down"><rect class="o" x="8" y="11" width="2" height="2"/></g>
+
+    <!-- Props -->
+    <g id="bowl">
+      <rect class="g2" x="8" y="14" width="7" height="2"/>
+      <rect class="g" x="9" y="14" width="5" height="1"/>
+    </g>
+    <g id="ball">
+      <rect class="g" x="3" y="14" width="2" height="2"/>
+      <rect class="w" x="4" y="14" width="1" height="1"/>
+    </g>
+
+    <!-- Mirroring helper for LEFT frames -->
+    <g id="mirror_left">
+      <!-- Usage: wrap content, then scale(-1,1) translate(-16,0) in a <g> -->
+    </g>
+  </defs>
+
+  <!-- Row labels -->
+  <g transform="translate(2,2)">
+    <g transform="translate(0,0)"><rect class="lbl" x="0" y="0" rx="2" ry="2" width="26" height="6"/><text x="2" y="4">RUN RIGHT</text></g>
+    <g transform="translate(0,16)"><rect class="lbl" x="0" y="0" rx="2" ry="2" width="26" height="6"/><text x="2" y="4">RUN LEFT</text></g>
+    <g transform="translate(0,32)"><rect class="lbl" x="0" y="0" rx="2" ry="2" width="26" height="6"/><text x="2" y="4">RUN DOWN</text></g>
+    <g transform="translate(0,48)"><rect class="lbl" x="0" y="0" rx="2" ry="2" width="26" height="6"/><text x="2" y="4">RUN UP</text></g>
+    <g transform="translate(0,64)"><rect class="lbl" x="0" y="0" rx="2" ry="2" width="26" height="6"/><text x="2" y="4">EAT</text></g>
+    <g transform="translate(0,80)"><rect class="lbl" x="0" y="0" rx="2" ry="2" width="26" height="6"/><text x="2" y="4">PLAY</text></g>
+  </g>
+
+  <!-- GRID helper (faint) -->
+  <g opacity="0.15">
+    <!-- vertical lines -->
+    <path d="M28 0v96M44 0v96M60 0v96M76 0v96M12 0v96" stroke="#000" stroke-width="0.2"/>
+    <!-- horizontal lines -->
+    <path d="M0 16h90M0 32h90M0 48h90M0 64h90M0 80h90" stroke="#000" stroke-width="0.2"/>
+  </g>
+
+  <!-- FRAMES START | each cell 16x16; content origin at (label 28 + col*16, row*16) -->
+
+  <!-- RUN RIGHT row (row 0) -->
+  <g transform="translate(28,0)">
+    <!-- frame 1 -->
+    <g transform="translate(0,0)">
+      <use href="#torso_side"/>
+      <use href="#tail_side_up"/>
+      <use href="#legs_side_A"/>
+      <use href="#head_right_normal"/>
+    </g>
+    <!-- frame 2 -->
+    <g transform="translate(16,0)">
+      <use href="#torso_side"/>
+      <use href="#tail_side_down"/>
+      <use href="#legs_side_B"/>
+      <use href="#head_right_normal"/>
+    </g>
+    <!-- frame 3 -->
+    <g transform="translate(32,0)">
+      <use href="#torso_side"/>
+      <use href="#tail_side_up"/>
+      <use href="#legs_side_A"/>
+      <use href="#head_right_normal"/>
+    </g>
+    <!-- frame 4 -->
+    <g transform="translate(48,0)">
+      <use href="#torso_side"/>
+      <use href="#tail_side_down"/>
+      <use href="#legs_side_B"/>
+      <use href="#head_right_normal"/>
+    </g>
+  </g>
+
+  <!-- RUN LEFT row (row 1) | mirror horizontally inside each cell -->
+  <g transform="translate(28,16)">
+    <g transform="translate(0,0)">
+      <g transform="translate(16,0) scale(-1,1)">
+        <use href="#torso_side"/>
+        <use href="#tail_side_up"/>
+        <use href="#legs_side_A"/>
+        <use href="#head_right_normal"/>
+      </g>
+    </g>
+    <g transform="translate(16,0)">
+      <g transform="translate(16,0) scale(-1,1)">
+        <use href="#torso_side"/>
+        <use href="#tail_side_down"/>
+        <use href="#legs_side_B"/>
+        <use href="#head_right_normal"/>
+      </g>
+    </g>
+    <g transform="translate(32,0)">
+      <g transform="translate(16,0) scale(-1,1)">
+        <use href="#torso_side"/>
+        <use href="#tail_side_up"/>
+        <use href="#legs_side_A"/>
+        <use href="#head_right_normal"/>
+      </g>
+    </g>
+    <g transform="translate(48,0)">
+      <g transform="translate(16,0) scale(-1,1)">
+        <use href="#torso_side"/>
+        <use href="#tail_side_down"/>
+        <use href="#legs_side_B"/>
+        <use href="#head_right_normal"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- RUN DOWN row (row 2) front view -->
+  <g transform="translate(28,32)">
+    <g transform="translate(0,0)">
+      <use href="#front_body"/>
+      <use href="#legs_front_A"/>
+    </g>
+    <g transform="translate(16,0)">
+      <use href="#front_body"/>
+      <use href="#legs_front_B"/>
+    </g>
+    <g transform="translate(32,0)">
+      <use href="#front_body"/>
+      <use href="#legs_front_A"/>
+    </g>
+    <g transform="translate(48,0)">
+      <use href="#front_body"/>
+      <use href="#legs_front_B"/>
+    </g>
+  </g>
+
+  <!-- RUN UP row (row 3) back view -->
+  <g transform="translate(28,48)">
+    <g transform="translate(0,0)">
+      <use href="#back_body"/>
+      <use href="#tail_back_up"/>
+      <use href="#legs_back_A"/>
+    </g>
+    <g transform="translate(16,0)">
+      <use href="#back_body"/>
+      <use href="#tail_back_down"/>
+      <use href="#legs_back_B"/>
+    </g>
+    <g transform="translate(32,0)">
+      <use href="#back_body"/>
+      <use href="#tail_back_up"/>
+      <use href="#legs_back_A"/>
+    </g>
+    <g transform="translate(48,0)">
+      <use href="#back_body"/>
+      <use href="#tail_back_down"/>
+      <use href="#legs_back_B"/>
+    </g>
+  </g>
+
+  <!-- EAT row (row 4) side-right with head bob + bowl -->
+  <g transform="translate(28,64)">
+    <g transform="translate(0,0)">
+      <use href="#torso_side"/>
+      <use href="#legs_side_A"/>
+      <use href="#tail_side_down"/>
+      <use href="#head_right_down1"/>
+      <use href="#bowl"/>
+    </g>
+    <g transform="translate(16,0)">
+      <use href="#torso_side"/>
+      <use href="#legs_side_B"/>
+      <use href="#tail_side_down"/>
+      <use href="#head_right_down2"/>
+      <use href="#bowl"/>
+    </g>
+    <g transform="translate(32,0)">
+      <use href="#torso_side"/>
+      <use href="#legs_side_A"/>
+      <use href="#tail_side_up"/>
+      <use href="#head_right_down2"/>
+      <rect class="p" x="14" y="13" width="1" height="1"/>
+      <use href="#bowl"/>
+    </g>
+    <g transform="translate(48,0)">
+      <use href="#torso_side"/>
+      <use href="#legs_side_B"/>
+      <use href="#tail_side_up"/>
+      <use href="#head_right_normal"/>
+      <use href="#bowl"/>
+    </g>
+  </g>
+
+  <!-- PLAY row (row 5) front view + ball + bouncy paws -->
+  <g transform="translate(28,80)">
+    <g transform="translate(0,0)">
+      <use href="#front_body"/>
+      <use href="#legs_front_neutral"/>
+      <use href="#ball"/>
+    </g>
+    <g transform="translate(16,0)">
+      <use href="#front_body"/>
+      <use href="#legs_front_A"/>
+      <g transform="translate(1,0)"><use href="#ball"/></g>
+    </g>
+    <g transform="translate(32,0)">
+      <use href="#front_body"/>
+      <use href="#legs_front_B"/>
+      <g transform="translate(3,0)"><use href="#ball"/></g>
+    </g>
+    <g transform="translate(48,0)">
+      <use href="#front_body"/>
+      <g>
+        <rect class="o" x="5" y="13" width="2" height="3"/>
+        <rect class="o" x="9" y="13" width="2" height="3"/>
+      </g>
+      <g transform="translate(4,0)"><use href="#ball"/></g>
+    </g>
+  </g>
+
+</svg>
